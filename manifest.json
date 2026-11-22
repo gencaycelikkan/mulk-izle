@@ -1,0 +1,18 @@
+{
+  "name": "Mülkİzle | Gayrimenkul Süreç & Portföy Takip",
+  "short_name": "Mülkİzle",
+  "description": "12 haneli takip kodu ile canlı gayrimenkul pazarlama süreci, saha günlüğü, filigranlı kamera ve dijital yer gösterme uygulaması.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F8FAFC",
+  "theme_color": "#2563EB",
+  "icons": [
+    {
+      "src": "mulkizle_turkpatent_591x591.jpg",
+      "sizes": "591x591",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
