@@ -920,6 +920,12 @@ function danismanAnaModSec(modId, btnEl) {
   } else if (modId === "mode-messages" && typeof uyeMesajKutusuPanelRender === "function") {
     uyeMesajKutusuPanelRender();
     if (typeof igSolMenuGuncelle === "function") igSolMenuGuncelle("messages");
+  } else if (modId === "mode-agenda" && typeof danismanAjandaPanelRender === "function") {
+    danismanAjandaPanelRender();
+    if (typeof igSolMenuGuncelle === "function") igSolMenuGuncelle("agenda");
+  } else if (modId === "mode-notifications" && typeof danismanBildirimlerPanelRender === "function") {
+    danismanBildirimlerPanelRender();
+    if (typeof igSolMenuGuncelle === "function") igSolMenuGuncelle("notifications");
   } else {
     if (typeof igSolMenuGuncelle === "function") igSolMenuGuncelle("portfolios");
   }
@@ -931,11 +937,21 @@ function danismanSolMenuSec(secim) {
     gorunumDegistir("view-dashboard");
     danismanAnaModSec("mode-portfolios", document.getElementById("modeBtnPortfolios"));
     igSolMenuGuncelle("portfolios");
+  } else if (secim === "notifications") {
+    aktifHizliTestEkrani = "dashboard";
+    gorunumDegistir("view-dashboard");
+    danismanAnaModSec("mode-notifications");
+    igSolMenuGuncelle("notifications");
   } else if (secim === "messages") {
     aktifHizliTestEkrani = "dashboard";
     gorunumDegistir("view-dashboard");
     danismanAnaModSec("mode-messages", document.getElementById("modeBtnMessages"));
     igSolMenuGuncelle("messages");
+  } else if (secim === "agenda") {
+    aktifHizliTestEkrani = "dashboard";
+    gorunumDegistir("view-dashboard");
+    danismanAnaModSec("mode-agenda");
+    igSolMenuGuncelle("agenda");
   } else if (secim === "ariyorum") {
     aktifHizliTestEkrani = "ariyorum";
     gorunumDegistir("view-ariyorum");
@@ -959,7 +975,9 @@ function danismanSolMenuSec(secim) {
 function igSolMenuGuncelle(aktifSecim) {
   const navMap = {
     portfolios: "igNavPortfolios",
+    notifications: "igNavNotifications",
     messages: "igNavMessages",
+    agenda: "igNavAgenda",
     ariyorum: "igNavAriyorum",
     "edit-profile": "igNavEditProfile",
     "view-website": "igNavViewWebsite"
@@ -977,6 +995,17 @@ function igSolMenuGuncelle(aktifSecim) {
     if (redBadge) {
       redBadge.textContent = `${okunmamis}`;
       redBadge.style.display = okunmamis > 0 ? "inline-flex" : "none";
+    }
+  }
+
+  if (typeof danismanBildirimleriniGetir === "function") {
+    const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+    const bListe = danismanBildirimleriniGetir(aktifId);
+    const okunmamisB = bListe.filter(b => !b.okundu).length;
+    const notifBadge = document.getElementById("igSidebarNotifBadge");
+    if (notifBadge) {
+      notifBadge.textContent = `${okunmamisB}`;
+      notifBadge.style.display = okunmamisB > 0 ? "inline-flex" : "none";
     }
   }
 }
@@ -4773,6 +4802,10 @@ function saticiPaneliniGoster(kod) {
             ${WHATSAPP_OFFICIAL_SVG}
             <span>Mesaj</span>
           </a>
+          <button type="button" class="social-btn-soft" style="padding:7px 14px;font-size:0.78rem;" onclick="saticiDurumYenilemeTalebiGonder('${p.kod}')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            <span>Güncel Durum / Yenileme İste</span>
+          </button>
           <button type="button" class="social-btn-soft" style="padding:7px 14px;font-size:0.78rem;" onclick="saticiVeyaAlicidanDanismanProfilineGit('ahmet-demir')">
             ${lucide.user}
             <span>Danışman Profili</span>
@@ -5359,14 +5392,32 @@ function kisiselProfilEditorRender() {
     blogWrap.innerHTML = dp.bloglar
       .map(
         (b, idx) => `
-        <div class="blog-card">
+        <div class="blog-card" style="overflow:hidden;">
           <div>
+            ${
+              b.foto
+                ? `<div style="margin:-14px -14px 10px -14px;height:145px;overflow:hidden;border-bottom:1px solid #E2E8F0;background:#F1F5F9;">
+                    <img src="${b.foto}" alt="${b.baslik}" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                  </div>`
+                : ""
+            }
             <span style="font-size:0.72rem;font-weight:800;color:var(--cobalt-600);text-transform:uppercase;">${b.kategori} • ${b.tarih}</span>
             <h5 style="font-size:0.95rem;font-weight:800;margin:6px 0;color:var(--navy-900);">${b.baslik}</h5>
             <p style="font-size:0.81rem;color:var(--text-body);">${b.ozet}</p>
           </div>
-          <div style="margin-top:12px;text-align:right;">
-            <button type="button" class="btn btn-outline btn-sm" style="color:#dc2626;" onclick="blogYazisiSil(${idx})">Yazıyı Sil</button>
+          <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+            <label class="saas-btn-outline-sm" style="cursor:pointer;padding:4px 10px;font-size:0.74rem;margin:0;">
+              <span>📷 ${b.foto ? "Fotoğrafı Değiştir" : "Fotoğraf Ekle"}</span>
+              <input type="file" accept="image/*" style="display:none;" onchange="mevcutBlogYazisinaFotografYukle(event, ${idx})" />
+            </label>
+            <div style="display:flex;gap:6px;">
+              ${
+                b.foto
+                  ? `<button type="button" class="btn btn-outline btn-sm" style="font-size:0.74rem;padding:4px 9px;" onclick="mevcutBlogFotografiniKaldir(${idx})">Fotoğrafı Kaldır</button>`
+                  : ""
+              }
+              <button type="button" class="btn btn-outline btn-sm" style="color:#dc2626;font-size:0.74rem;padding:4px 9px;" onclick="blogYazisiSil(${idx})">Yazıyı Sil</button>
+            </div>
           </div>
         </div>
       `
@@ -5413,11 +5464,73 @@ function kisiselProfilKaydet(bildirim = true) {
   }
 }
 
+let seciliYeniBlogFotoData = "";
+
+function blogFotografiDosyadanSec(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    seciliYeniBlogFotoData = e.target.result || "";
+    const wrap = document.getElementById("newBlogPhotoPreviewWrap");
+    const img = document.getElementById("newBlogPhotoPreviewImg");
+    if (img) img.src = seciliYeniBlogFotoData;
+    if (wrap) wrap.style.display = "inline-flex";
+  };
+  reader.readAsDataURL(file);
+}
+
+function blogFotografiUrlOnizle(url) {
+  const temiz = (url || "").trim();
+  seciliYeniBlogFotoData = temiz;
+  const wrap = document.getElementById("newBlogPhotoPreviewWrap");
+  const img = document.getElementById("newBlogPhotoPreviewImg");
+  if (temiz.length > 6) {
+    if (img) img.src = temiz;
+    if (wrap) wrap.style.display = "inline-flex";
+  } else if (wrap) {
+    wrap.style.display = "none";
+  }
+}
+
+function blogFotografiSecimiTemizle() {
+  seciliYeniBlogFotoData = "";
+  const fileEl = document.getElementById("newBlogPhotoFile");
+  const urlEl = document.getElementById("newBlogPhotoUrl");
+  const wrap = document.getElementById("newBlogPhotoPreviewWrap");
+  if (fileEl) fileEl.value = "";
+  if (urlEl) urlEl.value = "";
+  if (wrap) wrap.style.display = "none";
+}
+
+function mevcutBlogYazisinaFotografYukle(event, idx) {
+  const file = event.target.files && event.target.files[0];
+  if (!file || !danismanProfili || !danismanProfili.bloglar || !danismanProfili.bloglar[idx]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    danismanProfili.bloglar[idx].foto = e.target.result || "";
+    profilKaydetStorage();
+    kisiselProfilEditorRender();
+    danismanKisiselWebSitesiGoster();
+  };
+  reader.readAsDataURL(file);
+}
+
+function mevcutBlogFotografiniKaldir(idx) {
+  if (!danismanProfili || !danismanProfili.bloglar || !danismanProfili.bloglar[idx]) return;
+  danismanProfili.bloglar[idx].foto = "";
+  profilKaydetStorage();
+  kisiselProfilEditorRender();
+  danismanKisiselWebSitesiGoster();
+}
+
 function yeniBlogYazisiEkle() {
   if (!danismanProfili) profilYukle();
   const baslik = (document.getElementById("newBlogTitle")?.value || "").trim();
   const kategori = (document.getElementById("newBlogCategory")?.value || "Bölge & Piyasa Analizi").trim();
   const ozet = (document.getElementById("newBlogSummary")?.value || "").trim();
+  const urlInput = (document.getElementById("newBlogPhotoUrl")?.value || "").trim();
+  const foto = seciliYeniBlogFotoData || urlInput || "";
 
   if (!baslik || !ozet) {
     alert("Lütfen blog yazısı başlığını ve içeriğini girin.");
@@ -5426,11 +5539,12 @@ function yeniBlogYazisiEkle() {
 
   const bugun = new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
   danismanProfili.bloglar = danismanProfili.bloglar || [];
-  danismanProfili.bloglar.unshift({ tarih: bugun, kategori, baslik, ozet });
+  danismanProfili.bloglar.unshift({ tarih: bugun, kategori, baslik, ozet, foto });
 
   document.getElementById("newBlogTitle").value = "";
   document.getElementById("newBlogCategory").value = "";
   document.getElementById("newBlogSummary").value = "";
+  blogFotografiSecimiTemizle();
 
   profilKaydetStorage();
   kisiselProfilEditorRender();
@@ -5660,8 +5774,15 @@ function danismanKisiselWebSitesiGoster() {
         dp.bloglar
           .map(
             b => `
-            <article class="saas-card" style="margin:0;display:flex;flex-direction:column;justify-content:space-between;gap:10px;">
+            <article class="saas-card" style="margin:0;display:flex;flex-direction:column;justify-content:space-between;gap:10px;overflow:hidden;">
               <div>
+                ${
+                  b.foto
+                    ? `<div style="margin:-20px -20px 12px -20px;height:175px;overflow:hidden;border-bottom:1px solid #E2E8F0;background:#F1F5F9;">
+                        <img src="${b.foto}" alt="${b.baslik}" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                      </div>`
+                    : ""
+                }
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
                   <span class="saas-badge-blue">${b.kategori}</span>
                   <span class="saas-text-xs">${b.tarih}</span>
@@ -6150,6 +6271,16 @@ function yeniAliciCoopTalebiOlustur() {
   if (document.getElementById("bcBuyerNote")) document.getElementById("bcBuyerNote").value = "";
   aliciCoopKaydet();
   aliciCoopTalepleriRender();
+
+  if (typeof danismanBildirimEkle === "function") {
+    danismanBildirimEkle({
+      tip: "ariyorum",
+      baslik: `🔍 Arıyorum! ${il} / ${ilce} (${oda}) Talebinize ${yeniTalep.cevapVerenler.length} Bölge Uzmanı Cevap Verdi`,
+      detay: `${aday1.ad} ve ${aday2.ad} talebiniz için 'Paylaşıma Açığım' diyerek uygun portföylerini iletti.`,
+      zaman: "Az önce",
+      hedefMod: "ariyorum"
+    });
+  }
 
   alert(
     `📢 ALICI TALEBİNİZ (${yeniTalep.id}) BÖLGE UZMANLARINA İLETİLDİ!\n\n` +
@@ -8344,6 +8475,16 @@ function modaldanUyeMesajiGonder(hedefDanismanId) {
   });
   seciliDmThreadIdx = 0;
 
+  if (typeof danismanBildirimEkle === "function") {
+    danismanBildirimEkle({
+      tip: "mesaj",
+      baslik: `💬 Yeni Üye Mesajı: ${liste[0]?.gonderenAd || "Meslektaşınız"}`,
+      detay: `"${liste[0]?.icerik || ""}"`,
+      zaman: "Az önce",
+      hedefMod: "messages"
+    });
+  }
+
   uyeMesajKutulariniKaydet();
   danismanKisiselWebSitesiGoster();
   uyeMesajKutusuPanelRender();
@@ -8612,6 +8753,692 @@ function uyeMesajKutusuPanelRender() {
       </button>
     </div>
     ${inboxHtml}
+  `;
+}
+
+// ============================================================================
+// ANA MODÜL 5: AJANDAM (GÜN, TARİH VE SAATLİ RANDEVU & NOT TAKİBİ)
+// ============================================================================
+const AGENDA_STORAGE_KEY = "mulkizle_ajanda_notlari_v1";
+let ajandaKayitlari = {};
+let ajandaAktifFiltre = "all"; // all | today | upcoming | completed
+
+const GUN_ISIMLERI_TR = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+const AY_ISIMLERI_TR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+
+function tarihBilgisiniFormatlaTR(yyyyMmDd) {
+  if (!yyyyMmDd) return { tamTarih: "Tarih Belirtilmedi", gunAdi: "" };
+  const parcalar = yyyyMmDd.split("-");
+  if (parcalar.length !== 3) return { tamTarih: yyyyMmDd, gunAdi: "" };
+  const yil = parseInt(parcalar[0], 10);
+  const ay = parseInt(parcalar[1], 10) - 1;
+  const gun = parseInt(parcalar[2], 10);
+  const d = new Date(yil, ay, gun);
+  const gunAdi = GUN_ISIMLERI_TR[d.getDay()] || "";
+  const ayAdi = AY_ISIMLERI_TR[ay] || "";
+  return {
+    tamTarih: `${gun} ${ayAdi} ${yil}`,
+    gunAdi
+  };
+}
+
+function bugunTarihIso() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function yarinTarihIso() {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function danismanAjandasiniYukle() {
+  try {
+    const raw = localStorage.getItem(AGENDA_STORAGE_KEY);
+    if (raw) {
+      ajandaKayitlari = JSON.parse(raw);
+    }
+  } catch (e) {
+    ajandaKayitlari = {};
+  }
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  if (!Array.isArray(ajandaKayitlari[aktifId]) || ajandaKayitlari[aktifId].length === 0) {
+    const bugun = bugunTarihIso();
+    const yarin = yarinTarihIso();
+    ajandaKayitlari[aktifId] = [
+      {
+        id: "aj-1",
+        tarih: bugun,
+        saat: "14:30",
+        kategori: "Yer Gösterimi",
+        portfoyKod: "849201736410",
+        baslik: "Bağlıca 3+1 Daire — Alıcı Aile Yer Gösterimi",
+        not: "Alıcı Murat Bey ve eşi daireyi gezecek. Kapıcı Arif Bey'den 15 dk önce yedek anahtar alınacak, dijital yer gösterme belgesi imzalatılacak.",
+        tamamlandi: false,
+        hatirlatmaAktif: true
+      },
+      {
+        id: "aj-2",
+        tarih: bugun,
+        saat: "17:00",
+        kategori: "Mülk Sahibi Görüşmesi",
+        portfoyKod: "849201736410",
+        baslik: "Ahmet Yılmaz (Mülk Sahibi) Haftalık Süreç & Fiyat Değerlendirmesi",
+        not: "Gelen son teklifler ve Sahibinden.com haftalık görüntülenme istatistikleri mülk sahibiyle paylaşılacak.",
+        tamamlandi: false,
+        hatirlatmaAktif: true
+      },
+      {
+        id: "aj-3",
+        tarih: yarin,
+        saat: "11:00",
+        kategori: "Tapu & Sözleşme",
+        portfoyKod: "739104825612",
+        baslik: "Çayyolu Villa Portföyü — Drone Çekimi ve Yetki Sözleşmesi Yenileme",
+        not: "Hava durumu uygun olursa dış cephe drone çekimi yapılacak ve 90 günlük yetki uzatma onayı alınacak.",
+        tamamlandi: false,
+        hatirlatmaAktif: true
+      }
+    ];
+    danismanAjandasiniKaydet();
+  }
+}
+
+function danismanAjandasiniKaydet() {
+  try {
+    localStorage.setItem(AGENDA_STORAGE_KEY, JSON.stringify(ajandaKayitlari));
+  } catch (e) {}
+}
+
+function danismanAjandaListesiniGetir(danismanId) {
+  danismanAjandasiniYukle();
+  const id = danismanId || (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  if (!Array.isArray(ajandaKayitlari[id])) {
+    ajandaKayitlari[id] = [];
+  }
+  return ajandaKayitlari[id].sort((a, b) => {
+    const dtA = `${a.tarih || ""} ${a.saat || "00:00"}`;
+    const dtB = `${b.tarih || ""} ${b.saat || "00:00"}`;
+    return dtA.localeCompare(dtB);
+  });
+}
+
+function danismanAjandaNotuEkle() {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const tarih = document.getElementById("agInputDate")?.value || bugunTarihIso();
+  const saat = document.getElementById("agInputTime")?.value || "12:00";
+  const kategori = document.getElementById("agInputCategory")?.value || "Randevu / Not";
+  const portfoyKod = document.getElementById("agInputPortfolio")?.value || "";
+  const baslik = (document.getElementById("agInputTitle")?.value || "").trim();
+  const not = (document.getElementById("agInputNote")?.value || "").trim();
+  const hatirlatma = document.getElementById("agInputReminder")?.checked !== false;
+
+  if (!baslik && !not) {
+    alert("Lütfen ajanda kaydı için bir başlık veya not yazın.");
+    return;
+  }
+
+  const liste = danismanAjandaListesiniGetir(aktifId);
+  const yeniKayit = {
+    id: `aj-${Date.now()}`,
+    tarih,
+    saat,
+    kategori,
+    portfoyKod,
+    baslik: baslik || `${kategori} Notu`,
+    not,
+    tamamlandi: false,
+    hatirlatmaAktif: hatirlatma
+  };
+
+  liste.push(yeniKayit);
+  danismanAjandasiniKaydet();
+
+  if (hatirlatma) {
+    const { tamTarih, gunAdi } = tarihBilgisiniFormatlaTR(tarih);
+    danismanBildirimEkle({
+      tip: "ajanda",
+      baslik: `⏰ Ajanda Hatırlatması: ${yeniKayit.baslik}`,
+      detay: `${tamTarih} ${gunAdi} • Saat ${saat} (${kategori}) — ${not || "Planlanan ajanda kaydınız yaklaşıyor."}`,
+      zaman: `${tamTarih} • ${saat}`,
+      hedefMod: "agenda",
+      portfoyKod
+    });
+  }
+
+  danismanAjandaPanelRender();
+}
+
+function danismanAjandaTamamlaToggle(kayitId) {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const liste = danismanAjandaListesiniGetir(aktifId);
+  const hedef = liste.find(x => x.id === kayitId);
+  if (!hedef) return;
+  hedef.tamamlandi = !hedef.tamamlandi;
+  danismanAjandasiniKaydet();
+  danismanAjandaPanelRender();
+}
+
+function danismanAjandaSil(kayitId) {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  if (!Array.isArray(ajandaKayitlari[aktifId])) return;
+  ajandaKayitlari[aktifId] = ajandaKayitlari[aktifId].filter(x => x.id !== kayitId);
+  danismanAjandasiniKaydet();
+  danismanAjandaPanelRender();
+}
+
+function danismanAjandaFiltreSec(filtre) {
+  ajandaAktifFiltre = filtre;
+  danismanAjandaPanelRender();
+}
+
+function danismanAjandaPanelRender() {
+  const wrap = document.getElementById("agentAgendaContainer");
+  if (!wrap) return;
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const tumListe = danismanAjandaListesiniGetir(aktifId);
+  const bugun = bugunTarihIso();
+
+  const bugunkuSayi = tumListe.filter(x => x.tarih === bugun && !x.tamamlandi).length;
+  const bekleyenSayi = tumListe.filter(x => !x.tamamlandi).length;
+  const tamamlananSayi = tumListe.filter(x => x.tamamlandi).length;
+
+  const filtrelenmis = tumListe.filter(x => {
+    if (ajandaAktifFiltre === "today") return x.tarih === bugun;
+    if (ajandaAktifFiltre === "upcoming") return !x.tamamlandi;
+    if (ajandaAktifFiltre === "completed") return x.tamamlandi;
+    return true;
+  });
+
+  const gorunenPortfoyler = aktifDanismaninGorunenPortfoyleri();
+  const portfoySecenekleriHtml = [
+    `<option value="">Bağlı Portföy Seçin (İsteğe Bağlı)</option>`,
+    ...gorunenPortfoyler.map(p => `<option value="${p.kod}">#${p.kod} — ${p.baslik}</option>`)
+  ].join("");
+
+  const kategoriRenkMap = {
+    "Yer Gösterimi": "background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;",
+    "Mülk Sahibi Görüşmesi": "background:#F0FDF4;color:#15803D;border:1px solid #BBF7D0;",
+    "Tapu & Sözleşme": "background:#FEF3C7;color:#B45309;border:1px solid #FDE68A;",
+    "Çekim & Pazarlama": "background:#FAF5FF;color:#7E22CE;border:1px solid #E9D5FF;",
+    "Randevu / Not": "background:#F1F5F9;color:#334155;border:1px solid #CBD5E1;"
+  };
+
+  const listeHtml =
+    filtrelenmis.length === 0
+      ? `<div class="saas-card" style="text-align:center;padding:32px 20px;color:#64748B;">
+          Bu filtrede kayıtlı ajanda notunuz bulunmuyor. Yukarıdaki formdan gün, tarih ve saat seçerek yeni not ekleyebilirsiniz.
+        </div>`
+      : filtrelenmis
+          .map(item => {
+            const { tamTarih, gunAdi } = tarihBilgisiniFormatlaTR(item.tarih);
+            const bugunMu = item.tarih === bugun;
+            const bagliPortfoy = item.portfoyKod ? portfoyler.find(p => p.kod === item.portfoyKod) : null;
+            const katStil = kategoriRenkMap[item.kategori] || kategoriRenkMap["Randevu / Not"];
+
+            return `
+              <div class="saas-card" style="padding:14px 16px;margin-bottom:10px;border-left:4px solid ${
+                item.tamamlandi ? "#94A3B8" : bugunMu ? "#2563EB" : "#0F172A"
+              };opacity:${item.tamamlandi ? "0.68" : "1"};">
+                <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:10px;">
+                  <div style="display:flex;align-items:flex-start;gap:12px;flex:1;min-width:240px;">
+                    <button
+                      type="button"
+                      onclick="danismanAjandaTamamlaToggle('${item.id}')"
+                      title="${item.tamamlandi ? "Tamamlandı işaretini kaldır" : "Tamamlandı olarak işaretle"}"
+                      style="width:22px;height:22px;border-radius:6px;border:2px solid ${
+                        item.tamamlandi ? "#16A34A" : "#94A3B8"
+                      };background:${
+                        item.tamamlandi ? "#16A34A" : "#FFFFFF"
+                      };color:#FFFFFF;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;margin-top:2px;flex-shrink:0;"
+                    >
+                      ${item.tamamlandi ? "✓" : ""}
+                    </button>
+                    <div style="flex:1;">
+                      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:4px;">
+                        <span style="font-size:0.76rem;font-weight:800;color:#0F172A;background:#F8FAFC;border:1px solid #E2E8F0;padding:2px 8px;border-radius:6px;">
+                          📅 ${tamTarih} • <strong>${gunAdi}</strong>
+                        </span>
+                        <span style="font-size:0.76rem;font-weight:800;color:#2563EB;background:#EFF6FF;border:1px solid #BFDBFE;padding:2px 8px;border-radius:6px;">
+                          🕒 ${item.saat || "Belirtilmedi"}
+                        </span>
+                        <span style="font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:999px;${katStil}">
+                          ${item.kategori || "Not"}
+                        </span>
+                        ${
+                          bugunMu && !item.tamamlandi
+                            ? `<span style="font-size:0.7rem;font-weight:800;background:#FEE2E2;color:#DC2626;padding:2px 7px;border-radius:999px;">BUGÜN</span>`
+                            : ""
+                        }
+                      </div>
+                      <div style="font-size:0.95rem;font-weight:700;color:#0F172A;${
+                        item.tamamlandi ? "text-decoration:line-through;color:#64748B;" : ""
+                      }">
+                        ${item.baslik}
+                      </div>
+                      ${
+                        item.not
+                          ? `<div style="font-size:0.83rem;color:#475569;margin-top:4px;line-height:1.45;">${item.not}</div>`
+                          : ""
+                      }
+                      ${
+                        bagliPortfoy
+                          ? `<div style="margin-top:6px;">
+                              <button type="button" class="saas-btn-outline-sm" style="padding:3px 9px;font-size:0.72rem;" onclick="seciliKod='${bagliPortfoy.kod}'; acikAkordeonPortfoyKodu='${bagliPortfoy.kod}'; danismanSolMenuSec('portfolios');">
+                                🏠 #${bagliPortfoy.kod} — ${bagliPortfoy.baslik} Portföyüne Git →
+                              </button>
+                            </div>`
+                          : ""
+                      }
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <button type="button" class="saas-btn-outline-sm" style="color:#DC2626;border-color:#FECACA;padding:5px 10px;font-size:0.74rem;" onclick="danismanAjandaSil('${item.id}')">
+                      Sil
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+
+  wrap.innerHTML = `
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <h2 class="saas-h2" style="margin:0;">Ajandam &amp; Saha Planlayıcı</h2>
+          <span class="saas-badge-blue">${bugunkuSayi} Bugünkü Randevu</span>
+          <span class="saas-badge-neutral">${bekleyenSayi} Bekleyen • ${tamamlananSayi} Tamamlanan</span>
+        </div>
+        <div class="saas-text-xs" style="margin-top:2px;">Gün, tarih ve saat belirterek yer gösterimi, mülk sahibi görüşmesi, tapu randevusu ve saha notlarınızı planlayın.</div>
+      </div>
+      <button type="button" class="saas-btn-outline-sm" onclick="danismanSolMenuSec('notifications')">
+        <span>🔔 Bildirimler &amp; Hatırlatmalar</span>
+      </button>
+    </div>
+
+    <!-- YENİ AJANDA NOTU & RANDEVU EKLEME KARTI -->
+    <div class="saas-card" style="padding:16px 18px;margin-bottom:16px;background:#F8FAFC;border:1.5px solid #DBEAFE;">
+      <h3 class="saas-h2" style="font-size:0.95rem;margin-bottom:10px;">+ Yeni Ajanda Notu / Randevu Ekle</h3>
+      <div class="form-grid-3" style="margin-bottom:10px;">
+        <div class="field">
+          <label>Tarih (Gün / Ay / Yıl)</label>
+          <input type="date" id="agInputDate" value="${bugun}" class="saas-input-compact" style="width:100%;padding:8px 10px;" />
+        </div>
+        <div class="field">
+          <label>Saat</label>
+          <input type="time" id="agInputTime" value="14:00" class="saas-input-compact" style="width:100%;padding:8px 10px;" />
+        </div>
+        <div class="field">
+          <label>Kategori</label>
+          <select id="agInputCategory" class="saas-input-compact" style="width:100%;padding:8px 10px;">
+            <option value="Yer Gösterimi">Yer Gösterimi</option>
+            <option value="Mülk Sahibi Görüşmesi">Mülk Sahibi Görüşmesi</option>
+            <option value="Tapu & Sözleşme">Tapu &amp; Sözleşme</option>
+            <option value="Çekim & Pazarlama">Çekim &amp; Pazarlama</option>
+            <option value="Randevu / Not">Genel Randevu / Not</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-grid-2" style="margin-bottom:10px;">
+        <div class="field">
+          <label>Başlık / Kısa Özet</label>
+          <input type="text" id="agInputTitle" class="saas-input-compact" placeholder="Örn: Bağlıca 3+1 Daire Alıcı Yer Gösterimi" style="width:100%;padding:8px 12px;" />
+        </div>
+        <div class="field">
+          <label>İlgili Portföy (İsteğe Bağlı)</label>
+          <select id="agInputPortfolio" class="saas-input-compact" style="width:100%;padding:8px 10px;">
+            ${portfoySecenekleriHtml}
+          </select>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:12px;">
+        <label>Detaylı Ajanda Notunuz</label>
+        <textarea id="agInputNote" rows="2" class="saas-input-compact" placeholder="Tarih ve saatle ilgili hatırlamak istediğiniz detayları, iletişim numarasını veya hazırlık notlarını yazın..." style="width:100%;padding:8px 12px;"></textarea>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;">
+        <label style="display:inline-flex;align-items:center;gap:7px;font-size:0.8rem;color:#334155;cursor:pointer;">
+          <input type="checkbox" id="agInputReminder" checked />
+          <span>Bildirimler merkezine ajanda hatırlatması olarak da düşsün</span>
+        </label>
+        <button type="button" class="social-btn-primary" onclick="danismanAjandaNotuEkle()">
+          <span>+ Ajandama Kaydet</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- FİLTRE SEKMELERİ -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+      <button type="button" class="${ajandaAktifFiltre === "all" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('all')">
+        Tümü (${tumListe.length})
+      </button>
+      <button type="button" class="${ajandaAktifFiltre === "today" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('today')">
+        Bugün (${tumListe.filter(x => x.tarih === bugun).length})
+      </button>
+      <button type="button" class="${ajandaAktifFiltre === "upcoming" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('upcoming')">
+        Bekleyenler (${bekleyenSayi})
+      </button>
+      <button type="button" class="${ajandaAktifFiltre === "completed" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('completed')">
+        Tamamlananlar (${tamamlananSayi})
+      </button>
+    </div>
+
+    <div>
+      ${listeHtml}
+    </div>
+  `;
+}
+
+// ============================================================================
+// ANA MODÜL 6: BİLDİRİMLER MERKEZİ (MESAJ, AJANDA, SATICI YENİLEME, ARIYORUM)
+// ============================================================================
+const NOTIFICATIONS_STORAGE_KEY = "mulkizle_bildirimler_v1";
+let danismanBildirimleri = {};
+let bildirimAktifFiltre = "all"; // all | mesaj | ajanda | yenileme | ariyorum
+
+function danismanBildirimleriniYukle() {
+  try {
+    const raw = localStorage.getItem(NOTIFICATIONS_STORAGE_KEY);
+    if (raw) {
+      danismanBildirimleri = JSON.parse(raw);
+    }
+  } catch (e) {
+    danismanBildirimleri = {};
+  }
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  if (!Array.isArray(danismanBildirimleri[aktifId]) || danismanBildirimleri[aktifId].length === 0) {
+    const { tamTarih, gunAdi } = tarihBilgisiniFormatlaTR(bugunTarihIso());
+    danismanBildirimleri[aktifId] = [
+      {
+        id: "ntf-1",
+        tip: "yenileme",
+        baslik: "🔄 Mülk Sahibinin Yenileme & Güncel Durum Talebi",
+        detay: "Ahmet Yılmaz (#849201736410 - Bağlıca Mah. 3+1 Daire) takip ekranından haftalık ilan görüntülenme sayılarının, süreç adımlarının ve yetki durumunun yenilenmesini talep etti.",
+        zaman: "10 dakika önce",
+        okundu: false,
+        hedefMod: "portfolios",
+        portfoyKod: "849201736410"
+      },
+      {
+        id: "ntf-2",
+        tip: "ajanda",
+        baslik: "⏰ Ajanda Hatırlatması: Bağlıca 3+1 Daire — Alıcı Aile Yer Gösterimi",
+        detay: `${tamTarih} ${gunAdi} • Saat 14:30 — Alıcı Murat Bey ve eşi daireyi gezecek. Yedek anahtar kapıcı Arif Bey'den alınacak.`,
+        zaman: "Bugün • 14:30",
+        okundu: false,
+        hedefMod: "agenda",
+        portfoyKod: "849201736410"
+      },
+      {
+        id: "ntf-3",
+        tip: "ariyorum",
+        baslik: "🔍 Arıyorum! Uzmanlık Bölgenizde Yeni Alıcı & Paylaşım Eşleşmesi",
+        detay: "Bölgenizde (Ankara / Bağlıca - Çayyolu) 5.000.000 ₺ - 6.000.000 ₺ bütçeli, krediye uygun 3+1 arayan hazır alıcı için meslektaşınız paylaşımlı portföy (Co-Op) talebi gönderdi.",
+        zaman: "1 saat önce",
+        okundu: false,
+        hedefMod: "ariyorum",
+        portfoyKod: ""
+      },
+      {
+        id: "ntf-4",
+        tip: "mesaj",
+        baslik: "💬 Yeni Üye Mesajı: Selin Yılmaz (Bölge Uzmanı)",
+        detay: "Kişisel web siteniz ve ortak portföy ağınız üzerinden gelen yeni bir mesajınız var: 'Merhaba, Bağlıca 3+1 portföyünüz için hazır nakit alıcım var, ortak gösterim yapabilir miyiz?'",
+        zaman: "2 saat önce",
+        okundu: false,
+        hedefMod: "messages",
+        portfoyKod: ""
+      }
+    ];
+    danismanBildirimleriniKaydet();
+  }
+}
+
+function danismanBildirimleriniKaydet() {
+  try {
+    localStorage.setItem(NOTIFICATIONS_STORAGE_KEY, JSON.stringify(danismanBildirimleri));
+  } catch (e) {}
+}
+
+function danismanBildirimleriniGetir(danismanId) {
+  danismanBildirimleriniYukle();
+  const id = danismanId || (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  if (!Array.isArray(danismanBildirimleri[id])) {
+    danismanBildirimleri[id] = [];
+  }
+  return danismanBildirimleri[id];
+}
+
+function danismanBildirimEkle(yeni) {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const liste = danismanBildirimleriniGetir(aktifId);
+  liste.unshift({
+    id: `ntf-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+    tip: yeni.tip || "mesaj",
+    baslik: yeni.baslik || "Yeni Bildirim",
+    detay: yeni.detay || "",
+    zaman: yeni.zaman || "Az önce",
+    okundu: false,
+    hedefMod: yeni.hedefMod || "portfolios",
+    portfoyKod: yeni.portfoyKod || ""
+  });
+  danismanBildirimleriniKaydet();
+  if (typeof igSolMenuGuncelle === "function") {
+    igSolMenuGuncelle();
+  }
+}
+
+function saticiDurumYenilemeTalebiGonder(kod) {
+  const p = portfoyler.find(x => x.kod === kod) || aktifPortfoy();
+  if (!p) return;
+
+  const not = prompt(
+    `🔄 Danışmanınız ${p.danisman}'a iletilecek yenileme / güncelleme talebinizi yazabilirsiniz:`,
+    "İlan istatistiklerinin, haftalık süreç adımlarının ve yetki süresinin güncellenmesini rica ederim."
+  );
+  if (not === null) return;
+
+  danismanBildirimEkle({
+    tip: "yenileme",
+    baslik: `🔄 Mülk Sahibinin Yenileme Talebi: ${p.mulkSahibi} (#${p.kod})`,
+    detay: `${p.baslik} mülk sahibi ${p.mulkSahibi} yenileme talebi gönderdi: "${not.trim() || "Güncel durum yenileme talebi"}"`,
+    zaman: "Az önce",
+    hedefMod: "portfolios",
+    portfoyKod: p.kod
+  });
+
+  alert(`✅ Yenileme ve güncel durum talebiniz danışmanınız ${p.danisman}'ın Bildirimler paneline iletildi!`);
+}
+
+function danismanBildirimFiltreSec(filtre) {
+  bildirimAktifFiltre = filtre;
+  danismanBildirimlerPanelRender();
+}
+
+function danismanBildirimTumunuOkunduYap() {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const liste = danismanBildirimleriniGetir(aktifId);
+  liste.forEach(b => {
+    b.okundu = true;
+  });
+  danismanBildirimleriniKaydet();
+  danismanBildirimlerPanelRender();
+  if (typeof igSolMenuGuncelle === "function") igSolMenuGuncelle("notifications");
+}
+
+function danismanBildirimTiklaGit(bildirimId) {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const liste = danismanBildirimleriniGetir(aktifId);
+  const b = liste.find(x => x.id === bildirimId);
+  if (!b) return;
+  b.okundu = true;
+  danismanBildirimleriniKaydet();
+
+  if (b.portfoyKod) {
+    seciliKod = b.portfoyKod;
+    acikAkordeonPortfoyKodu = b.portfoyKod;
+  }
+
+  if (b.hedefMod === "agenda") {
+    danismanSolMenuSec("agenda");
+  } else if (b.hedefMod === "messages") {
+    danismanSolMenuSec("messages");
+  } else if (b.hedefMod === "ariyorum") {
+    danismanSolMenuSec("ariyorum");
+  } else {
+    danismanSolMenuSec("portfolios");
+  }
+}
+
+function danismanBildirimSil(bildirimId) {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  if (!Array.isArray(danismanBildirimleri[aktifId])) return;
+  danismanBildirimleri[aktifId] = danismanBildirimleri[aktifId].filter(x => x.id !== bildirimId);
+  danismanBildirimleriniKaydet();
+  danismanBildirimlerPanelRender();
+  if (typeof igSolMenuGuncelle === "function") igSolMenuGuncelle("notifications");
+}
+
+function danismanBildirimlerPanelRender() {
+  const wrap = document.getElementById("agentNotificationsContainer");
+  if (!wrap) return;
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const tumListe = danismanBildirimleriniGetir(aktifId);
+  const okunmamisSayi = tumListe.filter(b => !b.okundu).length;
+
+  const notifBadge = document.getElementById("igSidebarNotifBadge");
+  if (notifBadge) {
+    notifBadge.textContent = `${okunmamisSayi}`;
+    notifBadge.style.display = okunmamisSayi > 0 ? "inline-flex" : "none";
+  }
+
+  const filtrelenmis = tumListe.filter(b => {
+    if (bildirimAktifFiltre === "all") return true;
+    return b.tip === bildirimAktifFiltre;
+  });
+
+  const tipEtiketMap = {
+    mesaj: {
+      etiket: "💬 Mesaj Bildirimi",
+      stil: "background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;",
+      aksiyonMetni: "Mesaj Kutusunu Aç →"
+    },
+    ajanda: {
+      etiket: "⏰ Ajanda Hatırlatması",
+      stil: "background:#FAF5FF;color:#7E22CE;border:1px solid #E9D5FF;",
+      aksiyonMetni: "Ajandama Git →"
+    },
+    yenileme: {
+      etiket: "🔄 Mülk Sahibi Yenileme Talebi",
+      stil: "background:#FEF3C7;color:#B45309;border:1px solid #FDE68A;",
+      aksiyonMetni: "Portföyü Güncelle →"
+    },
+    ariyorum: {
+      etiket: "🔍 Arıyorum! Eşleşmesi",
+      stil: "background:#F0FDF4;color:#15803D;border:1px solid #BBF7D0;",
+      aksiyonMetni: "Arıyorum Talebini Gör →"
+    }
+  };
+
+  const listeHtml =
+    filtrelenmis.length === 0
+      ? `<div class="saas-card" style="text-align:center;padding:32px 20px;color:#64748B;">
+          Bu kategoride bildiriminiz bulunmuyor.
+        </div>`
+      : filtrelenmis
+          .map(b => {
+            const meta = tipEtiketMap[b.tip] || tipEtiketMap.mesaj;
+            return `
+              <div class="saas-card" style="padding:14px 16px;margin-bottom:10px;border-left:4px solid ${
+                b.okundu ? "#CBD5E1" : "#2563EB"
+              };background:${b.okundu ? "#FFFFFF" : "#F8FAFC"};">
+                <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:10px;">
+                  <div style="flex:1;min-width:240px;">
+                    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:5px;">
+                      <span style="font-size:0.72rem;font-weight:700;padding:2px 9px;border-radius:999px;${meta.stil}">
+                        ${meta.etiket}
+                      </span>
+                      <span style="font-size:0.74rem;color:#64748B;font-weight:600;">${b.zaman}</span>
+                      ${
+                        !b.okundu
+                          ? `<span style="font-size:0.68rem;font-weight:800;background:#2563EB;color:#FFFFFF;padding:1px 7px;border-radius:999px;">YENİ</span>`
+                          : ""
+                      }
+                    </div>
+                    <div style="font-size:0.95rem;font-weight:700;color:#0F172A;margin-bottom:4px;">
+                      ${b.baslik}
+                    </div>
+                    <div style="font-size:0.83rem;color:#475569;line-height:1.45;">
+                      ${b.detay}
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                    <button type="button" class="saas-btn-primary-sm" style="padding:6px 12px;font-size:0.76rem;" onclick="danismanBildirimTiklaGit('${b.id}')">
+                      <span>${meta.aksiyonMetni}</span>
+                    </button>
+                    <button type="button" class="saas-btn-outline-sm" style="padding:6px 10px;font-size:0.74rem;color:#64748B;" onclick="danismanBildirimSil('${b.id}')">
+                      Sil
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+
+  wrap.innerHTML = `
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <h2 class="saas-h2" style="margin:0;">Bildirimler Merkezi</h2>
+          ${
+            okunmamisSayi > 0
+              ? `<span class="saas-badge-blue">${okunmamisSayi} Yeni Bildirim</span>`
+              : `<span class="saas-badge-neutral">Tüm Bildirimler Okundu</span>`
+          }
+        </div>
+        <div class="saas-text-xs" style="margin-top:2px;">Mesajlar, ajanda hatırlatmaları, mülk sahibinin yenileme talepleri ve Arıyorum! ağından gelen eşleşmeler burada toplanır.</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button type="button" class="saas-btn-outline-sm" onclick="danismanBildirimTumunuOkunduYap()">
+          <span>✓ Tümünü Okundu İşaretle</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- KATEGORİ FİLTRE BUTONLARI -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+      <button type="button" class="${bildirimAktifFiltre === "all" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanBildirimFiltreSec('all')">
+        Tümü (${tumListe.length})
+      </button>
+      <button type="button" class="${bildirimAktifFiltre === "mesaj" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanBildirimFiltreSec('mesaj')">
+        💬 Mesajlar (${tumListe.filter(x => x.tip === "mesaj").length})
+      </button>
+      <button type="button" class="${bildirimAktifFiltre === "ajanda" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanBildirimFiltreSec('ajanda')">
+        ⏰ Ajanda Hatırlatmaları (${tumListe.filter(x => x.tip === "ajanda").length})
+      </button>
+      <button type="button" class="${bildirimAktifFiltre === "yenileme" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanBildirimFiltreSec('yenileme')">
+        🔄 Mülk Sahibi Yenileme Talebi (${tumListe.filter(x => x.tip === "yenileme").length})
+      </button>
+      <button type="button" class="${bildirimAktifFiltre === "ariyorum" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanBildirimFiltreSec('ariyorum')">
+        🔍 Arıyorum! Bildirimleri (${tumListe.filter(x => x.tip === "ariyorum").length})
+      </button>
+    </div>
+
+    <div>
+      ${listeHtml}
+    </div>
   `;
 }
 

@@ -132,7 +132,19 @@
         <span class="ig-nav-label">Yeni Mülk Takip Kodu Oluştur</span>
       </button>
 
-      <!-- 3. Mesajlar (Instagram DM İkonu + Kırmızı Okunmamış Sayısı Rozeti) -->
+      <!-- 3. Bildirimler (Çan İkonu + Kırmızı Okunmamış Bildirim Rozeti) -->
+      <button type="button" class="ig-nav-item" id="igNavNotifications" onclick="danismanSolMenuSec('notifications')">
+        <span class="ig-nav-icon" style="position:relative;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <span class="ig-unread-red-badge" id="igSidebarNotifBadge">4</span>
+        </span>
+        <span class="ig-nav-label">Bildirimler</span>
+      </button>
+
+      <!-- 4. Mesajlar (Instagram DM İkonu + Kırmızı Okunmamış Sayısı Rozeti) -->
       <button type="button" class="ig-nav-item" id="igNavMessages" onclick="danismanSolMenuSec('messages')">
         <span class="ig-nav-icon" style="position:relative;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -144,7 +156,25 @@
         <span class="ig-nav-label">Mesajlar</span>
       </button>
 
-      <!-- 4. Arıyorum! (Büyüteç İkonu — Ayrı Sayfada Açılan Bölge Uzmanı & Ortak Çalışma) -->
+      <!-- 5. Ajandam (Takvim İkonu — Gün, Tarih ve Saatli Randevu & Not Takibi) -->
+      <button type="button" class="ig-nav-item" id="igNavAgenda" onclick="danismanSolMenuSec('agenda')">
+        <span class="ig-nav-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+            <path d="M8 14h.01"/>
+            <path d="M12 14h.01"/>
+            <path d="M16 14h.01"/>
+            <path d="M8 18h.01"/>
+            <path d="M12 18h.01"/>
+          </svg>
+        </span>
+        <span class="ig-nav-label">Ajandam</span>
+      </button>
+
+      <!-- 6. Arıyorum! (Büyüteç İkonu — Ayrı Sayfada Açılan Bölge Uzmanı & Ortak Çalışma) -->
       <button type="button" class="ig-nav-item" id="igNavAriyorum" onclick="danismanSolMenuSec('ariyorum')">
         <span class="ig-nav-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -1273,6 +1303,23 @@
               <label>Blog Yazısı İçeriği / Özeti</label>
               <textarea id="newBlogSummary" rows="2" placeholder="Okuyucular ve mülk sahipleri için uzman görüşünüzü yazın..."></textarea>
             </div>
+            <div class="form-grid-2" style="align-items:flex-end;margin-bottom:10px;">
+              <div class="field" style="margin-bottom:0;">
+                <label>Fotoğraf / Görsel (İsteğe Bağlı — Bilgisayardan Seç veya Link Yapıştır)</label>
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                  <label class="saas-btn-outline-sm" style="cursor:pointer;margin:0;">
+                    <span>📷 Bilgisayardan Fotoğraf Seç</span>
+                    <input type="file" id="newBlogPhotoFile" accept="image/*" style="display:none;" onchange="blogFotografiDosyadanSec(event)" />
+                  </label>
+                  <input type="text" id="newBlogPhotoUrl" placeholder="veya görsel URL'si yapıştırın (https://...)" style="flex:1;min-width:180px;" oninput="blogFotografiUrlOnizle(this.value)" />
+                </div>
+              </div>
+              <div id="newBlogPhotoPreviewWrap" style="display:none;align-items:center;gap:10px;background:#F8FAFC;border:1px solid #E2E8F0;padding:6px 10px;border-radius:10px;">
+                <img id="newBlogPhotoPreviewImg" src="" alt="Önizleme" style="width:54px;height:40px;object-fit:cover;border-radius:6px;" />
+                <span style="font-size:0.75rem;color:#334155;font-weight:600;flex:1;">Fotoğraf Eklendi</span>
+                <button type="button" class="saas-btn-outline-sm" style="padding:3px 8px;font-size:0.72rem;color:#DC2626;" onclick="blogFotografiSecimiTemizle()">Kaldır</button>
+              </div>
+            </div>
             <button type="button" class="btn btn-accent btn-sm" onclick="yeniBlogYazisiEkle()">
               + Blog Yazısını Kişisel Web Sitemde Yayınla
             </button>
@@ -1286,6 +1333,20 @@
            ==================================================================== -->
       <div id="mode-messages" class="agent-mode-section">
         <div id="agentMessageBoxContainer"></div>
+      </div>
+
+      <!-- ====================================================================
+           ANA MODÜL 5: AJANDAM (GÜN, TARİH VE SAATLİ RANDEVU & NOT TAKİBİ)
+           ==================================================================== -->
+      <div id="mode-agenda" class="agent-mode-section">
+        <div id="agentAgendaContainer"></div>
+      </div>
+
+      <!-- ====================================================================
+           ANA MODÜL 6: BİLDİRİMLER MERKEZİ (MESAJ, AJANDA, SATICI YENİLEME, ARIYORUM)
+           ==================================================================== -->
+      <div id="mode-notifications" class="agent-mode-section">
+        <div id="agentNotificationsContainer"></div>
       </div>
     </section>
 
