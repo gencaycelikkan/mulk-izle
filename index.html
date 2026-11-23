@@ -1230,19 +1230,27 @@
               </div>
             </div>
 
-            <div class="form-grid-3">
-              <div class="field">
-                <label>Çalıştığınız İl (Bölge Uzmanı Aramalarında Çıkar)</label>
-                <input type="text" id="apCity" placeholder="Örn: Ankara" oninput="kisiselProfilKaydet(false)" />
+            <!-- UZMANLIK BÖLGESİ SEÇİCİSİ (GİZLİ UYUMLULUK INPUTLARI + ETİKET LİSTESİ) -->
+            <div style="display:none;">
+              <input type="text" id="apCity" />
+              <input type="text" id="apDistrict" />
+              <input type="text" id="apRegions" />
+            </div>
+
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+              <div style="font-size:0.82rem;font-weight:800;color:#0F172A;margin-bottom:8px;">
+                Uzmanlık bölgenizi seçin
               </div>
-              <div class="field">
-                <label>Çalıştığınız İlçeler (Virgülle Ayırın)</label>
-                <input type="text" id="apDistrict" placeholder="Örn: Etimesgut, Çankaya" oninput="kisiselProfilKaydet(false)" />
+              <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+                <select id="apHelperCity" class="saas-input-compact" style="padding:7px 10px;font-size:0.82rem;" onchange="profilSemtYardimcisiIlDegisti()"></select>
+                <select id="apHelperDistrict" class="saas-input-compact" style="padding:7px 10px;font-size:0.82rem;" onchange="profilSemtYardimcisiIlceDegisti()"></select>
+                <select id="apHelperSemt" class="saas-input-compact" style="padding:7px 10px;font-size:0.82rem;min-width:200px;" onchange="profilSemtYardimcisiSemtOnizle()"></select>
+                <button type="button" class="saas-btn-primary-sm" style="padding:7px 14px;font-size:0.78rem;" onclick="profilSemtiUzmanligaEkle(false)">
+                  <span>+ Uzmanlık Bölgeme Ekle</span>
+                </button>
               </div>
-              <div class="field">
-                <label>Uzmanlık Mahalleleri / Bölgeler (Rozet Kazandırır)</label>
-                <input type="text" id="apRegions" placeholder="Örn: Bağlıca, Yaşamkent, Çayyolu, Ümitköy, İncek" oninput="kisiselProfilKaydet(false)" />
-              </div>
+              <div id="apHelperSemtMahallePreview" style="font-size:0.73rem;color:#475569;margin-top:6px;"></div>
+              <div id="apSelectedRegionsPills" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;"></div>
             </div>
 
             <div class="field">
@@ -1357,91 +1365,78 @@
       <div id="mode-coop">
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;">
           <div>
-            <div style="display:flex;align-items:center;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
               <h1 class="saas-h1" style="margin:0;">Arıyorum!</h1>
-              <span class="saas-badge-blue">Bölge Uzmanı &amp; Ortak Portföy Ağı</span>
+              <span class="saas-badge-blue">81 İl • İlçe • Mahalle Alıcı Talep Ağı</span>
+              <span class="saas-badge-neutral" id="ariyorumMyRegionBadge">Uzmanlık Bölgeniz: Ankara / Çankaya</span>
             </div>
-            <div class="saas-text-xs" style="margin-top:3px;">Hazır alıcınız için aradığınız mülk özelliklerini bölge uzmanlarına iletin veya satıcı portföyünüz için ortak çalışacak uzman bulun.</div>
+            <div class="saas-text-xs" style="margin-top:3px;">Hazır alıcınız için aradığınız mülk özelliklerini yayınlayın; o bölgedeki uzmanlara bildirim düşsün, paylaşıma açık aktif portföyler doğrudan mesaj kutunuza gelsin.</div>
           </div>
-          <button type="button" class="social-btn-soft" onclick="danismanSolMenuSec('portfolios')">
-            <span>← Portföylerime Dön</span>
-          </button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="social-btn-primary" id="btnToggleNewRequestDrawer" onclick="ariyorumYeniTalepFormuToggle()">
+              <span>+ Yeni Arama Talebi Aç</span>
+            </button>
+            <button type="button" class="social-btn-soft" onclick="danismanSolMenuSec('portfolios')">
+              <span>← Portföylerime Dön</span>
+            </button>
+          </div>
         </div>
         <div class="editor-card">
-          <!-- PAYLAŞIMA AÇIK MISIN? DURUM SEÇİCİ BARI -->
-          <div style="background:var(--bg-page);border:1.5px solid var(--border-strong);padding:14px 18px;border-radius:12px;margin-bottom:18px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
-            <div>
-              <span class="pill-badge" style="margin-bottom:4px;">CO-OP PAYLAŞIM DURUMUM</span>
-              <h4 style="font-size:1rem;font-weight:800;color:var(--navy-900);">Paylaşımlı Çalışmaya (Co-Op) Açık mısınız?</h4>
-              <p style="font-size:0.79rem;color:var(--text-body);">
-                Diğer şehir ve ilçelerdeki meslektaşlarınız bölge uzmanı aradığında profilinizin <strong>"Paylaşıma Açık"</strong> olarak listelenmesini buradan yönetebilirsiniz. Paylaşım oranını meslektaşınızla kendi aranızda konuşup belirlersiniz.
-              </p>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button
-                type="button"
-                id="btnCoopOpenYes"
-                class="saas-btn-primary-sm"
-                onclick="danismanPaylasimDurumuDegistir(true)"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Paylaşıma Açığım</span>
-              </button>
-              <button
-                type="button"
-                id="btnCoopOpenNo"
-                class="saas-btn-outline-sm"
-                onclick="danismanPaylasimDurumuDegistir(false)"
-              >
-                <span>Paylaşıma Açık Değilim</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- BÖLÜM A: ALICIM İÇİN BÖLGE UZMANINA SOR (KRİTERLERİ İLET, PAYLAŞIMI KENDİ ARANIZDA KONUŞUN) -->
-          <div class="ma-section-card" style="border:1.5px solid var(--cobalt-600);background:#ffffff;">
-            <div style="margin-bottom:12px;">
-              <span class="pill-badge" style="margin-bottom:4px;">ALICI TALEBİ • BÖLGE UZMANINA SOR</span>
-              <h4 style="font-size:1.05rem;font-weight:800;color:var(--navy-900);">1. Alıcım İçin Bölge Uzmanına Sor (Aranan Özellikleri İlet)</h4>
-              <p style="font-size:0.79rem;color:var(--text-body);">
-                Hazır alıcınızın aradığı mülk özelliklerini girip o bölgede <strong>"Paylaşıma Açığım"</strong> diyen bölge uzmanlarına iletin. Uygun portföyü olan uzmanlarla paylaşım şartlarını kendi aranızda özgürce belirleyin.
-              </p>
+          <!-- BÖLÜM A: TIKLAYINCA AÇILAN YENİ ARAMA TALEBİ AÇMA FORMU (81 İL • İLÇE • MAHALLE) -->
+          <div class="ma-section-card" id="ariyorumNewRequestCollapseCard" style="display:none;border:1.5px solid var(--cobalt-600);background:#ffffff;margin-bottom:18px;">
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px;">
+              <div>
+                <span class="pill-badge" style="margin-bottom:4px;">YENİ ARAMA TALEBİ • 81 İL / İLÇE / SEMT / MAHALLE</span>
+                <h4 style="font-size:1.05rem;font-weight:800;color:var(--navy-900);margin:0;">Alıcım İçin Yeni Arama Talebi Aç</h4>
+                <p style="font-size:0.79rem;color:var(--text-body);margin-top:3px;">
+                  Seçtiğiniz <strong>İl, İlçe, Semt (Bölge) ve Mahalleyi</strong> uzmanlık alanı olarak kaydetmiş tüm gayrimenkul danışmanlarına anında <strong>Bildirim</strong> düşer. Elinde uygun portföyü olan danışmanlar <strong>"Aktif Portföyümü Gönder"</strong> diyerek doğrudan sizin <strong>Mesaj Kutunuza</strong> portföylerini iletir.
+                </p>
+              </div>
+              <button type="button" class="saas-btn-outline-sm" onclick="ariyorumYeniTalepFormuToggle(false)">✕ Kapat</button>
             </div>
 
-            <div class="form-grid-3">
+            <div class="form-grid-2">
               <div class="field">
-                <label>Aranan İl</label>
-                <select id="bcCity" onchange="aliciCoopIlDegisti()">
-                  <option value="İzmir" selected>İzmir</option>
-                  <option value="İstanbul">İstanbul</option>
-                  <option value="Antalya">Antalya</option>
-                  <option value="Ankara">Ankara</option>
-                </select>
+                <label>Aranan İl (81 İl)</label>
+                <select id="bcCity" onchange="aliciCoopIlDegisti()"></select>
               </div>
               <div class="field">
                 <label>Aranan İlçe</label>
-                <select id="bcDistrict">
-                  <option value="Narlıdere" selected>Narlıdere</option>
-                  <option value="Karşıyaka">Karşıyaka</option>
-                  <option value="Mavişehir">Mavişehir</option>
-                  <option value="Urla">Urla</option>
-                  <option value="Bornova">Bornova</option>
-                </select>
+                <select id="bcDistrict" onchange="aliciCoopIlceDegisti()"></select>
               </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="field">
+                <label>Aranan Semt / Bölge (Örn: Çayyolu, Bağlıca, Bahçelievler)</label>
+                <select id="bcSemt" onchange="aliciCoopSemtDegisti()"></select>
+              </div>
+              <div class="field">
+                <label>Aranan Mahalle (Semt Geneli veya Tekil Mahalle)</label>
+                <select id="bcNeighborhood" onchange="aliciCoopMahalleDegisti()"></select>
+                <input
+                  type="text"
+                  id="bcNeighborhoodCustom"
+                  placeholder="Mahalle adını yazınız..."
+                  style="display:none;margin-top:6px;"
+                />
+              </div>
+            </div>
+
+            <div class="form-grid-3">
               <div class="field">
                 <label>Alıcının Fiyat / Bütçe Aralığı</label>
                 <input type="text" id="bcPriceRange" value="5.000.000 ₺ - 6.000.000 ₺" placeholder="Örn: 5.000.000 ₺ - 6.000.000 ₺" />
               </div>
-            </div>
-
-            <div class="form-grid-3">
               <div class="field">
                 <label>Oda Sayısı</label>
                 <select id="bcRooms">
                   <option value="3+1" selected>3+1 Daire</option>
                   <option value="2+1">2+1 Daire</option>
+                  <option value="1+1">1+1 Daire</option>
                   <option value="4+1 / Dubleks">4+1 / Dubleks</option>
                   <option value="Müstakil Villa">Müstakil Villa</option>
+                  <option value="Ticari / İşyeri / Arsa">Ticari / İşyeri / Arsa</option>
                 </select>
               </div>
               <div class="field">
@@ -1453,6 +1448,9 @@
                   <option value="Kat Fark Etmez">Kat Fark Etmez</option>
                 </select>
               </div>
+            </div>
+
+            <div class="form-grid-3">
               <div class="field">
                 <label>Cephe &amp; Bina Yaşı</label>
                 <div style="display:flex;gap:6px;">
@@ -1468,9 +1466,6 @@
                   </select>
                 </div>
               </div>
-            </div>
-
-            <div class="form-grid-3">
               <div class="field">
                 <label>Krediye Uygunluk &amp; Kredi Limiti</label>
                 <select id="bcCredit">
@@ -1480,20 +1475,19 @@
                 </select>
               </div>
               <div class="field">
-                <label>Kök Tapu / Tapu Durumu</label>
-                <select id="bcDeed">
-                  <option value="Kök Tapulu (Kat Mülkiyetli)" selected>Kök Tapulu / Kat Mülkiyetli</option>
-                  <option value="Kat İrtifaklı (İskanlı)">Kat İrtifaklı (İskanlı)</option>
-                  <option value="Tapu Türü Fark Etmez">Tapu Türü Fark Etmez</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>Ne Zaman Almayı Düşünüyor?</label>
-                <select id="bcTimeline">
-                  <option value="Hemen Almak İstiyor" selected>Hemen Almak İstiyor</option>
-                  <option value="3 Ay İçinde">3 Ay İçinde</option>
-                  <option value="3 - 6 Ay İçinde">3 - 6 Ay İçinde</option>
-                </select>
+                <label>Kök Tapu &amp; Alım Zamanı</label>
+                <div style="display:flex;gap:6px;">
+                  <select id="bcDeed" style="flex:1;">
+                    <option value="Kök Tapulu (Kat Mülkiyetli)" selected>Kök Tapulu</option>
+                    <option value="Kat İrtifaklı (İskanlı)">Kat İrtifaklı</option>
+                    <option value="Tapu Türü Fark Etmez">Fark Etmez</option>
+                  </select>
+                  <select id="bcTimeline" style="flex:1;">
+                    <option value="Hemen Almak İstiyor" selected>Hemen Alacak</option>
+                    <option value="3 Ay İçinde">3 Ay İçinde</option>
+                    <option value="3 - 6 Ay İçinde">3-6 Ay</option>
+                  </select>
+                </div>
               </div>
             </div>
 
@@ -1501,24 +1495,65 @@
               <input
                 type="text"
                 id="bcBuyerNote"
-                placeholder="Bölge uzmanına iletilecek ek not (Örn: Alıcım nakit+kredi hazır, paylaşım oranını telefonda görüşelim...)"
+                placeholder="Bölge uzmanlarına iletilecek ek not (Örn: Alıcım nakit+kredi hazır, paylaşım oranını telefonda görüşelim...)"
                 style="flex:1;min-width:240px;padding:9px 12px;border-radius:8px;border:1px solid var(--border-strong);font-size:0.84rem;"
               />
               <button type="button" class="btn btn-primary" onclick="yeniAliciCoopTalebiOlustur()">
-                + Bölge Uzmanlarına Sor &amp; Portföy İste →
+                + Talebi Yayınla &amp; Bölge Uzmanlarına Bildirim Gönder →
               </button>
             </div>
           </div>
 
-          <!-- BÖLÜM B: BÖLGE UZMANLARINA SORDUĞUM ALICI TALEPLERİ & GELEN CEVAPLAR -->
+          <!-- BÖLÜM B: TÜM ARAMA TALEPLERİ (81 İL • İLÇE • SEMT • MAHALLE FİLTRELİ) -->
           <div class="ma-section-card">
-            <h4 style="font-size:0.98rem;font-weight:800;margin-bottom:4px;">
-              2. Bölge Uzmanlarına Sorduğum Alıcı Talepleri &amp; Gelen Cevaplar
-            </h4>
-            <p style="font-size:0.79rem;color:var(--text-body);margin-bottom:12px;">
-              Talebinize cevap veren ve <strong>"Paylaşıma Açığım"</strong> diyen emlakçılardan uygun olanı seçip doğrudan iletişime geçebilir, paylaşım şartlarını kendi aranızda konuşup alıcınıza sunum yapabilirsiniz.
-            </p>
-            <div id="buyerCoopRequestsList" style="display:flex;flex-direction:column;gap:16px;"></div>
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px;">
+              <div>
+                <h4 style="font-size:0.98rem;font-weight:800;margin-bottom:4px;">
+                  Aktif Arama Talepleri (İl • İlçe • Semt • Mahalle Filtreli)
+                </h4>
+                <p style="font-size:0.79rem;color:var(--text-body);margin:0;">
+                  Tüm Türkiye'deki alıcı taleplerini <strong>İl, İlçe, Semt (Bölge) ve Mahalle</strong> bazında filtreleyebilirsiniz. Uygun portföyünüz varsa <strong>"Aktif Portföyümü Gönder"</strong> butonuna tıklayın; gönderdiğiniz portföy herkese açık görünmez, yalnızca <strong>talep açan danışmanın özel Mesaj Kutusuna</strong> düşer.
+                </p>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button type="button" class="saas-btn-primary-sm" onclick="ariyorumSadeceUzmanlikBolgemFiltrele()">
+                  <span>📍 Uzmanlık Semt / Bölgemi Filtrele</span>
+                </button>
+                <button type="button" class="saas-btn-outline-sm" onclick="ariyorumFiltreleriSifirla()">
+                  <span>Tüm Türkiye'yi Göster</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 81 İL • İLÇE • SEMT • MAHALLE FİLTRE BARI -->
+            <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:12px 14px;margin-bottom:16px;">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;align-items:flex-end;">
+                <div class="field" style="margin-bottom:0;">
+                  <label>İl Filtresi (81 İl)</label>
+                  <select id="ariyorumFilterCity" onchange="ariyorumTalepFiltreIlDegisti()"></select>
+                </div>
+                <div class="field" style="margin-bottom:0;">
+                  <label>İlçe Filtresi</label>
+                  <select id="ariyorumFilterDistrict" onchange="ariyorumTalepFiltreIlceDegisti()">
+                    <option value="Tümü" selected>Tüm İlçeler</option>
+                  </select>
+                </div>
+                <div class="field" style="margin-bottom:0;">
+                  <label>Semt / Bölge Filtresi</label>
+                  <select id="ariyorumFilterSemt" onchange="ariyorumTalepFiltreSemtDegisti()">
+                    <option value="Tümü" selected>Tüm Semtler</option>
+                  </select>
+                </div>
+                <div class="field" style="margin-bottom:0;">
+                  <label>Mahalle Filtresi</label>
+                  <select id="ariyorumFilterNeighborhood" onchange="aliciCoopTalepleriRender()">
+                    <option value="Tümü" selected>Tüm Mahalleler</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div id="buyerCoopRequestsList" style="display:flex;flex-direction:column;gap:14px;"></div>
           </div>
 
           <!-- BÖLÜM C: SATICI PORTFÖYÜ İÇİN İL / İLÇE BÖLGE UZMANI ARA & ORTAK ÇALIŞMA -->
@@ -1807,10 +1842,14 @@
           </div>
         </div>
 
-        <div class="form-grid-2">
+        <div class="form-grid-3">
           <div class="field">
             <label>İlçe</label>
             <select id="npIlce" onchange="npKonumIlceDegisti()"></select>
+          </div>
+          <div class="field">
+            <label>Semt / Bölge</label>
+            <select id="npSemt" onchange="npKonumSemtDegisti()"></select>
           </div>
           <div class="field">
             <label>Mahalle</label>

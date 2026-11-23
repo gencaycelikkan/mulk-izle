@@ -1105,6 +1105,7 @@ function panelYenile() {
           "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=300&q=80";
         const teklifSayisi = (p.teklifler || []).length;
         const goruntulenmeSayisi = portfoyGoruntulenmeSayisiniAl(p);
+        const paylasimaAcikMi = p.paylasimaAcikMi !== false;
         const altBilgi = `Satıcı: ${p.mulkSahibi} • ${teklifSayisi} Teklif${p.coopAktifMi ? ` • Co-Op: #${p.coopKod}` : ""}`;
         const tarihBilgisi = (p.sonGuncelleme || "16 Kasım 2026").split("•")[0].trim();
 
@@ -1134,9 +1135,28 @@ function panelYenile() {
                 </div>
               </div>
 
-              <div class="hb-portfolio-right-col">
+              <div class="hb-portfolio-right-col" style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
                 <div class="hb-portfolio-date">${tarihBilgisi}</div>
                 <div class="hb-portfolio-price">${p.fiyat || ""}</div>
+                <button
+                  type="button"
+                  onclick="event.stopPropagation(); portfoyPaylasimDurumuToggle('${p.kod}');"
+                  title="Bu portföyün diğer emlakçılarla paylaşıma açık/kapalı durumunu değiştir"
+                  style="display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:0.71rem;font-weight:700;cursor:pointer;border:1px solid ${
+                    paylasimaAcikMi ? "#86EFAC" : "#CBD5E1"
+                  };background:${paylasimaAcikMi ? "#F0FDF4" : "#F8FAFC"};color:${
+                    paylasimaAcikMi ? "#15803D" : "#64748B"
+                  };transition:all 0.2s ease;"
+                >
+                  <span style="width:24px;height:13px;border-radius:999px;background:${
+                    paylasimaAcikMi ? "#16A34A" : "#94A3B8"
+                  };position:relative;display:inline-block;transition:background 0.2s ease;">
+                    <span style="width:9px;height:9px;border-radius:50%;background:#FFFFFF;position:absolute;top:2px;left:${
+                      paylasimaAcikMi ? "13px" : "2px"
+                    };transition:left 0.2s ease;"></span>
+                  </span>
+                  <span>${paylasimaAcikMi ? "Paylaşıma Açık" : "Paylaşıma Kapalı"}</span>
+                </button>
               </div>
 
               <div class="hb-portfolio-actions-col">
@@ -1218,6 +1238,14 @@ function portfoySec(kod) {
 
 function portfoyAkordeonKapat() {
   acikAkordeonPortfoyKodu = null;
+  panelYenile();
+}
+
+function portfoyPaylasimDurumuToggle(kod) {
+  const hedef = portfoyler.find(x => x.kod === kod);
+  if (!hedef) return;
+  hedef.paylasimaAcikMi = hedef.paylasimaAcikMi === false ? true : false;
+  verileriKaydet();
   panelYenile();
 }
 
@@ -3813,6 +3841,169 @@ const DETAYLI_MAHALLELER = {
   "Muğla:Bodrum": ["Akyarlar Mah.", "Bitez Mah.", "Cevat Şakir Mah.", "Çırkan Mah.", "Eskiçeşme Mah.", "Gölköy (Göltürkbükü) Mah.", "Gümbet Mah.", "Gümüşlük Mah.", "Gündoğan Mah.", "Gürece Mah.", "İslamhaneleri Mah.", "Karabağ Mah.", "Konacık Mah.", "Kumbahçe Mah.", "Mumcular Mah.", "Ortakent Mah.", "Torba Mah.", "Turgutreis Mah.", "Türkbükü Mah.", "Türkkuyusu Mah.", "Umurça Mah.", "Yahşi Mah.", "Yalıkavak Mah.", "Yokuşbaşı Mah."]
 };
 
+// SAHİBİNDEN.COM TARZI İL -> İLÇE -> SEMT (BÖLGE) -> MAHALLE VERİTABANI
+const DETAYLI_SEMT_MAHALLELER = {
+  "Ankara:Çankaya": {
+    "Çayyolu": ["Çayyolu Mah.", "Alacaatlı Mah.", "Konutkent Mah.", "Yaşamkent Mah.", "Ümit (Ümitköy) Mah.", "Koru Mah.", "Dodurga Mah.", "Prof. Dr. Ahmet Taner Kışlalı Mah.", "Mutlukent Mah.", "Beytepe Mah."],
+    "Balgat / Çukurambar": ["Çukurambar Mah.", "Balgat Mah.", "Mustafa Kemal Mah.", "Söğütözü Mah.", "Kızılırmak Mah.", "Çiğdem Mah.", "Yüzüncüyıl Mah.", "Ehlibeyt Mah.", "Cevizlidere Mah."],
+    "Bahçelievler / Emek": ["Bahçelievler Mah.", "Emek Mah.", "Yukarı Bahçelievler Mah.", "Aşkabat (7. Cadde) Mah.", "Beştepe Mah."],
+    "Oran / Yıldız": ["Oran Mah.", "Yukarı Dikmen Mah.", "Sancak Mah.", "Yıldız Mah.", "Turan Güneş Mah.", "Hilal Mah.", "Birlik Mah.", "Kırkkonaklar Mah."],
+    "Gaziosmanpaşa (GOP) / Çankaya": ["Gaziosmanpaşa (GOP) Mah.", "Çankaya Mah.", "Büyükesat Mah.", "Küçükesat Mah.", "Kazım Özalp Mah.", "Aziziye Mah."],
+    "Ayrancı / Kavaklıdere": ["Ayrancı Mah.", "Güvenevler Mah.", "Remzi Oğuz Arık (Tunalı) Mah.", "Kavaklıdere Mah.", "Barbaros Mah."],
+    "Dikmen / Öveçler": ["Dikmen Mah.", "İlkadım Mah.", "Öveçler Mah.", "Sokullu Mehmet Paşa Mah.", "Aşağı Öveçler Mah.", "Keklikpınarı Mah."],
+    "İncek / Ahlatlıbel (Çankaya)": ["Ahlatlıbel Mah.", "İncek Bulvarı Aksı Mah.", "Alacaatlı İncek Etabı Mah."],
+    "Kızılay / Sıhhiye": ["Kızılay Mah.", "Meşrutiyet Mah.", "Cumhuriyet Mah.", "Korkutreis Mah.", "Fidanlık Mah."]
+  },
+  "Ankara:Etimesgut": {
+    "Bağlıca": ["Bağlıca Mah.", "Yeni Bağlıca Mah.", "Yapracık Mah.", "Yukarıyurtçu Mah.", "Aşağıyurtçu Mah."],
+    "Eryaman": ["Eryaman Mah.", "Göksu Mah.", "Tunahan Mah.", "Şehit Osman Avcı Mah.", "Güzelkent Mah.", "Şeyh Şamil Mah.", "Yavuz Selim Mah.", "Altay Mah.", "Yeşilova Mah."],
+    "Elvankent": ["Elvan Mah.", "Topçu Mah.", "Piyade Mah.", "Oğuzlar Mah.", "Atayurt Mah.", "Ayyıldız Mah.", "Etiler Mah."],
+    "Etimesgut Merkez": ["İstasyon Mah.", "Alsancak Mah.", "Süvari Mah.", "Kâzım Karabekir Mah.", "30 Ağustos Mah.", "Bahçekapı Mah.", "Erler Mah.", "Şeker Mah."]
+  },
+  "Ankara:Gölbaşı": {
+    "İncek": ["İncek Mah.", "Kızılcaşar Mah.", "Taşpınar Mah.", "Tulumtaş Mah.", "Hacılar Mah."],
+    "Gölbaşı Merkez": ["Bahçelievler Mah.", "Eymir Mah.", "Gaziosmanpaşa Mah.", "Karşıyaka Mah.", "Seğmenler Mah.", "Şafak Mah.", "Örencik Mah."]
+  },
+  "Ankara:Yenimahalle": {
+    "Batıkent": ["Kentkoop Mah.", "Çakırlar Mah.", "Turgut Özal Mah.", "Uğur Mumcu Mah.", "Yeni Batı Mah.", "İlkyerleşim Mah.", "Kardelen Mah.", "Ergazi Mah."],
+    "Demetevler": ["Demetevler Mah.", "Demetlale Mah.", "Demetgül Mah.", "Özevler Mah."],
+    "Yenimahalle Merkez": ["Ragıp Tüzün Mah.", "İvedik Mah.", "Gazi Mah.", "Emniyet Mah.", "Yuvaköy Mah.", "Karşıyaka Mah.", "Susuz Mah.", "Ostim Mah."]
+  },
+  "Ankara:Keçiören": {
+    "Etlik / İncirli": ["Etlik Mah.", "İncirli Mah.", "Aşağı Eğlence Mah.", "Ayvalı Mah.", "Esertepe Mah.", "Yayla Mah."],
+    "Ovacık / Subayevleri": ["Ovacık Mah.", "Subayevleri (Kavacık) Mah.", "Kalaba Mah.", "Şehit Kubilay Mah."],
+    "Bağlum / Ufuktepe": ["Bağlum Mah.", "Ufuktepe Mah.", "Aktepe Mah.", "Kuşcağız Mah."]
+  },
+  "Ankara:Mamak": {
+    "Abidinpaşa / Akdere": ["Abidinpaşa Mah.", "Akdere Mah.", "Demirlibahçe Mah.", "Gülveren Mah.", "Tuzluçayır Mah."],
+    "Mamak Merkez / Natoyolu": ["Durali Alıç Mah.", "Ege Mah.", "Fahri Korutürk Mah.", "Mutlu Mah.", "Şahintepe Mah.", "Boğaziçi Mah.", "Kayaş Mah.", "Yeşilbayır Mah."]
+  },
+  "Ankara:Sincan": {
+    "Sincan Merkez / Fatih": ["Fatih Mah.", "Atatürk Mah.", "Andiçen Mah.", "Pınarbaşı Mah.", "Tandoğan Mah.", "İstasyon Mah.", "Mevlana Mah."],
+    "Yenikent / Temelli": ["Yenikent Mah.", "Törekent Mah.", "Saraycık Mah.", "Temelli Mah.", "Ahievran Mah."]
+  },
+  "İstanbul:Kadıköy": {
+    "Suadiye / Caddebostan (Bağdat Cad.)": ["Suadiye Mah.", "Caddebostan Mah.", "Erenköy Mah.", "Fenerbahçe Mah.", "Bostancı Mah."],
+    "Moda / Kadıköy Merkez": ["Caferağa (Moda) Mah.", "Osmanağa Mah.", "Rasimpaşa Mah.", "Zühtüpaşa Mah.", "Hasanpaşa Mah."],
+    "Göztepe / Feneryolu": ["Göztepe Mah.", "Feneryolu Mah.", "Merdivenköy Mah.", "Dumlupınar Mah.", "Eğitim Mah.", "Fikirtepe Mah."],
+    "Kozyatağı / Acıbadem": ["Kozyatağı Mah.", "19 Mayıs Mah.", "Sahrayıcedit Mah.", "Acıbadem Mah.", "Koşuyolu Mah."]
+  },
+  "İstanbul:Beşiktaş": {
+    "Etiler / Ulus": ["Etiler Mah.", "Ulus Mah.", "Akat (Akatlar) Mah.", "Kültür Mah.", "Levazım Mah.", "Nisbetiye Mah."],
+    "Levent / Gayrettepe": ["Levent Mah.", "Konaklar Mah.", "Gayrettepe Mah.", "Balmumcu Mah.", "Dikilitaş Mah."],
+    "Bebek / Ortaköy": ["Bebek Mah.", "Arnavutköy Mah.", "Kuruçeşme Mah.", "Ortaköy Mah.", "Mecidiye Mah."],
+    "Beşiktaş Merkez": ["Cihannüma Mah.", "Sinanpaşa Mah.", "Türkali Mah.", "Vişnezade Mah.", "Abbasağa Mah.", "Muradiye Mah.", "Yıldız Mah."]
+  },
+  "İstanbul:Bağcılar": {
+    "Güneşli / Basın Ekspres": ["Güneşli Mah.", "15 Temmuz Mah.", "Bağlar Mah.", "Hürriyet Mah.", "Kirazlı Mah."],
+    "Mahmutbey / Göztepe": ["Mahmutbey Mah.", "Göztepe Mah.", "Fatih Mah.", "Demirkapı Mah.", "Yüzyıl Mah."],
+    "Bağcılar Merkez": ["Merkez Mah.", "Çınar Mah.", "Barbaros Mah.", "İnönü Mah.", "Kazım Karabekir Mah.", "Sancaktepe Mah.", "Yenigün Mah.", "Yıldıztepe Mah."]
+  },
+  "İstanbul:Sarıyer": {
+    "Maslak / Ayazağa": ["Maslak Mah.", "Ayazağa Mah.", "Huzur Mah.", "Pınar Mah."],
+    "İstinye / Tarabya": ["İstinye Mah.", "Tarabya Mah.", "Emirgan Mah.", "Reşitpaşa Mah.", "Yeniköy Mah.", "Baltalimanı Mah.", "Rumelihisarı Mah."],
+    "Zekeriyaköy / Sarıyer Merkez": ["Zekeriyaköy Mah.", "Uskumruköy Mah.", "Bahçeköy Mah.", "Maden Mah.", "Sarıyer Merkez Mah.", "Büyükdere Mah."]
+  },
+  "İstanbul:Şişli": {
+    "Nişantaşı / Teşvikiye": ["Teşvikiye Mah.", "Meşrutiyet (Nişantaşı) Mah.", "Harbiye Mah.", "Halaskargazi Mah."],
+    "Mecidiyeköy / Fulya": ["Mecidiyeköy Mah.", "Fulya Mah.", "Esentepe Mah.", "19 Mayıs Mah.", "Gülbahar Mah.", "Merkez Mah."],
+    "Bomonti / Feriköy": ["Cumhuriyet (Bomonti) Mah.", "Feriköy Mah.", "Bozkurt Mah.", "Duatepe Mah.", "Paşa Mah."]
+  },
+  "İstanbul:Üsküdar": {
+    "Altunizade / Acıbadem": ["Altunizade Mah.", "Acıbadem Mah.", "Barbaros Mah.", "Küçük Çamlıca Mah.", "Kısıklı Mah."],
+    "Çengelköy / Beylerbeyi": ["Çengelköy Mah.", "Beylerbeyi Mah.", "Kandilli Mah.", "Kuzguncuk Mah.", "Bahçelievler Mah.", "Güzeltepe Mah."],
+    "Üsküdar Merkez / Bulgurlu": ["Mimar Sinan Mah.", "Salacak Mah.", "Valide-i Atik Mah.", "İcadiye Mah.", "Bulgurlu Mah.", "Ünalan Mah."]
+  },
+  "İstanbul:Ataşehir": {
+    "Batı Ataşehir": ["Atatürk Mah.", "Barbaros Mah.", "Küçükbakkalköy Mah.", "İçerenköy Mah."],
+    "Doğu Ataşehir": ["Kayışdağı Mah.", "İnönü Mah.", "Mevlana Mah.", "Yenişehir Mah.", "Yeni Çamlıca Mah.", "Ferhatpaşa Mah.", "Örnek Mah."]
+  },
+  "İstanbul:Bakırköy": {
+    "Ataköy": ["Ataköy 1. Kısım Mah.", "Ataköy 2-5-6. Kısım Mah.", "Ataköy 3-4-11. Kısım Mah.", "Ataköy 7-8-9-10. Kısım Mah."],
+    "Florya / Yeşilköy": ["Florya (Şenlikköy) Mah.", "Basınköy Mah.", "Yeşilköy Mah.", "Yeşilyurt Mah."],
+    "Bakırköy Merkez": ["Cevizlik Mah.", "Kartaltepe Mah.", "Zeytinlik Mah.", "Zuhuratbaba Mah.", "Osmaniye Mah.", "Sakızağacı Mah."]
+  },
+  "İstanbul:Başakşehir": {
+    "Bahçeşehir": ["Bahçeşehir 1. Kısım Mah.", "Bahçeşehir 2. Kısım Mah."],
+    "Kayaşehir / Başakşehir Merkez": ["Kayabaşı (Kayaşehir) Mah.", "Başakşehir Mah.", "Başak Mah.", "Altınşehir Mah.", "Güvercintepe Mah."]
+  },
+  "İstanbul:Beylikdüzü": {
+    "Beylikdüzü Merkez / Adnan Kahveci": ["Adnan Kahveci Mah.", "Barış Mah.", "Büyükşehir Mah.", "Cumhuriyet Mah."],
+    "Gürpınar / Yakuplu (Marina)": ["Marmara Mah.", "Kavaklı Mah.", "Sahil Mah.", "Gürpınar Mah.", "Yakuplu Mah.", "Dereağzı Mah."]
+  },
+  "İzmir:Narlıdere": {
+    "Sahilevleri / Ilıca": ["Sahilevleri Mah.", "Ilıca Mah.", "Yenikale Mah.", "Altıevler Mah."],
+    "Narlıdere Merkez": ["Narlı Mah.", "Çatalkaya Mah.", "Huzur Mah.", "Çamtepe Mah.", "Atatürk Mah.", "2. İnönü Mah.", "Limanreis Mah."]
+  },
+  "İzmir:Karşıyaka": {
+    "Mavişehir / Bostanlı": ["Mavişehir Mah.", "Bostanlı Mah.", "Atakent Mah.", "Yalı Mah.", "Şemikler Mah."],
+    "Karşıyaka Merkez / Alaybey": ["Aksoy Mah.", "Donanmacı Mah.", "Alaybey Mah.", "Tersane Mah.", "Bahriye Üçok Mah.", "Bahçelievler Mah.", "Nergiz Mah."]
+  },
+  "İzmir:Urla": {
+    "İskele / Çeşmealtı": ["İskele Mah.", "Çeşmealtı (Güvendik) Mah.", "Kalabak Mah.", "Zeytinalanı Mah.", "Çamlıçay Mah.", "Denizli Mah.", "İçmeler Mah."],
+    "Urla Merkez / Kuşçular": ["Yeni Mah.", "Yaka Mah.", "Altıntaş Mah.", "Kuşçular Mah.", "Bademler Mah.", "Kekliktepe Mah.", "Gülbahçe Mah."]
+  },
+  "İzmir:Bornova": {
+    "Özkanlar / Küçükpark": ["Özkanlar (Mansuroğlu) Mah.", "Kazımdirik Mah.", "Erzene Mah.", "Ergene Mah."],
+    "Evka 3 / Bornova Merkez": ["Evka 3 Mah.", "Evka 4 Mah.", "Atatürk Mah.", "İnönü Mah.", "Kızılay Mah.", "Çamdibi (Gazi Osman Paşa) Mah."]
+  },
+  "İzmir:Çeşme": {
+    "Alaçatı / Ilıca": ["Alaçatı Mah.", "Ilıca Mah.", "Celal Bayar Mah.", "Şifne Mah.", "Reisdere Mah.", "Ovacık Mah."],
+    "Çeşme Merkez / Dalyan": ["Dalyan Mah.", "Çiftlik (Çiftlikköy) Mah.", "Boyalık Mah.", "Altınyunus Mah.", "Musalla Mah.", "İsmet İnönü Mah."]
+  },
+  "Antalya:Muratpaşa": {
+    "Lara / Güzeloba": ["Güzeloba (Lara) Mah.", "Şirinyalı Mah.", "Fener Mah.", "Çağlayan Mah.", "Güzeloluk Mah.", "Kırcami Mah."],
+    "Meltem / Muratpaşa Merkez": ["Meltem Mah.", "Bahçelievler Mah.", "Gençlik Mah.", "Deniz Mah.", "Meydankavağı Mah.", "Yeşilbahçe Mah.", "Zerdalilik Mah."]
+  },
+  "Antalya:Konyaaltı": {
+    "Liman / Hurma": ["Liman Mah.", "Hurma Mah.", "Sarısu Mah.", "Gürsu Mah.", "Altınkum Mah."],
+    "Uncalı / Arapsuyu": ["Uncalı Mah.", "Arapsuyu Mah.", "Molla Yusuf Mah.", "Öğretmenevleri Mah.", "Toros Mah.", "Uluç Mah.", "Pınarbaşı Mah."]
+  },
+  "Antalya:Alanya": {
+    "Mahmutlar / Oba": ["Mahmutlar Mah.", "Oba Mah.", "Tosmur Mah.", "Kestel Mah.", "Kargıcak Mah.", "Cikcilli Mah."],
+    "Alanya Merkez / Kleopatra": ["Saray Mah.", "Kızlar Pınarı Mah.", "Güller Pınarı Mah.", "Şekerhane Mah.", "Çarşı Mah.", "Konaklı Mah.", "Avsallar Mah."]
+  },
+  "Muğla:Bodrum": {
+    "Yalıkavak / Gündoğan": ["Yalıkavak Mah.", "Gündoğan Mah.", "Gölköy (Göltürkbükü) Mah.", "Türkbükü Mah."],
+    "Bitez / Ortakent / Yahşi": ["Bitez Mah.", "Ortakent Mah.", "Yahşi Mah.", "Gümbet Mah.", "Konacık Mah."],
+    "Turgutreis / Gümüşlük / Merkez": ["Turgutreis Mah.", "Akyarlar Mah.", "Gümüşlük Mah.", "Eskiçeşme Mah.", "Kumbahçe Mah.", "Torba Mah."]
+  }
+};
+
+function ilIlceyeGoreSemtHaritasiGetir(il, ilce) {
+  if (!il || !ilce || il === "Tümü" || ilce === "Tümü") return {};
+  const ozelSemtMap = DETAYLI_SEMT_MAHALLELER[`${il}:${ilce}`];
+  if (ozelSemtMap) return ozelSemtMap;
+
+  const ozelMahListe = DETAYLI_MAHALLELER[`${il}:${ilce}`];
+  if (ozelMahListe && ozelMahListe.length > 0) {
+    const yarisi = Math.ceil(ozelMahListe.length / 2);
+    return {
+      [`${ilce} Merkez`]: ozelMahListe.slice(0, yarisi),
+      [`${ilce} Yeni Yerleşim`]: ozelMahListe.slice(yarisi)
+    };
+  }
+
+  return {
+    [`${ilce} Merkez`]: [`${ilce} Merkez Mah.`, "Cumhuriyet Mah.", "Atatürk Mah.", "Fatih Mah.", "İstiklal Mah.", "Hürriyet Mah."],
+    [`${ilce} Çarşı / Meydan`]: ["Yeni Mah.", "Bahçelievler Mah.", "Mimar Sinan Mah.", "Gazi Mah.", "İnönü Mah.", "Zafer Mah."],
+    [`${ilce} Konut Bölgesi`]: ["Yunus Emre Mah.", "Adnan Menderes Mah.", "Mevlana Mah.", "Esentepe Mah.", "Yeşiltepe Mah.", "Çamlık Mah."]
+  };
+}
+
+function ilIlceSemteGoreMahalleListesiGetir(il, ilce, semt) {
+  const semtMap = ilIlceyeGoreSemtHaritasiGetir(il, ilce);
+  if (semt && semt !== "Tümü" && semt !== "Tüm Semtler" && semtMap[semt]) {
+    return [...semtMap[semt]];
+  }
+  const tumu = [];
+  Object.values(semtMap).forEach(arr => {
+    arr.forEach(m => {
+      if (!tumu.includes(m)) tumu.push(m);
+    });
+  });
+  return tumu.length > 0 ? tumu : [`${ilce} Merkez Mah.`, ...STANDART_ILCE_MAHALLELERI.filter(m => m !== "Merkez Mah.")];
+}
 const STANDART_ILCE_MAHALLELERI = [
   "Merkez Mah.",
   "Cumhuriyet Mah.",
@@ -3885,10 +4076,22 @@ function npKonumIlDegisti() {
 function npKonumIlceDegisti() {
   const il = document.getElementById("npIl")?.value || "Ankara";
   const ilce = document.getElementById("npIlce")?.value || "Etimesgut";
-  const ozelListe = DETAYLI_MAHALLELER[`${il}:${ilce}`];
-  const mahalleler = ozelListe
-    ? [...ozelListe]
-    : [`${ilce} Merkez Mah.`, ...STANDART_ILCE_MAHALLELERI.filter(m => m !== "Merkez Mah.")];
+  const semtMap = ilIlceyeGoreSemtHaritasiGetir(il, ilce);
+  const semtler = Object.keys(semtMap);
+  const semtSel = document.getElementById("npSemt");
+  if (semtSel) {
+    semtSel.innerHTML =
+      semtler.map((s, idx) => `<option value="${s}" ${idx === 0 ? "selected" : ""}>${s}</option>`).join("") +
+      `<option value="Tüm Semtler">Tüm ${ilce} Mahalleleri (Genel)</option>`;
+  }
+  npKonumSemtDegisti();
+}
+
+function npKonumSemtDegisti() {
+  const il = document.getElementById("npIl")?.value || "Ankara";
+  const ilce = document.getElementById("npIlce")?.value || "Etimesgut";
+  const semt = document.getElementById("npSemt")?.value || "";
+  const mahalleler = ilIlceSemteGoreMahalleListesiGetir(il, ilce, semt);
   const mahSel = document.getElementById("npMahalle");
   if (!mahSel) return;
   mahSel.innerHTML =
@@ -4184,8 +4387,10 @@ function yeniPortfoyOlusturOnayla() {
   const ulke = document.getElementById("npUlke")?.value || "Türkiye";
   const il = document.getElementById("npIl")?.value || "Ankara";
   const ilce = document.getElementById("npIlce")?.value || "Etimesgut";
+  const semt = document.getElementById("npSemt")?.value || "";
   const mahalle = npSeciliMahalleAdiniAl();
-  const bolge = `${mahalle}, ${ilce} / ${il}${ulke !== "Türkiye" ? ` (${ulke})` : ""}`;
+  const semtMetni = semt && semt !== "Tüm Semtler" ? ` (${semt})` : "";
+  const bolge = `${mahalle}${semtMetni}, ${ilce} / ${il}${ulke !== "Türkiye" ? ` (${ulke})` : ""}`;
 
   const girilenFiyatRakam = (document.getElementById("npFiyat")?.value || "").trim();
   const sonFiyat = girilenFiyatRakam
@@ -5362,6 +5567,8 @@ function kisiselProfilEditorRender() {
   setVal("apStoreUrl", dp.magazaUrl);
   setVal("apPhone", dp.telefon);
 
+  profilSemtYardimcisiniBaslat();
+
   const rozetler = danismanRozetleriniHesapla(dp);
   const kazanilanSayisi = rozetler.filter(r => r.kazanildi).length;
 
@@ -5460,8 +5667,149 @@ function kisiselProfilKaydet(bildirim = true) {
   profilKaydetStorage();
   kisiselProfilEditorRender();
   if (bildirim) {
-    alert(`✅ Kişisel web sitesi profiliniz, İl (${dp.il}) / İlçe (${dp.ilce}) uzmanlık bölgeleriniz ve tüm portföylerinizdeki danışman/filigran bilgileriniz tek merkezden güncellendi!`);
+    alert(`✅ Kişisel web sitesi profiliniz, İl (${dp.il}) / İlçe (${dp.ilce}) / Semt uzmanlık bölgeleriniz ve tüm portföylerinizdeki danışman/filigran bilgileriniz tek merkezden güncellendi!`);
   }
+}
+
+function profilSemtYardimcisiniBaslat() {
+  const ilSel = document.getElementById("apHelperCity");
+  if (!ilSel) return;
+  if (ilSel.options.length === 0) {
+    const iller = typeof TURKIYE_81_IL_ILCELER !== "undefined" ? Object.keys(TURKIYE_81_IL_ILCELER) : ["Ankara", "İstanbul", "İzmir", "Antalya"];
+    const mevcutIl = (document.getElementById("apCity")?.value || "Ankara").trim();
+    ilSel.innerHTML = iller
+      .map(il => `<option value="${il}" ${il.toLowerCase() === mevcutIl.toLowerCase() ? "selected" : ""}>${il}</option>`)
+      .join("");
+    profilSemtYardimcisiIlDegisti();
+  }
+  profilSeciliUzmanlikEtiketleriniRenderEt();
+}
+
+function profilSeciliUzmanlikEtiketleriniRenderEt() {
+  const pillsWrap = document.getElementById("apSelectedRegionsPills");
+  if (!pillsWrap) return;
+  if (!danismanProfili) profilYukle();
+  const il = danismanProfili?.il || "Ankara";
+  const ilceler = danismanProfili?.ilce || "Çankaya";
+  const semtler = (danismanProfili?.bolgeler || "")
+    .split(",")
+    .map(x => x.trim())
+    .filter(Boolean);
+
+  if (semtler.length === 0) {
+    pillsWrap.innerHTML = `<span class="saas-text-xs">Henüz uzmanlık semti seçilmedi. Yukarıdan İl, İlçe ve Semt seçip ekleyin.</span>`;
+    return;
+  }
+
+  pillsWrap.innerHTML =
+    `<span style="font-size:0.75rem;font-weight:700;color:#0F172A;align-self:center;margin-right:4px;">Seçili Uzmanlık Bölgeleriniz (${il} / ${ilceler}):</span>` +
+    semtler
+      .map(
+        (s, idx) => `
+        <span style="display:inline-flex;align-items:center;gap:6px;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;padding:3px 10px;border-radius:999px;font-size:0.76rem;font-weight:700;">
+          <span>${s}</span>
+          <button type="button" onclick="profilUzmanlikSemtiSil(${idx})" style="border:none;background:transparent;color:#1D4ED8;cursor:pointer;font-weight:800;padding:0;line-height:1;" title="Kaldır">✕</button>
+        </span>
+      `
+      )
+      .join("");
+}
+
+function profilUzmanlikSemtiSil(idx) {
+  if (!danismanProfili) profilYukle();
+  const semtler = (danismanProfili.bolgeler || "")
+    .split(",")
+    .map(x => x.trim())
+    .filter(Boolean);
+  semtler.splice(idx, 1);
+  danismanProfili.bolgeler = semtler.join(", ");
+  const regInput = document.getElementById("apRegions");
+  if (regInput) regInput.value = danismanProfili.bolgeler;
+  kisiselProfilKaydet(false);
+  profilSeciliUzmanlikEtiketleriniRenderEt();
+}
+
+function profilSemtYardimcisiIlDegisti() {
+  const ilSel = document.getElementById("apHelperCity");
+  const ilceSel = document.getElementById("apHelperDistrict");
+  if (!ilSel || !ilceSel) return;
+  const il = ilSel.value || "Ankara";
+  const cityInput = document.getElementById("apCity");
+  if (cityInput) cityInput.value = il;
+  const ilceler =
+    (typeof TURKIYE_81_IL_ILCELER !== "undefined" && TURKIYE_81_IL_ILCELER[il]) ||
+    IL_ILCE_HARITASI[il] ||
+    ["Merkez"];
+  const varsayilan = il === "Ankara" && ilceler.includes("Çankaya") ? "Çankaya" : ilceler[0];
+  ilceSel.innerHTML = ilceler
+    .map(ilce => `<option value="${ilce}" ${ilce === varsayilan ? "selected" : ""}>${ilce}</option>`)
+    .join("");
+  profilSemtYardimcisiIlceDegisti();
+}
+
+function profilSemtYardimcisiIlceDegisti() {
+  const il = document.getElementById("apHelperCity")?.value || "Ankara";
+  const ilce = document.getElementById("apHelperDistrict")?.value || "Çankaya";
+  const semtSel = document.getElementById("apHelperSemt");
+  if (!semtSel) return;
+  const semtMap = ilIlceyeGoreSemtHaritasiGetir(il, ilce);
+  const semtler = Object.keys(semtMap);
+  semtSel.innerHTML = semtler.map((s, i) => `<option value="${s}" ${i === 0 ? "selected" : ""}>${s} Semti / Bölgesi</option>`).join("");
+  profilSemtYardimcisiSemtOnizle();
+}
+
+function profilSemtYardimcisiSemtOnizle() {
+  const il = document.getElementById("apHelperCity")?.value || "Ankara";
+  const ilce = document.getElementById("apHelperDistrict")?.value || "Çankaya";
+  const semt = document.getElementById("apHelperSemt")?.value || "";
+  const previewEl = document.getElementById("apHelperSemtMahallePreview");
+  if (!previewEl) return;
+  const mahalleler = ilIlceSemteGoreMahalleListesiGetir(il, ilce, semt);
+  previewEl.innerHTML = `<strong>${semt}</strong> semtinin kapsadığı mahalleler (${mahalleler.length}): <span style="color:#2563EB;">${mahalleler.join(", ")}</span>`;
+}
+
+function profilSemtiUzmanligaEkle(altMahallelerleBirlikte = false) {
+  const il = document.getElementById("apHelperCity")?.value || "Ankara";
+  const ilce = document.getElementById("apHelperDistrict")?.value || "Çankaya";
+  const semt = document.getElementById("apHelperSemt")?.value || "";
+  if (!semt) return;
+
+  const cityInput = document.getElementById("apCity");
+  const distInput = document.getElementById("apDistrict");
+  const regInput = document.getElementById("apRegions");
+
+  if (cityInput) {
+    cityInput.value = il;
+  }
+  if (distInput) {
+    const mevcutIlceler = distInput.value
+      .split(",")
+      .map(x => x.trim())
+      .filter(Boolean);
+    if (!mevcutIlceler.some(x => x.toLowerCase() === ilce.toLowerCase())) {
+      mevcutIlceler.push(ilce);
+      distInput.value = mevcutIlceler.join(", ");
+    }
+  }
+  if (regInput) {
+    const mevcutBolgeler = regInput.value
+      .split(",")
+      .map(x => x.trim())
+      .filter(Boolean);
+    const eklenecekler = [semt];
+    if (altMahallelerleBirlikte) {
+      const mahalleler = ilIlceSemteGoreMahalleListesiGetir(il, ilce, semt).map(m => m.replace(" Mah.", "").trim());
+      eklenecekler.push(...mahalleler);
+    }
+    eklenecekler.forEach(item => {
+      if (!mevcutBolgeler.some(x => x.toLowerCase() === item.toLowerCase())) {
+        mevcutBolgeler.push(item);
+      }
+    });
+    regInput.value = mevcutBolgeler.join(", ");
+  }
+  kisiselProfilKaydet(false);
+  profilSeciliUzmanlikEtiketleriniRenderEt();
 }
 
 let seciliYeniBlogFotoData = "";
@@ -5812,9 +6160,9 @@ function danismanKisiselWebSitesiGoster() {
   const hakkindaSekmeHtml = `
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;">
       <div class="saas-card" style="margin:0;">
-        <h3 class="saas-h2" style="margin-bottom:10px;">Uzmanlık Bölgeleri &amp; Özgeçmiş</h3>
+        <h3 class="saas-h2" style="margin-bottom:10px;">Uzmanlık Semtleri (Bölgeleri) &amp; Özgeçmiş</h3>
         <p class="saas-text-sm" style="color:#0F172A;line-height:1.6;margin-bottom:14px;">${dp.bio}</p>
-        <div class="saas-text-xs" style="font-weight:700;color:#64748B;margin-bottom:6px;">HİZMET VERİLEN MAHALLELER (${dp.il || "Ankara"} / ${dp.ilce || "Çankaya"})</div>
+        <div class="saas-text-xs" style="font-weight:700;color:#64748B;margin-bottom:6px;">UZMANLIK SEMTLERİ / BÖLGELER &amp; MAHALLELER (${dp.il || "Ankara"} / ${dp.ilce || "Çankaya"})</div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">${bolgePillsHtml}</div>
         ${
           dp.hobiler
@@ -6127,16 +6475,61 @@ function danismanPaylasimDurumuDegistir(acikMi) {
   bolgeUzmaniAraRender();
 }
 
-const BUYER_COOP_STORAGE_KEY = "mulkizle_alici_coop_talepleri_v3";
+const BUYER_COOP_STORAGE_KEY = "mulkizle_alici_coop_talepleri_v6";
 let aliciCoopTalepleri = [];
+let ariyorumIlSecicileriHazirMi = false;
 
 const VARSAYILAN_ALICI_COOP_TALEPLERI = [
   {
+    id: "ACT-104",
+    tarih: "23 Kasım 2026",
+    olusturanDanisman: "Selin Yılmaz (Ankara • Başkent Gayrimenkul)",
+    olusturanDanismanId: "selin-yilmaz",
+    olusturanDanismanTel: "0532 555 44 33",
+    il: "Ankara",
+    ilce: "Çankaya",
+    semt: "Çayyolu",
+    mahalle: "Alacaatlı Mah.",
+    oda: "3+1",
+    kat: "Ara Kat",
+    cephe: "Güney - Batı Cephe",
+    binaYasi: "0-5 Yaş (Sıfır/Yeni)",
+    krediDurumu: "Krediye Uygun (Kredi Limiti: 3.000.000 ₺)",
+    tapuDurumu: "Kök Tapulu (Kat Mülkiyetli)",
+    fiyatAraligi: "4.500.000 ₺ - 5.500.000 ₺",
+    alimZamani: "Hemen Almak İstiyor",
+    not: "Hazır nakit + kredili aile alıcım için Ankara Çankaya / Çayyolu semtinde (Alacaatlı, Konutkent, Yaşamkent veya Çayyolu Mah.) site içi 3+1 ara kat daire arıyorum. Uygun aktif portföyü olan meslektaşlarım doğrudan mesaj kutuma gönderebilir."
+  },
+  {
+    id: "ACT-105",
+    tarih: "22 Kasım 2026",
+    olusturanDanisman: "Selin Yılmaz (Ankara • Başkent Gayrimenkul)",
+    olusturanDanismanId: "selin-yilmaz",
+    olusturanDanismanTel: "0532 555 44 33",
+    il: "Ankara",
+    ilce: "Etimesgut",
+    semt: "Bağlıca",
+    mahalle: "Bağlıca Mah.",
+    oda: "3+1",
+    kat: "Ara Kat",
+    cephe: "Güney - Doğu Cephe",
+    binaYasi: "5-10 Yaş Arası",
+    krediDurumu: "Krediye Uygun (Kredi Limiti: 3.000.000 ₺)",
+    tapuDurumu: "Kök Tapulu (Kat Mülkiyetli)",
+    fiyatAraligi: "4.500.000 ₺ - 5.200.000 ₺",
+    alimZamani: "Hemen Almak İstiyor",
+    not: "Bağlıca semti (Bağlıca Mah. / Yeni Bağlıca Mah.) içinde 3+1 site içi ara kat daire arayan nakit + kredili hazır müşterim var. Aktif portföyünüzü mesaj olarak gönderebilirsiniz."
+  },
+  {
     id: "ACT-101",
     tarih: "19 Kasım 2026",
-    olusturanDanisman: "Gencay Çelikkan (Ankara)",
+    olusturanDanisman: "Ahmet Kaya (İzmir • Körfez Gayrimenkul)",
+    olusturanDanismanId: "uzman-izmir-narlidere-1",
+    olusturanDanismanTel: "0532 611 44 55",
     il: "İzmir",
     ilce: "Narlıdere",
+    semt: "Sahilevleri / Ilıca",
+    mahalle: "Ilıca Mah.",
     oda: "3+1",
     kat: "Ara Kat",
     cephe: "Güney - Doğu Cephe",
@@ -6145,36 +6538,137 @@ const VARSAYILAN_ALICI_COOP_TALEPLERI = [
     tapuDurumu: "Kök Tapulu (Kat Mülkiyetli)",
     fiyatAraligi: "5.000.000 ₺ - 6.000.000 ₺",
     alimZamani: "Hemen Almak İstiyor",
-    not: "Alıcım İzmir Narlıdere'de 3+1, ara katta, Güney-Doğu cepheli, 5-10 yaş arası, krediye uygun (kredi limiti 3 Milyon TL), kök tapulu yer arıyor. Bütçesi 5-6 Milyon TL, hemen almak istiyor. Paylaşım şartlarını telefonda konuşalım.",
-    secilenAdayIdx: 0,
-    cevapVerenler: [
-      {
-        uzmanId: "uzman-izmir-narlidere-1",
-        ad: "Ahmet Kaya",
-        ofis: "İzmir Körfez Gayrimenkul • Narlıdere Bölge Uzmanı",
-        telefon: "0532 611 44 55",
-        paylasimaAcikMi: true,
-        rozet: "7 Uzmanlık Rozeti • 160+ Satış",
-        portfoyBaslik: "İzmir Narlıdere Ilıca Mah. 3+1 (3. Ara Kat • Güney-Doğu • 7 Yaşında • 3M Krediye Uygun • Kök Tapulu)",
-        portfoyFiyat: "5.650.000 ₺",
-        portfoyKod: "738192045612",
-        mesaj: "Gencay Bey merhaba, paylaşıma açığım. Narlıdere Ilıca'da tam belirttiğiniz özelliklerde 3+1 ara kat, Güney-Doğu, 7 yaşında, kök tapulu portföyüm hazır (5.650.000 ₺). Arayın paylaşım oranımızı konuşup alıcınıza sunum yapalım."
-      },
-      {
-        uzmanId: "uzman-izmir-1",
-        ad: "Zeynep Aksoy",
-        ofis: "Ege Körfez Gayrimenkul • İzmir Uzmanı",
-        telefon: "0535 912 34 56",
-        paylasimaAcikMi: true,
-        rozet: "7 Uzmanlık Rozeti • 110+ Satış",
-        portfoyBaslik: "İzmir Narlıdere Yenikale 3+1 (2. Ara Kat • Güney-Doğu • 8 Yaşında • Kök Tapu)",
-        portfoyFiyat: "5.900.000 ₺",
-        portfoyKod: "849201736410",
-        mesaj: "Paylaşıma açığım, Narlıdere Yenikale'de 5.900.000 TL'ye kök tapulu ve krediye uygun 3+1 ara kat dairem mevcuttur."
-      }
-    ]
+    not: "Alıcım İzmir Narlıdere Sahilevleri / Ilıca semtinde 3+1, ara katta, Güney-Doğu cepheli, 5-10 yaş arası, krediye uygun, kök tapulu yer arıyor. Bütçesi 5-6 Milyon TL."
+  },
+  {
+    id: "ACT-102",
+    tarih: "18 Kasım 2026",
+    olusturanDanisman: "Burak Demir (İstanbul • Avrupa Gayrimenkul)",
+    olusturanDanismanId: "uzman-bagcilar-1",
+    olusturanDanismanTel: "0533 880 90 10",
+    il: "İstanbul",
+    ilce: "Kadıköy",
+    semt: "Suadiye / Caddebostan (Bağdat Cad.)",
+    mahalle: "Suadiye Mah.",
+    oda: "2+1",
+    kat: "Üst Katlar / Manzaralı",
+    cephe: "Güney - Batı Cephe",
+    binaYasi: "0-5 Yaş (Sıfır/Yeni)",
+    krediDurumu: "Tamamı Peşin / Nakit Alıcı",
+    tapuDurumu: "Kök Tapulu (Kat Mülkiyetli)",
+    fiyatAraligi: "8.500.000 ₺ - 10.000.000 ₺",
+    alimZamani: "Hemen Almak İstiyor",
+    not: "Yatırımcı müşterim için Kadıköy Bağdat Caddesi (Suadiye / Caddebostan) semtinde sıfır veya yeni binada 2+1 daire arıyoruz. Nakit hazır."
+  },
+  {
+    id: "ACT-103",
+    tarih: "17 Kasım 2026",
+    olusturanDanisman: "Zeynep Aksoy (İzmir • Ege Körfez Gayrimenkul)",
+    olusturanDanismanId: "uzman-izmir-1",
+    olusturanDanismanTel: "0535 912 34 56",
+    il: "Antalya",
+    ilce: "Konyaaltı",
+    semt: "Liman / Hurma",
+    mahalle: "Liman Mah.",
+    oda: "3+1",
+    kat: "Ara Kat",
+    cephe: "Güney - Doğu Cephe",
+    binaYasi: "0-5 Yaş (Sıfır/Yeni)",
+    krediDurumu: "Tamamı Peşin / Nakit Alıcı",
+    tapuDurumu: "Kök Tapulu (Kat Mülkiyetli)",
+    fiyatAraligi: "7.000.000 ₺ - 8.500.000 ₺",
+    alimZamani: "3 Ay İçinde",
+    not: "Antalya Konyaaltı Liman / Hurma semtine taşınacak doktor müşterim için havuzlu sitede paylaşıma açık 3+1 daire arıyorum."
   }
 ];
+
+function mahalledenSemtBul(il, ilce, mahalle) {
+  if (!il || !ilce || !mahalle) return "";
+  const semtMap = ilIlceyeGoreSemtHaritasiGetir(il, ilce);
+  const arananTemiz = mahalle.replace(" Mah.", "").trim().toLowerCase();
+  for (const [semtAdi, mahList] of Object.entries(semtMap)) {
+    if (mahList.some(m => m.toLowerCase().includes(arananTemiz))) {
+      return semtAdi;
+    }
+  }
+  return "";
+}
+
+function danismanUzmanlikSemtVeBolgeleriTalepleEslesiyorMu(talep, dp) {
+  if (!talep || !dp) return false;
+  const uyeIl = (dp.il || "Ankara").toLowerCase();
+  if ((talep.il || "").toLowerCase() !== uyeIl) return false;
+
+  const uyeMetni = `${dp.ilce || ""} , ${dp.bolgeler || ""}`.toLowerCase();
+  const talepIlce = (talep.ilce || "").toLowerCase();
+  const talepSemt = (talep.semt || "").toLowerCase();
+  const talepMah = (talep.mahalle || "").replace(" Mah.", "").trim().toLowerCase();
+
+  if (talepSemt && talepSemt !== "tüm semtler" && uyeMetni.includes(talepSemt.split("/")[0].trim())) {
+    return true;
+  }
+  if (talepMah && talepMah !== "tüm mahalleler" && uyeMetni.includes(talepMah)) {
+    return true;
+  }
+  // Üye semt yazdıysa (örn: "Çayyolu"), talepte o semtin alt mahallesi (örn: "Alacaatlı Mah.") varsa yine eşleşir!
+  const semtMap = ilIlceyeGoreSemtHaritasiGetir(talep.il, talep.ilce);
+  for (const [semtAdi, mahList] of Object.entries(semtMap)) {
+    const semtKisa = semtAdi.split("/")[0].trim().toLowerCase();
+    if (uyeMetni.includes(semtKisa)) {
+      if (talepSemt.includes(semtKisa)) return true;
+      if (mahList.some(m => m.replace(" Mah.", "").trim().toLowerCase() === talepMah)) {
+        return true;
+      }
+    }
+  }
+  return talepIlce && uyeMetni.includes(talepIlce);
+}
+
+function ilIlceyeGoreMahalleListesiGetir(il, ilce) {
+  if (!il || !ilce || il === "Tümü" || ilce === "Tümü") return [];
+  const ozelListe = typeof DETAYLI_MAHALLELER !== "undefined" ? DETAYLI_MAHALLELER[`${il}:${ilce}`] : null;
+  if (ozelListe && ozelListe.length > 0) {
+    return [...ozelListe];
+  }
+  const standart =
+    typeof STANDART_ILCE_MAHALLELERI !== "undefined"
+      ? STANDART_ILCE_MAHALLELERI.filter(m => m !== "Merkez Mah.")
+      : ["Cumhuriyet Mah.", "Atatürk Mah.", "Yeni Mah.", "Fatih Mah.", "Bahçelievler Mah."];
+  return [`${ilce} Merkez Mah.`, ...standart];
+}
+
+function ariyorumYeniTalepFormuToggle(forceState) {
+  const card = document.getElementById("ariyorumNewRequestCollapseCard");
+  const btn = document.getElementById("btnToggleNewRequestDrawer");
+  if (!card) return;
+  const suAnAcik = card.style.display !== "none";
+  const yeniDurum = typeof forceState === "boolean" ? forceState : !suAnAcik;
+  card.style.display = yeniDurum ? "block" : "none";
+  if (btn) {
+    btn.innerHTML = yeniDurum ? `<span>✕ Talep Formunu Kapat</span>` : `<span>+ Yeni Arama Talebi Aç</span>`;
+  }
+  if (yeniDurum) {
+    ariyorumKonumSecicileriniBaslat();
+  }
+}
+
+function ariyorumKonumSecicileriniBaslat() {
+  const iller = typeof TURKIYE_81_IL_ILCELER !== "undefined" ? Object.keys(TURKIYE_81_IL_ILCELER) : ["Ankara", "İstanbul", "İzmir", "Antalya"];
+
+  const bcCity = document.getElementById("bcCity");
+  if (bcCity && bcCity.options.length <= 4) {
+    bcCity.innerHTML = iller.map(il => `<option value="${il}" ${il === "Ankara" ? "selected" : ""}>${il}</option>`).join("");
+    aliciCoopIlDegisti();
+  }
+
+  const filterCity = document.getElementById("ariyorumFilterCity");
+  if (filterCity && filterCity.options.length <= 5) {
+    filterCity.innerHTML =
+      `<option value="Tümü" selected>Tüm İller (81 İl)</option>` +
+      iller.map(il => `<option value="${il}">${il}</option>`).join("");
+  }
+  ariyorumIlSecicileriHazirMi = true;
+}
 
 function aliciCoopYukle() {
   try {
@@ -6195,16 +6689,83 @@ function aliciCoopIlDegisti() {
   const ilSel = document.getElementById("bcCity");
   const ilceSel = document.getElementById("bcDistrict");
   if (!ilSel || !ilceSel) return;
-  const ilceler = IL_ILCE_HARITASI[ilSel.value] || ["Merkez"];
-  ilceSel.innerHTML = ilceler.map((ilce, i) => `<option value="${ilce}" ${i === 0 ? "selected" : ""}>${ilce}</option>`).join("");
+  const il = ilSel.value || "Ankara";
+  const ilceler =
+    (typeof TURKIYE_81_IL_ILCELER !== "undefined" && TURKIYE_81_IL_ILCELER[il]) ||
+    IL_ILCE_HARITASI[il] ||
+    ["Merkez"];
+  const varsayilanIlce = il === "Ankara" && ilceler.includes("Çankaya") ? "Çankaya" : ilceler[0];
+  ilceSel.innerHTML = ilceler
+    .map(ilce => `<option value="${ilce}" ${ilce === varsayilanIlce ? "selected" : ""}>${ilce}</option>`)
+    .join("");
+  aliciCoopIlceDegisti();
+}
+
+function aliciCoopIlceDegisti() {
+  const il = document.getElementById("bcCity")?.value || "Ankara";
+  const ilce = document.getElementById("bcDistrict")?.value || "Çankaya";
+  const semtSel = document.getElementById("bcSemt");
+  const semtMap = ilIlceyeGoreSemtHaritasiGetir(il, ilce);
+  const semtler = Object.keys(semtMap);
+  if (semtSel) {
+    semtSel.innerHTML =
+      `<option value="Tüm Semtler">Fark Etmez (Tüm ${ilce} Semtleri / Genel)</option>` +
+      semtler.map((s, idx) => `<option value="${s}" ${idx === 0 ? "selected" : ""}>${s} Semti / Bölgesi</option>`).join("");
+  }
+  aliciCoopSemtDegisti();
+}
+
+function aliciCoopSemtDegisti() {
+  const il = document.getElementById("bcCity")?.value || "Ankara";
+  const ilce = document.getElementById("bcDistrict")?.value || "Çankaya";
+  const semt = document.getElementById("bcSemt")?.value || "Tüm Semtler";
+  const mahSel = document.getElementById("bcNeighborhood");
+  if (!mahSel) return;
+  const mahalleler = ilIlceSemteGoreMahalleListesiGetir(il, ilce, semt);
+  const ustEtiket =
+    semt && semt !== "Tüm Semtler"
+      ? `Tüm ${semt} Semti Mahalleleri (Genel)`
+      : `Tüm ${ilce} Mahalleleri (Genel)`;
+  mahSel.innerHTML =
+    `<option value="Tüm Mahalleler">${ustEtiket}</option>` +
+    mahalleler.map(m => `<option value="${m}">${m}</option>`).join("") +
+    `<option value="__CUSTOM__">+ Listede Olmayan Mahalle Yaz...</option>`;
+  aliciCoopMahalleDegisti();
+}
+
+function aliciCoopMahalleDegisti() {
+  const mahSel = document.getElementById("bcNeighborhood");
+  const customInput = document.getElementById("bcNeighborhoodCustom");
+  if (!mahSel || !customInput) return;
+  if (mahSel.value === "__CUSTOM__") {
+    customInput.style.display = "block";
+    customInput.focus();
+  } else {
+    customInput.style.display = "none";
+  }
+}
+
+function bcSeciliMahalleAdiniAl() {
+  const mahSel = document.getElementById("bcNeighborhood");
+  const customInput = document.getElementById("bcNeighborhoodCustom");
+  if (mahSel && mahSel.value === "__CUSTOM__") {
+    return (customInput?.value || "").trim() || "Tüm Mahalleler";
+  }
+  return mahSel?.value || "Tüm Mahalleler";
 }
 
 function yeniAliciCoopTalebiOlustur() {
   if (!aliciCoopTalepleri.length) aliciCoopYukle();
   if (!danismanProfili) profilYukle();
 
-  const il = document.getElementById("bcCity")?.value || "İzmir";
-  const ilce = document.getElementById("bcDistrict")?.value || "Narlıdere";
+  const il = document.getElementById("bcCity")?.value || "Ankara";
+  const ilce = document.getElementById("bcDistrict")?.value || "Çankaya";
+  const seciliSemtRaw = document.getElementById("bcSemt")?.value || "Tüm Semtler";
+  const mahalle = bcSeciliMahalleAdiniAl();
+  const semt =
+    seciliSemtRaw && seciliSemtRaw !== "Tüm Semtler"
+      ? seciliSemtRaw
+      : mahalledenSemtBul(il, ilce, mahalle) || `${ilce} Geneli`;
   const fiyatAraligi = (document.getElementById("bcPriceRange")?.value || "5.000.000 ₺ - 6.000.000 ₺").trim();
   const oda = (document.getElementById("bcRooms")?.value || "3+1").split("|")[0];
   const kat = (document.getElementById("bcFloor")?.value || "Ara Kat").split("|")[0];
@@ -6215,20 +6776,21 @@ function yeniAliciCoopTalebiOlustur() {
   const alimZamani = (document.getElementById("bcTimeline")?.value || "Hemen Almak İstiyor").split("|")[0];
   const not =
     (document.getElementById("bcBuyerNote")?.value || "").trim() ||
-    `Alıcım ${il} ${ilce}'de ${oda}, ${kat}, ${cephe}, ${binaYasi}, ${krediDurumu}, ${tapuDurumu} yer arıyor. Bütçesi ${fiyatAraligi}, ${alimZamani.toLowerCase()}. Paylaşım oranını kendi aramızda görüşelim.`;
+    `Alıcım ${il} / ${ilce} — ${semt} semtinde (${mahalle}) ${oda}, ${kat}, ${cephe}, ${binaYasi}, ${krediDurumu}, ${tapuDurumu} mülk arıyor. Bütçesi ${fiyatAraligi}, ${alimZamani.toLowerCase()}. Uygun aktif portföyünüzü mesaj kutuma gönderebilirsiniz.`;
 
   const bugun = new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
-
-  const bolgeUzmanlari = BOLGE_UZMANLARI_HAVUZU.filter(u => u.il === il);
-  const aday1 = bolgeUzmanlari[0] || BOLGE_UZMANLARI_HAVUZU[0];
-  const aday2 = bolgeUzmanlari[1] || BOLGE_UZMANLARI_HAVUZU[1];
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
 
   const yeniTalep = {
     id: `ACT-${Math.floor(100 + Math.random() * 899)}`,
     tarih: bugun,
-    olusturanDanisman: `${danismanProfili?.ad || "Gencay Çelikkan"} (${danismanProfili?.il || "Ankara"})`,
+    olusturanDanisman: `${danismanProfili?.ad || "Gencay Çelikkan"} (${danismanProfili?.il || "Ankara"} • ${danismanProfili?.ofis || "Gayrimenkul Danışmanlık"})`,
+    olusturanDanismanId: aktifId,
+    olusturanDanismanTel: danismanProfili?.telefon || "0532 000 00 00",
     il,
     ilce,
+    semt,
+    mahalle,
     oda,
     kat,
     cephe,
@@ -6237,177 +6799,392 @@ function yeniAliciCoopTalebiOlustur() {
     tapuDurumu,
     fiyatAraligi,
     alimZamani,
-    not,
-    secilenAdayIdx: 0,
-    cevapVerenler: [
-      {
-        uzmanId: aday1.id,
-        ad: aday1.ad,
-        ofis: aday1.ofis,
-        telefon: aday1.telefon,
-        paylasimaAcikMi: true,
-        rozet: `${aday1.rozetSayisi} Uzmanlık Rozeti • Doğrulanmış Uzman`,
-        portfoyBaslik: `${il} ${ilce} ${oda} (${kat} • ${cephe} • ${binaYasi} • ${tapuDurumu})`,
-        portfoyFiyat: fiyatAraligi.split("-")[0].trim(),
-        portfoyKod: "738192045612",
-        mesaj: `Paylaşıma açığım! ${il} ${ilce}'de belirttiğiniz ${oda}, ${kat}, ${cephe}, ${binaYasi} ve ${tapuDurumu} özelliklerine uyan portföyüm mevcut. Paylaşım şartlarını aramızda konuşup alıcınıza sunum yapabiliriz.`
-      },
-      {
-        uzmanId: aday2.id,
-        ad: aday2.ad,
-        ofis: aday2.ofis,
-        telefon: aday2.telefon,
-        paylasimaAcikMi: true,
-        rozet: `${aday2.rozetSayisi} Uzmanlık Rozeti • Bölge Uzmanı`,
-        portfoyBaslik: `${il} ${ilce} Site İçi ${oda} (${kat} • ${krediDurumu})`,
-        portfoyFiyat: fiyatAraligi.split("-")[1]?.trim() || fiyatAraligi,
-        portfoyKod: "849201736410",
-        mesaj: `Paylaşıma açığım. Alıcınızın ${fiyatAraligi} bütçesine uygun alternatif kök tapulu dairemiz hazırdır.`
-      }
-    ]
+    not
   };
 
   aliciCoopTalepleri.unshift(yeniTalep);
   if (document.getElementById("bcBuyerNote")) document.getElementById("bcBuyerNote").value = "";
   aliciCoopKaydet();
+  ariyorumYeniTalepFormuToggle(false);
   aliciCoopTalepleriRender();
+
+  const bolgemleEslesiyorMu = danismanUzmanlikSemtVeBolgeleriTalepleEslesiyorMu(yeniTalep, danismanProfili);
 
   if (typeof danismanBildirimEkle === "function") {
     danismanBildirimEkle({
       tip: "ariyorum",
-      baslik: `🔍 Arıyorum! ${il} / ${ilce} (${oda}) Talebinize ${yeniTalep.cevapVerenler.length} Bölge Uzmanı Cevap Verdi`,
-      detay: `${aday1.ad} ve ${aday2.ad} talebiniz için 'Paylaşıma Açığım' diyerek uygun portföylerini iletti.`,
+      baslik: bolgemleEslesiyorMu
+        ? `🔍 Uzmanlık Semtinizde (${il} / ${ilce} • ${semt} / ${mahalle}) Yeni Arama Talebi Açıldı! (#${yeniTalep.id})`
+        : `🔍 Arıyorum! ${il} / ${ilce} • ${semt} (${mahalle}) Talebiniz Bölge Uzmanlarına Bildirildi`,
+      detay: `${il} / ${ilce} — ${semt} semti (${mahalle}) için ${oda} (${fiyatAraligi}) arama talebi yayınlandı. Bölge uzmanlarının göndereceği aktif portföyler doğrudan Mesaj Kutunuza düşecektir.`,
       zaman: "Az önce",
       hedefMod: "ariyorum"
     });
   }
 
   alert(
-    `📢 ALICI TALEBİNİZ (${yeniTalep.id}) BÖLGE UZMANLARINA İLETİLDİ!\n\n` +
-      `• Aranan Özellikler: ${il} / ${ilce} • ${oda} • ${kat} • ${cephe} • ${binaYasi}\n` +
-      `• Kredi & Tapu: ${krediDurumu} • ${tapuDurumu}\n` +
-      `• Bütçe & Zaman: ${fiyatAraligi} • ${alimZamani}\n\n` +
-      `O bölgede '🟢 Paylaşıma Açığım' diyen uzmanlardan gelen cevapları aşağıdan seçip paylaşım şartlarını kendi aranızda konuşabilirsiniz.`
+    `📢 ARAMA TALEBİNİZ (#${yeniTalep.id}) YAYINLANDI!\n\n` +
+      `• Konum: ${il} / ${ilce} / ${semt} Semti (${mahalle})\n` +
+      `• Özellikler: ${oda} • ${kat} • ${cephe} • ${binaYasi}\n` +
+      `• Bütçe: ${fiyatAraligi}\n\n` +
+      `${il} / ${ilce} (${semt}) bölge uzmanlarına bildirim gönderildi. Meslektaşlarınızın göndereceği aktif portföyler herkese açık görünmez, doğrudan sizin özel Mesaj Kutunuza düşer.`
   );
 }
 
-function aliciCoopCevapVerenEmlakciSec(talepId, adayIdx) {
-  const t = aliciCoopTalepleri.find(x => x.id === talepId);
-  if (!t || !t.cevapVerenler[adayIdx]) return;
-  t.secilenAdayIdx = adayIdx;
-  aliciCoopKaydet();
+function ariyorumTalepFiltreIlDegisti() {
+  const ilSel = document.getElementById("ariyorumFilterCity");
+  const ilceSel = document.getElementById("ariyorumFilterDistrict");
+  const semtSel = document.getElementById("ariyorumFilterSemt");
+  const mahSel = document.getElementById("ariyorumFilterNeighborhood");
+  if (!ilSel || !ilceSel) return;
+
+  const seciliIl = ilSel.value;
+  if (seciliIl === "Tümü") {
+    ilceSel.innerHTML = `<option value="Tümü" selected>Tüm İlçeler</option>`;
+    if (semtSel) semtSel.innerHTML = `<option value="Tümü" selected>Tüm Semtler</option>`;
+    if (mahSel) mahSel.innerHTML = `<option value="Tümü" selected>Tüm Mahalleler</option>`;
+  } else {
+    const ilceler =
+      (typeof TURKIYE_81_IL_ILCELER !== "undefined" && TURKIYE_81_IL_ILCELER[seciliIl]) ||
+      IL_ILCE_HARITASI[seciliIl] ||
+      ["Merkez"];
+    ilceSel.innerHTML =
+      `<option value="Tümü" selected>Tüm ${seciliIl} İlçeleri</option>` +
+      ilceler.map(ilce => `<option value="${ilce}">${ilce}</option>`).join("");
+    if (semtSel) semtSel.innerHTML = `<option value="Tümü" selected>Tüm Semtler</option>`;
+    if (mahSel) mahSel.innerHTML = `<option value="Tümü" selected>Tüm Mahalleler</option>`;
+  }
   aliciCoopTalepleriRender();
 }
 
-function aliciCoopOrtakSunumAc(talepId) {
+function ariyorumTalepFiltreIlceDegisti() {
+  const ilSel = document.getElementById("ariyorumFilterCity");
+  const ilceSel = document.getElementById("ariyorumFilterDistrict");
+  const semtSel = document.getElementById("ariyorumFilterSemt");
+  const mahSel = document.getElementById("ariyorumFilterNeighborhood");
+  if (!ilSel || !ilceSel) return;
+
+  const seciliIl = ilSel.value;
+  const seciliIlce = ilceSel.value;
+  if (seciliIl === "Tümü" || seciliIlce === "Tümü") {
+    if (semtSel) semtSel.innerHTML = `<option value="Tümü" selected>Tüm Semtler</option>`;
+    if (mahSel) mahSel.innerHTML = `<option value="Tümü" selected>Tüm Mahalleler</option>`;
+  } else {
+    const semtMap = ilIlceyeGoreSemtHaritasiGetir(seciliIl, seciliIlce);
+    const semtler = Object.keys(semtMap);
+    if (semtSel) {
+      semtSel.innerHTML =
+        `<option value="Tümü" selected>Tüm ${seciliIlce} Semtleri (Genel)</option>` +
+        semtler.map(s => `<option value="${s}">${s} Semti</option>`).join("");
+    }
+    if (mahSel) {
+      const mahalleler = ilIlceSemteGoreMahalleListesiGetir(seciliIl, seciliIlce, "Tümü");
+      mahSel.innerHTML =
+        `<option value="Tümü" selected>Tüm ${seciliIlce} Mahalleleri</option>` +
+        mahalleler.map(m => `<option value="${m}">${m}</option>`).join("");
+    }
+  }
+  aliciCoopTalepleriRender();
+}
+
+function ariyorumTalepFiltreSemtDegisti() {
+  const ilSel = document.getElementById("ariyorumFilterCity");
+  const ilceSel = document.getElementById("ariyorumFilterDistrict");
+  const semtSel = document.getElementById("ariyorumFilterSemt");
+  const mahSel = document.getElementById("ariyorumFilterNeighborhood");
+  if (!ilSel || !ilceSel || !mahSel) return;
+
+  const seciliIl = ilSel.value;
+  const seciliIlce = ilceSel.value;
+  const seciliSemt = semtSel ? semtSel.value : "Tümü";
+  if (seciliIl === "Tümü" || seciliIlce === "Tümü") {
+    mahSel.innerHTML = `<option value="Tümü" selected>Tüm Mahalleler</option>`;
+  } else {
+    const mahalleler = ilIlceSemteGoreMahalleListesiGetir(seciliIl, seciliIlce, seciliSemt);
+    const baslik = seciliSemt !== "Tümü" ? `Tüm ${seciliSemt} Mahalleleri` : `Tüm ${seciliIlce} Mahalleleri`;
+    mahSel.innerHTML =
+      `<option value="Tümü" selected>${baslik}</option>` +
+      mahalleler.map(m => `<option value="${m}">${m}</option>`).join("");
+  }
+  aliciCoopTalepleriRender();
+}
+
+function ariyorumSadeceUzmanlikBolgemFiltrele() {
+  if (!danismanProfili) profilYukle();
+  ariyorumKonumSecicileriniBaslat();
+  const uyeIl = (danismanProfili?.il || "Ankara").split(",")[0].trim();
+  const uyeIlce = (danismanProfili?.ilce || "Çankaya").split(",")[0].trim();
+  const ilSel = document.getElementById("ariyorumFilterCity");
+  const ilceSel = document.getElementById("ariyorumFilterDistrict");
+  const semtSel = document.getElementById("ariyorumFilterSemt");
+  const mahSel = document.getElementById("ariyorumFilterNeighborhood");
+
+  if (ilSel) {
+    ilSel.value = uyeIl;
+    const ilceler =
+      (typeof TURKIYE_81_IL_ILCELER !== "undefined" && TURKIYE_81_IL_ILCELER[uyeIl]) ||
+      IL_ILCE_HARITASI[uyeIl] ||
+      [uyeIlce];
+    if (ilceSel) {
+      ilceSel.innerHTML =
+        `<option value="Tümü">Tüm ${uyeIl} İlçeleri</option>` +
+        ilceler.map(ilce => `<option value="${ilce}" ${ilce === uyeIlce ? "selected" : ""}>${ilce}</option>`).join("");
+      ilceSel.value = uyeIlce;
+    }
+    const semtMap = ilIlceyeGoreSemtHaritasiGetir(uyeIl, uyeIlce);
+    const semtler = Object.keys(semtMap);
+    const uyeBolgelerLower = (danismanProfili?.bolgeler || "").toLowerCase();
+    const eslesenSemt = semtler.find(s => uyeBolgelerLower.includes(s.split("/")[0].trim().toLowerCase())) || "Tümü";
+    if (semtSel) {
+      semtSel.innerHTML =
+        `<option value="Tümü" ${eslesenSemt === "Tümü" ? "selected" : ""}>Tüm ${uyeIlce} Semtleri</option>` +
+        semtler.map(s => `<option value="${s}" ${s === eslesenSemt ? "selected" : ""}>${s} Semti</option>`).join("");
+      semtSel.value = eslesenSemt;
+    }
+    if (mahSel) {
+      const mahalleler = ilIlceSemteGoreMahalleListesiGetir(uyeIl, uyeIlce, eslesenSemt);
+      mahSel.innerHTML =
+        `<option value="Tümü" selected>Tüm ${eslesenSemt !== "Tümü" ? eslesenSemt : uyeIlce} Mahalleleri</option>` +
+        mahalleler.map(m => `<option value="${m}">${m}</option>`).join("");
+    }
+  }
+  aliciCoopTalepleriRender();
+}
+
+function ariyorumFiltreleriSifirla() {
+  ariyorumKonumSecicileriniBaslat();
+  const ilSel = document.getElementById("ariyorumFilterCity");
+  const ilceSel = document.getElementById("ariyorumFilterDistrict");
+  const semtSel = document.getElementById("ariyorumFilterSemt");
+  const mahSel = document.getElementById("ariyorumFilterNeighborhood");
+  if (ilSel) ilSel.value = "Tümü";
+  if (ilceSel) ilceSel.innerHTML = `<option value="Tümü" selected>Tüm İlçeler</option>`;
+  if (semtSel) semtSel.innerHTML = `<option value="Tümü" selected>Tüm Semtler</option>`;
+  if (mahSel) mahSel.innerHTML = `<option value="Tümü" selected>Tüm Mahalleler</option>`;
+  aliciCoopTalepleriRender();
+}
+
+// "Aktif Portföyümü Gönder" — Yalnızca talep açanın özel Mesaj Kutusuna düşer (herkese açık görünmez)
+function ariyorumAktifPortfoyumuMesajOlarakGonder(talepId) {
   const t = aliciCoopTalepleri.find(x => x.id === talepId);
   if (!t) return;
-  const aday = t.cevapVerenler[t.secilenAdayIdx] || t.cevapVerenler[0];
-  seciliKod = aday?.portfoyKod || "738192045612";
-  gorunumDegistir("view-buyer");
+  if (!danismanProfili) profilYukle();
+
+  const secimEl = document.getElementById(`sendPropSelect-${talepId}`);
+  const notEl = document.getElementById(`sendPropNote-${talepId}`);
+  const seciliPortfoyKod = secimEl ? secimEl.value : "";
+
+  const uygunPortfoylerim = aktifDanismaninGorunenPortfoyleri();
+  const secilenP = uygunPortfoylerim.find(p => p.kod === seciliPortfoyKod) || uygunPortfoylerim[0];
+
+  if (!secilenP) {
+    alert("⚠️ Gönderebileceğiniz aktif bir portföyünüz bulunmuyor. Önce yeni bir portföy oluşturabilirsiniz.");
+    return;
+  }
+
+  const ekNot =
+    (notEl?.value || "").trim() ||
+    `Merhaba, #${t.id} (${t.il} / ${t.ilce} • ${t.mahalle || "Tüm Mahalleler"} • ${t.oda}) arama talebiniz için paylaşıma açık aktif portföyümü iletiyorum.`;
+
+  const gonderenAd = danismanProfili?.ad || "Gencay Çelikkan";
+  const gonderenOfis = `${danismanProfili?.ofis || "Gayrimenkul Danışmanlık Ofisi"} (${danismanProfili?.il || "Ankara"} / ${danismanProfili?.ilce || "Çankaya"})`;
+  const gonderenTel = danismanProfili?.telefon || "0532 000 00 00";
+
+  const mesajMetni =
+    `🏠 [Arıyorum! Talep #${t.id} İçin Aktif Portföy Önerisi]\n` +
+    `• Portföy: ${secilenP.baslik} (${secilenP.bolge})\n` +
+    `• Fiyat: ${secilenP.fiyat || "Belirtilmedi"} • Takip Kodu: #${secilenP.kod}\n` +
+    `• Mesaj: ${ekNot}`;
+
+  // Talep açan danışmanın özel mesaj kutusuna kaydet (ve test kolaylığı için aktif kullanıcının mesaj kutusuna da yansıt)
+  const hedefDanismanId = t.olusturanDanismanId || "selin-yilmaz";
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+
+  if (typeof uyeMesajlariniGetir === "function") {
+    const hedefKutu = uyeMesajlariniGetir(hedefDanismanId);
+    hedefKutu.unshift({
+      gonderenAd,
+      gonderenRol: `${gonderenOfis} • Aktif Portföy Gönderimi`,
+      gonderenTel,
+      tarih: "Az önce",
+      icerik: mesajMetni,
+      yanit: "",
+      okundu: false
+    });
+
+    if (hedefDanismanId !== aktifId) {
+      const kendiKutum = uyeMesajlariniGetir(aktifId);
+      kendiKutum.unshift({
+        gonderenAd: `${t.olusturanDanisman.split("(")[0].trim()} (Talep #${t.id} Sahibi)`,
+        gonderenRol: `${t.il} / ${t.ilce} (${t.mahalle || "Merkez"}) Arama Talebi`,
+        gonderenTel: t.olusturanDanismanTel || "0532 555 44 33",
+        tarih: "Az önce",
+        icerik: `[${t.id} Talebi: ${t.il}/${t.ilce} ${t.oda} - ${t.fiyatAraligi}] talebine aktif portföyünüzü gönderdiniz.`,
+        yanit: mesajMetni,
+        okundu: true
+      });
+    }
+    if (typeof uyeMesajKutulariniKaydet === "function") {
+      uyeMesajKutulariniKaydet();
+    }
+  }
+
+  if (typeof danismanBildirimEkle === "function") {
+    danismanBildirimEkle({
+      tip: "mesaj",
+      baslik: `💬 Aktif Portföyünüz (#${secilenP.kod}) ${t.olusturanDanisman.split("(")[0].trim()}'ın Mesaj Kutusuna İletildi`,
+      detay: `Talep #${t.id} (${t.il} / ${t.ilce} • ${t.mahalle || ""}) için "${secilenP.baslik}" portföyünüz yalnızca talep sahibinin özel mesaj kutusuna gönderildi.`,
+      zaman: "Az önce",
+      hedefMod: "messages"
+    });
+  }
+
+  const drawerEl = document.getElementById(`sendPropDrawer-${talepId}`);
+  if (drawerEl) drawerEl.style.display = "none";
+  if (notEl) notEl.value = "";
+
+  alert(
+    `✅ AKTİF PORTFÖYÜNÜZ ÖZEL MESAJ OLARAK GÖNDERİLDİ!\n\n` +
+      `• Gönderilen Portföy: ${secilenP.baslik} (#${secilenP.kod} - ${secilenP.fiyat})\n` +
+      `• Alıcı (Talep Sahibi): ${t.olusturanDanisman}\n\n` +
+      `Gönderdiğiniz portföy bu sayfada herkese açık görünmez; doğrudan talep açan danışmanın özel 'Mesajlar' kutusuna düştü.`
+  );
+}
+
+function ariyorumPortfoyGonderCekmecesiToggle(talepId) {
+  const el = document.getElementById(`sendPropDrawer-${talepId}`);
+  if (!el) return;
+  el.style.display = el.style.display === "none" ? "block" : "none";
 }
 
 function aliciCoopTalepleriRender() {
   if (!aliciCoopTalepleri || aliciCoopTalepleri.length === 0) aliciCoopYukle();
+  if (!danismanProfili) profilYukle();
+  if (!ariyorumIlSecicileriHazirMi) ariyorumKonumSecicileriniBaslat();
+
+  const uyeIl = danismanProfili?.il || "Ankara";
+  const uyeIlce = danismanProfili?.ilce || "Çankaya";
+  const uyeSemtler = danismanProfili?.bolgeler || "Çayyolu, Bağlıca";
+  const regionBadge = document.getElementById("ariyorumMyRegionBadge");
+  if (regionBadge) {
+    regionBadge.textContent = `Uzmanlık Semt / Bölgeniz: ${uyeIl} (${uyeSemtler})`;
+  }
+
+  const filterCity = document.getElementById("ariyorumFilterCity")?.value || "Tümü";
+  const filterDistrict = document.getElementById("ariyorumFilterDistrict")?.value || "Tümü";
+  const filterSemt = document.getElementById("ariyorumFilterSemt")?.value || "Tümü";
+  const filterNeighborhood = document.getElementById("ariyorumFilterNeighborhood")?.value || "Tümü";
 
   const wrap = document.getElementById("buyerCoopRequestsList");
   if (!wrap) return;
 
-  wrap.innerHTML = aliciCoopTalepleri
-    .map(t => {
-      const seciliAday = t.secilenAdayIdx >= 0 ? t.cevapVerenler[t.secilenAdayIdx] : null;
+  const filtrelenmisTalepler = aliciCoopTalepleri.filter(t => {
+    const ilOk = filterCity === "Tümü" || t.il === filterCity;
+    const ilceOk = filterDistrict === "Tümü" || t.ilce === filterDistrict;
+    let semtOk = true;
+    if (filterSemt !== "Tümü") {
+      const tSemt = t.semt || mahalledenSemtBul(t.il, t.ilce, t.mahalle) || "";
+      const semtMahalleleri = ilIlceSemteGoreMahalleListesiGetir(t.il, t.ilce, filterSemt);
+      semtOk =
+        tSemt.toLowerCase().includes(filterSemt.toLowerCase()) ||
+        semtMahalleleri.some(m => (t.mahalle || "").toLowerCase().includes(m.replace(" Mah.", "").trim().toLowerCase()));
+    }
+    const mahOk =
+      filterNeighborhood === "Tümü" ||
+      !t.mahalle ||
+      t.mahalle === "Tüm Mahalleler" ||
+      t.mahalle.toLowerCase().includes(filterNeighborhood.toLowerCase());
+    return ilOk && ilceOk && semtOk && mahOk;
+  });
 
-      const cevaplarHtml = (t.cevapVerenler || [])
-        .map((aday, idx) => {
-          const isSelected = t.secilenAdayIdx === idx;
-          return `
-            <div style="background:${isSelected ? "#F8FAFC" : "#FFFFFF"};border:${
-            isSelected ? "1.5px solid #2563EB" : "1px solid #E2E8F0"
-          };border-radius:10px;padding:12px 14px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
-              <div style="flex:1;min-width:250px;">
-                <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:4px;">
-                  <span class="saas-badge-blue">Paylaşıma Açık</span>
-                  <strong style="font-size:0.9rem;color:#0F172A;">${aday.ad}</strong>
-                  <span class="saas-text-xs">${aday.ofis} • ${aday.rozet}</span>
-                </div>
-                <div style="font-size:0.84rem;font-weight:600;color:#0F172A;margin-bottom:3px;">
-                  Uygun Portföy: ${aday.portfoyBaslik} — <strong>${aday.portfoyFiyat}</strong>
-                </div>
-                <p class="saas-text-xs">"${aday.mesaj}"</p>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  class="${isSelected ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}"
-                  onclick="aliciCoopCevapVerenEmlakciSec('${t.id}', ${idx})"
-                >
-                  <span>${isSelected ? "Seçilen Uzman" : "Uzmanı Seç"}</span>
-                </button>
-              </div>
-            </div>
-          `;
-        })
+  if (filtrelenmisTalepler.length === 0) {
+    wrap.innerHTML = `
+      <div class="saas-card" style="text-align:center;padding:28px 20px;color:#64748B;">
+        Seçilen konum filtresinde (<strong>${filterCity} / ${filterDistrict} / ${filterSemt} / ${filterNeighborhood}</strong>) aktif arama talebi bulunamadı.
+      </div>
+    `;
+    return;
+  }
+
+  const aktifPortfoylerim = aktifDanismaninGorunenPortfoyleri();
+  const acikPortfoylerim = aktifPortfoylerim.filter(p => p.paylasimaAcikMi !== false);
+  const gonderilebilirPortfoyler = acikPortfoylerim.length > 0 ? acikPortfoylerim : aktifPortfoylerim;
+
+  wrap.innerHTML = filtrelenmisTalepler
+    .map(t => {
+      const bolgemleEslesiyor = danismanUzmanlikSemtVeBolgeleriTalepleEslesiyorMu(t, danismanProfili);
+      const gosterilenSemt = t.semt || mahalledenSemtBul(t.il, t.ilce, t.mahalle) || t.ilce;
+
+      const portfoyOptionsHtml = gonderilebilirPortfoyler
+        .map(
+          p =>
+            `<option value="${p.kod}">#${p.kod} — ${p.baslik} (${p.fiyat || ""}) ${
+              p.paylasimaAcikMi !== false ? "• [Paylaşıma Açık]" : ""
+            }</option>`
+        )
         .join("");
 
-      const iletisimVeSunumKutusuHtml = seciliAday
-        ? `
-          <div class="saas-alert-banner" style="margin-top:12px;">
-            <div class="saas-alert-banner-left">
-              <strong style="font-size:0.84rem;color:#0F172A;">
-                ${seciliAday.ad} (${seciliAday.telefon}) • ${seciliAday.portfoyFiyat}
-              </strong>
-              <span class="saas-text-xs">Paylaşım oranını meslektaşınızla doğrudan görüşebilirsiniz.</span>
-            </div>
-            <div class="saas-alert-banner-right">
-              <a href="tel:${(seciliAday.telefon || "05326114455").replace(/\s+/g, "")}" class="saas-btn-outline-sm">
-                <span>Uzmanı Ara</span>
-              </a>
-              <a
-                href="https://wa.me/9${(seciliAday.telefon || "05326114455").replace(/\D/g, "")}?text=${encodeURIComponent(
-                  `Merhaba ${seciliAday.ad}, Mülkİzle üzerinden ${t.il} ${t.ilce} (${t.oda}, ${t.kat}, ${t.fiyatAraligi}) alıcı talebim için ulaşıyorum.`
-                )}"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="saas-btn-outline-sm"
-              >
-                <span>Mesaj Gönder</span>
-              </a>
-              <button type="button" class="saas-btn-primary-sm" onclick="aliciCoopOrtakSunumAc('${t.id}')">
-                <span>Portföy Sunumunu Aç</span>
-              </button>
-            </div>
-          </div>
-        `
-        : "";
-
       return `
-        <div class="saas-card" style="padding:18px;">
-          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:12px;border-bottom:1px solid #E2E8F0;margin-bottom:12px;">
-            <div>
-              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:4px;">
+        <div class="saas-card" style="padding:18px;${bolgemleEslesiyor ? "border:1.5px solid #2563EB;" : ""}">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px;">
+            <div style="flex:1;min-width:260px;">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px;">
                 <span class="saas-badge-neutral">Talep #${t.id}</span>
-                <span class="saas-text-xs">${t.tarih} • ${t.olusturanDanisman}</span>
+                <span class="saas-badge-blue">📍 ${t.il} / ${t.ilce} • <strong>${gosterilenSemt} Semti</strong> (${t.mahalle || "Tüm Mahalleler"})</span>
+                ${
+                  bolgemleEslesiyor
+                    ? `<span style="font-size:0.71rem;font-weight:800;background:#FEF3C7;color:#B45309;border:1px solid #FDE68A;padding:2px 8px;border-radius:999px;">🔔 Uzmanlık Semtinizle Eşleşiyor</span>`
+                    : ""
+                }
+                <span class="saas-text-xs">${t.tarih} • Talep Açan: <strong>${t.olusturanDanisman}</strong></span>
               </div>
-              <h3 class="saas-h2">
-                ${t.il} / ${t.ilce} — ${t.oda} • ${t.kat} • ${t.cephe} • ${t.binaYasi || "5-10 Yaş"}
+              <h3 class="saas-h2" style="margin-bottom:4px;">
+                ${t.il} / ${t.ilce} — ${gosterilenSemt} (${t.mahalle || "Semt Geneli"}) • ${t.oda} • ${t.kat} • ${t.cephe}
               </h3>
-              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+              ${t.not ? `<p class="saas-text-xs" style="margin:4px 0 8px;color:#334155;line-height:1.45;">"${t.not}"</p>` : ""}
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
                 <span class="saas-badge-neutral">Bütçe: ${t.fiyatAraligi}</span>
                 <span class="saas-badge-neutral">${t.krediDurumu}</span>
                 <span class="saas-badge-neutral">${t.tapuDurumu}</span>
                 <span class="saas-badge-blue">${t.alimZamani}</span>
               </div>
             </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+              <button type="button" class="social-btn-primary" style="padding:8px 14px;font-size:0.79rem;" onclick="ariyorumPortfoyGonderCekmecesiToggle('${t.id}')">
+                <span>📤 Aktif Portföyümü Gönder</span>
+              </button>
+              <span style="font-size:0.68rem;color:#64748B;">🔒 Yalnızca talep açanın mesajına düşer</span>
+            </div>
           </div>
 
-          <div class="saas-text-xs" style="font-weight:600;color:#0F172A;margin-bottom:8px;">
-            Cevap Veren Bölge Uzmanları (${(t.cevapVerenler || []).length}):
+          <!-- TIKLAYINCA AÇILAN: AKTİF PORTFÖYÜMÜ TALEP SAHİBİNİN MESAJ KUTUSUNA GÖNDERME ALANI -->
+          <div id="sendPropDrawer-${t.id}" style="display:none;margin-top:14px;padding-top:14px;border-top:1px dashed #CBD5E1;background:#F8FAFC;padding:12px 14px;border-radius:10px;">
+            <div style="font-size:0.8rem;font-weight:700;color:#0F172A;margin-bottom:8px;">
+              🔒 ${t.olusturanDanisman.split("(")[0].trim()} adlı danışmanın Özel Mesaj Kutusuna Gönderilecek Aktif Portföyünüzü Seçin:
+            </div>
+            <div class="form-grid-2" style="margin-bottom:8px;">
+              <div class="field" style="margin-bottom:0;">
+                <select id="sendPropSelect-${t.id}" class="saas-input-compact" style="width:100%;padding:8px 10px;">
+                  ${portfoyOptionsHtml}
+                </select>
+              </div>
+              <div class="field" style="margin-bottom:0;">
+                <input
+                  type="text"
+                  id="sendPropNote-${t.id}"
+                  class="saas-input-compact"
+                  placeholder="Meslektaşınıza özel mesaj notunuz (Örn: Portföyüm paylaşıma açıktır, alıcınıza sunabiliriz...)"
+                  style="width:100%;padding:8px 10px;"
+                />
+              </div>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:8px;">
+              <button type="button" class="saas-btn-outline-sm" onclick="ariyorumPortfoyGonderCekmecesiToggle('${t.id}')">İptal</button>
+              <button type="button" class="saas-btn-primary-sm" onclick="ariyorumAktifPortfoyumuMesajOlarakGonder('${t.id}')">
+                <span>Mesaj Kutusuna Gönder →</span>
+              </button>
+            </div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            ${cevaplarHtml}
-          </div>
-
-          ${iletisimVeSunumKutusuHtml}
         </div>
       `;
     })

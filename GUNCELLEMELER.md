@@ -39,6 +39,21 @@ Bu dosya projede yapılan yeni özellikleri, arayüz eklemelerini ve yapısal de
 
 ---
 
-### 4. 🤝 Ortak Çalışma ve Görev Takip Dosyaları
+### 4. 🤝 Portföy Bazlı "Paylaşıma Açık / Kapalı" Switch & Arıyorum! (81 İl • İlçe • Semt • Mahalle + Özel Mesajla Portföy Gönderimi)
+* **Aktif Portföylerim — Portföy Bazlı Paylaşım Switch'i (`#mode-portfolios`):**
+  * Her aktif portföy kartının üzerinde o portföye özel **"Paylaşıma Açık / Paylaşıma Kapalı"** switch'i yer alır.
+* **Sahibinden Tarzı `İl → İlçe → Semt (Bölge) → Mahalle` 4 Kademeli Konum Yapısı:**
+  * **Profil & Uzmanlık Bölgesi (`#mode-profile`):** Danışman uzmanlığını **Semt (Bölge)** olarak seçtiğinde (*Örn: Çankaya → Çayyolu Semti*), o semte bağlı tüm alt mahalleleri (*Alacaatlı, Konutkent, Yaşamkent, Ümitköy, Çayyolu, Koru vb.*) otomatik olarak kapsar. Profil düzenleme ekranına hızlı **"Semt (Bölge) Seçerek Uzmanlığıma Ekle"** aracı eklendi.
+  * **Yeni Mülk Takip Kodu Sihirbazı (`#newPortfolioModal`):** Konum seçimi `İl → İlçe → Semt / Bölge → Mahalle` olarak 4 kademeye çıkarıldı.
+  * **Arıyorum! Tıklayınca Açılan Talep Formu & 4'lü Filtreleme (`#view-ariyorum`):**
+    * Talep açma ekranı sağ üstteki **"+ Yeni Arama Talebi Aç"** butonuna tıklayınca açılır.
+    * Hem talep açarken hem de mevcut talepleri filtrelerken **İl (81 İl) • İlçe • Semt / Bölge • Mahalle** seçilebilir. Semt genel seçildiğinde o semtin tüm mahalleleri de altında listelenir.
+    * Üye `"Çayyolu"` semtinde uzmanım dediğinde, `"Alacaatlı Mah."` veya `"Konutkent Mah."` için açılan bir talep otomatik olarak **"🔔 Uzmanlık Semtinizle Eşleşiyor"** olarak işaretlenir ve bildirimlerine düşer.
+* **"📤 Aktif Portföyümü Gönder" (Herkese Açık Görünmez, Talep Açanın Mesaj Kutusuna Düşer):**
+  * Her talebin yanında **"📤 Aktif Portföyümü Gönder"** butonu yer alır. Danışman aktif portföyünü seçip gönderdiğinde kimse görmez; doğrudan **talep açan danışmanın özel Mesaj Kutusuna** düşer.
+
+---
+
+### 5. 🤝 Ortak Çalışma ve Görev Takip Dosyaları
 * **`ORTAK_CALISMA_REHBERI.md`:** Gencay (İçerik & Emlak İş Kurgusu) ve Abisi (UI/UX, Tasarım & Mobil Uygulama) arasındaki görev/dosya sınırlarını ve GitHub (`pull` → `commit` → `push`) çalışma düzenini anlatan rehber eklendi.
 * **`TODO.md`:** UI/UX, Mobil Uygulama ve İçerik yapılacaklar listesi ile karşılıklı istek/not köşesi eklendi.
