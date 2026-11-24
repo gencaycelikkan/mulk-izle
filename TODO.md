@@ -1,8 +1,35 @@
-# 📋 Mülkİzle (`mulkizle.com`) — Ortak Yapılacaklar Listesi (TODO)
+# 📋 Mülkİzle (`mulkizle.com`) — Ortak Yapılacaklar Listesi (TODO) & Adım Adım Yol Haritası
 
 Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulama)** arasındaki ortak görev takip tablosudur.
 * Tamamlanan maddelerin başındaki `[ ]` işaretini `[x]` olarak güncelleyebilirsiniz.
-* Birbirinizden istediğiniz tasarım veya metin taleplerini ilgili başlığın altına ekleyebilirsiniz.
+* Dağınıklığı önlemek için her oturumda **tek bir ekran / tek bir özellik** seçilip tamamlandıktan sonra bir sonrakine geçilir.
+
+---
+
+## 🚨 Öncelikli Yeni Özellik Talepleri (Gencay — Sıradaki Geliştirmeler)
+
+- [ ] **1. Tekil Alıcı Mülk Takip Kodu Sistemi (Aynı Portföy İçin Her Alıcıya Ayrı Kod):**
+  - Aynı portföy için birden fazla alıcıya **aynı mülk takip kodu gitmeyecek**; her alıcıya özel tekil takip kodu üretilecek (böylece hangi alıcının incelediği, teklif verdiği veya yer gösterimi onayladığı kişi bazlı takip edilecek).
+- [ ] **2. "Potansiyel Alıcılarım" Havuzu (Satılan Portföyün Alıcılarını Aktarma):**
+  - Bir portföy için birden fazla alıcıya mülk takip kodu atıldığında ve o portföy satıldığında (veya kapatıldığında), o portföyle ilgilenmiş diğer tüm alıcıların iletişim ve bütçe/tercih bilgileri otomatik olarak danışmanın **"Potansiyel Alıcılarım"** bölümüne aktarılacak; sol menüde/panelde böyle özel bir bölüm açılacak.
+- [ ] **3. Mülk Arama ve Portföy Sistemine "Arsa" Kategorisi Eklenmesi:**
+  - Mülk arama (`Arıyorum!`) ve portföy oluşturma ekranlarına Konut dışında **Arsa** (Ada/Parsel, İmar Durumu, $m^2$, KAKS/EMSAL, Gabari vb.) seçeneği eklenecek.
+- [ ] **4. Arıyorum!'dan Mesajla Gelen Portföyün Tıklanabilir Olması:**
+  - `Arıyorum!` talebine karşılık bir danışman **"📤 Aktif Portföyümü Gönder"** dediğinde ve bu portföy talep sahibinin **Mesajlar** kutusuna düştüğünde, mesaj içindeki portföy kartı/kodu **tıklanabilir** olacak; tıklandığında ilgili portföyün detay/katalog ekranı açılacak.
+- [ ] **5. Üye Olma ve Üye Girişi Ekranlarına "Ben Robot Değilim" Kutucuğu:**
+  - Yeni Danışman / Ofis Üyelik Formuna (`#view-membership-form`) ve Üye Girişi penceresine (`#agentLoginModal`) bot/spam koruması için **"Ben robot değilim"** onay kutucuğu eklenecek.
+
+---
+
+## 🧭 7 Adımlı "Tek Seferde Tek Ekran" Çalışma Sırası
+
+- [ ] **1. ADIM: Vitrin & Tanıtım Sayfaları** (*Üst Menü, Ana Sayfa, Neden Mülkİzle?, Hizmetlerimiz, Mobil Uygulama, Biz Kimiz?*)
+- [ ] **2. ADIM: Üye Ol (5'li Paket Seçimi) → Ayrı Sayfada Üyelik Formu & Üye Girişi** (*"Ben robot değilim" kutucuğu dahil*)
+- [ ] **3. ADIM: Yeni Mülk Takip Kodu Oluşturma Sihirbazı (`+` Butonu)** (*Konut + Arsa desteği dahil*)
+- [ ] **4. ADIM: Aktif Portföylerim, Tekil Alıcı Kodları & "Potansiyel Alıcılarım" Bölümü**
+- [ ] **5. ADIM: Mülk Sahibi (Satıcı) & Alıcı Katalog Ekranları**
+- [ ] **6. ADIM: Danışman Günlük Operasyon Araçları** (*Bildirimler, Mesajlar [tıklanabilir portföy kartı dahil], Mülk Ajandam*)
+- [ ] **7. ADIM: Pro Network Özellikleri** (*Arıyorum! [Arsa filtreli] ve Profilim `mulkizle.com/adiniz`*)
 
 ---
 

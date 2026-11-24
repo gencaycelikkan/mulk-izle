@@ -2,7 +2,7 @@
 // MÜLKİZLE (mulkizle.com) — 3 PANELLİ (EMLAKÇI • SATICI • ALICI) UYGULAMA MANTIĞI
 // ============================================================================
 
-const UCRETSIZ_LIMIT = 4;
+const UCRETSIZ_LIMIT = 3;
 const STORAGE_KEY = "mulkizle_portfoyler_clean_v1";
 const USERS_STORAGE_KEY = "mulkizle_kullanicilar_clean_v1";
 const ACTIVE_USER_KEY = "mulkizle_aktif_kullanici_clean_v1";
@@ -611,8 +611,35 @@ function anaSayfaSayaclariniGuncelle() {
 // ============================================================================
 let danismanGirisYaptiMi = false;
 let bekleyenDanismanModu = "mode-portfolios";
+let _aktifGorunumId = "view-landing";
+let _aktifDanismanModu = "mode-portfolios";
+let _popstateIsleniyor = false;
+let _sonHistoryPushZamani = 0;
+
+function tarayiciGecmisineKaydet(viewId, modeId) {
+  if (_popstateIsleniyor || typeof window.history === "undefined") return;
+  const v = viewId || _aktifGorunumId || "view-landing";
+  const m = modeId || _aktifDanismanModu || "mode-portfolios";
+  const mevcut = window.history.state;
+  if (mevcut && mevcut.view === v && (v !== "view-dashboard" || mevcut.mode === m)) {
+    return;
+  }
+  const hashAd =
+    v === "view-dashboard"
+      ? `#panel-${m.replace(/^mode-/, "")}`
+      : `#${v.replace(/^view-/, "")}`;
+  const stateObj = { view: v, mode: m, seciliKod: seciliKod || "" };
+  const simdi = Date.now();
+  if (simdi - _sonHistoryPushZamani < 80) {
+    window.history.replaceState(stateObj, "", hashAd);
+  } else {
+    window.history.pushState(stateObj, "", hashAd);
+    _sonHistoryPushZamani = simdi;
+  }
+}
 
 function gorunumDegistir(hedefId) {
+  _aktifGorunumId = hedefId;
   document.querySelectorAll(".app-view").forEach(v => {
     v.classList.toggle("active", v.id === hedefId);
   });
@@ -620,13 +647,18 @@ function gorunumDegistir(hedefId) {
     btn.classList.toggle("active", btn.dataset.target === hedefId);
   });
 
+  tarayiciGecmisineKaydet(hedefId, _aktifDanismanModu);
+
   // Sol ikon barı site ana sayfasında (ve üye girişi yapılmadığında) görünmez;
   // Üye girişi yapıldığında görünür ve üye girişi yapılınca üstteki "Ana Sayfa - Mobil Uygulama - Biz Kimiz?" sekmeleri gizlenir.
   const kamusalSayfaMi =
     hedefId === "view-landing" ||
+    hedefId === "view-why-mulkizle" ||
+    hedefId === "view-services" ||
     hedefId === "view-mobile-app" ||
     hedefId === "view-about" ||
-    hedefId === "view-membership";
+    hedefId === "view-membership" ||
+    hedefId === "view-membership-form";
   const uyeBariniGoster = Boolean(danismanGirisYaptiMi && !kamusalSayfaMi);
   document.body.classList.toggle("member-logged-in", uyeBariniGoster);
 
@@ -776,23 +808,42 @@ function danismanCikisYap() {
 }
 
 // ============================================================================
-// ÜYELİK SAYFASI: GOOGLE İLE HIZLI KAYIT, FİRMA BİLGİSİ VE REFERANS KODU
+// ÜYELİK SAYFASI: PAKET SEÇİMİNDEN SONRA AYRI SAYFADA ÜYELİK FORMU AÇMA
 // ============================================================================
-function paketSecVeFormaOdaklan(paketId) {
-  const sel = document.getElementById("regSelectedPlan");
-  if (sel) sel.value = paketId;
-  referansKoduKontrolEt(false);
-  const card = document.getElementById("membershipRegisterCard");
-  if (card) {
-    card.scrollIntoView({ behavior: "smooth", block: "center" });
+const PAKET_OZET_ETIKETLERI = {
+  ucretsiz: "Seçilen Paket: Ücretsiz Başlangıç (0 ₺ / 3 Aktif Portföy)",
+  pro: "Seçilen Paket: Pro Danışman Paketi (799 ₺ / ay — Sınırsız)",
+  takim: "Seçilen Paket: Takım Lideri Paketi (2.999 ₺ / ay — 5 Danışman)",
+  broker: "Seçilen Paket: Broker / Ofis Paketi (11.999 ₺ / ay — 25 Danışman)"
+};
+
+function secilenPaketRozetiniGuncelle(paketId) {
+  const badge = document.getElementById("selectedPlanSummaryBadge");
+  if (badge) {
+    badge.textContent = PAKET_OZET_ETIKETLERI[paketId] || PAKET_OZET_ETIKETLERI.ucretsiz;
   }
-  document.getElementById("regFullName")?.focus();
+}
+
+function paketSecVeFormaOdaklan(paketId) {
+  const secilen = paketId || "ucretsiz";
+  const sel = document.getElementById("regSelectedPlan");
+  if (sel) sel.value = secilen;
+  secilenPaketRozetiniGuncelle(secilen);
+  referansKoduKontrolEt(false);
+  gorunumDegistir("view-membership-form");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  setTimeout(() => {
+    document.getElementById("regFullName")?.focus();
+  }, 120);
 }
 
 function referansKoduKontrolEt(bildirimGoster = false) {
   const kodInput = document.getElementById("regReferralCode");
   const fb = document.getElementById("regReferralFeedback");
   const planSel = document.getElementById("regSelectedPlan");
+  if (planSel) {
+    secilenPaketRozetiniGuncelle(planSel.value);
+  }
   if (!kodInput || !fb) return;
 
   const kod = (kodInput.value || "").trim().toUpperCase();
@@ -929,6 +980,8 @@ function danismanAnaModSec(modId, btnEl) {
     gorunumDegistir("view-ariyorum");
     return;
   }
+  _aktifDanismanModu = modId;
+  tarayiciGecmisineKaydet(_aktifGorunumId, modId);
   document.querySelectorAll(".agent-mode-section").forEach(sec => {
     sec.classList.toggle("active", sec.id === modId);
   });
@@ -984,15 +1037,13 @@ function danismanSolMenuSec(secim) {
     (secim === "ariyorum" ||
       secim === "edit-profile" ||
       secim === "view-website" ||
-      secim === "messages" ||
-      secim === "agenda")
+      secim === "messages")
   ) {
     const adMap = {
-      ariyorum: "Arıyorum! (81 İl Alıcı & Ortak Portföy Ağı)",
+      ariyorum: "Arıyorum! (Türkiye Geneli Danışman Networkü)",
       "edit-profile": "Profilim & Kişisel Web Sitesi",
       "view-website": "Profilim (Kişisel Danışman Web Sitesi)",
-      messages: "Üyelere Özel Mesaj Kutusu",
-      agenda: "Mülk Ajandam & Randevu Planlayıcı"
+      messages: "Üyelere Özel Mesaj Kutusu"
     };
     ucretsizUyeProKisitiGoster(adMap[secim] || "Bu Özellik");
     return;
@@ -1056,7 +1107,7 @@ function igSolMenuGuncelle(aktifSecim) {
   // Sol bardaki tüm menü öğeleri her zaman görünür ve tıklanabilir;
   // Bildirimler ücretsiz üyede de açıktır. Diğer Pro özelliklerin yanında küçük "PRO" etiketi çıkar ve tıklayınca Ücretli Üyelik (Paywall) paneli açılır!
   const proMu = aktifDanismanProMu();
-  const proOzelMenuIdleri = ["igNavMessages", "igNavAgenda", "igNavAriyorum", "igNavViewWebsite"];
+  const proOzelMenuIdleri = ["igNavMessages", "igNavAriyorum", "igNavViewWebsite"];
   proOzelMenuIdleri.forEach(elId => {
     const el = document.getElementById(elId);
     if (!el) return;
@@ -6011,7 +6062,7 @@ function kisiselSiteLinkiniKopyala() {
     .replace(/ö/g, "o")
     .replace(/ç/g, "c")
     .replace(/[^a-z0-9]+/g, "-");
-  const url = `https://mulkizle.com/d/${slug}`;
+  const url = `https://mulkizle.com/${slug}`;
   if (navigator.clipboard) {
     navigator.clipboard.writeText(url).catch(() => {});
   }
@@ -10497,6 +10548,33 @@ document.addEventListener("DOMContentLoaded", () => {
   mobilUygulamaSimulasyonRender();
   karakterSimulasyonBariniRenderEt();
   anaSayfaSayaclariniGuncelle();
+
+  // Tarayıcı ve Mouse Geri / İleri Tuşları (HTML5 History API) Desteği
+  if (typeof window.history !== "undefined") {
+    window.history.replaceState(
+      { view: _aktifGorunumId, mode: _aktifDanismanModu, seciliKod: seciliKod || "" },
+      "",
+      window.location.hash || "#landing"
+    );
+
+    window.addEventListener("popstate", e => {
+      const st = e.state || { view: "view-landing", mode: "mode-portfolios" };
+      _popstateIsleniyor = true;
+      try {
+        if (st.seciliKod) {
+          seciliKod = st.seciliKod;
+        }
+        const hedefView = st.view || "view-landing";
+        gorunumDegistir(hedefView);
+        if (hedefView === "view-dashboard" && st.mode) {
+          danismanAnaModSec(st.mode);
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } finally {
+        _popstateIsleniyor = false;
+      }
+    });
+  }
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js").catch(() => {});

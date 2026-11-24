@@ -4246,6 +4246,738 @@ body.member-logged-in #navRegisterBtn {
   white-space: nowrap;
 }
 
+/* ============================================================================
+   8. PRELINE UI & TABLER SAAS MODERNİZASYON KATMANI (AJANS KALİTESİNDE UI/UX)
+   ============================================================================ */
+
+/* Genel Sayfa ve Konteyner Ferahlığı */
+body {
+  background-color: #F8FAFC;
+  background-image: radial-gradient(at 50% 0%, rgba(37, 99, 235, 0.055) 0px, transparent 55%);
+  background-attachment: fixed;
+  color: #0F172A;
+}
+
+.container {
+  max-width: 1280px;
+}
+
+/* Üst Bar (Topbar) Preline Glassmorphism */
+.topbar {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+  padding: 13px 0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
+}
+
+.view-tabs {
+  background: #F1F5F9;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  gap: 3px;
+}
+
+.view-tab {
+  padding: 8px 16px;
+  border-radius: 9px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #475569;
+  transition: all 0.18s ease;
+}
+
+.view-tab:hover {
+  color: #0F172A;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.view-tab.active {
+  background: #FFFFFF;
+  color: #2563EB;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+/* Butonlar — Preline / Shadcn Dokunuşu */
+.btn {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 10px 18px;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #2563EB 0%, #1D4ED8 100%);
+  border: 1px solid #1D4ED8;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, #1D4ED8 0%, #1E40AF 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.22);
+}
+
+.btn-outline {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #0F172A;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+.btn-outline:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  color: #2563EB;
+}
+
+/* Ana Sayfa Hero Alanı — Modern SaaS Vitrin */
+.cargo-hero {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+  border: 1px solid #E2E8F0;
+  border-radius: 24px;
+  padding: 48px 36px 40px;
+  margin-bottom: 28px;
+  box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.05), 0 2px 6px rgba(15, 23, 42, 0.02);
+  position: relative;
+  overflow: hidden;
+}
+
+.cargo-hero::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 720px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.11) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cargo-hero-centered {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.modern-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1D4ED8;
+  font-size: 0.73rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin-bottom: 18px;
+}
+
+.modern-hero-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.cargo-hero h1 {
+  font-size: 2.35rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.18;
+  color: #0F172A;
+  margin-bottom: 14px;
+}
+
+.cargo-hero p {
+  font-size: 1.02rem;
+  color: #475569;
+  line-height: 1.6;
+  max-width: 660px;
+  margin: 0 auto 28px;
+}
+
+/* 12 Haneli Takip Kodu Sorgulama Kutusu */
+.hero-tracking-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 18px 20px;
+  box-shadow: 0 10px 28px -6px rgba(15, 23, 42, 0.07);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero-tracking-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.hero-input-icon-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.hero-input-search-icon {
+  position: absolute;
+  left: 16px;
+  color: #94A3B8;
+  pointer-events: none;
+}
+
+.hero-tracking-input {
+  width: 100%;
+  padding: 15px 16px 15px 46px;
+  border-radius: 12px;
+  border: 1.5px solid #CBD5E1;
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #0F172A;
+  background: #F8FAFC;
+  transition: all 0.18s ease;
+}
+
+.hero-tracking-input:focus {
+  background: #FFFFFF;
+  border-color: #2563EB;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+  outline: none;
+}
+
+.hero-submit-btn {
+  padding: 0 28px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.hero-sample-codes-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid #F1F5F9;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.hero-sample-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.hero-sample-pill {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: #334155;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.73rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.hero-sample-pill:hover {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+  color: #2563EB;
+}
+
+/* Ana Sayfa 3'lü Özellik Kartları (Trust Pillars) */
+.trust-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 28px 0;
+}
+
+.trust-pillar-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 26px 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.025);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.trust-pillar-card:hover {
+  transform: translateY(-3px);
+  border-color: #BFDBFE;
+  box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.07);
+}
+
+.pillar-icon-box {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #EFF6FF;
+  color: #2563EB;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.trust-pillar-card h3 {
+  font-size: 1.06rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 8px;
+  letter-spacing: -0.015em;
+}
+
+.trust-pillar-card p {
+  font-size: 0.875rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+/* Modern CTA Banner */
+.modern-cta-banner {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  color: #FFFFFF;
+  border-radius: 20px;
+  padding: 32px 36px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.18);
+}
+
+.modern-cta-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #60A5FA;
+  margin-bottom: 6px;
+}
+
+.modern-cta-banner h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.modern-cta-banner p {
+  font-size: 0.88rem;
+  color: #CBD5E1;
+  max-width: 620px;
+}
+
+.modern-cta-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Sayfa Üst Başlık Hero Kartı (Neden Mülkİzle & Hizmetlerimiz) */
+.modern-section-hero {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 22px;
+  padding: 38px 36px;
+  margin-bottom: 24px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+}
+
+.modern-section-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1D4ED8;
+  font-size: 0.73rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin-bottom: 14px;
+}
+
+.modern-section-hero h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.03em;
+  line-height: 1.22;
+  max-width: 820px;
+  margin: 0 auto 12px;
+}
+
+.modern-section-hero p {
+  font-size: 0.96rem;
+  color: #475569;
+  line-height: 1.65;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+/* Neden Mülkİzle 3'lü Büyük Kartlar */
+.modern-why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.modern-why-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 28px 26px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modern-why-card.accent-blue {
+  border-top: 4px solid #2563EB;
+}
+
+.modern-why-card.accent-navy {
+  border-top: 4px solid #0F172A;
+}
+
+.modern-why-card.accent-emerald {
+  border-top: 4px solid #10B981;
+}
+
+.modern-why-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.modern-why-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.modern-why-icon.blue {
+  background: #EFF6FF;
+  color: #2563EB;
+}
+
+.modern-why-icon.navy {
+  background: #F1F5F9;
+  color: #0F172A;
+}
+
+.modern-why-icon.emerald {
+  background: #ECFDF5;
+  color: #059669;
+}
+
+.modern-why-header h2 {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-top: 6px;
+  line-height: 1.3;
+}
+
+.modern-why-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modern-why-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.modern-check-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.74rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.modern-check-circle.blue {
+  background: #EFF6FF;
+  color: #2563EB;
+}
+
+.modern-check-circle.navy {
+  background: #F1F5F9;
+  color: #0F172A;
+}
+
+.modern-check-circle.emerald {
+  background: #ECFDF5;
+  color: #059669;
+}
+
+.modern-why-item strong {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 3px;
+}
+
+.modern-why-item p {
+  font-size: 0.84rem;
+  color: #475569;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Karşılaştırma Kartı */
+.modern-compare-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
+}
+
+.modern-compare-card h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 16px;
+}
+
+.modern-compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.modern-compare-box {
+  padding: 20px;
+  border-radius: 14px;
+}
+
+.modern-compare-box.negative {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+}
+
+.modern-compare-box.positive {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+}
+
+.modern-compare-title {
+  font-size: 0.94rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: #0F172A;
+}
+
+.modern-compare-box p {
+  font-size: 0.85rem;
+  color: #334155;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.modern-compare-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #E2E8F0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+/* Hizmetlerimiz 6'lı Bento Grid */
+.modern-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.modern-service-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 26px 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.025);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.modern-service-card:hover {
+  transform: translateY(-3px);
+  border-color: #93C5FD;
+  box-shadow: 0 14px 28px -8px rgba(37, 99, 235, 0.12);
+}
+
+.modern-service-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modern-service-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #EFF6FF;
+  color: #2563EB;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modern-service-num {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #CBD5E1;
+  letter-spacing: -0.03em;
+}
+
+.modern-service-card h3 {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.modern-service-card p {
+  font-size: 0.86rem;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 5'li Yan Yana Ödeme Planı Kartları */
+.price-card {
+  border-radius: 18px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.price-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.08);
+}
+
+.price-card.featured {
+  border: 2px solid #2563EB;
+  box-shadow: 0 12px 28px -6px rgba(37, 99, 235, 0.16);
+}
+
+@media (max-width: 1100px) {
+  .pricing-grid-five-side {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .pricing-grid-five-side,
+  .trust-pillars-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .cargo-hero {
+    padding: 28px 18px;
+  }
+  .cargo-hero h1 {
+    font-size: 1.65rem;
+  }
+  .hero-tracking-form {
+    flex-direction: column;
+  }
+  .hero-submit-btn {
+    padding: 14px;
+    justify-content: center;
+  }
+}
+
+/* Danışman Paneli (Dashboard) Kartları ve Form Alanları Modernizasyonu */
+.saas-card,
+.editor-card,
+.ma-section-card {
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.025);
+}
+
+.hb-portfolio-card {
+  border-radius: 16px !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.025) !important;
+  transition: all 0.18s ease !important;
+}
+
+.hb-portfolio-card:hover {
+  border-color: #BFDBFE !important;
+  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Sol Navigasyon Barı (Tabler / Preline Tarzı Net ve Okunaklı) */
+.ig-left-sidebar {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid #E2E8F0;
+  width: 68px;
+}
+
+.ig-left-sidebar:hover {
+  width: 236px;
+  background: #FFFFFF;
+  box-shadow: 12px 0 32px -8px rgba(15, 23, 42, 0.1);
+}
+
+.ig-nav-item.active {
+  background: #EFF6FF;
+  color: #2563EB;
+}
+
+.ig-nav-item.active .ig-nav-icon,
+.ig-nav-item.active .ig-nav-label {
+  color: #2563EB;
+}
+
 
 
 

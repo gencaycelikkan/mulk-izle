@@ -23,6 +23,15 @@ Bu dosya projede yapılan yeni özellikleri, arayüz eklemelerini ve yapısal de
 * Sol bardaki *"Profil & Blog Düzenle"* sekmesi kaldırıldı; *"Kişisel Web Sitemi Gör"* sekmesinin adı **"Profilim"** olarak sadeleştirildi (düzenleme işlemi Profilim sayfasının içindeki *"Profili Düzenle"* butonuyla yapılır).
 * Aktif portföylerdeki **"Paylaşıma Açık / Paylaşıma Kapalı"** switch'i danışmanın **Profilim (Kişisel Web Sitesi)** vitriniyle doğrudan bağlandı: switch kapalıysa diğer üyeler veya ziyaretçiler o portföyü danışmanın profilinde göremez.
 
+### 4. 📦 5'li Yan Yana Ödeme Planları, 2 Adımlı Üyelik Akışı & Yeni Kurumsal Sayfalar
+* **Ücretsiz Üyelik Limiti (3 Aktif Portföy):** Ücretsiz üyelik hakkı 3 aktif portföy olarak güncellendi.
+* **5 Ödeme Planı Yan Yana (`#view-membership`):** *Ücretsiz üyelik, Pro, Takım Lideri Paketi, Broker / Ofis Paketi ve Kurumsal & Şube (25+)* paketleri sayfada 5 sütun halinde yan yana dizildi.
+* **Paket Seçiminden Sonra Ayrı Sayfada Açılan Üyelik Formu (`#view-membership-form`):** *"Üye Ol"* sayfasında önce paket seçilir; herhangi bir pakete tıklandığında seçilen paket rozetiyle birlikte ayrı bir sayfada **"Yeni Danışman / Ofis Üyelik Formu"** açılır.
+* **"Neden Mülkİzle?" (`#view-why-mulkizle`) ve "Hizmetlerimiz" (`#view-services`) Sayfaları:** Üst menüye eklendi; Danışmanlar, Mülk Sahipleri ve Alıcılar için faydalar ile Pro pakette sunulan 6 ana hizmet detaylandırıldı.
+* **Kişisel Web Sitesi URL Yapısı:** Danışman kişisel web sitesi adresleri `/d/` olmadan doğrudan **`mulkizle.com/adiniz`** formatına geçirildi.
+* **Üye Girişi Penceresi (`#agentLoginModal`):** Sağ üst köşedeki **`✕`** butonuyla kapanacak, sade **"Üye Girişi"** başlığı ve **"Giriş Yap"** butonuyla çalışacak şekilde temizlendi.
+* **Preline UI / Tabler SaaS Tasarım Modernizasyonu & Mouse Geri/İleri Tuşu Desteği:** Tüm sayfalara modern SaaS kart/tipografi katmanı ve tarayıcı/mouse Geri-İleri tuşlarıyla sayfa geçişi sağlayan HTML5 `History API` (`pushState` / `popstate`) desteği eklendi.
+
 ---
 
 ## 📅 23 Kasım 2026 — Yeni Eklenen Özellikler
