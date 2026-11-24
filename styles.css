@@ -133,6 +133,24 @@ body {
   font-size: 1.05rem;
 }
 
+.brand-slogan {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #64748B;
+  letter-spacing: -0.01em;
+  padding-left: 11px;
+  margin-left: 2px;
+  border-left: 1.5px solid #CBD5E1;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+@media (max-width: 1120px) {
+  .brand-slogan {
+    display: none;
+  }
+}
+
 /* Kurumsal Sekme Seçici */
 .view-tabs {
   display: inline-flex;
