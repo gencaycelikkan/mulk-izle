@@ -440,41 +440,6 @@ function kullanicilariKaydet() {
   } catch (e) {}
 }
 
-function tumKullanicilariVeVerileriSifirla() {
-  kayitliKullanicilar = [];
-  aktifKullanici = null;
-  portfoyler = [];
-  seciliKod = "";
-  acikAkordeonPortfoyKodu = null;
-  danismanGirisYaptiMi = false;
-  proPaketAktif = false;
-  danismanProfili = {
-    ad: "",
-    ofis: "",
-    deneyim: "",
-    telefon: "",
-    foto: "",
-    il: "Ankara",
-    ilce: "",
-    bolgeler: "",
-    hobiler: "",
-    bio: "",
-    instagram: "",
-    twitter: "",
-    linkedin: "",
-    magazaUrl: "",
-    bloglar: []
-  };
-  try {
-    localStorage.removeItem(USERS_STORAGE_KEY);
-    localStorage.removeItem(ACTIVE_USER_KEY);
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(PROFILE_STORAGE_KEY);
-  } catch (e) {}
-  const navText = document.getElementById("navAgentLoginBtnText");
-  if (navText) navText.textContent = "Üye Girişi";
-}
-
 function verileriYukle() {
   kullanicilariYukle();
   try {
@@ -549,13 +514,6 @@ function portfoyGoruntulenmeSayisiniAl(p) {
   p.tekilGoruntuleyenler = [];
   p.siteIciGoruntulenmeSayisi = 0;
   return 0;
-}
-
-function portfoyGoruntulenmeSayisiniAyarla(p, yeniSayi) {
-  if (!p) return 0;
-  const temiz = Math.max(0, parseInt(String(yeniSayi || "0").replace(/\D/g, ""), 10) || 0);
-  p.siteIciGoruntulenmeSayisi = temiz;
-  return temiz;
 }
 
 function portfoyGoruntulenmeArtir(kod, kaydetVeYenile = true, gorunumTipi = "") {
@@ -1085,9 +1043,6 @@ function danismanSolMenuSec(secim) {
     gorunumDegistir("view-agent-profile");
     igSolMenuGuncelle("view-website");
   }
-  if (typeof karakterSimulasyonBariniRenderEt === "function") {
-    karakterSimulasyonBariniRenderEt();
-  }
 }
 
 function igSolMenuGuncelle(aktifSecim) {
@@ -1144,17 +1099,6 @@ function igSolMenuGuncelle(aktifSecim) {
       notifBadge.textContent = `${okunmamisB}`;
       notifBadge.style.display = okunmamisB > 0 ? "inline-flex" : "none";
     }
-  }
-}
-
-// Sağ Alt Köşe Gizlenebilir "Demo & Hızlı Test" Çekmecesi
-function demoCekmecesiToggle(forceState) {
-  const drawer = document.getElementById("demoQuickDrawer");
-  if (!drawer) return;
-  if (typeof forceState === "boolean") {
-    drawer.classList.toggle("open", forceState);
-  } else {
-    drawer.classList.toggle("open");
   }
 }
 
@@ -1370,11 +1314,6 @@ function portfoySec(kod) {
     seciliKod = kod;
     acikAkordeonPortfoyKodu = kod;
   }
-  panelYenile();
-}
-
-function portfoyAkordeonKapat() {
-  acikAkordeonPortfoyKodu = null;
   panelYenile();
 }
 
@@ -1851,20 +1790,6 @@ function aiOzgecmisOlustur() {
 
   kisiselProfilKaydet(false);
   alert("✨ Yapay Zeka (AI), uzmanlık bölgenize ve profilinize uygun profesyonel özgeçmiş metninizi hazırladı!");
-}
-
-function danismanFotografiYukle(event) {
-  const file = event.target.files && event.target.files[0];
-  const p = aktifPortfoy();
-  if (!file || !p) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const ma = varsayilanPazarAnalizi(p);
-    ma.danismanFoto = e.target.result;
-    document.getElementById("maAgentPhotoPreview").src = e.target.result;
-    verileriKaydet();
-  };
-  reader.readAsDataURL(file);
 }
 
 // İlan Sitelerinden (Sahibinden / Hepsiemlak / Emlakjet) Linkle Rakip İlan Otomatik Çekme
@@ -2670,21 +2595,6 @@ function dosyadanFotografYukle(event) {
     };
     reader.readAsDataURL(file);
   });
-}
-
-function ornekFotografEkle() {
-  const p = aktifPortfoy();
-  if (!p) return;
-  const rastgele = ORNEK_FOTOGRAFLAR[Math.floor(Math.random() * ORNEK_FOTOGRAFLAR.length)];
-  p.medya = p.medya || [];
-  p.medya.push({
-    baslik: `${rastgele.baslik} (#${p.medya.length + 1})`,
-    url: rastgele.url,
-    sikistirmaBilgisi: "8.4 MB → 136 KB WebP (%98 Tasarruf)"
-  });
-  verileriKaydet();
-  medyaGalerisiRender();
-  pazarAnaliziRender();
 }
 
 function fotografSil(idx) {
@@ -3786,11 +3696,6 @@ function seciliSozlesmeyiYazdir() {
   win.document.close();
 }
 
-function hazirYetkiTaslagiYazdir() {
-  seciliSozlesmeyiYazdir();
-}
-
-// ============================================================================
 // ============================================================================
 // YENİ PORTFÖY AÇMA MODALI: 6 SAYFALI ADIM ADIM MÜLK TAKİP KODU OLUŞTURMA SİHİRBAZI
 // TÜRKİYE'NİN 81 İLİ, TÜM İLÇELERİ, MAHALLELERİ + KKTC VE YURT DIŞI ÜLKELER
@@ -4669,12 +4574,6 @@ function demoProyaGec() {
 // 2. PANEL: SATICI (MÜLK SAHİBİ) & CO-OP ORTAK DANIŞMAN CANLI TAKİP EKRANI
 // ============================================================================
 let aktifTakipKoduGiris = "";
-let aktifSaticiSekmesi = "seller-tab-process";
-
-function saticiAltSekmeSec(sekmeId) {
-  aktifSaticiSekmesi = sekmeId;
-  saticiPaneliniGoster(aktifTakipKoduGiris || seciliKod);
-}
 
 const WHATSAPP_OFFICIAL_SVG = `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.031 2C6.508 2 2.023 6.485 2.023 12.008c0 1.766.46 3.489 1.334 5.01L2 22l5.122-1.343a9.97 9.97 0 0 0 4.909 1.295h.004c5.522 0 10.007-4.485 10.007-10.008C22.042 6.485 17.554 2 12.031 2zm5.826 14.128c-.246.693-1.428 1.326-1.984 1.409-.506.076-1.147.108-1.852-.116-.428-.136-.977-.318-1.682-.622-2.96-1.278-4.892-4.26-5.04-4.458-.148-.197-1.203-1.601-1.203-3.054 0-1.453.76-2.167 1.03-2.463.271-.296.592-.37.789-.37.197 0 .395.002.567.01.182.009.426-.069.667.509.246.591.838 2.045.912 2.193.074.148.123.32.025.518-.099.197-.148.32-.296.493-.148.172-.311.385-.444.517-.148.148-.302.309-.13.604.173.296.767 1.265 1.646 2.049 1.132 1.009 2.085 1.322 2.381 1.47.296.148.469.123.641-.074.173-.197.74-.863.937-1.158.198-.296.395-.247.666-.148.271.099 1.726.814 2.022.962.296.148.493.222.567.345.074.123.074.715-.172 1.408z"/></svg>`;
 
@@ -5211,16 +5110,6 @@ function saticiPaneliniGoster(kod) {
   `;
 }
 
-// Satıcının Her Adıma Emoji (👍 ❤️ 👏 🔥) Bırakması
-function saticiAdimEmojiSec(idx, emoji) {
-  const p = aktifPortfoy();
-  if (!p || !p.hizmetler || !p.hizmetler[idx]) return;
-  const h = p.hizmetler[idx];
-  h.emoji = h.emoji === emoji ? "" : emoji;
-  verileriKaydet();
-  saticiPaneliniGoster(p.kod);
-}
-
 // Satıcının Her Adıma Yorum Yazması
 function saticiAdimYorumYaz(idx) {
   const p = aktifPortfoy();
@@ -5234,63 +5123,6 @@ function saticiAdimYorumYaz(idx) {
   h.saticiYorumu = yorum.trim();
   verileriKaydet();
   saticiPaneliniGoster(p.kod);
-}
-
-// Satıcı Panelinin Altındaki WhatsApp Mesaj Kutusundan Danışmana Soru/Mesaj Gönderme
-function saticidanEmlakciyaWhatsappGonder() {
-  const p = aktifPortfoy();
-  if (!p) return;
-  const input = document.getElementById("sellerDirectWaInput");
-  const mesaj = (input?.value || "").trim() || `Merhaba ${p.danisman}, ${p.kod} kodlu mülkümün takip ekranını inceledim.`;
-
-  const bugun = new Date().toLocaleDateString("tr-TR", {
-    day: "numeric",
-    month: "long",
-    hour: "2-digit",
-    minute: "2-digit"
-  });
-
-  // Mülk günlüğüne de satıcı sorusu olarak kaydet
-  p.gunluk = p.gunluk || [];
-  p.gunluk.unshift({
-    tarih: `${bugun} • Satıcı Mesajı`,
-    metin: `💬 Mülk Sahibi (${p.mulkSahibi}) Mesajı: "${mesaj}"`,
-    gorunurluk: "public"
-  });
-  verileriKaydet();
-
-  const temizTel = (p.danismanTel || "905320000000").replace(/\D/g, "");
-  const waTel = temizTel.startsWith("0") ? `9${temizTel}` : temizTel;
-  const tamMetin = `📦 *Mülkİzle (${p.kod} - ${p.baslik})*\n*Mülk Sahibi:* ${p.mulkSahibi}\n\n💬 *Mesajım:* ${mesaj}`;
-  window.open(`https://wa.me/${waTel}?text=${encodeURIComponent(tamMetin)}`, "_blank");
-  if (input) input.value = "";
-  saticiPaneliniGoster(p.kod);
-}
-
-function saticiMobilYetkiOnayla() {
-  const p = aktifPortfoy();
-  if (!p) return;
-  const otp = (document.getElementById("sellerOtpInput").value || "").trim();
-  const tcSon4 = (document.getElementById("sellerTcInput").value || "").trim() || "Doğrulandı";
-  if (!otp) {
-    alert("Lütfen SMS onay kodunu girin.");
-    return;
-  }
-
-  const damga = new Date().toLocaleDateString("tr-TR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit"
-  });
-
-  p.yetkiOnaylandiMi = true;
-  p.yetkiOnayDetayi = `${damga} • SMS Kodu (${otp}) & TC Son 4 (${tcSon4}) ile ${p.mulkSahibi} tarafından mobil onaylandı`;
-
-  verileriKaydet();
-  saticiPaneliniGoster(p.kod);
-  alert("✅ Yetki Sözleşmesi mobil onayla başarıyla mühürlendi!");
 }
 
 // Satıcının Fiyat Teklifini Onaylaması veya Reddetmesi
@@ -5315,40 +5147,9 @@ function saticiTeklifKarar(idx, karar) {
   saticiPaneliniGoster(p.kod);
 }
 
-// Satıcının Yer Gösterim Randevusunu Onaylaması veya Reddetmesi
-function saticiGosterimKarar(idx, karar) {
-  const p = aktifPortfoy();
-  if (!p || !p.yerGosterimleri || !p.yerGosterimleri[idx]) return;
-
-  const g = p.yerGosterimleri[idx];
-  const not = prompt(
-    karar === "approved"
-      ? `✅ "${g.tarihSaat}" tarihli yer gösterim randevusunu ONAYLIYORSUNUZ.\nDanışmanınıza iletmek istediğiniz bir not var mı?`
-      : `❌ "${g.tarihSaat}" tarihli yer gösterim randevusunu REDDEDİYORSUNUZ.\nUygun olduğunuz alternatif gün/saati yazabilirsiniz:`,
-    karar === "approved" ? "Belirtilen saatte mülk gösterime uygundur." : "O saatte müsait değiliz, farklı bir saat planlayalım."
-  );
-
-  if (not === null) return; // İptal
-
-  g.durum = karar;
-  g.saticiYaniti = not.trim() || (karar === "approved" ? "Randevu satıcı tarafından onaylandı." : "Randevu saati satıcı tarafından reddedildi.");
-
-  verileriKaydet();
-  saticiPaneliniGoster(p.kod);
-}
-
 // ============================================================================
 // 3. PANEL: ALICI (DİJİTAL SUNUM, 360° TUR, FİLİGRANLI GALERİ & TEKLİF VERME)
 // ============================================================================
-function aliciSecimKutusunuDoldur() {
-  const sel = document.getElementById("buyerPortfolioSelect");
-  if (!sel) return;
-  const yayindakiPortfoyler = portfoyler.filter(portfoyunAktifIlaniVarMi);
-  sel.innerHTML = yayindakiPortfoyler
-    .map(p => `<option value="${p.kod}" ${p.kod === seciliKod ? "selected" : ""}>${p.kod} — ${p.baslik} (${p.fiyat || ""})</option>`)
-    .join("");
-}
-
 function aliciPaneliniGoster(kod) {
   const p = portfoyler.find(x => x.kod === kod) || aktifPortfoy();
   const container = document.getElementById("buyerPanelOutput");
@@ -6051,24 +5852,6 @@ function blogYazisiSil(idx) {
   kisiselProfilEditorRender();
 }
 
-function kisiselSiteLinkiniKopyala() {
-  if (!danismanProfili) profilYukle();
-  const slug = (danismanProfili.ad || "gencay-celikkan")
-    .toLowerCase()
-    .replace(/ğ/g, "g")
-    .replace(/ü/g, "u")
-    .replace(/ş/g, "s")
-    .replace(/ı/g, "i")
-    .replace(/ö/g, "o")
-    .replace(/ç/g, "c")
-    .replace(/[^a-z0-9]+/g, "-");
-  const url = `https://mulkizle.com/${slug}`;
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(url).catch(() => {});
-  }
-  alert(`🔗 Kişisel Web Sitenizin Sosyal Medya Bio Linki Kopyalandı:\n\n${url}\n\nBu linki Instagram, TikTok, LinkedIn ve WhatsApp profilinize ekleyebilirsiniz!`);
-}
-
 // DANIŞMANIN KİŞİSEL WEB SİTESİ & DİJİTAL KARTVİZİT GÖRÜNÜMÜ (#view-agent-profile)
 // - Rozetler: Küçük ikonlar
 // - Instagram, Twitter, LinkedIn: Tıklamalı kutucuklar
@@ -6094,13 +5877,6 @@ function portfoyunAktifIlaniVarMi(item) {
   return true;
 }
 
-let acikBlogSatirIdx = 0;
-
-function blogSatirToggle(idx) {
-  acikBlogSatirIdx = acikBlogSatirIdx === idx ? null : idx;
-  danismanKisiselWebSitesiGoster();
-}
-
 let incelenenWebSitesiDanismanId = "ahmet-demir";
 let aktifProfilSekmesi = "portfolios";
 // "owner" (Profil Sahibi) | "member" (Diğer Üye Emlakçı) | "guest" (Üye Olmayan / Satıcı / Alıcı)
@@ -6109,16 +5885,6 @@ let profilGoruntuleyenModu = "owner";
 function profilSekmeSec(sekmeId) {
   aktifProfilSekmesi = sekmeId;
   danismanKisiselWebSitesiGoster();
-}
-
-function danismanWebSitesiSecVeGoster(hedefDanismanId, goruntuleyenModu) {
-  if (hedefDanismanId) {
-    incelenenWebSitesiDanismanId = hedefDanismanId;
-  }
-  if (goruntuleyenModu) {
-    profilGoruntuleyenModu = goruntuleyenModu;
-  }
-  gorunumDegistir("view-agent-profile");
 }
 
 function danismanKisiselWebSitesiGoster() {
@@ -6497,12 +6263,6 @@ function danismanKisiselWebSitesiGoster() {
   `;
 }
 
-let acikVitrinPortfoyKodu = null;
-
-function vitrinPortfoyToggle(kod) {
-  acikVitrinPortfoyKodu = acikVitrinPortfoyKodu === kod ? null : kod;
-  danismanKisiselWebSitesiGoster();
-}
 const IL_ILCE_HARITASI = {
   İzmir: ["Narlıdere", "Karşıyaka", "Mavişehir", "Urla", "Bornova"],
   İstanbul: ["Bağcılar", "Kadıköy", "Beşiktaş", "Başakşehir"],
@@ -6627,34 +6387,8 @@ function bolgeUzmaniIlDegisti() {
 }
 
 // ============================================================================
-// PAYLAŞIMA AÇIK MISIN? (AÇIĞIM / AÇIK DEĞİLİM) & ALICI KRİTERLERİYLE BÖLGE UZMANINA SORMA (KOMİSYONU KENDİ ARALARINDA KONUŞURLAR)
+// ALICI KRİTERLERİYLE BÖLGE UZMANINA SORMA & ARIYORUM! AĞI
 // ============================================================================
-let danismanPaylasimaAcikMi = true;
-
-function danismanPaylasimDurumuDegistir(acikMi) {
-  danismanPaylasimaAcikMi = Boolean(acikMi);
-  const btnYes = document.getElementById("btnCoopOpenYes");
-  const btnNo = document.getElementById("btnCoopOpenNo");
-
-  if (btnYes && btnNo) {
-    if (danismanPaylasimaAcikMi) {
-      btnYes.className = "btn btn-primary btn-sm";
-      btnNo.className = "btn btn-outline btn-sm";
-    } else {
-      btnYes.className = "btn btn-outline btn-sm";
-      btnNo.className = "btn btn-accent btn-sm";
-    }
-  }
-
-  // Havuzdaki kendi kartımızın durumunu da güncelle
-  const kendiKartim = BOLGE_UZMANLARI_HAVUZU.find(u => u.id === "uzman-ankara-1");
-  if (kendiKartim) {
-    kendiKartim.paylasimaAcikMi = danismanPaylasimaAcikMi;
-  }
-
-  bolgeUzmaniAraRender();
-}
-
 const BUYER_COOP_STORAGE_KEY = "mulkizle_alici_coop_talepleri_v6";
 let aliciCoopTalepleri = [];
 let ariyorumIlSecicileriHazirMi = false;
@@ -6802,19 +6536,6 @@ function danismanUzmanlikSemtVeBolgeleriTalepleEslesiyorMu(talep, dp) {
     }
   }
   return talepIlce && uyeMetni.includes(talepIlce);
-}
-
-function ilIlceyeGoreMahalleListesiGetir(il, ilce) {
-  if (!il || !ilce || il === "Tümü" || ilce === "Tümü") return [];
-  const ozelListe = typeof DETAYLI_MAHALLELER !== "undefined" ? DETAYLI_MAHALLELER[`${il}:${ilce}`] : null;
-  if (ozelListe && ozelListe.length > 0) {
-    return [...ozelListe];
-  }
-  const standart =
-    typeof STANDART_ILCE_MAHALLELERI !== "undefined"
-      ? STANDART_ILCE_MAHALLELERI.filter(m => m !== "Merkez Mah.")
-      : ["Cumhuriyet Mah.", "Atatürk Mah.", "Yeni Mah.", "Fatih Mah.", "Bahçelievler Mah."];
-  return [`${ilce} Merkez Mah.`, ...standart];
 }
 
 function ariyorumYeniTalepFormuToggle(forceState) {
@@ -7757,11 +7478,6 @@ function takipKoduTelefonDogrulaOnayla() {
   saticiPaneliniGoster(dogrulanacakKod);
 }
 
-// Ana Sayfa Hero Kargo Sorgulama Kutusu
-function heroKodSorgula(kod) {
-  heroKodSecVeDogrula(kod);
-}
-
 // ============================================================================
 // DİKEY SÜREÇ ADIMLARI DETAY POP-UP MODALI & BAŞKA BİR PENCEREDE GÖSTERME SİSTEMİ
 // ============================================================================
@@ -7838,75 +7554,6 @@ function adimDetayMaddeleriGetir(adimAdi, durum, portfoy) {
     "WebTapu üzerinden başvuru yapılarak tapu harçları, döner sermaye ve banka/Takasbank süreçleri koordine edilir.",
     "Tapu müdürlüğünde güvenli mülkiyet ve bedel devri ile süreç başarıyla tamamlanır."
   ];
-}
-
-function ornekAdimDetayPopUpAc(idx, dogrudanYeniPencere = false) {
-  const ornekAdimlar = [
-    {
-      no: 1,
-      ad: "Profesyonel Fotoğraf Çekimi & Yerinde Keşif",
-      durum: "done",
-      durumMetni: "Tamamlandı",
-      tarih: "14 Kasım 2026 • 11:30"
-    },
-    {
-      no: 2,
-      ad: "Pazar & Rakip Fiyat Analizi Raporu",
-      durum: "done",
-      durumMetni: "Tamamlandı",
-      tarih: "15 Kasım 2026 • 14:15"
-    },
-    {
-      no: 3,
-      ad: "Drone, 360° Sanal Tur & İlan Portalları Yayını",
-      durum: "done",
-      durumMetni: "Tamamlandı",
-      tarih: "16 Kasım 2026 • 10:00"
-    },
-    {
-      no: 4,
-      ad: "Kayıtlı Yer Gösterimleri & Alıcı Geri Bildirimleri",
-      durum: "current",
-      durumMetni: "Aktif Yapılıyor",
-      tarih: "19 Kasım 2026 • Devam Ediyor"
-    },
-    {
-      no: 5,
-      ad: "Resmi Fiyat Teklifi Toplama & Satıcı Onayı",
-      durum: "pending",
-      durumMetni: "Sırada",
-      tarih: "Planlanan Aşama"
-    },
-    {
-      no: 6,
-      ad: "Kapora Protokolü, Sözleşme & Güvenli Tapu Devri",
-      durum: "pending",
-      durumMetni: "Final Aşaması",
-      tarih: "Planlanan Aşama"
-    }
-  ];
-
-  const secilen = ornekAdimlar[idx] || ornekAdimlar[0];
-  const p = portfoyler[0];
-  const veri = {
-    no: secilen.no,
-    toplamAdim: ornekAdimlar.length,
-    ad: secilen.ad,
-    durum: secilen.durum,
-    durumMetni: secilen.durumMetni,
-    tarih: secilen.tarih,
-    mulkBaslik: p ? p.baslik : "Örnek Mülk Portföyü (Bağlıca 3+1 Daire)",
-    takipKodu: p ? p.kod : "849201736410",
-    danisman: p ? p.danisman : "Gencay Çelikkan",
-    ofis: p ? p.ofis : "Mülkİzle Gayrimenkul Ankara",
-    aciklama: adimAciklamaMetniGetir(secilen.ad, secilen.durum, p),
-    maddeler: adimDetayMaddeleriGetir(secilen.ad, secilen.durum, p),
-    saticiYorumu: "",
-    saticiModu: false,
-    stepIdx: idx
-  };
-
-  adimDetayPopUpGoster(veri, dogrudanYeniPencere);
 }
 
 function saticiAdimDetayPopUpAc(idx, dogrudanYeniPencere = false) {
@@ -9228,190 +8875,22 @@ function dortKarakterVerileriniHazirla() {
   kullanicilariKaydet();
 }
 
-let aktifKarakterAltAksiyon = "seller-website";
-
-function karakterGozundenBak(karakterId, altAksiyon) {
-  dortKarakterVerileriniHazirla();
-  aktifTestKarakteri = karakterId;
-
-  const ahmet = DORT_KARAKTER_PROFILLERI["ahmet-demir"];
-  const selin = DORT_KARAKTER_PROFILLERI["selin-yilmaz"];
-  const navText = document.getElementById("navAgentLoginBtnText");
-
-  if (karakterId === "emlakci-1") {
-    // 1. KARAKTER: ANA EMLAKÇI (AHMET DEMİR)
-    aktifKullanici = kayitliKullanicilar.find(u => u.id === "ahmet-demir") || kayitliKullanicilar[0];
-    danismanProfili = JSON.parse(JSON.stringify(ahmet));
-    danismanGirisYaptiMi = true;
-    proPaketAktif = false;
-    incelenenWebSitesiDanismanId = "ahmet-demir";
-    seciliKod = "849201736410";
-    if (navText) navText.textContent = "Danışman Paneli (Ahmet)";
-
-    aktifKarakterAltAksiyon = altAksiyon || "dashboard";
-    if (aktifKarakterAltAksiyon === "own-website") {
-      incelenenWebSitesiDanismanId = "ahmet-demir";
-      gorunumDegistir("view-agent-profile");
-    } else if (aktifKarakterAltAksiyon === "inspect-agent2") {
-      incelenenWebSitesiDanismanId = "selin-yilmaz";
-      gorunumDegistir("view-agent-profile");
-    } else {
-      gorunumDegistir("view-dashboard");
-      danismanAnaModSec("mode-portfolios", document.querySelector(".agent-mode-btn"));
-    }
-  } else if (karakterId === "satici") {
-    // 2. KARAKTER: SATICI / MÜLK SAHİBİ (KEMAL SOYLU)
-    if (navText) navText.textContent = "Satıcı Modu (Kemal Soylu)";
-    aktifKarakterAltAksiyon = altAksiyon || "seller-website";
-
-    if (aktifKarakterAltAksiyon === "seller-website") {
-      incelenenWebSitesiDanismanId = "ahmet-demir";
-      gorunumDegistir("view-agent-profile");
-    } else if (aktifKarakterAltAksiyon === "seller-website-2") {
-      incelenenWebSitesiDanismanId = "selin-yilmaz";
-      gorunumDegistir("view-agent-profile");
-    } else if (aktifKarakterAltAksiyon === "seller-track-draft") {
-      seciliKod = "518293047162";
-      aktifTakipKoduGiris = "518293047162";
-      gorunumDegistir("view-seller");
-    } else {
-      seciliKod = "849201736410";
-      aktifTakipKoduGiris = "849201736410";
-      gorunumDegistir("view-seller");
-    }
-  } else if (karakterId === "alici") {
-    // 3. KARAKTER: ALICI (ZEYNEP KAYA)
-    if (navText) navText.textContent = "Alıcı Modu (Zeynep Kaya)";
-    aktifKarakterAltAksiyon = altAksiyon || "buyer-dossier";
-
-    if (aktifKarakterAltAksiyon === "buyer-agent1-web") {
-      incelenenWebSitesiDanismanId = "ahmet-demir";
-      gorunumDegistir("view-agent-profile");
-    } else if (aktifKarakterAltAksiyon === "buyer-agent2-web") {
-      incelenenWebSitesiDanismanId = "selin-yilmaz";
-      gorunumDegistir("view-agent-profile");
-    } else if (aktifKarakterAltAksiyon === "buyer-dossier-2") {
-      seciliKod = "592837461029";
-      gorunumDegistir("view-buyer");
-    } else {
-      seciliKod = "849201736410";
-      gorunumDegistir("view-buyer");
-    }
-  } else if (karakterId === "emlakci-2") {
-    // 4. KARAKTER: BAŞKA EMLAKÇI (SELİN YILMAZ — YILMAZ LUXURY / CO-OP ORTAK)
-    aktifKullanici = kayitliKullanicilar.find(u => u.id === "selin-yilmaz") || kayitliKullanicilar[1];
-    danismanProfili = JSON.parse(JSON.stringify(selin));
-    danismanGirisYaptiMi = true;
-    proPaketAktif = true;
-    if (navText) navText.textContent = "Danışman Paneli (Selin)";
-
-    aktifKarakterAltAksiyon = altAksiyon || "inspect-agent1";
-    if (aktifKarakterAltAksiyon === "inspect-agent1") {
-      incelenenWebSitesiDanismanId = "ahmet-demir";
-      gorunumDegistir("view-agent-profile");
-    } else if (aktifKarakterAltAksiyon === "coop-track") {
-      seciliKod = "849201736410";
-      aktifTakipKoduGiris = "910482736519";
-      gorunumDegistir("view-seller");
-    } else if (aktifKarakterAltAksiyon === "own-website") {
-      incelenenWebSitesiDanismanId = "selin-yilmaz";
-      gorunumDegistir("view-agent-profile");
-    } else if (aktifKarakterAltAksiyon === "own-dashboard") {
-      seciliKod = "592837461029";
-      gorunumDegistir("view-dashboard");
-      danismanAnaModSec("mode-portfolios", document.querySelector(".agent-mode-btn"));
-    }
-  }
-
-  karakterSimulasyonBariniRenderEt();
-}
-
 let aktifHizliTestEkrani = "dashboard";
 
 function hizliEkranTestSec(ekranTipi) {
   dortKarakterVerileriniHazirla();
   aktifHizliTestEkrani = ekranTipi;
+  if (!seciliKod) seciliKod = (portfoyler[0] && portfoyler[0].kod) || "849201736410";
 
-  const ahmet = DORT_KARAKTER_PROFILLERI["ahmet-demir"];
-  const navText = document.getElementById("navAgentLoginBtnText");
-  incelenenWebSitesiDanismanId = "ahmet-demir";
-  if (!seciliKod) seciliKod = "849201736410";
-
-  if (ekranTipi === "landing") {
-    // Üye girişi yapılmamış Ana Sayfa görünümü
-    danismanGirisYaptiMi = false;
-    profilGoruntuleyenModu = "guest";
-    if (navText) navText.textContent = "Üye Girişi";
-    gorunumDegistir("view-landing");
-  } else if (ekranTipi === "dashboard") {
-    aktifKullanici = kayitliKullanicilar.find(u => u.id === "ahmet-demir") || kayitliKullanicilar[0];
-    danismanProfili = JSON.parse(JSON.stringify(ahmet));
-    danismanGirisYaptiMi = true;
-    if (navText) navText.textContent = "Danışman Paneli (Ahmet)";
-    profilGoruntuleyenModu = "owner";
-    gorunumDegistir("view-dashboard");
-    danismanAnaModSec("mode-portfolios", document.getElementById("modeBtnPortfolios"));
-  } else if (ekranTipi === "ariyorum") {
-    aktifKullanici = kayitliKullanicilar.find(u => u.id === "ahmet-demir") || kayitliKullanicilar[0];
-    danismanProfili = JSON.parse(JSON.stringify(ahmet));
-    danismanGirisYaptiMi = true;
-    if (navText) navText.textContent = "Danışman Paneli (Ahmet)";
-    profilGoruntuleyenModu = "owner";
-    gorunumDegistir("view-ariyorum");
-  } else if (ekranTipi === "profile-owner") {
-    aktifKullanici = kayitliKullanicilar.find(u => u.id === "ahmet-demir") || kayitliKullanicilar[0];
-    danismanProfili = JSON.parse(JSON.stringify(ahmet));
-    danismanGirisYaptiMi = true;
-    if (navText) navText.textContent = "Danışman Paneli (Ahmet)";
-    profilGoruntuleyenModu = "owner";
-    gorunumDegistir("view-agent-profile");
-  } else if (ekranTipi === "profile-member") {
-    aktifKullanici = kayitliKullanicilar.find(u => u.id === "ahmet-demir") || kayitliKullanicilar[0];
-    danismanProfili = JSON.parse(JSON.stringify(ahmet));
-    danismanGirisYaptiMi = true;
-    if (navText) navText.textContent = "Danışman Paneli (Üye)";
-    profilGoruntuleyenModu = "member";
-    gorunumDegistir("view-agent-profile");
-  } else if (ekranTipi === "profile-guest") {
-    danismanGirisYaptiMi = false;
-    if (navText) navText.textContent = "Üye Girişi";
-    profilGoruntuleyenModu = "guest";
-    gorunumDegistir("view-agent-profile");
-  } else if (ekranTipi === "seller") {
-    danismanGirisYaptiMi = false;
-    if (navText) navText.textContent = "Üye Girişi";
-    profilGoruntuleyenModu = "guest";
-    seciliKod = "849201736410";
-    aktifTakipKoduGiris = "849201736410";
+  if (ekranTipi === "seller") {
+    aktifTakipKoduGiris = seciliKod;
     gorunumDegistir("view-seller");
   } else if (ekranTipi === "buyer") {
-    danismanGirisYaptiMi = false;
-    if (navText) navText.textContent = "Üye Girişi";
-    profilGoruntuleyenModu = "guest";
-    seciliKod = "849201736410";
     gorunumDegistir("view-buyer");
-  }
-
-  karakterSimulasyonBariniRenderEt();
-}
-
-function karakterSimulasyonBariniRenderEt() {
-  const idMap = {
-    landing: "qBtnLanding",
-    dashboard: "qBtnDashboard",
-    ariyorum: "qBtnAriyorum",
-    "profile-owner": "qBtnProfileOwner",
-    "profile-member": "qBtnProfileMember",
-    "profile-guest": "qBtnProfileGuest",
-    seller: "qBtnSeller",
-    buyer: "qBtnBuyer"
-  };
-  Object.entries(idMap).forEach(([key, btnId]) => {
-    const el = document.getElementById(btnId);
-    if (el) el.classList.toggle("active", aktifHizliTestEkrani === key);
-  });
-  if (typeof igSolMenuGuncelle === "function" && aktifHizliTestEkrani === "ariyorum") {
-    igSolMenuGuncelle("ariyorum");
+  } else if (ekranTipi === "landing") {
+    gorunumDegistir("view-landing");
+  } else if (ekranTipi === "dashboard") {
+    gorunumDegistir("view-dashboard");
   }
 }
 
@@ -10546,7 +10025,6 @@ document.addEventListener("DOMContentLoaded", () => {
   panelYenile();
   saticiPaneliniGoster(seciliKod);
   mobilUygulamaSimulasyonRender();
-  karakterSimulasyonBariniRenderEt();
   anaSayfaSayaclariniGuncelle();
 
   // Tarayıcı ve Mouse Geri / İleri Tuşları (HTML5 History API) Desteği
