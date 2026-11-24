@@ -57,43 +57,7 @@
     </div>
   </header>
 
-  <!-- YORMAYAN TEK SATIRLIK HIZLI GÖRÜNÜM GEÇİŞ BARI (KARAKTERSİZ, DOĞRUDAN EKRAN TESTİ) -->
-  <div class="persona-sim-wrapper" id="quickTestViewBar">
-    <div class="container ig-switcher-inner">
-      <div class="ig-persona-group">
-        <span class="ig-switcher-label">
-          <span class="ig-live-dot"></span>
-          <span>Hızlı Ekran Geçişi:</span>
-        </span>
-        <div class="ig-persona-pills">
-          <button type="button" class="ig-persona-pill" id="qBtnLanding" onclick="hizliEkranTestSec('landing')">
-            <span>Ana Sayfa (Girişsiz)</span>
-          </button>
-          <button type="button" class="ig-persona-pill" id="qBtnDashboard" onclick="hizliEkranTestSec('dashboard')">
-            <span>Danışman Paneli (Üye)</span>
-          </button>
-          <button type="button" class="ig-persona-pill" id="qBtnAriyorum" onclick="hizliEkranTestSec('ariyorum')">
-            <span>Arıyorum!</span>
-          </button>
-          <button type="button" class="ig-persona-pill" id="qBtnProfileOwner" onclick="hizliEkranTestSec('profile-owner')">
-            <span>Kişisel Web Sitesi (Sahibi)</span>
-          </button>
-          <button type="button" class="ig-persona-pill" id="qBtnProfileMember" onclick="hizliEkranTestSec('profile-member')">
-            <span>Kişisel Web Sitesi (Diğer Üye Emlakçı)</span>
-          </button>
-          <button type="button" class="ig-persona-pill" id="qBtnProfileGuest" onclick="hizliEkranTestSec('profile-guest')">
-            <span>Kişisel Web Sitesi (Üye Olmayan)</span>
-          </button>
-          <button type="button" class="ig-persona-pill" id="qBtnSeller" onclick="hizliEkranTestSec('seller')">
-            <span>Satıcı Görünümü (Takip Kodu)</span>
-          </button>
-          <button type="button" class="ig-persona-pill" id="qBtnBuyer" onclick="hizliEkranTestSec('buyer')">
-            <span>Alıcı Görünümü (Takip Kodu)</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- HIZLI GÖRÜNÜM GEÇİŞ BARI KALDIRILDI (GERÇEK KULLANICI GİRİŞİ İLE MANUEL TEST) -->
 
   <!-- INSTAGRAM TARZI SOLDA İKONLU, MOUSE ÜZERİNE GELİNCE AÇILAN DANIŞMAN YAN MENÜSÜ -->
   <aside class="ig-left-sidebar" id="igLeftSidebar" aria-label="Danışman Sol Navigasyon">
@@ -156,7 +120,7 @@
         <span class="ig-nav-label">Mesajlar</span>
       </button>
 
-      <!-- 5. Ajandam (Takvim İkonu — Gün, Tarih ve Saatli Randevu & Not Takibi) -->
+      <!-- 5. Mülk Ajandam (Takvim İkonu — Gün, Tarih ve Saatli Randevu & Not Takibi) -->
       <button type="button" class="ig-nav-item" id="igNavAgenda" onclick="danismanSolMenuSec('agenda')">
         <span class="ig-nav-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -171,7 +135,7 @@
             <path d="M12 18h.01"/>
           </svg>
         </span>
-        <span class="ig-nav-label">Ajandam</span>
+        <span class="ig-nav-label">Mülk Ajandam</span>
       </button>
 
       <!-- 6. Arıyorum! (Büyüteç İkonu — Ayrı Sayfada Açılan Bölge Uzmanı & Ortak Çalışma) -->
@@ -185,20 +149,7 @@
         <span class="ig-nav-label">Arıyorum!</span>
       </button>
 
-      <!-- 5. Pano / Profil & Blog Düzenle (Instagram Pano İkonu) -->
-      <button type="button" class="ig-nav-item" id="igNavEditProfile" onclick="danismanSolMenuSec('edit-profile')">
-        <span class="ig-nav-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="4" ry="4"/>
-            <line x1="8" y1="16" x2="8" y2="12"/>
-            <line x1="12" y1="16" x2="12" y2="8"/>
-            <line x1="16" y1="16" x2="16" y2="11"/>
-          </svg>
-        </span>
-        <span class="ig-nav-label">Profil &amp; Blog Düzenle</span>
-      </button>
-
-      <!-- 6. Kişisel Web Sitemi Gör (Instagram Yuvarlak Profil Fotoğrafı İkonu) -->
+      <!-- 6. Profilim (Instagram Yuvarlak Profil Fotoğrafı İkonu — Kişisel Web Sitesi & İçinden Düzenleme) -->
       <button type="button" class="ig-nav-item" id="igNavViewWebsite" onclick="danismanSolMenuSec('view-website')">
         <span class="ig-nav-icon">
           <img
@@ -208,7 +159,7 @@
             id="igSidebarAvatarImg"
           />
         </span>
-        <span class="ig-nav-label">Kişisel Web Sitemi Gör</span>
+        <span class="ig-nav-label">Profilim</span>
       </button>
     </nav>
 
@@ -700,7 +651,7 @@
             <!-- Seçili Mülkün 5 Net Sekmesi (Mülk ve İsteğe Bağlı Pazar Analizi Ayrıldı) -->
             <div class="sub-tabs">
               <button type="button" class="sub-tab-btn active" id="subTabBtnServices" onclick="emlakciAltSekme('sub-services', this)">
-                01. Süreç &amp; Mülk Günlüğü
+                01. Süreç &amp; Kişisel Notlar
               </button>
               <button type="button" class="sub-tab-btn" id="subTabBtnMedia" onclick="emlakciAltSekme('sub-property-media', this)">
                 02. Mülk
@@ -717,14 +668,14 @@
             </div>
 
             <!-- ==============================================================
-                 MÜLK SEKMESİ 01: MÜLK GÜNLÜĞÜM (ÜSTTE, SADECE DANIŞMANA ÖZEL) + KRONOLOJİK SÜREÇ ADIMLARI
+                 MÜLK SEKMESİ 01: KİŞİSEL NOTLAR (ÜSTTE, SADECE DANIŞMANA ÖZEL) + KRONOLOJİK SÜREÇ ADIMLARI
                  ============================================================== -->
             <div id="sub-services" class="sub-panel active">
-              <!-- 1. MÜLK GÜNLÜĞÜM (EN ÜSTTE — SADECE DANIŞMANA ÖZEL SAHA, ANAHTAR, KAPICI & PAZARLIK NOTLARI) -->
+              <!-- 1. KİŞİSEL NOTLAR (EN ÜSTTE — SADECE DANIŞMANA ÖZEL SAHA, ANAHTAR, KAPICI & PAZARLIK NOTLARI) -->
               <div class="saas-card" style="padding:16px 18px;margin-bottom:20px;background:#F8FAFC;">
                 <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
                   <div>
-                    <h2 class="saas-h2">Mülk Günlüğüm (Sadece Size Özel Saha &amp; İletişim Notları)</h2>
+                    <h2 class="saas-h2">Kişisel Notlar (Sadece Size Özel Saha &amp; İletişim Notları)</h2>
                     <div class="saas-text-xs">Kapıcı telefonu, anahtar yeri, aidat veya pazarlık alt limiti gibi özel notlarınız satıcı panelinde görünmez.</div>
                   </div>
                   <span class="saas-badge-neutral">Satıcı Panelinde Gizli</span>
@@ -739,7 +690,7 @@
                     style="flex:1;min-width:240px;padding:9px 12px;font-size:0.84rem;"
                   />
                   <button type="button" class="saas-btn-primary-sm" style="padding:9px 16px;" onclick="gunlukNotuEkle()">
-                    <span>+ Günlüğe Kaydet</span>
+                    <span>+ Notlara Kaydet</span>
                   </button>
                 </div>
 
@@ -2168,22 +2119,35 @@
     </div>
   </div>
 
-  <!-- 3 ÜCRETSİZ İŞ DOLDUĞUNDA ÇIKAN PRO PAKET (PAYWALL) PENCERESİ -->
+  <!-- 3 ÜCRETSİZ İŞ DOLDUĞUNDA VEYA PRO ÖZELLİĞE TIKLANDIĞINDA ÇIKAN ÜCRETLİ ÜYELİK (PRO PAKET) PENCERESİ -->
   <div class="paywall-backdrop" id="paywallModal" onclick="if(event.target === this) paywallKapat()">
-    <div class="paywall-modal" style="text-align:center;max-width:480px;">
-      <span class="pill-badge" style="margin-bottom:10px;">3 / 3 ÜCRETSİZ PORTFÖY KOTANIZ DOLDU</span>
-      <h3 style="font-size:1.3rem;font-weight:800;margin-bottom:10px;">
-        Sınırsız Portföy Takibi İçin Mülkİzle Pro'ya Geçin
+    <div class="paywall-modal" style="text-align:center;max-width:500px;">
+      <span class="pill-badge" id="paywallModalBadge" style="margin-bottom:10px;">PRO ÜYELİK (ÜCRETLİ PAKET) ÖZELLİĞİ</span>
+      <h3 id="paywallModalTitle" style="font-size:1.3rem;font-weight:800;margin-bottom:10px;">
+        Bu Özelliği Kullanmak İçin Mülkİzle Pro'ya Geçin
       </h3>
-      <p style="font-size:0.88rem;color:var(--text-body);margin-bottom:20px;">
-        İlk 3 portföyünüzü ücretsiz kullandınız. Sınırsız 12 haneli mülk takibi, SMS doğrulama, kişisel danışman web siteniz ve Co-Op ortak çalışma ağını kullanmak için lansmana özel aylık <strong>799 ₺</strong> ile Pro Danışman paketine geçebilirsiniz.
+      <p id="paywallModalDesc" style="font-size:0.86rem;color:var(--text-body);margin-bottom:16px;line-height:1.55;">
+        Ücretsiz üyelikte yalnızca aktif portföylerinizi yönetebilir ve müşterilerinize 12 haneli Mülk Takip Kodu gönderebilirsiniz. <strong>Kişisel Danışman Web Siteniz, Arıyorum! (81 İl Alıcı &amp; Ortak Portföy Ağı), Özel Mesaj Kutusu, Mülk Ajandam ve Bildirimler</strong> için Pro Danışman paketine geçebilirsiniz.
       </p>
+      <div style="background:#F8FAFC;border:1px solid #DBEAFE;border-radius:12px;padding:12px 14px;text-align:left;margin-bottom:18px;font-size:0.8rem;color:#0F172A;">
+        <div style="font-weight:800;color:#2563EB;margin-bottom:6px;">💎 Pro Danışman Paketi (799 ₺ / Ay) Avantajları:</div>
+        <div style="display:flex;flex-direction:column;gap:4px;color:#334155;">
+          <span>✓ Kişisel Danışman Web Sitesi &amp; Dijital Vitrin (<code>mulkizle.com/d/adiniz</code>)</span>
+          <span>✓ Arıyorum! 81 İl • İlçe • Semt • Mahalle Alıcı Talep Ağı</span>
+          <span>✓ Üyelere Özel Mesaj Kutusu &amp; Aktif Portföy Gönderimi</span>
+          <span>✓ Mülk Ajandam &amp; Otomatik Bölge Bildirimleri</span>
+          <span>✓ Sınırsız 12 Haneli Mülk Takip Kodu Oluşturma</span>
+        </div>
+      </div>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <button type="button" class="btn btn-primary" style="width:100%;justify-content:center;" onclick="demoProyaGec()">
-          <span>Demo İçin Pro Paketi Şimdi Ücretsiz Aktif Et (Sınırsız)</span>
+        <button type="button" class="btn btn-primary" style="width:100%;justify-content:center;" onclick="paywallKapat(); gorunumDegistir('view-membership');">
+          <span>Ücretli Üyelik Paketlerini İncele &amp; Pro'ya Geç →</span>
+        </button>
+        <button type="button" class="btn btn-indigo btn-sm" style="width:100%;justify-content:center;" onclick="demoProyaGec()">
+          <span>Test İçin Bu Hesapta Pro Paketi Şimdi Aktif Et</span>
         </button>
         <button type="button" class="btn btn-outline" style="width:100%;justify-content:center;" onclick="paywallKapat()">
-          <span>Şimdilik 3 Portföyle Devam Et</span>
+          <span>Şimdilik Ücretsiz Paketle Devam Et</span>
         </button>
       </div>
     </div>
@@ -2210,8 +2174,8 @@
       <div id="agentLoginErrorBox" style="display:none;background:#FEF2F2;border:1px solid #FECACA;color:#DC2626;padding:10px 12px;border-radius:8px;font-size:0.78rem;font-weight:600;margin-bottom:12px;"></div>
 
       <div class="field">
-        <label>Kayıtlı Cep Telefonu veya E-Posta Adresiniz</label>
-        <input type="text" id="agentLoginIdentifier" value="" placeholder="Örn: 0532 000 00 00 veya adiniz@emlakofisi.com" />
+        <label>Kullanıcı Adı, E-Posta veya Cep Telefonu</label>
+        <input type="text" id="agentLoginIdentifier" value="" placeholder="Örn: ahmet, selin, burak veya e-posta / telefon" />
       </div>
 
       <div class="field">
@@ -2260,8 +2224,8 @@
     </div>
   </div>
 
-  <!-- SAĞ ALT KÖŞE GİZLENEBİLİR "4 KARAKTER & HIZLI TEST" ÇEKMECESİ -->
-  <div class="demo-quick-drawer" id="demoQuickDrawer">
+  <!-- SAĞ ALT TEST ÇEKMECESİ GİZLENDİ -->
+  <div class="demo-quick-drawer" id="demoQuickDrawer" style="display:none;">
     <div class="demo-drawer-body">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
         <strong style="font-size:0.78rem;color:var(--navy-900);text-transform:uppercase;letter-spacing:0.03em;">4 Karakter Test Simülatörü</strong>

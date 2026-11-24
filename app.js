@@ -707,11 +707,12 @@ function danismanGirisOnayla() {
   const temizGirilenTel = girisId.replace(/\D/g, "");
   const bulunan = kayitliKullanicilar.find(u => {
     const uEmail = (u.email || "").toLowerCase();
+    const uUsername = (u.kullaniciAdi || "").toLowerCase();
     const uTel = (u.telefon || "").replace(/\D/g, "");
     const idEslesiyor =
-      (girisId && uEmail === girisId) ||
+      (girisId && (uEmail === girisId || uUsername === girisId)) ||
       (temizGirilenTel.length >= 7 && uTel.includes(temizGirilenTel));
-    const sifreEslesiyor = !u.sifre || !sifre || u.sifre === sifre;
+    const sifreEslesiyor = !u.sifre || u.sifre === sifre;
     return idEslesiyor && sifreEslesiyor;
   });
 
@@ -721,7 +722,7 @@ function danismanGirisOnayla() {
       errBox.style.background = "#FEF2F2";
       errBox.style.borderColor = "#FECACA";
       errBox.style.color = "#DC2626";
-      errBox.textContent = "Bu telefon veya e-posta ile kayıtlı kullanıcı bulunamadı. Lütfen bilgilerinizi kontrol edin veya yeni kayıt oluşturun.";
+      errBox.textContent = "Kullanıcı adı, e-posta, telefon veya şifre hatalı! Lütfen bilgilerinizi kontrol edin.";
     }
     return;
   }
@@ -730,6 +731,26 @@ function danismanGirisOnayla() {
   kullanicilariKaydet();
   danismanGirisYaptiMi = true;
   proPaketAktif = bulunan.plan !== "ucretsiz";
+  incelenenWebSitesiDanismanId = bulunan.id;
+  profilGoruntuleyenModu = "owner";
+
+  const hedefProfil = danismanProfiliniGetirById(bulunan.id);
+  if (hedefProfil) {
+    danismanProfili = JSON.parse(JSON.stringify(hedefProfil));
+    profilKaydetStorage();
+  }
+
+  const kendiPortfoyleri = portfoyler.filter(p => p.danismanId === bulunan.id || p.danisman === bulunan.ad);
+  if (kendiPortfoyleri.length > 0) {
+    seciliKod = kendiPortfoyleri[0].kod;
+    acikAkordeonPortfoyKodu = null;
+  }
+
+  const avatarEl = document.getElementById("igSidebarAvatarImg");
+  if (avatarEl && danismanProfili?.foto) {
+    avatarEl.src = danismanProfili.foto;
+  }
+
   danismanGirisModalKapat();
 
   const navText = document.getElementById("navAgentLoginBtnText");
@@ -931,7 +952,52 @@ function danismanAnaModSec(modId, btnEl) {
   }
 }
 
+function aktifDanismanProMu() {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  if (aktifKullanici && aktifKullanici.plan) {
+    return aktifKullanici.plan !== "ucretsiz";
+  }
+  return typeof uyeParaliUyelikVarMi === "function" ? uyeParaliUyelikVarMi(aktifId) : Boolean(proPaketAktif);
+}
+
+function ucretsizUyeProKisitiGoster(ozellikAdi) {
+  const badgeEl = document.getElementById("paywallModalBadge");
+  const titleEl = document.getElementById("paywallModalTitle");
+  const descEl = document.getElementById("paywallModalDesc");
+
+  if (badgeEl) badgeEl.textContent = "🔒 PRO ÜYELİK (ÜCRETLİ PAKET) ÖZELLİĞİ";
+  if (titleEl) titleEl.textContent = `${ozellikAdi} İçin Mülkİzle Pro'ya Geçin`;
+  if (descEl) {
+    descEl.innerHTML = `<strong>${ozellikAdi}</strong> yalnızca ücretli <strong>Pro Danışman Paketi</strong> üy자larımız için aktiftir. Ücretsiz üyelikte yalnızca aktif portföylerinizi yönetebilir ve müşterilerinize 12 haneli Mülk Takip Kodu gönderebilirsiniz.`;
+  }
+
+  const modal = document.getElementById("paywallModal");
+  if (modal) {
+    modal.classList.add("open");
+  }
+}
+
 function danismanSolMenuSec(secim) {
+  const proMu = aktifDanismanProMu();
+  if (
+    !proMu &&
+    (secim === "ariyorum" ||
+      secim === "edit-profile" ||
+      secim === "view-website" ||
+      secim === "messages" ||
+      secim === "agenda")
+  ) {
+    const adMap = {
+      ariyorum: "Arıyorum! (81 İl Alıcı & Ortak Portföy Ağı)",
+      "edit-profile": "Profilim & Kişisel Web Sitesi",
+      "view-website": "Profilim (Kişisel Danışman Web Sitesi)",
+      messages: "Üyelere Özel Mesaj Kutusu",
+      agenda: "Mülk Ajandam & Randevu Planlayıcı"
+    };
+    ucretsizUyeProKisitiGoster(adMap[secim] || "Bu Özellik");
+    return;
+  }
+
   if (secim === "portfolios") {
     aktifHizliTestEkrani = "dashboard";
     gorunumDegistir("view-dashboard");
@@ -960,9 +1026,10 @@ function danismanSolMenuSec(secim) {
     aktifHizliTestEkrani = "dashboard";
     gorunumDegistir("view-dashboard");
     danismanAnaModSec("mode-profile", document.getElementById("modeBtnProfile"));
-    igSolMenuGuncelle("edit-profile");
+    igSolMenuGuncelle("view-website");
   } else if (secim === "view-website") {
     aktifHizliTestEkrani = "profile-owner";
+    incelenenWebSitesiDanismanId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
     profilGoruntuleyenModu = "owner";
     gorunumDegistir("view-agent-profile");
     igSolMenuGuncelle("view-website");
@@ -979,12 +1046,31 @@ function igSolMenuGuncelle(aktifSecim) {
     messages: "igNavMessages",
     agenda: "igNavAgenda",
     ariyorum: "igNavAriyorum",
-    "edit-profile": "igNavEditProfile",
     "view-website": "igNavViewWebsite"
   };
   Object.entries(navMap).forEach(([key, elId]) => {
     const el = document.getElementById(elId);
     if (el) el.classList.toggle("active", key === aktifSecim);
+  });
+
+  // Sol bardaki tüm menü öğeleri her zaman görünür ve tıklanabilir;
+  // Bildirimler ücretsiz üyede de açıktır. Diğer Pro özelliklerin yanında küçük "PRO" etiketi çıkar ve tıklayınca Ücretli Üyelik (Paywall) paneli açılır!
+  const proMu = aktifDanismanProMu();
+  const proOzelMenuIdleri = ["igNavMessages", "igNavAgenda", "igNavAriyorum", "igNavViewWebsite"];
+  proOzelMenuIdleri.forEach(elId => {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    el.style.display = "";
+    const labelEl = el.querySelector(".ig-nav-label");
+    if (labelEl) {
+      const hamMetin = labelEl.getAttribute("data-base-label") || labelEl.textContent.replace(/\s*PRO$/i, "").trim();
+      labelEl.setAttribute("data-base-label", hamMetin);
+      if (!proMu) {
+        labelEl.innerHTML = `${hamMetin} <span style="margin-left:6px;font-size:0.62rem;font-weight:800;background:#EFF6FF;color:#2563EB;border:1px solid #BFDBFE;padding:1px 6px;border-radius:999px;">PRO</span>`;
+      } else {
+        labelEl.textContent = hamMetin;
+      }
+    }
   });
 
   if (typeof uyeMesajlariniGetir === "function") {
@@ -994,7 +1080,7 @@ function igSolMenuGuncelle(aktifSecim) {
     const redBadge = document.getElementById("igSidebarUnreadBadge");
     if (redBadge) {
       redBadge.textContent = `${okunmamis}`;
-      redBadge.style.display = okunmamis > 0 ? "inline-flex" : "none";
+      redBadge.style.display = proMu && okunmamis > 0 ? "inline-flex" : "none";
     }
   }
 
@@ -1037,14 +1123,10 @@ function emlakciAltSekme(subId, btnEl) {
 let acikAkordeonPortfoyKodu = null;
 
 function aktifDanismaninGorunenPortfoyleri() {
-  const aktifKarakter = typeof aktifTestKarakteri !== "undefined" ? aktifTestKarakteri : "emlakci-1";
-  if (aktifKarakter === "emlakci-2") {
-    return portfoyler.filter(
-      p => p.danismanId === "selin-yilmaz" || p.danisman === "Selin Yılmaz" || p.coopPartnerAd === "Selin Yılmaz"
-    );
-  }
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const aktifAd = (aktifKullanici && aktifKullanici.ad) || "Ahmet Demir";
   return portfoyler.filter(
-    p => !p.danismanId || p.danismanId === "ahmet-demir" || p.danisman === (aktifKullanici && aktifKullanici.ad)
+    p => p.danismanId === aktifId || p.danisman === aktifAd || (!p.danismanId && aktifId === "ahmet-demir")
   );
 }
 
@@ -1138,25 +1220,29 @@ function panelYenile() {
               <div class="hb-portfolio-right-col" style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
                 <div class="hb-portfolio-date">${tarihBilgisi}</div>
                 <div class="hb-portfolio-price">${p.fiyat || ""}</div>
-                <button
-                  type="button"
-                  onclick="event.stopPropagation(); portfoyPaylasimDurumuToggle('${p.kod}');"
-                  title="Bu portföyün diğer emlakçılarla paylaşıma açık/kapalı durumunu değiştir"
-                  style="display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:0.71rem;font-weight:700;cursor:pointer;border:1px solid ${
-                    paylasimaAcikMi ? "#86EFAC" : "#CBD5E1"
-                  };background:${paylasimaAcikMi ? "#F0FDF4" : "#F8FAFC"};color:${
-                    paylasimaAcikMi ? "#15803D" : "#64748B"
-                  };transition:all 0.2s ease;"
-                >
-                  <span style="width:24px;height:13px;border-radius:999px;background:${
-                    paylasimaAcikMi ? "#16A34A" : "#94A3B8"
-                  };position:relative;display:inline-block;transition:background 0.2s ease;">
-                    <span style="width:9px;height:9px;border-radius:50%;background:#FFFFFF;position:absolute;top:2px;left:${
-                      paylasimaAcikMi ? "13px" : "2px"
-                    };transition:left 0.2s ease;"></span>
-                  </span>
-                  <span>${paylasimaAcikMi ? "Paylaşıma Açık" : "Paylaşıma Kapalı"}</span>
-                </button>
+                ${
+                  aktifDanismanProMu()
+                    ? `<button
+                        type="button"
+                        onclick="event.stopPropagation(); portfoyPaylasimDurumuToggle('${p.kod}');"
+                        title="Bu portföyün kişisel web sitenizde ve diğer emlakçılarla paylaşıma açık/kapalı durumunu değiştir"
+                        style="display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:0.71rem;font-weight:700;cursor:pointer;border:1px solid ${
+                          paylasimaAcikMi ? "#86EFAC" : "#CBD5E1"
+                        };background:${paylasimaAcikMi ? "#F0FDF4" : "#F8FAFC"};color:${
+                          paylasimaAcikMi ? "#15803D" : "#64748B"
+                        };transition:all 0.2s ease;"
+                      >
+                        <span style="width:24px;height:13px;border-radius:999px;background:${
+                          paylasimaAcikMi ? "#16A34A" : "#94A3B8"
+                        };position:relative;display:inline-block;transition:background 0.2s ease;">
+                          <span style="width:9px;height:9px;border-radius:50%;background:#FFFFFF;position:absolute;top:2px;left:${
+                            paylasimaAcikMi ? "13px" : "2px"
+                          };transition:left 0.2s ease;"></span>
+                        </span>
+                        <span>${paylasimaAcikMi ? "Paylaşıma Açık" : "Paylaşıma Kapalı"}</span>
+                      </button>`
+                    : ""
+                }
               </div>
 
               <div class="hb-portfolio-actions-col">
@@ -1247,6 +1333,9 @@ function portfoyPaylasimDurumuToggle(kod) {
   hedef.paylasimaAcikMi = hedef.paylasimaAcikMi === false ? true : false;
   verileriKaydet();
   panelYenile();
+  if (typeof danismanKisiselWebSitesiGoster === "function") {
+    danismanKisiselWebSitesiGoster();
+  }
 }
 
 function portfoySil(kod) {
@@ -4515,9 +4604,14 @@ function paywallKapat() {
 }
 
 function demoProyaGec() {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
   proPaketAktif = true;
+  if (typeof uyeParaliUyeligiAktifEt === "function") {
+    uyeParaliUyeligiAktifEt(aktifId, true);
+  }
   paywallKapat();
-  yeniPortfoyModalAc();
+  igSolMenuGuncelle("portfolios");
+  panelYenile();
 }
 
 // ============================================================================
@@ -6040,16 +6134,43 @@ function danismanKisiselWebSitesiGoster() {
     if (incelenenWebSitesiDanismanId === "selin-yilmaz") {
       return item.danismanId === "selin-yilmaz" || item.danisman === "Selin Yılmaz";
     }
+    if (incelenenWebSitesiDanismanId === "burak-kaya") {
+      return item.danismanId === "burak-kaya" || item.danisman === "Burak Kaya";
+    }
     return !item.danismanId || item.danismanId === "ahmet-demir" || item.danisman === dp.ad;
   });
-
-  const yayindakiIlanliPortfoyler = danismanaAitPortfoyler.filter(portfoyunAktifIlaniVarMi);
 
   const sayfaSahibiMi = profilGoruntuleyenModu === "owner";
   const baskaUyeMi = profilGoruntuleyenModu === "member";
 
+  // KURAL: Aktif portföylerdeki "Paylaşıma Açık / Kapalı" switch'i kişisel web sitesiyle doğrudan bağlıdır.
+  // Eğer switch "Paylaşıma Açık" (paylasimaAcikMi !== false) ise diğer üyeler ve ziyaretçiler kişisel web sitesinde görür.
+  // Eğer switch "Paylaşıma Kapalı" (paylasimaAcikMi === false) ise başka bir üye/ziyaretçi o portföyü kişisel web sitesinde kesinlikle görmez!
+  const yayindakiIlanliPortfoyler = danismanaAitPortfoyler.filter(item => {
+    if (!portfoyunAktifIlaniVarMi(item)) return false;
+    if (!sayfaSahibiMi && item.paylasimaAcikMi === false) return false;
+    return true;
+  });
+
   const hedefUyeParaliMi =
     typeof uyeParaliUyelikVarMi === "function" ? uyeParaliUyelikVarMi(incelenenWebSitesiDanismanId) : proPaketAktif;
+
+  // KURAL: Ücretsiz üyenin Kişisel Web Sitesi yoktur!
+  if (!hedefUyeParaliMi) {
+    container.innerHTML = `
+      <div class="saas-card" style="text-align:center;padding:42px 24px;max-width:580px;margin:24px auto;">
+        <span class="saas-badge-neutral" style="margin-bottom:10px;">PRO DANIŞMAN PAKETİ ÖZELLİĞİ</span>
+        <h2 class="saas-h2" style="margin-bottom:8px;">${dp.ad} • Kişisel Web Sitesi Aktif Değil</h2>
+        <p class="saas-text-sm" style="color:#475569;line-height:1.55;margin-bottom:18px;">
+          Ücretsiz üyelik paketinde yalnızca <strong>Aktif Portföyler</strong> ve müşterilere gönderilen <strong>12 Haneli Mülk Takip Kodu</strong> özelliği bulunur. Kişisel danışman web sitesi, Arıyorum! ağı ve mesaj kutusu yalnızca <strong>Pro Üyelik</strong> paketinde aktiftir.
+        </p>
+        <button type="button" class="social-btn-primary" onclick="danismanSolMenuSec('portfolios')">
+          <span>← Aktif Portföylerime Dön</span>
+        </button>
+      </div>
+    `;
+    return;
+  }
   const uyeMesajListesi =
     typeof uyeMesajlariniGetir === "function" ? uyeMesajlariniGetir(incelenenWebSitesiDanismanId) : [];
   const okunmamisMesajSayisi = uyeMesajListesi.filter(m => !m.okundu && !m.yanit).length;
@@ -6065,14 +6186,15 @@ function danismanKisiselWebSitesiGoster() {
               "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80";
             const fotoSayisi = (item.medya || []).length;
             const sosyalSayisi = portfoySosyalMedyaLinkleriniGetir(item).length;
+            const paylasimaAcik = item.paylasimaAcikMi !== false;
 
             return `
-              <article class="social-listing-card">
+              <article class="social-listing-card" style="${!paylasimaAcik && sayfaSahibiMi ? "opacity:0.75;border:1.5px dashed #94A3B8;" : ""}">
                 <div class="social-listing-media" onclick="seciliKod='${item.kod}'; gorunumDegistir('view-buyer');">
                   <img src="${kapakFoto}" alt="${item.baslik}" />
                   <span class="social-listing-badge-top-left">
-                    <span class="ig-live-dot"></span>
-                    <span>Yayında • #${item.kod}</span>
+                    <span class="ig-live-dot" style="${!paylasimaAcik ? "background:#94A3B8;" : ""}"></span>
+                    <span>${paylasimaAcik ? `Paylaşıma Açık • #${item.kod}` : `Paylaşıma Kapalı (Diğer Üyelere Gizli) • #${item.kod}`}</span>
                   </span>
                   ${
                     item.matterportUrl
@@ -6093,10 +6215,17 @@ function danismanKisiselWebSitesiGoster() {
                     </div>
                   </div>
 
-                  <div class="social-listing-footer">
+                  <div class="social-listing-footer" style="flex-wrap:wrap;gap:6px;">
                     <button type="button" class="social-btn-primary" style="padding:7px 14px;font-size:0.78rem;" onclick="seciliKod='${item.kod}'; gorunumDegistir('view-buyer');">
                       <span>Fotoğraflar &amp; 360° Tur</span>
                     </button>
+                    ${
+                      sayfaSahibiMi
+                        ? `<button type="button" class="social-btn-soft" style="padding:7px 11px;font-size:0.74rem;color:${paylasimaAcik ? "#15803D" : "#64748B"};" onclick="portfoyPaylasimDurumuToggle('${item.kod}')">
+                            <span>${paylasimaAcik ? "🟢 Paylaşıma Açık" : "⚪ Paylaşıma Kapalı"}</span>
+                          </button>`
+                        : ""
+                    }
                     <a href="${item.sahibindenUrl}" target="_blank" rel="noopener noreferrer" class="social-btn-soft" style="padding:7px 13px;font-size:0.78rem;">
                       <span>Sahibinden</span>
                       ${extIcon}
@@ -6110,8 +6239,8 @@ function danismanKisiselWebSitesiGoster() {
         `</div>`
       : `
         <div class="saas-card" style="text-align:center;padding:36px 20px;">
-          <div style="font-size:0.95rem;font-weight:700;color:#0F172A;margin-bottom:4px;">Henüz yayında aktif ilan bulunmuyor</div>
-          <div class="saas-text-xs">İlan portallarında yayınlanan portföyler burada vitrin kartı olarak sergilenir.</div>
+          <div style="font-size:0.95rem;font-weight:700;color:#0F172A;margin-bottom:4px;">Paylaşıma açık aktif ilan bulunmuyor</div>
+          <div class="saas-text-xs">Danışmanın "Paylaşıma Açık" olarak işaretlediği aktif portföyler burada vitrin kartı olarak sergilenir.</div>
         </div>
       `;
 
@@ -8591,8 +8720,8 @@ const DORT_KARAKTER_PROFILLERI = {
     email: "selin@yilmazluxury.com",
     foto: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
     il: "Ankara",
-    ilce: "Çayyolu, İncek",
-    bolgeler: "Alacaatlı, Çayyolu, İncek, Beytepe",
+    ilce: "Çankaya",
+    bolgeler: "Çayyolu, Alacaatlı, Konutkent, İncek",
     hobiler: "Yelken, modern peyzaj mimarisi ve yatırım danışmanlığı",
     bio: "Ankara Çayyolu, Alacaatlı ve İncek aksında Yılmaz Luxury Gayrimenkul kurucu ortağı olarak müstakil villa ve nitelikli rezidans portföylerini yönetiyorum. Bölge dışı meslektaşlarımla Mülkİzle Co-Op (%50-%50) paylaşımlı çalışma ağı üzerinden şeffaf ortaklıklar yürütüyorum.",
     instagram: "https://www.instagram.com/selinyilmaz.luxury/",
@@ -8607,61 +8736,113 @@ const DORT_KARAKTER_PROFILLERI = {
         ozet: "Ankara batı koridorunda müstakil yaşam arayan ailelerin en çok tercih ettiği siteler, güvenlikli peyzaj kriterleri ve güncel arsa/villa değerlemeleri."
       }
     ]
+  },
+  "burak-kaya": {
+    id: "burak-kaya",
+    ad: "Burak Kaya",
+    ofis: "Kaya Boğaziçi & Anadolu Gayrimenkul",
+    deneyim: "11 Yıl Lüks Konut & Ticari Portföy Uzmanı",
+    telefon: "0533 444 55 66",
+    email: "burak@kayagayrimenkul.com",
+    foto: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80",
+    il: "İstanbul",
+    ilce: "Kadıköy",
+    bolgeler: "Suadiye / Caddebostan (Bağdat Cad.), Moda / Kadıköy Merkez",
+    hobiler: "Klasik otomobiller, fotoğrafçılık ve gayrimenkul hukuku",
+    bio: "İstanbul Kadıköy Bağdat Caddesi (Suadiye, Caddebostan, Erenköy, Fenerbahçe) aksında 11 yıldır lüks konut ve ticari gayrimenkul danışmanlığı yapıyorum. Tüm portföylerimde Mülkİzle 12 haneli canlı süreç takibi sunuyorum.",
+    instagram: "https://www.instagram.com/burakkaya.gayrimenkul/",
+    twitter: "https://x.com/burakkaya_gyo",
+    linkedin: "https://www.linkedin.com/in/burak-kaya-gayrimenkul",
+    magazaUrl: "https://kayagayrimenkul.sahibinden.com/",
+    bloglar: [
+      {
+        tarih: "20 Kasım 2026",
+        kategori: "Bağdat Caddesi Analizi",
+        baslik: "Suadiye ve Caddebostan'da Yeni Deprem Yönetmeliği Sonrası Sıfır Konut Değerlemeleri",
+        ozet: "Bağdat Caddesi aksında kentsel dönüşümle yenilenen prestijli binalarda metrekare satış fiyatları ve yatırımcı geri dönüş süreleri."
+      }
+    ]
   }
 };
 
 function danismanProfiliniGetirById(danismanId) {
-  if (danismanId === "selin-yilmaz") {
-    return DORT_KARAKTER_PROFILLERI["selin-yilmaz"];
-  }
-  if (danismanId === "ahmet-demir") {
-    return DORT_KARAKTER_PROFILLERI["ahmet-demir"];
+  if (danismanId && DORT_KARAKTER_PROFILLERI[danismanId]) {
+    return DORT_KARAKTER_PROFILLERI[danismanId];
   }
   return danismanProfili || DORT_KARAKTER_PROFILLERI["ahmet-demir"];
 }
 
 function dortKarakterVerileriniHazirla() {
-  if (dortKarakterHazirMi && portfoyler.length >= 2) return;
+  if (dortKarakterHazirMi && portfoyler.length >= 3) return;
   dortKarakterHazirMi = true;
 
   const ahmet = DORT_KARAKTER_PROFILLERI["ahmet-demir"];
   const selin = DORT_KARAKTER_PROFILLERI["selin-yilmaz"];
+  const burak = DORT_KARAKTER_PROFILLERI["burak-kaya"];
 
-  // 1. Emlakçı (Ahmet Demir) ve 4. Karakter / 2. Emlakçı (Selin Yılmaz) kullanıcı hesaplarını hazırla
+  // 3 Hazır Üye Hesabı:
+  // 1) Ahmet Demir -> ÜCRETSİZ Üyelik
+  // 2) Selin Yılmaz -> PRO Üyelik
+  // 3) Burak Kaya -> PRO Üyelik
   kayitliKullanicilar = [
     {
       id: "ahmet-demir",
+      kullaniciAdi: "ahmet",
       ad: ahmet.ad,
       ofis: ahmet.ofis,
       telefon: ahmet.telefon,
-      email: ahmet.email,
+      email: "ahmet@mulkizle.com",
       il: ahmet.il,
       ilce: ahmet.ilce,
-      sifre: "123456",
+      sifre: "Ahmet2026!",
       plan: "ucretsiz",
       kayitTarihi: "21 Kasım 2026"
     },
     {
       id: "selin-yilmaz",
+      kullaniciAdi: "selin",
       ad: selin.ad,
       ofis: selin.ofis,
       telefon: selin.telefon,
-      email: selin.email,
+      email: "selin@mulkizle.com",
       il: selin.il,
       ilce: selin.ilce,
-      sifre: "123456",
+      sifre: "Selin2026!",
       plan: "pro",
       kayitTarihi: "21 Kasım 2026"
+    },
+    {
+      id: "burak-kaya",
+      kullaniciAdi: "burak",
+      ad: burak.ad,
+      ofis: burak.ofis,
+      telefon: burak.telefon,
+      email: "burak@mulkizle.com",
+      il: burak.il,
+      ilce: burak.ilce,
+      sifre: "Burak2026!",
+      plan: "pro",
+      kayitTarihi: "22 Kasım 2026"
     }
   ];
 
-  if (!aktifKullanici) {
-    aktifKullanici = kayitliKullanicilar[0];
-  }
-  danismanGirisYaptiMi = true;
+  uyeParaliDurumlari["ahmet-demir"] = false;
+  uyeParaliDurumlari["selin-yilmaz"] = true;
+  uyeParaliDurumlari["burak-kaya"] = true;
 
-  // Eğer portföyler boşsa veya 4 karakter test portföyleri henüz yüklenmemişse oluştur
-  if (portfoyler.length === 0) {
+  if (aktifKullanici) {
+    const guncelAktif = kayitliKullanicilar.find(u => u.id === aktifKullanici.id);
+    if (guncelAktif) aktifKullanici = guncelAktif;
+    danismanGirisYaptiMi = true;
+    proPaketAktif = aktifKullanici.plan !== "ucretsiz";
+    const navText = document.getElementById("navAgentLoginBtnText");
+    if (navText) navText.textContent = `Danışman Paneli (${(aktifKullanici.ad || "Danışman").split(" ")[0]})`;
+  } else {
+    danismanGirisYaptiMi = false;
+  }
+
+  // Eğer portföylerde 3 danışmanın portföyleri henüz yoksa oluştur
+  if (portfoyler.length < 3 || !portfoyler.some(p => p.danismanId === "burak-kaya")) {
     portfoyler = [
       // PORTFÖY 1: 1. Emlakçı (Ahmet Demir) • Satıcı (Kemal Soylu) • Alıcı (Zeynep Kaya) • 2. Emlakçı Co-Op (Selin Yılmaz) — İLANDA YAYINDA
       {
@@ -8915,6 +9096,71 @@ function dortKarakterVerileriniHazirla() {
           rakipler: []
         },
         gunluk: [],
+        medya: [...ORNEK_FOTOGRAFLAR],
+        teklifler: [],
+        yerGosterimleri: []
+      },
+
+      // PORTFÖY 4: 3. Üye (Burak Kaya - PRO Üye) Portföyü — İLANDA YAYINDA
+      {
+        kod: "640192837465",
+        danismanId: "burak-kaya",
+        baslik: "Kadıköy Suadiye Bağdat Caddesi 3+1 Sıfır Ebeveyn Banyolu Daire",
+        fiyat: "18.900.000 ₺",
+        mulkSahibi: "Cihan Karahan",
+        mulkSahibiTel: "0532 900 11 22",
+        danisman: burak.ad,
+        danismanTel: burak.telefon,
+        ofis: burak.ofis,
+        bolge: "Suadiye Mah. (Suadiye / Caddebostan), Kadıköy / İstanbul",
+        durumEtiketi: "Yayında • Aktif Gösterim Sürecinde",
+        sonGuncelleme: "23 Kasım 2026",
+        sahibindenUrl: "https://www.sahibinden.com/ilan/emlak-konut-satilik-kadikoy-suadiye-3-1-sifir",
+        videoUrl: "https://www.instagram.com/burakkaya.gayrimenkul/reels/",
+        matterportUrl: "https://my.matterport.com/show/?m=SxQL3iGyoDo",
+        paylasimaAcikMi: true,
+        sosyalMedyaLinkleri: [
+          {
+            platform: "Instagram Reels Tanıtımı",
+            url: "https://www.instagram.com/burakkaya.gayrimenkul/reels/"
+          }
+        ],
+        coopAktifMi: false,
+        goruntulenme: "4.180",
+        favori: "115",
+        telefon: "38 Arama",
+        gosterim: "9 Aile Gezdi",
+        sosyalErisim: "28.400 İzlenme • 810 Beğeni",
+        yetkiModu: "mobil_onay",
+        yetkiSuresi: "90 Gün Tam Yetki",
+        komisyon: "%2 + KDV",
+        yetkiOnaylandiMi: true,
+        yetkiOnayDetayi: "15 Kasım 2026 • Dijital Onaylı",
+        hizmetler: [
+          { ad: "Yerinde Keşif", durum: "done", emoji: "👍", saticiYorumu: "" },
+          { ad: "Profesyonel Fotoğraf Çekimi", durum: "done", emoji: "❤️", saticiYorumu: "" },
+          { ad: "Detaylı Pazar Analizi", durum: "done", emoji: "👏", saticiYorumu: "" },
+          { ad: "360 Derece Çekim", durum: "done", emoji: "", saticiYorumu: "" },
+          { ad: "Sosyal Medya Tanıtımı", durum: "done", emoji: "🔥", saticiYorumu: "" },
+          { ad: "İlan Portalında Yayınlama", durum: "done", emoji: "", saticiYorumu: "" }
+        ],
+        pazarAnalizi: {
+          tamamlandiMi: true,
+          danismanFoto: burak.foto,
+          danismanBio: burak.bio,
+          referansMulkler: "Suadiye Sahil Tarafı 3+1 — 14 Günde Satıldı (18.400.000 ₺)",
+          minFiyat: "18.500.000 ₺",
+          maxFiyat: "19.200.000 ₺",
+          finalDegerlendirme: "Suadiye sahil ve cadde arasında sıfır kapalı otoparklı bina emsallerine göre optimum fiyat aralığıdır.",
+          rakipler: []
+        },
+        gunluk: [
+          {
+            tarih: "23 Kasım 2026 • 10:15",
+            metin: "Apartman görevlisi Mehmet Bey (0535 111 00 99) anahtarı teslim aldı.",
+            gorunurluk: "private"
+          }
+        ],
         medya: [...ORNEK_FOTOGRAFLAR],
         teklifler: [],
         yerGosterimleri: []
@@ -9831,7 +10077,7 @@ function danismanAjandaPanelRender() {
     <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;">
       <div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-          <h2 class="saas-h2" style="margin:0;">Ajandam &amp; Saha Planlayıcı</h2>
+          <h2 class="saas-h2" style="margin:0;">Mülk Ajandam</h2>
           <span class="saas-badge-blue">${bugunkuSayi} Bugünkü Randevu</span>
           <span class="saas-badge-neutral">${bekleyenSayi} Bekleyen • ${tamamlananSayi} Tamamlanan</span>
         </div>
@@ -9842,9 +10088,9 @@ function danismanAjandaPanelRender() {
       </button>
     </div>
 
-    <!-- YENİ AJANDA NOTU & RANDEVU EKLEME KARTI -->
+    <!-- YENİ MÜLK AJANDASI NOTU EKLEME KARTI -->
     <div class="saas-card" style="padding:16px 18px;margin-bottom:16px;background:#F8FAFC;border:1.5px solid #DBEAFE;">
-      <h3 class="saas-h2" style="font-size:0.95rem;margin-bottom:10px;">+ Yeni Ajanda Notu / Randevu Ekle</h3>
+      <h3 class="saas-h2" style="font-size:0.95rem;margin-bottom:10px;">+ Mülk Ajandama Yeni Kayıt Ekle</h3>
       <div class="form-grid-3" style="margin-bottom:10px;">
         <div class="field">
           <label>Tarih (Gün / Ay / Yıl)</label>
@@ -9887,10 +10133,10 @@ function danismanAjandaPanelRender() {
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;">
         <label style="display:inline-flex;align-items:center;gap:7px;font-size:0.8rem;color:#334155;cursor:pointer;">
           <input type="checkbox" id="agInputReminder" checked />
-          <span>Bildirimler merkezine ajanda hatırlatması olarak da düşsün</span>
+          <span>Bildirimler merkezine hatırlatma olarak da düşsün</span>
         </label>
         <button type="button" class="social-btn-primary" onclick="danismanAjandaNotuEkle()">
-          <span>+ Ajandama Kaydet</span>
+          <span>+ Mülk Ajandama Kaydet</span>
         </button>
       </div>
     </div>

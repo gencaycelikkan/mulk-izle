@@ -4,6 +4,27 @@ Bu dosya projede yapılan yeni özellikleri, arayüz eklemelerini ve yapısal de
 
 ---
 
+## 📅 24 Kasım 2026 — Yeni Eklenen Özellikler ve Düzenlemeler
+
+### 1. 🔑 Manuel Test İçin 3 Hazır Üye Hesabı (1 Ücretsiz + 2 Pro) & Hızlı Geçiş Barının Kaldırılması
+* Üstteki simülasyon / hızlı ekran geçiş barı ve sağ alt test çekmecesi kaldırılarak gerçek kullanıcı giriş/çıkış akışına geçildi.
+* Manuel test için 3 farklı danışman hesabı tanımlandı:
+  1. **Ahmet Demir (Ücretsiz Üye):** Kullanıcı Adı: `ahmet` | Şifre: `Ahmet2026!`
+  2. **Selin Yılmaz (Pro Üye 1):** Kullanıcı Adı: `selin` | Şifre: `Selin2026!`
+  3. **Burak Kaya (Pro Üye 2):** Kullanıcı Adı: `burak` | Şifre: `Burak2026!`
+
+### 2. 🔒 Ücretsiz Üye vs. Pro Üye Yetki Ayrımı & Paywall Penceresi
+* **Ücretsiz Üyelik:** Aktif portföylerini yönetebilir, müşterilerine 12 haneli mülk takip kodu gönderebilir ve **Bildirimler** sekmesini kullanabilir.
+* **Pro Özellikler (`Mesajlar`, `Mülk Ajandam`, `Arıyorum!`, `Profilim`):** Ücretsiz üyede sol barda yanlarında **`PRO`** etiketiyle görünür; tıklandığında doğrudan **Ücretli Üyelik (Pro Paket)** tanıtım ve geçiş penceresi açılır.
+
+### 3. 🧭 Sol Bar & İsimlendirme Sadeleştirmeleri
+* Aktif portföylerin içindeki özel saha notları alanının adı **"Kişisel Notlar"** olarak güncellendi.
+* Sol bardaki randevu ve takvim modülünün adı **"Mülk Ajandam"** olarak güncellendi.
+* Sol bardaki *"Profil & Blog Düzenle"* sekmesi kaldırıldı; *"Kişisel Web Sitemi Gör"* sekmesinin adı **"Profilim"** olarak sadeleştirildi (düzenleme işlemi Profilim sayfasının içindeki *"Profili Düzenle"* butonuyla yapılır).
+* Aktif portföylerdeki **"Paylaşıma Açık / Paylaşıma Kapalı"** switch'i danışmanın **Profilim (Kişisel Web Sitesi)** vitriniyle doğrudan bağlandı: switch kapalıysa diğer üyeler veya ziyaretçiler o portföyü danışmanın profilinde göremez.
+
+---
+
 ## 📅 23 Kasım 2026 — Yeni Eklenen Özellikler
 
 ### 1. 🔔 Bildirimler Merkezi (Üye / Danışman Paneli & Sol Bar)
