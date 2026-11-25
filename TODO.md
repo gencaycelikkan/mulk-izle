@@ -44,6 +44,25 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
 
 ---
 
+## 🏗️ Sıradaki Büyük Vizyon: İnşaat Projeleri & Satış Ofisleri Özel Paketi (Ayrı Fiyatlandırma)
+
+> **Not:** Müteahhit / İnşaat Firması Satış Ofisleri ve Proje Pazarlama Ekipleri için bireysel emlak danışmanı paketlerinden bağımsız, **ayrı fiyatlandırılacak** kurumsal modül yol haritası:
+
+- [ ] **1. Satış Ofisi Özel CRM & Müşteri Takip Sistemi:**
+  - Satış ofisine gelen (Walk-in), telefonla arayan veya reklam formundan düşen proje müşterilerinin satış temsilcilerine atanması, görüşme geçmişi, sıcak/ılık/soğuk alıcı takibi, WhatsApp toplu/şablonlu bilgilendirme ve geri arama (follow-up) hatırlatmaları.
+- [ ] **2. İnteraktif Online Proje Kataloğu & Dijital Maket / Vaziyet Planı:**
+  - Projenin vaziyet planı, blok/kat/daire tipleri (`1+1`, `2+1`, `3+1`, `Bahçe Dubleks`, `Ticari Ünite`), kat planları, 360° örnek daire sanal turu, inşaat ilerleme yüzdesi (şantiye canlı zaman tüneli) ve kişiye özel tekil 12 haneli Proje Sunum & Takip Kodu gönderimi.
+- [ ] **3. Canlı Blok / Daire Stok & Durum Matrisi (`Satışta` / `Opsiyonlu` / `Satıldı`):**
+  - Satış ofisi ekranında hangi blokta hangi dairenin boş, hangisinin kaporası alınmış/opsiyonlu, hangisinin satılmış olduğunun renkli görsel matris üzerinde anlık takibi.
+- [ ] **4. Kişiye Özel Ödeme Planı & Lansman Teklif Simülatörü:**
+  - Peşinat, ara ödeme, inşaat firması içi senet/vade veya banka kredisi seçenekleriyle alıcıya özel PDF ve 12 haneli dijital ödeme planı teklifi oluşturma.
+- [ ] **5. Mülkİzle 81 İl Üye Danışman Ağına Proje Paylaşımı (Co-Op / Yetkili Acente Ağı):**
+  - Satış ofisinin dilerse projesini Mülkİzle'deki Pro danışmanlara komisyon paylaşımıyla açabilmesi (danışman kendi alıcısını satış ofisine sistem üzerinden kayıtlı yönlendirir, müşteri koruma garantisi sağlanır).
+- [ ] **6. Satış Ofisi Paketinin Ayrı Fiyatlandırılması:**
+  - Mevcut bireysel/ofis danışman paketlerinden ayrı olarak proje büyüklüğüne ve satış temsilcisi sayısına göre özel **Satış Ofisi / Proje Paketi** fiyatlandırma kartı ve kurgusu.
+
+---
+
 ## 🎨 1. UI/UX ve Tasarım Görevleri (Abisi)
 
 ### Genel Arayüz & Responsive (Mobil Uyum)
