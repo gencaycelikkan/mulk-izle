@@ -4404,7 +4404,7 @@ function potansiyelAlicilarimPanelRender() {
             <div style="font-size:0.95rem;font-weight:700;color:#0F172A;margin-bottom:4px;">Bu Filtreye Uygun Potansiyel Alıcı Bulunamadı</div>
             <div class="saas-text-xs">Bir portföyünüze tekil alıcı takip kodu tanımlayıp o portföyü "Satıldı" olarak kapattığınızda evi alamayan diğer tüm alıcılar eski mülkün özellikleriyle otomatik buraya aktarılır.</div>
           </div>`
-        : `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;">
+        : `<div class="potential-buyers-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px;">
             ${liste
               .map(item => {
                 const temizTel = String(item.telefon || "").replace(/\D/g, "");
@@ -5004,7 +5004,7 @@ function sozlesmeTaslagiRender() {
         <li>Özel Şartlar: ${fInput("Varsa Özel Şartları ve Tapu Masrafı Anlaşmasını Yazınız")}</li>
       </ol>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px;text-align:center;">
+      <div class="contract-sign-grid-3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px;text-align:center;">
         <div style="border:1px dashed #64748b;border-radius:10px;padding:12px;min-height:85px;"><strong>SATICI TARAF</strong><br/>${fInput("Satıcı Ad Soyad", p.mulkSahibi)}</div>
         <div style="border:1px dashed #64748b;border-radius:10px;padding:12px;min-height:85px;"><strong>ALICI TARAF</strong><br/>${fInput("Alıcı Ad Soyad")}</div>
         <div style="border:1px dashed #64748b;border-radius:10px;padding:12px;min-height:85px;"><strong>EMLAK İŞLETMESİ</strong><br/>${fInput("İşletme / Danışman", p.danisman)}</div>
@@ -5035,7 +5035,7 @@ function sozlesmeTaslagiRender() {
         5. Ek Özel Şartlar: ${fInput("Varsa Ek Özel Şartları Giriniz")}
       </p>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px;text-align:center;">
+      <div class="contract-sign-grid-3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px;text-align:center;">
         <div style="border:1px dashed #64748b;border-radius:10px;padding:12px;min-height:85px;"><strong>KİRAYA VEREN</strong><br/>${fInput("Kiraya Veren", p.mulkSahibi)}</div>
         <div style="border:1px dashed #64748b;border-radius:10px;padding:12px;min-height:85px;"><strong>KEFİL</strong><br/>${fInput("Kefil Ad Soyad")}</div>
         <div style="border:1px dashed #64748b;border-radius:10px;padding:12px;min-height:85px;"><strong>KİRACI</strong><br/>${fInput("Kiracı Ad Soyad")}</div>
@@ -5062,7 +5062,7 @@ function sozlesmeTaslagiRender() {
         4. Ek İşyeri Özel Şartları: ${fInput("Varsa Ek İşyeri Şartlarını Yazınız")}
       </p>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px;text-align:center;">
+      <div class="contract-sign-grid-3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px;text-align:center;">
         <div style="border:1px dashed #64748b;border-radius:10px;padding:12px;min-height:85px;"><strong>KEFİL / GARANTÖR</strong><br/>${fInput("Kefil Ad Soyad")}</div>
         <div style="border:1px dashed #64748b;border-radius:10px;padding:12px;min-height:85px;"><strong>KİRACI (KAŞE/İMZA)</strong><br/>${fInput("Kiracı Ad Soyad / Unvan")}</div>
         <div style="border:1px dashed #64748b;border-radius:10px;padding:12px;min-height:85px;"><strong>KİRAYA VEREN</strong><br/>${fInput("Kiraya Veren Ad Soyad", p.mulkSahibi)}</div>
@@ -5111,7 +5111,7 @@ function sozlesmeTaslagiRender() {
       </p>
 
       <div style="display:flex;justify-content:flex-end;margin-top:26px;">
-        <div style="border:1px dashed #64748b;border-radius:10px;padding:16px 32px;min-height:95px;text-align:center;min-width:280px;">
+        <div class="contract-single-sign-box" style="border:1px dashed #64748b;border-radius:10px;padding:16px 24px;min-height:95px;text-align:center;min-width:240px;max-width:100%;">
           <strong>TAAHHÜT EDEN KİRACI (İMZA)</strong><br/><br/>
           ${fInput("Kiracı Adı Soyadı")}
         </div>
@@ -5148,7 +5148,7 @@ function sozlesmeTaslagiRender() {
         <li>İşbu yer gösterme belgesinden doğacak uyuşmazlıklarda ${fInput("Yetkili Mahkeme", "ANKARA", "fillable-inline")} Mahkemeleri ve İcra Daireleri yetkilidir.</li>
       </ol>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:22px;text-align:center;">
+      <div class="contract-sign-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:22px;text-align:center;">
         <div style="border:1px dashed #64748b;border-radius:10px;padding:14px;min-height:90px;">
           <strong>TAŞINMAZI GÖREN (ALICI / KİRACI ADAYI) İMZA</strong><br/>
           ${fInput("Alıcı Adı Soyadı")}
@@ -6753,7 +6753,7 @@ function saticiPaneliniGoster(kod) {
   const bekleyenTeklifSayisi = teklifListesi.filter(t => !t.durum || t.durum === "pending").length;
 
   const saticiGorselOzetBariHtml = `
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin:14px 0 4px;">
+    <div class="visual-kpi-strip-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin:14px 0 4px;">
       <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:11px;">
         <div style="width:36px;height:36px;border-radius:10px;background:#2563EB;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.82rem;flex-shrink:0;">%${ilerlemeYuzdesi}</div>
         <div>
@@ -7368,7 +7368,7 @@ function aliciPaneliniGoster(kod) {
       : `${oz.odaSayisi !== undefined ? `${oz.odaSayisi}+${oz.salonSayisi !== undefined ? oz.salonSayisi : 1}` : "3+1"} • ${oz.brutAlan || "145"} m²`;
 
   const aliciGorselOzetBariHtml = `
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin:14px 0 4px;">
+    <div class="visual-kpi-strip-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin:14px 0 4px;">
       <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;">
         <div style="width:34px;height:34px;border-radius:9px;background:#2563EB;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🏷️</div>
         <div>
@@ -12261,7 +12261,7 @@ function danismanAjandaPanelRender() {
     </div>
 
     <!-- %70 GÖRSEL ÖZET BAR: 4'LÜ AJANDA DURUM KARTLARI -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px;">
+    <div class="visual-kpi-strip-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px;">
       <div onclick="danismanAjandaFiltreSec('today')" style="cursor:pointer;background:${ajandaAktifFiltre === "today" ? "#EFF6FF" : "#FFFFFF"};border:1.5px solid ${ajandaAktifFiltre === "today" ? "#2563EB" : "#E2E8F0"};border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;">
         <div style="width:38px;height:38px;border-radius:10px;background:#DBEAFE;color:#1D4ED8;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">📅</div>
         <div>
@@ -12645,7 +12645,7 @@ function danismanBildirimlerPanelRender() {
     </div>
 
     <!-- %70 GÖRSEL ÖZET BAR: 4'LÜ BİLDİRİM KATEGORİ KARTLARI -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin-bottom:14px;">
+    <div class="visual-kpi-strip-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin-bottom:14px;">
       <div onclick="danismanBildirimFiltreSec('mesaj')" style="cursor:pointer;background:${bildirimAktifFiltre === "mesaj" ? "#EFF6FF" : "#FFFFFF"};border:1.5px solid ${bildirimAktifFiltre === "mesaj" ? "#2563EB" : "#E2E8F0"};border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:11px;">
         <div style="width:36px;height:36px;border-radius:10px;background:#DBEAFE;color:#1D4ED8;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0;">💬</div>
         <div>

@@ -5642,6 +5642,691 @@ body.member-logged-in .site-footer {
   cursor: pointer;
 }
 
+/* ============================================================================
+   11. MOBİL UI/UX DÖNÜŞÜMÜ (<= 768px & <= 480px NATIVE APP RESPONSIVE KATMANI)
+   ============================================================================ */
+
+/* Yatay Taşma (Horizontal Overflow) Sıfırlama */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 78px !important;
+    padding-left: 0 !important;
+  }
+
+  .container {
+    padding: 0 14px !important;
+  }
+
+  /* 1. KOMPAKT 2 SATIRLI MOBİL TOPBAR (180px -> 86px, Üye Girişinde 54px) */
+  header.topbar {
+    padding: 8px 0 !important;
+  }
+
+  .topbar-inner {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+  }
+
+  .brand-logo {
+    gap: 8px !important;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .brand-logo-svg {
+    width: 30px !important;
+    height: 30px !important;
+    flex-shrink: 0;
+  }
+
+  .brand-wordmark {
+    font-size: 1.15rem !important;
+  }
+
+  .brand-slogan {
+    display: none !important;
+  }
+
+  .topbar-inner > div:last-child {
+    order: 2;
+    gap: 6px !important;
+    flex-shrink: 0;
+  }
+
+  #navAgentLoginBtn,
+  #navRegisterBtn {
+    padding: 6px 11px !important;
+    font-size: 0.75rem !important;
+    border-radius: 8px !important;
+    white-space: nowrap;
+  }
+
+  /* Kamusal 5'li Menü Sekmeleri: 2. Satırda Kaydırılabilir Uygulama Şeridi */
+  #publicTopNavTabs.view-tabs {
+    order: 3;
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 4px !important;
+    padding: 4px !important;
+    border-radius: 10px !important;
+  }
+
+  #publicTopNavTabs.view-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  #publicTopNavTabs .view-tab {
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    padding: 6px 12px !important;
+    font-size: 0.76rem !important;
+    border-radius: 7px !important;
+  }
+
+  /* 2. ÜYE GİRİŞİ YAPILDIĞINDA SOL MENÜNÜN (#igLeftSidebar) ALT UYGULAMA BARINA DÖNÜŞMESİ */
+  body.member-logged-in .real-mobile-bottom-bar {
+    display: none !important;
+  }
+
+  body.member-logged-in .ig-left-sidebar,
+  body.member-logged-in .ig-left-sidebar:hover {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 66px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 4px 6px 6px !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-right: none !important;
+    border-top: 1px solid #E2E8F0 !important;
+    box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.08) !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none;
+    z-index: 140 !important;
+  }
+
+  body.member-logged-in .ig-left-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.member-logged-in .ig-sidebar-top {
+    display: none !important;
+  }
+
+  body.member-logged-in .ig-sidebar-nav {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 2px !important;
+    flex: 1 0 auto !important;
+    height: 100%;
+  }
+
+  body.member-logged-in .ig-sidebar-bottom {
+    padding-top: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0;
+    margin-left: 2px;
+  }
+
+  body.member-logged-in .ig-nav-item {
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 3px !important;
+    width: auto !important;
+    min-width: 58px !important;
+    height: 54px !important;
+    padding: 4px 6px !important;
+    border-radius: 10px !important;
+    text-align: center !important;
+  }
+
+  body.member-logged-in .ig-nav-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  body.member-logged-in .ig-nav-icon svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+
+  body.member-logged-in .ig-sidebar-avatar {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  body.member-logged-in .ig-nav-label {
+    opacity: 1 !important;
+    transform: none !important;
+    font-size: 0.61rem !important;
+    line-height: 1.1 !important;
+    max-width: 64px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    pointer-events: auto !important;
+  }
+
+  /* "+ Yeni Mülk Takip Kodu Oluştur" etiketi mobilde kısa görünsün */
+  body.member-logged-in #igNavCreate .ig-nav-label {
+    font-size: 0 !important;
+  }
+
+  body.member-logged-in #igNavCreate .ig-nav-label::after {
+    content: "+ Kod Aç";
+    font-size: 0.61rem;
+    font-weight: 700;
+  }
+
+  body.member-logged-in #igNavPotentialBuyers .ig-nav-label {
+    font-size: 0 !important;
+  }
+
+  body.member-logged-in #igNavPotentialBuyers .ig-nav-label::after {
+    content: "Alıcılarım";
+    font-size: 0.61rem;
+  }
+
+  body.member-logged-in #igNavAgenda .ig-nav-label {
+    font-size: 0 !important;
+  }
+
+  body.member-logged-in #igNavAgenda .ig-nav-label::after {
+    content: "Ajandam";
+    font-size: 0.61rem;
+  }
+
+  /* 3. HERO & KAMUSAL SAYFA KARTLARI MOBİL UYUMU */
+  .cargo-hero {
+    padding: 20px 14px 18px !important;
+    border-radius: 18px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .modern-hero-badge {
+    font-size: 0.64rem !important;
+    padding: 5px 10px !important;
+    margin-bottom: 12px !important;
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .modern-hero-badge-dot {
+    flex-shrink: 0;
+  }
+
+  .cargo-hero h1 {
+    font-size: 1.38rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .cargo-hero p {
+    font-size: 0.86rem !important;
+    line-height: 1.45 !important;
+    margin-bottom: 14px !important;
+  }
+
+  .hero-tracking-card {
+    padding: 12px !important;
+    border-radius: 14px !important;
+  }
+
+  .hero-tracking-input {
+    font-size: 0.82rem !important;
+    padding: 12px 10px 12px 36px !important;
+  }
+
+  .hero-input-search-icon {
+    left: 11px !important;
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  .hero-sample-codes-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 6px !important;
+    margin-top: 10px !important;
+    text-align: left;
+  }
+
+  .hero-sample-pills {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  .hero-sample-pill {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 8px 11px !important;
+    font-size: 0.76rem !important;
+  }
+
+  /* Tüm 300px+ Gridleri Mobilde Sıfır Taşmalı Tek Sütuna İndir */
+  .modern-why-grid,
+  .modern-services-grid,
+  .modern-compare-grid,
+  .social-portfolio-grid,
+  .potential-buyers-grid,
+  .blog-grid,
+  .form-grid-2,
+  .form-grid-3,
+  .form-grid-4 {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .saas-card,
+  .editor-card,
+  .ma-section-card,
+  .modern-why-card,
+  .modern-service-card,
+  .modern-compare-card,
+  .visual-how-card,
+  .about-trust-card {
+    padding: 15px 14px !important;
+    border-radius: 14px !important;
+  }
+
+  .modern-section-hero {
+    padding: 20px 14px !important;
+    border-radius: 16px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .modern-section-hero h1 {
+    font-size: 1.35rem !important;
+  }
+
+  .modern-cta-banner {
+    padding: 18px 14px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    text-align: left !important;
+  }
+
+  .modern-cta-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modern-cta-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .visual-step-indicator {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    border-radius: 14px !important;
+    padding: 6px 8px !important;
+  }
+
+  /* 4. AKTİF PORTFÖYLER YATAY AKORDEON KARTI MOBİL DÜZENİ */
+  .hb-portfolio-header {
+    display: grid !important;
+    grid-template-columns: 48px 1fr auto !important;
+    gap: 10px !important;
+    padding: 12px !important;
+    align-items: start !important;
+  }
+
+  .hb-portfolio-thumb {
+    width: 48px !important;
+    height: 48px !important;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  .hb-portfolio-code-col {
+    grid-column: 2 / 3 !important;
+    grid-row: 1 / 2;
+    min-width: 0;
+  }
+
+  .hb-portfolio-title-sub {
+    white-space: normal !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.3;
+  }
+
+  .hb-portfolio-actions-col {
+    grid-column: 3 / 4 !important;
+    grid-row: 1 / 2;
+  }
+
+  .hb-portfolio-status-col {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 / 3;
+    background: #F8FAFC;
+    border: 1px solid #F1F5F9;
+    border-radius: 9px;
+    padding: 8px 10px;
+  }
+
+  .hb-status-sub {
+    padding-left: 0 !important;
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  .hb-portfolio-right-col {
+    grid-column: 1 / -1 !important;
+    grid-row: 3 / 4;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    text-align: left !important;
+    padding-top: 8px;
+    border-top: 1px solid #F1F5F9;
+    gap: 8px !important;
+  }
+
+  .hb-portfolio-body {
+    padding: 12px 10px 16px !important;
+  }
+
+  /* 5. PORTFÖY 5'Lİ ALT SEKMELERİ (.sub-tabs) VE KİŞİSEL SİTE SEKMELERİ (.social-feed-tabs) */
+  .sub-tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px !important;
+    padding-bottom: 4px !important;
+  }
+
+  .sub-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sub-tab-btn {
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    padding: 8px 12px !important;
+    font-size: 0.76rem !important;
+  }
+
+  /* Süreç Adımları Kartı (.house-step-card) Mobil Ferahlığı */
+  .house-step-item {
+    gap: 10px !important;
+  }
+
+  .house-step-card {
+    padding: 10px 11px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .house-step-actions-group {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-start;
+  }
+
+  /* 6. SATICI / ALICI / AJANDA / BİLDİRİMLER 4'LÜ ÖZET BARI VE KATALOG KÜNYESİ (2x2 SİMETRİK GRİD) */
+  .visual-kpi-strip-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .catalog-specs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .catalog-spec-item {
+    padding: 8px 10px !important;
+    min-width: 0;
+  }
+
+  .catalog-spec-value {
+    font-size: 0.8rem !important;
+    word-break: break-word;
+  }
+
+  .saas-agent-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .saas-agent-row > div:last-child {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* 7. KİŞİSEL WEB SİTESİ (mulkizle.com/adiniz) MOBİL HERO & SEKME DÜZENİ */
+  .social-profile-cover {
+    height: 124px !important;
+  }
+
+  .social-cover-location-pill {
+    top: 10px !important;
+    right: 10px !important;
+    bottom: auto !important;
+    font-size: 0.7rem !important;
+    padding: 4px 10px !important;
+  }
+
+  .social-profile-body {
+    padding: 0 14px 16px !important;
+  }
+
+  .social-profile-top-row {
+    margin-top: -40px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .social-avatar-xl {
+    width: 82px !important;
+    height: 82px !important;
+  }
+
+  .social-action-bar {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  .social-action-bar > a,
+  .social-action-bar > button {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 7px 10px !important;
+    font-size: 0.76rem !important;
+  }
+
+  .social-stats-strip {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .social-stats-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .social-feed-tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px !important;
+    padding: 0 4px !important;
+  }
+
+  .social-feed-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .social-feed-tab {
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    padding: 10px 10px !important;
+    font-size: 0.78rem !important;
+  }
+
+  /* 8. DM MESAJ KUTUSU & SÖZLEŞMELER MOBİL DÜZENİ */
+  .dm-inbox-layout {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+  }
+
+  .dm-thread-list {
+    max-height: 210px !important;
+    border-right: none !important;
+    border-bottom: 2px solid #E2E8F0 !important;
+  }
+
+  .dm-chat-stage {
+    min-height: 370px !important;
+  }
+
+  .contract-paper {
+    padding: 14px 10px !important;
+    overflow-x: auto !important;
+  }
+
+  .contract-sign-grid-3,
+  .contract-sign-grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .contract-single-sign-box {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* 9. MODALLAR & 6 ADIMLI YENİ PORTFÖY SİHİRBAZI MOBİL UYUMU */
+  .paywall-backdrop {
+    padding: 8px !important;
+    align-items: flex-end !important;
+  }
+
+  .paywall-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 92vh !important;
+    padding: 16px 14px !important;
+    border-radius: 18px 18px 14px 14px !important;
+    overflow-y: auto !important;
+  }
+
+  .np-wizard-progress {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+  }
+
+  .np-wizard-step-pill {
+    font-size: 0.68rem !important;
+    padding: 6px 4px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .np-step-slot-row {
+    flex-wrap: wrap !important;
+  }
+
+  .np-step-slot-select,
+  .np-step-slot-custom {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .wa-otp-input-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .wa-otp-input {
+    width: 100% !important;
+  }
+
+  .kvkk-trigger-box {
+    flex-wrap: wrap !important;
+  }
+
+  /* 10. MOBİL UYGULAMA SİMÜLATÖRÜ (#view-mobile-app) GERÇEK TELEFON EKRANI UYUMU */
+  .mobile-app-showcase-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .phone-device-frame {
+    width: 100% !important;
+    max-width: 350px !important;
+    height: auto !important;
+    padding: 9px !important;
+    border-radius: 28px !important;
+  }
+
+  .phone-screen {
+    height: 540px !important;
+    border-radius: 20px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .visual-kpi-strip-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .np-wizard-progress {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
 
 
 
