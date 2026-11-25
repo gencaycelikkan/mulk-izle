@@ -1572,7 +1572,7 @@
                   </div>
                 </div>
 
-                <div class="form-grid-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:10px;">
+                <div class="form-grid-3" style="margin-bottom:10px;">
                   <div class="field" style="margin-bottom:0;">
                     <label>Alıcı Adı Soyadı *</label>
                     <input type="text" id="newBuyerCodeName" placeholder="Örn: Zeynep Kaya" style="background:#FFFFFF;" />
@@ -1582,12 +1582,13 @@
                     <input type="text" id="newBuyerCodePhone" placeholder="0533 210 90 80" style="background:#FFFFFF;" />
                   </div>
                   <div class="field" style="margin-bottom:0;">
-                    <label>Alıcı Bütçesi &amp; Ödeme Tipi</label>
-                    <input type="text" id="newBuyerCodeBudget" placeholder="Örn: 6.750.000 ₺ (Nakit + Kredi)" style="background:#FFFFFF;" />
-                  </div>
-                  <div class="field" style="margin-bottom:0;">
-                    <label>Aradığı Özellik / Tercih Notu</label>
-                    <input type="text" id="newBuyerCodePref" placeholder="Örn: 3+1 Güney cephe, site içi" style="background:#FFFFFF;" />
+                    <label>Danışmanın Bu Alıcıya Özel Notu &amp; Bütçesi</label>
+                    <input
+                      type="text"
+                      id="newBuyerCodePref"
+                      placeholder="Örn: 6.750.000 ₺ nakit bütçesi var, kendi evini sattı..."
+                      style="background:#FFFFFF;"
+                    />
                   </div>
                 </div>
 
@@ -2056,9 +2057,12 @@
             <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px;">
               <div>
                 <span class="pill-badge" style="margin-bottom:4px;">YENİ ARAMA TALEBİ • 81 İL / İLÇE / SEMT / MAHALLE</span>
-                <h4 style="font-size:1.05rem;font-weight:800;color:var(--navy-900);margin:0;">Alıcım İçin Yeni Arama Talebi Aç</h4>
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                  <h4 style="font-size:1.05rem;font-weight:800;color:var(--navy-900);margin:0;">Alıcım İçin Yeni Arama Talebi Aç</h4>
+                  <span class="saas-badge-blue" id="ariyorumDailyQuotaBadge">Günlük Talep Hakkı: 0 / 5</span>
+                </div>
                 <p style="font-size:0.79rem;color:var(--text-body);margin-top:3px;">
-                  Önce aradığınız mülk kategorisini (<strong>Konut</strong> veya <strong>İmarlı Arsa</strong>) ve konumu seçin; o bölgedeki uzman danışmanlara anında bildirim düşsün.
+                  Önce aradığınız mülk kategorisini (<strong>Konut</strong>, <strong>İmarlı Arsa</strong> veya <strong>Tarla / Bağ / Bahçe</strong>) ve konumu seçin; o bölgedeki uzman danışmanlara anında bildirim düşsün. <em>(Spam önleme amacıyla günde en fazla 5 talep açılabilir.)</em>
                 </p>
               </div>
               <button type="button" class="saas-btn-outline-sm" onclick="ariyorumYeniTalepFormuToggle(false)">✕ Kapat</button>
@@ -2450,12 +2454,13 @@
                   Tüm Türkiye'deki alıcı taleplerini <strong>İl, İlçe, Semt (Bölge) ve Mahalle</strong> bazında filtreleyebilirsiniz. Uygun portföyünüz varsa <strong>"Aktif Portföyümü Gönder"</strong> butonuna tıklayın; gönderdiğiniz portföy herkese açık görünmez, yalnızca <strong>talep açan danışmanın özel Mesaj Kutusuna</strong> düşer.
                 </p>
               </div>
-              <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <button type="button" class="saas-btn-primary-sm" onclick="ariyorumSadeceUzmanlikBolgemFiltrele()">
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                <span class="saas-badge-neutral" id="ariyorumDailyQuotaHeaderBadge" title="Spam koruması: Günde en fazla 5 arama talebi açılabilir">Günlük Talep: 0 / 5</span>
+                <button type="button" class="saas-btn-primary-sm" id="btnAriyorumMyRegionFilter" onclick="ariyorumSadeceUzmanlikBolgemFiltrele()">
                   <span>📍 Uzmanlık Semt / Bölgemi Filtrele</span>
                 </button>
-                <button type="button" class="saas-btn-outline-sm" onclick="ariyorumFiltreleriSifirla()">
-                  <span>Tüm Türkiye'yi Göster</span>
+                <button type="button" class="saas-btn-outline-sm" id="btnAriyorumMyRequestsFilter" onclick="ariyorumTaleplerimFiltreleToggle()">
+                  <span>📋 Taleplerim (<span id="ariyorumMyRequestsCountLabel">0</span>)</span>
                 </button>
               </div>
             </div>
@@ -3769,6 +3774,13 @@
         </div>
 
         <div class="field" style="margin-bottom:10px;">
+          <label style="font-size:0.78rem;font-weight:700;color:#0F172A;">Bu Portföy Hangi Alıcıya Satıldı? (Seçilen kişi evi aldığı için Potansiyel Alıcılarım'a düşmez)</label>
+          <select id="delSoldWinningBuyerSelect" style="font-size:0.82rem;font-weight:700;background:#FFFFFF;">
+            <option value="__EXTERNAL__">Sistem Dışı Başka Bir Alıcıya Satıldı (Tüm Kayıtlı Alıcıları Potansiyel Havuza Aktar)</option>
+          </select>
+        </div>
+
+        <div class="field" style="margin-bottom:10px;">
           <label style="font-size:0.78rem;font-weight:700;color:#0F172A;">Kapanış / Pazarlık Oranı veya Yaklaşık Satış Bandı</label>
           <select id="delSoldDiscountBand" onchange="portfoySilFiyatBandiDegisti()" style="font-size:0.82rem;font-weight:700;">
             <option value="liste_fiyati">İlan / Liste Fiyatından Satıldı (%0 İskonto)</option>
@@ -3842,6 +3854,6 @@
     </button>
   </nav>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=20261125_2"></script>
 </body>
 </html>

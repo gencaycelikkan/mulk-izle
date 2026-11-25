@@ -14,7 +14,7 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
   - Bir portföy için birden fazla alıcıya mülk takip kodu atıldığında ve o portföy satıldığında (veya kapatıldığında), o portföyle ilgilenmiş diğer tüm alıcıların iletişim ve bütçe/tercih bilgileri otomatik olarak danışmanın **"Potansiyel Alıcılarım"** bölümüne aktarılacak; sol menüde/panelde böyle özel bir bölüm açılacak.
 - [x] **3. Mülk Arama ve Portföy Sistemine "Arsa" Kategorisi Eklenmesi:**
   - Mülk arama (`Arıyorum!`) ve portföy oluşturma ekranlarına Konut dışında **İmarlı Arsa** (İl/İlçe/Semt/Mahalle + Ada/Parsel, İmar Tipi, Hisseli Tapu, Alan $m^2$, Hmax, Maksimum Kat İzni, TAKS, KAKS/Emsal, Yapılaşma Durumu, Olanaklar ve Manzara) seçeneği eklendi.
-- [ ] **4. Arıyorum!'dan Mesajla Gelen Portföyün Tıklanabilir Olması:**
+- [x] **4. Arıyorum!'dan Mesajla Gelen Portföyün Tıklanabilir Olması:**
   - `Arıyorum!` talebine karşılık bir danışman **"📤 Aktif Portföyümü Gönder"** dediğinde ve bu portföy talep sahibinin **Mesajlar** kutusuna düştüğünde, mesaj içindeki portföy kartı/kodu **tıklanabilir** olacak; tıklandığında ilgili portföyün detay/katalog ekranı açılacak.
 - [x] **5. Üye Olma ve Üye Girişi Ekranlarına "Ben Robot Değilim" Kutucuğu:**
   - Yeni Danışman / Ofis Üyelik Formuna (`#view-membership-form`) ve Üye Girişi penceresine (`#agentLoginModal`) bot/spam koruması için **"Ben robot değilim"** onay kutucuğu eklendi.
@@ -38,9 +38,9 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
 - [x] **4. ADIM: Aktif Portföylerim, Tekil Alıcı Kodları & "Potansiyel Alıcılarım" Bölümü (Tamamlandı ✅)**
   - Her portföy içinde her alıcıya ayrı 12 haneli tekil takip kodu üretme, kişi bazlı inceleme sayacı, WhatsApp'tan kod gönderme ve tekil alıcı koduyla giriş doğrulaması eklendi.
   - Sol menüye **"Potansiyel Alıcılarım"** (`#igNavPotentialBuyers`) eklendi; bir portföy satıldığında/kapatıldığında o portföyle ilgilenen tüm alıcılar bütçe ve tercihleriyle otomatik olarak bu havuza aktarılıyor ve havuzdan yeni bir aktif portföy için tek tıkla yeni tekil kod üretilebiliyor.
-- [ ] **5. ADIM: Mülk Sahibi (Satıcı) & Alıcı Katalog Ekranları** (*%70 görsel zaman tüneli, galeri ve tek sayfa katalog künyesi*)
-- [ ] **6. ADIM: Danışman Günlük Operasyon Araçları** (*Bildirimler, Mesajlar [tıklanabilir görsel portföy kartı dahil], Mülk Ajandam*)
-- [ ] **7. ADIM: Pro Network Özellikleri** (*Arıyorum! [Arsa filtreli görsel talep kartları] ve Profilim `mulkizle.com/adiniz`*)
+- [x] **5. ADIM: Mülk Sahibi (Satıcı) & Alıcı Katalog Ekranları (Tamamlandı ✅)** (*%70 görsel 4'lü performans şeridi, zaman tüneli, gelen teklif onay/red ve yer gösterimi randevu kartları, galeri ve tek sayfa katalog künyesi*)
+- [x] **6. ADIM: Danışman Günlük Operasyon Araçları (Tamamlandı ✅)** (*Bildirimler, Mesajlar [tıklanabilir görsel portföy kartı dahil], Mülk Ajandam 4'lü görsel özet barları*)
+- [x] **7. ADIM: Pro Network Özellikleri (Tamamlandı ✅)** (*Arıyorum! [Günlük 5 talep spam limiti + Taleplerim sekmesi + Konut/Arsa/Tarla filtreli görsel talep kartları] ve Profilim `mulkizle.com/adiniz` [Arıyorum! özelliği kişisel web sitesinden gizlendi]*)
 
 ---
 
@@ -92,6 +92,7 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
   - `localStorage` yapısının Supabase (Avrupa/Frankfurt sunucusu) veya Firebase'e taşınması.
   - Mülk sahibi telefon numaraları ve kişisel notların yalnızca portföy sahibi danışman (`danisman_id`) tarafından okunabilmesini sağlayan **Row Level Security (RLS)** kurallarının yazılması.
   - Danışman şifrelerinin `Bcrypt / Auth` ile şifrelenerek (hashlenerek) saklanması.
+  - **12 Haneli Takip Kodu Sıfır Çakışma Garantisi (`UNIQUE INDEX` + Rol Ön Eki):** Veritabanındaki `tracking_codes` tablosunda `code CHAR(12) PRIMARY KEY / UNIQUE` kısıtı tanımlanarak farklı danışmanların satıcı (`8/5` ön ekli), tekil alıcı (`3/4` ön ekli) ve Co-Op (`9` ön ekli) kodlarının sistem genelinde (ve geçmişte silinmiş kodlar dahil) çakışma ihtimalinin fiziksel olarak `%0` yapılması.
 - [ ] **2. Cloudflare & 256-Bit SSL + Bot/Brute-Force Koruması:**
   - `mulkizle.com` alan adının Cloudflare arkasına alınarak zorunlu `HTTPS (256-Bit SSL)` aktif edilmesi.
   - 12 haneli takip kodu sorgulama ve giriş ekranlarına IP bazlı deneme limiti (Rate Limiting) ve gerçek Cloudflare Turnstile / reCAPTCHA bağlanması.
