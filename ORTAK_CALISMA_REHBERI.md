@@ -72,3 +72,33 @@ Gönderdikten sonra diğerinize *"Yeni değişiklikleri gönderdim, `git pull` y
 3. **İstekleri ve Yapılacakları `TODO.md` Dosyasına Yazın:**
    * Gencay bir ekranda yeni bir buton veya tasarım düzeltmesi istediğinde `TODO.md` içindeki **"UI/UX & Mobil İstekleri"** kısmına ekler.
    * Abisi bir bileşenin içine gerçek emlak metni veya sözleşme maddesi gerektiğinde `TODO.md` içindeki **"İçerik & Metin İstekleri"** kısmına ekler.
+
+---
+
+## 5. 🛡️ Canlıya (Gerçek Sunucuya) Geçince Yapılacaklar — Veri Güvenliği & KVKK Kurulum Rehberi
+
+Proje şu an geliştirme ve test aşamasında olduğu için verileri tarayıcının yerel hafızasında (`localStorage`) tutmaktadır. `mulkizle.com` alan adıyla gerçek yayına çıkarken **6698 sayılı KVKK** kapsamındaki teknik ve idari güvenlik tedbirlerini tam sağlamak için aşağıdaki 5 adım uygulanacaktır:
+
+### 1. Hazır Şifreli Bulut Veritabanı ve Satır Bazlı İzolasyon (Supabase / Firebase)
+* Veritabanı olarak **Supabase (PostgreSQL - Frankfurt/AB Bölgesi)** veya **Google Firebase** kullanılacaktır.
+* **Row Level Security (RLS - Satır Bazlı Güvenlik):** Veritabanı seviyesinde; *"Bir mülk sahibinin telefon numarasını, TC/Vergi bilgisini ve Kişisel Notlar alanını yalnızca o portföyü oluşturan `danisman_id` okuyabilir ve güncelleyebilir"* kuralı tanımlanacaktır. Böylece hiçbir üye danışman başka bir danışmanın müşteri telefonuna API üzerinden dahi erişemez.
+* **Şifre Hashleme:** Danışman şifreleri veritabanında açık metin olarak değil, `Supabase Auth / Firebase Auth` üzerinde **Bcrypt / Argon2** ile tek yönlü şifrelenmiş (hashed) olarak saklanacaktır.
+
+### 2. Bağlantı Güvenliği (`HTTPS` 256-Bit SSL & Cloudflare Kalkanı)
+* `mulkizle.com` alan adı **Cloudflare** üzerinden yönlendirilerek tüm trafik **256-Bit SSL (`https://`)** ile şifrelenecektir.
+* **Rate Limiting (Hız Sınırı) & Bot Koruması:** 12 haneli mülk takip kodu sorgulama ekranına ve üye girişine saniyede çoklu deneme (Brute-Force) yapılmasını engelleyen Cloudflare WAF / Turnstile kuralları aktif edilecektir.
+
+### 3. Kapalı Devre 12 Haneli Takip Kodu & WhatsApp / SMS OTP Doğrulaması
+* Mülk sahibi takip ekranı dışarıya açık olmayacak; 12 haneli kod girildiğinde mutlaka o koda tanımlı cep telefonuna **WhatsApp Business API / Netgsm / Twilio** üzerinden gönderilen **6 haneli tek kullanımlık doğrulama kodu (OTP)** ile açılacaktır.
+* Alıcı takip kodlarında ve dış vitrinde mülk sahibinin adı, telefonu ve pazar analizi raporu kesinlikle yer almayacaktır.
+
+### 4. Otomatik Veri Saklama ve İmha Politikası (KVKK Madde 7)
+* Satışı tamamlanan veya danışman tarafından kapatılan/silinen portföylerdeki müşteri iletişim bilgileri, yasal saklama süresi sonunda otomatik çalışan bir zamanlanmış görev (`cron job`) ile maskelenecek (`0532 *** ** 30`) veya kalıcı olarak anonimleştirilecektir.
+* `destek@mulkizle.com` üzerinden gelen veri silme talepleri admin panelinden en geç 30 gün içinde tek tuşla silinebilir olacaktır.
+
+### 5. Hukuki & İdari KVKK Kayıtları (Loglama)
+* Üye danışmanın kayıt olurken `KVKK_AYDINLATMA_METNI.md` içeriğini **sonuna kadar kaydırarak (scroll down)** onayladığına dair **Onay Zaman Damgası (Timestamp), Metin Versiyonu (`v1.0`) ve IP Adresi** veritabanındaki `users` tablosunda (`kvkk_approved_at`) kayıt altına alınacaktır.
+
+### 6. Sadece Admin Yetkisine Özel "Anonim Bölge & Mülk Özellikleri İstatistik Havuzu"
+* Portföy silme anketinden (*Satıldı / Satılmadı*) toplanan kimliksiz mülk özellikleri ve kapanış fiyat bandı (`₺/m²`) istatistik tablosu (`#anonimBolgeEmsalTabloCard`) sitede **hiçbir üye danışmana gösterilmeyecektir (`display:none`)**.
+* Veriler arka planda kimliksiz/ada-parselsiz olarak birikmeye devam edecek ve canlıya geçildiğinde yalnızca **Admin Paneli (`role = 'admin'`)** üzerinden erişilebilir olacaktır.

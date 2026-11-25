@@ -133,21 +133,29 @@ body {
   font-size: 1.05rem;
 }
 
+.brand-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 .brand-slogan {
-  font-size: 0.76rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: #64748B;
   letter-spacing: -0.01em;
-  padding-left: 11px;
-  margin-left: 2px;
-  border-left: 1.5px solid #CBD5E1;
-  line-height: 1.25;
+  line-height: 1.15;
   white-space: nowrap;
 }
 
-@media (max-width: 1120px) {
-  .brand-slogan {
-    display: none;
+@media (max-width: 980px) {
+  .view-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap !important;
+    max-width: 100%;
+  }
+  .view-tab {
+    white-space: nowrap;
   }
 }
 
@@ -4765,6 +4773,873 @@ body {
 .ig-nav-item.active .ig-nav-icon,
 .ig-nav-item.active .ig-nav-label {
   color: #2563EB;
+}
+
+/* ============================================================================
+   9. %70 GÖRSEL ANLATIM KATMANI (MİNİ EKRAN MAKETLERİ, 3 ADIM, BİZ KİMİZ, SSS & FOOTER)
+   ============================================================================ */
+
+.hero-tracking-input::placeholder,
+#regReferralCode::placeholder,
+.wa-otp-input::placeholder {
+  text-transform: none;
+  font-weight: 500;
+  color: #94A3B8;
+  letter-spacing: normal;
+}
+
+.visual-section-header {
+  text-align: center;
+  margin: 10px 0 18px;
+}
+
+.visual-section-header h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.025em;
+  margin: 4px 0 0;
+}
+
+/* 3 Adımda Nasıl Çalışır Görsel Grid */
+.visual-how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.visual-how-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.visual-how-step-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #2563EB;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.visual-how-card h3 {
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 2px 0 0;
+}
+
+.visual-how-card p {
+  font-size: 0.82rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Mini Ekran Maketi Kutusu (Visual UI Mockup) */
+.visual-mockup-box {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.visual-mockup-box.compact {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 9px 12px;
+  margin-bottom: 12px;
+}
+
+.vm-code-row,
+.vm-mini-bar,
+.vm-progress-head,
+.vm-offer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.76rem;
+  color: #334155;
+}
+
+.vm-pill-blue {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: 0.71rem;
+  font-weight: 800;
+}
+
+.vm-pill-green {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #F0FDF4;
+  color: #15803D;
+  border: 1px solid #BBF7D0;
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: 0.71rem;
+  font-weight: 800;
+}
+
+.vm-progress-track {
+  width: 100%;
+  height: 7px;
+  background: #E2E8F0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.vm-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563EB 0%, #60A5FA 100%);
+  border-radius: 999px;
+}
+
+.vm-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.vm-chip-done {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #0F172A;
+  border-radius: 7px;
+  padding: 2px 8px;
+  font-size: 0.69rem;
+  font-weight: 700;
+}
+
+.vm-chip-active {
+  background: #EFF6FF;
+  border: 1px solid #93C5FD;
+  color: #2563EB;
+  border-radius: 7px;
+  padding: 2px 8px;
+  font-size: 0.69rem;
+  font-weight: 700;
+}
+
+.vm-chip-neg {
+  background: #FFFFFF;
+  border: 1px solid #FECACA;
+  color: #DC2626;
+  border-radius: 7px;
+  padding: 2px 8px;
+  font-size: 0.69rem;
+  font-weight: 700;
+}
+
+.vm-approve-btn {
+  background: #16A34A;
+  color: #FFFFFF;
+  border-radius: 7px;
+  padding: 4px 10px;
+  font-size: 0.71rem;
+  font-weight: 800;
+}
+
+.pillar-visual-banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding: 10px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 11px;
+}
+
+.pv-tag {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 7px;
+  padding: 3px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.saas-badge-emerald {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  background: #ECFDF5;
+  color: #059669;
+  border: 1px solid #A7F3D0;
+}
+
+.modern-why-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.modern-why-card .visual-mockup-box {
+  margin-bottom: 16px;
+}
+
+.modern-why-card-footer {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.service-tier-pill {
+  font-size: 0.64rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+
+.service-tier-pill.free {
+  background: #F0FDF4;
+  color: #15803D;
+  border: 1px solid #BBF7D0;
+}
+
+.service-tier-pill.pro {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+
+/* Kompakt Sıkça Sorulan Sorular (SSS) */
+.visual-faq-section {
+  margin-bottom: 24px;
+}
+
+.visual-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.visual-faq-item {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 13px 16px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
+}
+
+.visual-faq-item summary {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #0F172A;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.visual-faq-item summary::after {
+  content: "+";
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #2563EB;
+}
+
+.visual-faq-item[open] summary::after {
+  content: "−";
+}
+
+.visual-faq-item p {
+  font-size: 0.8rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid #F1F5F9;
+}
+
+/* Biz Kimiz 4'lü Görsel Güven Grid */
+.about-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.about-trust-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 22px 18px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.025);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.about-trust-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  background: #EFF6FF;
+}
+
+.about-trust-card h3 {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.about-trust-card p {
+  font-size: 0.8rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.about-contact-strip {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 22px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.about-contact-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-contact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+  color: #0F172A;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.about-contact-pill.whatsapp {
+  background: #F0FDF4;
+  border-color: #BBF7D0;
+  color: #15803D;
+}
+
+/* Global Kurumsal Footer */
+.site-footer {
+  background: #FFFFFF;
+  border-top: 1px solid #E2E8F0;
+  padding: 40px 0 28px;
+  margin-top: 24px;
+}
+
+body.member-logged-in .site-footer {
+  display: none;
+}
+
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.site-footer-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.site-footer-col h4 {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #0F172A;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 4px;
+}
+
+.site-footer-col button,
+.site-footer-col a {
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.81rem;
+  font-weight: 600;
+  color: #64748B;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.15s ease;
+}
+
+.site-footer-col button:hover,
+.site-footer-col a:hover {
+  color: #2563EB;
+}
+
+.site-footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 18px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #94A3B8;
+}
+
+@media (max-width: 960px) {
+  .visual-how-grid,
+  .about-trust-grid,
+  .site-footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .visual-how-grid,
+  .visual-faq-grid,
+  .about-trust-grid,
+  .site-footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================================
+   10. 2. ADIM: GÖRSEL PAKET SEÇİMİ, SEÇİLEN PAKET ÖZET BARI & BEN ROBOT DEĞİLİM
+   ============================================================================ */
+
+.visual-step-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 5px 10px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.v-step-pill {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  color: #64748B;
+  background: transparent;
+  border: none;
+}
+
+.v-step-pill.active {
+  background: #2563EB;
+  color: #FFFFFF;
+}
+
+.v-step-pill.done {
+  background: #ECFDF5;
+  color: #059669;
+  border: 1px solid #A7F3D0;
+}
+
+.v-step-arrow {
+  color: #94A3B8;
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.price-visual-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.price-visual-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+}
+
+.price-visual-icon.blue {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+}
+
+.price-visual-quota-chip {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: #0F172A;
+  border-radius: 8px;
+  padding: 5px 9px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  margin: 6px 0 8px;
+}
+
+.price-visual-quota-chip.blue {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+  color: #1D4ED8;
+}
+
+.selected-plan-visual-bar {
+  background: #FFFFFF;
+  border: 1.5px solid #2563EB;
+  border-radius: 16px;
+  padding: 14px 20px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 6px 20px -6px rgba(37, 99, 235, 0.14);
+}
+
+.spv-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.spv-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.spv-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #2563EB;
+  letter-spacing: 0.04em;
+}
+
+.spv-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.spv-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Ben Robot Değilim Kutucuğu (reCAPTCHA / Cloudflare Turnstile Estetiği) */
+.not-robot-row {
+  margin-top: 8px;
+}
+
+.not-robot-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: #F8FAFC;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.18s ease;
+}
+
+.not-robot-box:hover {
+  border-color: #2563EB;
+  background: #FFFFFF;
+}
+
+.not-robot-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.not-robot-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.not-robot-custom-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 2px solid #94A3B8;
+  background: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.16s ease;
+  flex-shrink: 0;
+}
+
+.not-robot-checkbox:checked + .not-robot-custom-check {
+  background: #16A34A;
+  border-color: #16A34A;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.18);
+}
+
+.not-robot-checkbox:checked + .not-robot-custom-check::after {
+  content: "✓";
+  color: #FFFFFF;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.not-robot-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.not-robot-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #64748B;
+}
+
+/* WhatsApp Doğrulama Kodu Kutusu */
+.wa-otp-box {
+  background: #F0FDF4;
+  border: 1.5px solid #86EFAC;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wa-otp-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wa-otp-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #15803D;
+  letter-spacing: 0.03em;
+}
+
+.wa-send-code-btn {
+  background: #16A34A;
+  color: #FFFFFF;
+  border: 1px solid #15803D;
+  border-radius: 8px;
+  padding: 5px 11px;
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.16s ease;
+}
+
+.wa-send-code-btn:hover {
+  background: #15803D;
+  transform: translateY(-1px);
+}
+
+.wa-otp-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.wa-otp-input {
+  width: 145px !important;
+  padding: 7px 11px !important;
+  border-radius: 8px !important;
+  border: 1.5px solid #86EFAC !important;
+  background: #FFFFFF !important;
+  font-size: 0.88rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+  color: #0F172A !important;
+  text-align: center;
+}
+
+.wa-otp-status {
+  font-size: 0.73rem;
+  font-weight: 700;
+  color: #166534;
+  flex: 1;
+}
+
+/* KVKK Tıklamalı Kutu & Scroll Zorunlu Pop-Up Modal Stilleri */
+.kvkk-trigger-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #F8FAFC;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.18s ease;
+}
+
+.kvkk-trigger-box:hover {
+  border-color: #2563EB;
+  background: #FFFFFF;
+}
+
+.kvkk-trigger-box.approved {
+  background: #F0FDF4;
+  border-color: #86EFAC;
+}
+
+.kvkk-status-pill {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #2563EB;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.kvkk-trigger-box.approved .kvkk-status-pill {
+  color: #15803D;
+  background: #DCFCE7;
+  border-color: #86EFAC;
+}
+
+.kvkk-progress-wrap {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.kvkk-scroll-body {
+  max-height: 310px;
+  overflow-y: auto;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-size: 0.82rem;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.kvkk-scroll-body h4 {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 14px 0 6px;
+}
+
+.kvkk-scroll-body h4:first-child {
+  margin-top: 0;
+}
+
+.kvkk-scroll-body p {
+  margin: 0 0 10px;
+}
+
+.kvkk-confirm-unlock-box {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #F0FDF4;
+  border: 1.5px solid #86EFAC;
+  border-radius: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.kvkk-modal-check-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.82rem;
+  color: #0F172A;
+  cursor: pointer;
+  flex: 1;
+}
+
+.kvkk-modal-check-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #16A34A;
+  cursor: pointer;
 }
 
 

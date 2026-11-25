@@ -665,7 +665,76 @@ function uyeGirisiTetikle(hedefMod = "mode-portfolios") {
         errBox.style.display = "none";
       }
     }
+    const loginRobotEl = document.getElementById("loginNotRobotCheck");
+    if (loginRobotEl) loginRobotEl.checked = false;
+    const loginWaInput = document.getElementById("loginWhatsappOtpInput");
+    if (loginWaInput) loginWaInput.value = "";
+    const loginWaHint = document.getElementById("loginWhatsappOtpHint");
+    if (loginWaHint) loginWaHint.textContent = "Kayıtlı telefonunuza kod gönderilir";
+    girisAktifWhatsappKodu = "";
     document.getElementById("agentLoginModal")?.classList.add("open");
+  }
+}
+
+let girisAktifWhatsappKodu = "";
+let uyelikAktifWhatsappKodu = "";
+
+function girisKullanicisiniBul(girisId) {
+  const temizId = (girisId || "").trim().toLowerCase();
+  const temizGirilenTel = temizId.replace(/\D/g, "");
+  return kayitliKullanicilar.find(u => {
+    const uEmail = (u.email || "").toLowerCase();
+    const uUsername = (u.kullaniciAdi || "").toLowerCase();
+    const uTel = (u.telefon || "").replace(/\D/g, "");
+    return (
+      (temizId && (uEmail === temizId || uUsername === temizId)) ||
+      (temizGirilenTel.length >= 7 && uTel.includes(temizGirilenTel))
+    );
+  });
+}
+
+function girisWhatsappKoduGonder() {
+  const girisId = (document.getElementById("agentLoginIdentifier")?.value || "").trim();
+  const errBox = document.getElementById("agentLoginErrorBox");
+  const bulunan = girisKullanicisiniBul(girisId);
+  const hedefTel = bulunan ? bulunan.telefon : girisId.replace(/\D/g, "").length >= 7 ? girisId : "0532 555 44 33";
+
+  girisAktifWhatsappKodu = String(Math.floor(100000 + Math.random() * 900000));
+  const waInput = document.getElementById("loginWhatsappOtpInput");
+  if (waInput) waInput.value = girisAktifWhatsappKodu;
+
+  const waHint = document.getElementById("loginWhatsappOtpHint");
+  if (waHint) {
+    waHint.innerHTML = `✓ <strong>${hedefTel}</strong> numarasına WhatsApp kodu gönderildi: <strong>${girisAktifWhatsappKodu}</strong>`;
+  }
+  if (errBox) errBox.style.display = "none";
+}
+
+function uyelikWhatsappKoduGonder() {
+  const tel = (document.getElementById("regPhone")?.value || "").trim();
+  if (!tel || tel.replace(/\D/g, "").length < 7) {
+    alert("Lütfen önce geçerli bir Cep Telefonu Numarası girin.");
+    document.getElementById("regPhone")?.focus();
+    return;
+  }
+  uyelikAktifWhatsappKodu = String(Math.floor(100000 + Math.random() * 900000));
+  const waInput = document.getElementById("regWhatsappOtpInput");
+  if (waInput) waInput.value = uyelikAktifWhatsappKodu;
+  const waHint = document.getElementById("regWhatsappOtpHint");
+  if (waHint) {
+    waHint.innerHTML = `✓ <strong>${tel}</strong> numarasına WhatsApp kodu iletildi: <strong>${uyelikAktifWhatsappKodu}</strong>`;
+  }
+}
+
+function takipKoduWhatsappOnayGonder() {
+  const tel = (document.getElementById("verifyPhoneInput")?.value || "0532 410 20 30").trim();
+  const yeniKod = String(Math.floor(1000 + Math.random() * 9000));
+  const otpInput = document.getElementById("verifyOtpInput");
+  if (otpInput) otpInput.value = yeniKod;
+  const fb = document.getElementById("trackVerifyWaFeedback");
+  if (fb) {
+    fb.style.display = "block";
+    fb.innerHTML = `💬 <strong>${tel}</strong> numaralı WhatsApp hattınıza tek kullanımlık doğrulama kodu (<strong>${yeniKod}</strong>) gönderildi ve kutuya dolduruldu.`;
   }
 }
 
@@ -676,7 +745,42 @@ function danismanGirisModalKapat() {
 function danismanGirisOnayla() {
   const girisId = (document.getElementById("agentLoginIdentifier")?.value || "").trim().toLowerCase();
   const sifre = (document.getElementById("agentLoginPassword")?.value || "").trim();
+  const waKod = (document.getElementById("loginWhatsappOtpInput")?.value || "").trim();
+  const robotOnay = document.getElementById("loginNotRobotCheck")?.checked;
   const errBox = document.getElementById("agentLoginErrorBox");
+
+  if (!waKod) {
+    if (errBox) {
+      errBox.style.display = "block";
+      errBox.style.background = "#FEF2F2";
+      errBox.style.borderColor = "#FECACA";
+      errBox.style.color = "#DC2626";
+      errBox.textContent = "Lütfen 'WhatsApp Kodu Gönder' butonuna tıklayarak WhatsApp doğrulama kodunuzu alın.";
+    }
+    return;
+  }
+
+  if (girisAktifWhatsappKodu && waKod !== girisAktifWhatsappKodu) {
+    if (errBox) {
+      errBox.style.display = "block";
+      errBox.style.background = "#FEF2F2";
+      errBox.style.borderColor = "#FECACA";
+      errBox.style.color = "#DC2626";
+      errBox.textContent = "Girdiğiniz WhatsApp doğrulama kodu eşleşmiyor! Lütfen kontrol edin.";
+    }
+    return;
+  }
+
+  if (!robotOnay) {
+    if (errBox) {
+      errBox.style.display = "block";
+      errBox.style.background = "#FEF2F2";
+      errBox.style.borderColor = "#FECACA";
+      errBox.style.color = "#DC2626";
+      errBox.textContent = "Lütfen giriş yapmadan önce 'Ben robot değilim' doğrulama kutucuğunu işaretleyin.";
+    }
+    return;
+  }
 
   if (kayitliKullanicilar.length === 0) {
     if (errBox) {
@@ -769,10 +873,17 @@ function danismanCikisYap() {
 // ÜYELİK SAYFASI: PAKET SEÇİMİNDEN SONRA AYRI SAYFADA ÜYELİK FORMU AÇMA
 // ============================================================================
 const PAKET_OZET_ETIKETLERI = {
-  ucretsiz: "Seçilen Paket: Ücretsiz Başlangıç (0 ₺ / 3 Aktif Portföy)",
-  pro: "Seçilen Paket: Pro Danışman Paketi (799 ₺ / ay — Sınırsız)",
-  takim: "Seçilen Paket: Takım Lideri Paketi (2.999 ₺ / ay — 5 Danışman)",
-  broker: "Seçilen Paket: Broker / Ofis Paketi (11.999 ₺ / ay — 25 Danışman)"
+  ucretsiz: "Ücretsiz Başlangıç (0 ₺ / 3 Aktif Portföy)",
+  pro: "Pro Danışman Paketi (799 ₺ / ay — Sınırsız Portföy)",
+  takim: "Takım Lideri Paketi (2.999 ₺ / ay — 5 Danışman)",
+  broker: "Broker / Ofis Paketi (11.999 ₺ / ay — 25 Danışman)"
+};
+
+const PAKET_IKONLARI = {
+  ucretsiz: "🌱",
+  pro: "💎",
+  takim: "👥",
+  broker: "🏢"
 };
 
 function secilenPaketRozetiniGuncelle(paketId) {
@@ -780,12 +891,165 @@ function secilenPaketRozetiniGuncelle(paketId) {
   if (badge) {
     badge.textContent = PAKET_OZET_ETIKETLERI[paketId] || PAKET_OZET_ETIKETLERI.ucretsiz;
   }
+  const iconEl = document.getElementById("selectedPlanIcon");
+  if (iconEl) {
+    iconEl.textContent = PAKET_IKONLARI[paketId] || "🌱";
+  }
+}
+
+function uyelikFormuKonumlariniHazirla() {
+  const ilSel = document.getElementById("regCitySelect");
+  if (!ilSel) return;
+  if (ilSel.options.length === 0 && typeof TURKIYE_81_IL_ILCELER !== "undefined") {
+    const iller = Object.keys(TURKIYE_81_IL_ILCELER);
+    ilSel.innerHTML = iller
+      .map(il => `<option value="${il}" ${il === "Ankara" ? "selected" : ""}>${il}</option>`)
+      .join("");
+    uyelikFormuIlDegisti();
+  }
+}
+
+function uyelikFormuIlDegisti() {
+  const ilSel = document.getElementById("regCitySelect");
+  const ilceSel = document.getElementById("regDistrictSelect");
+  if (!ilSel || !ilceSel || typeof TURKIYE_81_IL_ILCELER === "undefined") return;
+  const il = ilSel.value || "Ankara";
+  const ilceler = TURKIYE_81_IL_ILCELER[il] || ["Merkez"];
+  const varsayilanIlce = il === "Ankara" && ilceler.includes("Çankaya") ? "Çankaya" : ilceler[0];
+  ilceSel.innerHTML = ilceler
+    .map(ilce => `<option value="${ilce}" ${ilce === varsayilanIlce ? "selected" : ""}>${ilce}</option>`)
+    .join("");
+  uyelikFormuIlceDegisti();
+}
+
+function uyelikFormuIlceDegisti() {
+  const il = document.getElementById("regCitySelect")?.value || "Ankara";
+  const ilce = document.getElementById("regDistrictSelect")?.value || "Çankaya";
+  const mahSel = document.getElementById("regNeighborhoodSelect");
+  if (!mahSel) return;
+  const mahalleler =
+    typeof ilIlceSemteGoreMahalleListesiGetir === "function"
+      ? ilIlceSemteGoreMahalleListesiGetir(il, ilce, "Tümü")
+      : [`${ilce} Merkez Mah.`, "Cumhuriyet Mah.", "Atatürk Mah."];
+  mahSel.innerHTML = mahalleler.map((m, i) => `<option value="${m}" ${i === 0 ? "selected" : ""}>${m}</option>`).join("");
+}
+
+let kvkkMetniSonunaKadarOkunduMu = false;
+
+function kvkkKutucukTiklandi(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  kvkkModalAc();
+}
+
+function kvkkModalAc() {
+  const modal = document.getElementById("kvkkConsentModal");
+  const scrollEl = document.getElementById("kvkkScrollContainer");
+  const confirmWrap = document.getElementById("kvkkModalConfirmWrap");
+  const innerCheck = document.getElementById("kvkkModalInnerCheckbox");
+  const approveBtn = document.getElementById("kvkkModalApproveBtn");
+  const bar = document.getElementById("kvkkScrollProgressBar");
+  const pctLabel = document.getElementById("kvkkScrollPercentLabel");
+  const hintText = document.getElementById("kvkkScrollHintText");
+
+  if (!modal) return;
+
+  // Eğer daha önce sonuna kadar okumadıysa sıfırdan başlat
+  if (!kvkkMetniSonunaKadarOkunduMu) {
+    if (scrollEl) scrollEl.scrollTop = 0;
+    if (confirmWrap) confirmWrap.style.display = "none";
+    if (innerCheck) innerCheck.checked = false;
+    if (approveBtn) {
+      approveBtn.disabled = true;
+      approveBtn.style.opacity = "0.5";
+      approveBtn.style.cursor = "not-allowed";
+    }
+    if (bar) bar.style.width = "0%";
+    if (pctLabel) pctLabel.textContent = "%0 Okundu";
+    if (hintText) {
+      hintText.textContent = "⬇️ Onay kutucuğunun açılması için lütfen metni sonuna kadar aşağı kaydırın";
+      hintText.style.color = "#475569";
+    }
+  } else {
+    if (confirmWrap) confirmWrap.style.display = "flex";
+  }
+
+  modal.classList.add("open");
+}
+
+function kvkkModalKapat() {
+  document.getElementById("kvkkConsentModal")?.classList.remove("open");
+}
+
+function kvkkScrollKontrolEt(el) {
+  if (!el) return;
+  const maxScroll = Math.max(1, el.scrollHeight - el.clientHeight);
+  const oran = Math.min(100, Math.round((el.scrollTop / maxScroll) * 100));
+
+  const bar = document.getElementById("kvkkScrollProgressBar");
+  const pctLabel = document.getElementById("kvkkScrollPercentLabel");
+  const hintText = document.getElementById("kvkkScrollHintText");
+  const confirmWrap = document.getElementById("kvkkModalConfirmWrap");
+
+  if (bar) bar.style.width = `${oran}%`;
+  if (pctLabel) pctLabel.textContent = `%${oran} Okundu`;
+
+  if (el.scrollTop + el.clientHeight >= el.scrollHeight - 16 || oran >= 98) {
+    kvkkMetniSonunaKadarOkunduMu = true;
+    if (bar) bar.style.width = "100%";
+    if (pctLabel) pctLabel.textContent = "%100 Tamamlandı ✓";
+    if (hintText) {
+      hintText.textContent = "✓ Metni sonuna kadar okudunuz! Şimdi aşağıdaki kutucuğu işaretleyerek onaylayabilirsiniz.";
+      hintText.style.color = "#15803D";
+    }
+    if (confirmWrap) {
+      confirmWrap.style.display = "flex";
+    }
+  }
+}
+
+function kvkkModalIciKutucukDegisti(isChecked) {
+  const approveBtn = document.getElementById("kvkkModalApproveBtn");
+  if (!approveBtn) return;
+  approveBtn.disabled = !isChecked;
+  approveBtn.style.opacity = isChecked ? "1" : "0.5";
+  approveBtn.style.cursor = isChecked ? "pointer" : "not-allowed";
+}
+
+function kvkkOnayiniTamamlaVeKapat() {
+  const innerCheck = document.getElementById("kvkkModalInnerCheckbox");
+  if (!kvkkMetniSonunaKadarOkunduMu || (innerCheck && !innerCheck.checked)) {
+    alert("Lütfen önce KVKK Aydınlatma Metni'ni sonuna kadar kaydırıp onay kutucuğunu işaretleyin.");
+    return;
+  }
+
+  const regKvkkEl = document.getElementById("regKvkkCheck");
+  if (regKvkkEl) regKvkkEl.checked = true;
+
+  const triggerBox = document.getElementById("regKvkkTriggerBox");
+  if (triggerBox) triggerBox.classList.add("approved");
+
+  const pillEl = document.getElementById("regKvkkStatusPill");
+  if (pillEl) pillEl.textContent = "✓ Okundu & Onaylandı";
+
+  kvkkModalKapat();
 }
 
 function paketSecVeFormaOdaklan(paketId) {
   const secilen = paketId || "ucretsiz";
   const sel = document.getElementById("regSelectedPlan");
   if (sel) sel.value = secilen;
+  const regRobotEl = document.getElementById("regNotRobotCheck");
+  if (regRobotEl) regRobotEl.checked = false;
+  const regKvkkEl = document.getElementById("regKvkkCheck");
+  if (regKvkkEl) regKvkkEl.checked = false;
+  kvkkMetniSonunaKadarOkunduMu = false;
+  document.getElementById("regKvkkTriggerBox")?.classList.remove("approved");
+  const pillEl = document.getElementById("regKvkkStatusPill");
+  if (pillEl) pillEl.textContent = "Metni Oku →";
+  uyelikFormuKonumlariniHazirla();
   secilenPaketRozetiniGuncelle(secilen);
   referansKoduKontrolEt(false);
   gorunumDegistir("view-membership-form");
@@ -808,10 +1072,12 @@ function referansKoduKontrolEt(bildirimGoster = false) {
   const plan = planSel ? planSel.value : "pro";
 
   if (!kod) {
-    fb.style.color = "var(--text-muted)";
-    fb.textContent = "Davet veya iş birliği kodunuz varsa girdiğinizde paket ücretinize anında %20 indirim tanımlanır.";
+    fb.style.display = "none";
+    fb.textContent = "";
     return;
   }
+
+  fb.style.display = "block";
 
   const fiyatTablosu = {
     ucretsiz: { eski: 0, yeni: 0, ad: "Ücretsiz Başlangıç" },
@@ -861,32 +1127,59 @@ function googleIleHizliKayitOl() {
 function danismanUyelikKaydiTamamla(googleIleMi = false, refKodOzel = "") {
   const ad = (document.getElementById("regFullName")?.value || "").trim();
   const firma = (document.getElementById("regCompany")?.value || "").trim();
+  const vergiNo = (document.getElementById("regTaxNumber")?.value || "").trim();
   const tel = (document.getElementById("regPhone")?.value || "").trim();
   const email = (document.getElementById("regEmail")?.value || "").trim();
   const sifre = (document.getElementById("regPassword")?.value || "123456").trim();
-  const ilIlce = (document.getElementById("regCityDistrict")?.value || "Ankara / Çankaya").trim();
+  const seciliIl = (document.getElementById("regCitySelect")?.value || "Ankara").trim();
+  const seciliIlce = (document.getElementById("regDistrictSelect")?.value || "Çankaya").trim();
+  const seciliMahalle = (document.getElementById("regNeighborhoodSelect")?.value || "Merkez Mah.").trim();
   const plan = document.getElementById("regSelectedPlan")?.value || "ucretsiz";
   const refKod = (refKodOzel || document.getElementById("regReferralCode")?.value || "").trim().toUpperCase();
 
-  if (!ad || !firma || !tel) {
-    alert("Lütfen Ad Soyad, Çalıştığınız Firma ve Cep Telefonu alanlarını doldurun.");
+  if (!ad || !firma || !tel || (!googleIleMi && !vergiNo)) {
+    alert("Lütfen Ad Soyad, Çalıştığınız Firma, Vergi Kimlik Numarası ve Cep Telefonu alanlarını doldurun.");
     return;
   }
 
-  const parcalar = ilIlce.split("/").map(s => s.trim());
-  const seciliIl = parcalar[0] || "Ankara";
-  const seciliIlce = parcalar[1] || "Çankaya";
+  const regWaEl = document.getElementById("regWhatsappOtpInput");
+  if (!googleIleMi && regWaEl) {
+    const girilenWa = (regWaEl.value || "").trim();
+    if (!girilenWa) {
+      alert("Lütfen 'WhatsApp Kodu Gönder' butonuna tıklayarak telefonunuza gelen WhatsApp doğrulama kodunu girin.");
+      return;
+    }
+    if (uyelikAktifWhatsappKodu && girilenWa !== uyelikAktifWhatsappKodu) {
+      alert("Girdiğiniz WhatsApp doğrulama kodu hatalı! Lütfen kontrol edin.");
+      return;
+    }
+  }
+
+  const regKvkkEl = document.getElementById("regKvkkCheck");
+  if (!googleIleMi && regKvkkEl && !regKvkkEl.checked) {
+    alert("Lütfen KVKK Aydınlatma Metni kutucuğuna tıklayıp açılan metni sonuna kadar kaydırarak onaylayın.");
+    kvkkModalAc();
+    return;
+  }
+
+  const regRobotEl = document.getElementById("regNotRobotCheck");
+  if (!googleIleMi && regRobotEl && !regRobotEl.checked) {
+    alert("Lütfen kaydınızı tamamlamadan önce 'Ben robot değilim' güvenlik kutucuğunu işaretleyin.");
+    return;
+  }
 
   // Yeni kullanıcıyı kaydet ve aktif kullanıcı yap
   const yeniKullanici = {
     id: `usr_${Date.now()}`,
     ad,
     ofis: firma,
+    vergiNo,
     telefon: tel,
     email,
     sifre,
     il: seciliIl,
     ilce: seciliIlce,
+    mahalle: seciliMahalle,
     plan,
     refKod,
     kayitTarihi: new Date().toLocaleDateString("tr-TR")
@@ -900,14 +1193,15 @@ function danismanUyelikKaydiTamamla(googleIleMi = false, refKodOzel = "") {
   danismanProfili = {
     ad,
     ofis: firma,
+    vergiNo,
     deneyim: "Gayrimenkul Danışmanı",
     telefon: tel,
     foto: "../assets/gencay-hero-portre.jpg",
     il: seciliIl,
     ilce: seciliIlce,
-    bolgeler: seciliIlce,
+    bolgeler: `${seciliIlce}, ${seciliMahalle}`,
     hobiler: "",
-    bio: `${seciliIl} (${seciliIlce}) bölgesinde ${firma} bünyesinde gayrimenkul danışmanı olarak hizmet veriyorum.`,
+    bio: `${seciliIl} (${seciliIlce} / ${seciliMahalle}) bölgesinde ${firma} bünyesinde gayrimenkul danışmanı olarak hizmet veriyorum.`,
     instagram: "",
     twitter: "",
     linkedin: "",
@@ -958,6 +1252,9 @@ function danismanAnaModSec(modId, btnEl) {
   } else if (modId === "mode-notifications" && typeof danismanBildirimlerPanelRender === "function") {
     danismanBildirimlerPanelRender();
     if (typeof igSolMenuGuncelle === "function") igSolMenuGuncelle("notifications");
+  } else if (modId === "mode-potential-buyers" && typeof potansiyelAlicilarimPanelRender === "function") {
+    potansiyelAlicilarimPanelRender();
+    if (typeof igSolMenuGuncelle === "function") igSolMenuGuncelle("potential-buyers");
   } else {
     if (typeof igSolMenuGuncelle === "function") igSolMenuGuncelle("portfolios");
   }
@@ -1027,6 +1324,11 @@ function danismanSolMenuSec(secim) {
     gorunumDegistir("view-dashboard");
     danismanAnaModSec("mode-agenda");
     igSolMenuGuncelle("agenda");
+  } else if (secim === "potential-buyers") {
+    aktifHizliTestEkrani = "dashboard";
+    gorunumDegistir("view-dashboard");
+    danismanAnaModSec("mode-potential-buyers");
+    igSolMenuGuncelle("potential-buyers");
   } else if (secim === "ariyorum") {
     aktifHizliTestEkrani = "ariyorum";
     gorunumDegistir("view-ariyorum");
@@ -1051,6 +1353,7 @@ function igSolMenuGuncelle(aktifSecim) {
     notifications: "igNavNotifications",
     messages: "igNavMessages",
     agenda: "igNavAgenda",
+    "potential-buyers": "igNavPotentialBuyers",
     ariyorum: "igNavAriyorum",
     "view-website": "igNavViewWebsite"
   };
@@ -1100,6 +1403,16 @@ function igSolMenuGuncelle(aktifSecim) {
       notifBadge.style.display = okunmamisB > 0 ? "inline-flex" : "none";
     }
   }
+
+  if (typeof potansiyelAlicilarListesiniGetir === "function") {
+    const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+    const potListe = potansiyelAlicilarListesiniGetir(aktifId);
+    const potBadge = document.getElementById("igSidebarPotentialBuyersBadge");
+    if (potBadge) {
+      potBadge.textContent = `${potListe.length}`;
+      potBadge.style.display = potListe.length > 0 ? "inline-flex" : "none";
+    }
+  }
 }
 
 // Seçili Mülk İçindeki 4 Alt Sekme Geçişi
@@ -1136,18 +1449,42 @@ function panelYenile() {
   const quotaFill = document.getElementById("quotaBarFill");
   const planBadge = document.getElementById("currentPlanBadge");
 
-  if (proPaketAktif) {
+  const proMu = aktifDanismanProMu();
+  const modalCounterEl = document.getElementById("newPortfolioQuotaCounterBadge");
+
+  if (proMu) {
     if (planBadge) planBadge.textContent = "Pro Danışman Paketi (Sınırsız)";
-    if (quotaText) quotaText.textContent = `${kullanilan} Aktif Portföy • Sınırsız Kota Aktif`;
+    if (quotaText) {
+      quotaText.textContent = `Aktif Portföy Sayacı: ${kullanilan} / ∞ (Sınırsız Pro Paket)`;
+      quotaText.style.background = "#EFF6FF";
+      quotaText.style.color = "#2563EB";
+      quotaText.style.borderColor = "#BFDBFE";
+    }
+    if (modalCounterEl) {
+      modalCounterEl.textContent = `Aktif Portföy Sayacı: ${kullanilan} / ∞ (Pro Paket)`;
+      modalCounterEl.style.background = "#EFF6FF";
+      modalCounterEl.style.color = "#2563EB";
+      modalCounterEl.style.borderColor = "#BFDBFE";
+    }
     if (quotaFill) quotaFill.style.width = "100%";
   } else {
     const yuzde = Math.min(100, Math.round((kullanilan / UCRETSIZ_LIMIT) * 100));
     const kalan = Math.max(0, UCRETSIZ_LIMIT - kullanilan);
+    const dolduMu = kullanilan >= UCRETSIZ_LIMIT;
     if (planBadge) planBadge.textContent = "Ücretsiz Başlangıç Paketi";
     if (quotaText) {
-      quotaText.textContent = `${kullanilan} / ${UCRETSIZ_LIMIT} Ücretsiz İş Kullanıldı (${
-        kalan > 0 ? `${kalan} ücretsiz hakkınız kaldı` : "Ücretsiz kotanız doldu"
+      quotaText.textContent = `Aktif Portföy Sayacı: ${kullanilan} / ${UCRETSIZ_LIMIT} (${
+        kalan > 0 ? `${kalan} ücretsiz hakkınız kaldı` : "Aktif portföy limitiniz doldu"
       })`;
+      quotaText.style.background = dolduMu ? "#FEF2F2" : "#EFF6FF";
+      quotaText.style.color = dolduMu ? "#DC2626" : "#2563EB";
+      quotaText.style.borderColor = dolduMu ? "#FECACA" : "#BFDBFE";
+    }
+    if (modalCounterEl) {
+      modalCounterEl.textContent = `Aktif Portföy Sayacı: ${kullanilan} / ${UCRETSIZ_LIMIT}`;
+      modalCounterEl.style.background = dolduMu ? "#FEF2F2" : "#EFF6FF";
+      modalCounterEl.style.color = dolduMu ? "#DC2626" : "#2563EB";
+      modalCounterEl.style.borderColor = dolduMu ? "#FECACA" : "#BFDBFE";
     }
     if (quotaFill) quotaFill.style.width = `${yuzde}%`;
   }
@@ -1181,9 +1518,13 @@ function panelYenile() {
           (p.medya && p.medya[0] && p.medya[0].url) ||
           "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=300&q=80";
         const teklifSayisi = (p.teklifler || []).length;
+        const tekilAliciKoduSayisi =
+          typeof portfoyVarsayilanAliciKodlariniHazirla === "function"
+            ? portfoyVarsayilanAliciKodlariniHazirla(p).length
+            : 0;
         const goruntulenmeSayisi = portfoyGoruntulenmeSayisiniAl(p);
         const paylasimaAcikMi = p.paylasimaAcikMi !== false;
-        const altBilgi = `Satıcı: ${p.mulkSahibi} • ${teklifSayisi} Teklif${p.coopAktifMi ? ` • Co-Op: #${p.coopKod}` : ""}`;
+        const altBilgi = `Satıcı: ${p.mulkSahibi} • 🔑 ${tekilAliciKoduSayisi} Tekil Alıcı Kodu • ${teklifSayisi} Teklif${p.coopAktifMi ? ` • Co-Op: #${p.coopKod}` : ""}`;
         const tarihBilgisi = (p.sonGuncelleme || "16 Kasım 2026").split("•")[0].trim();
 
         return `
@@ -1265,6 +1606,9 @@ function panelYenile() {
 
   kisiselProfilEditorRender();
   bolgeUzmaniAraRender();
+  if (typeof anonimBolgeEmsalTablosuRender === "function") {
+    anonimBolgeEmsalTablosuRender();
+  }
 
   const p = aktifPortfoy();
   if (!p) return;
@@ -1328,14 +1672,294 @@ function portfoyPaylasimDurumuToggle(kod) {
   }
 }
 
+let silinecekPortfoyKodu = null;
+let seciliPortfoySilmeNedeni = "satildi";
+const ANONIM_EMSAL_STORAGE_KEY = "mulkizle_anonim_bolge_emsal_havuzu_v1";
+
 function portfoySil(kod) {
   const silinecek = portfoyler.find(x => x.kod === kod);
   if (!silinecek) return;
 
-  const onay = confirm(
-    `"${silinecek.baslik}" (#${silinecek.kod}) portföyünü aktif portföylerinizden silmek istediğinize emin misiniz?`
-  );
-  if (!onay) return;
+  silinecekPortfoyKodu = kod;
+  const titleEl = document.getElementById("deletePortfolioTargetTitle");
+  if (titleEl) {
+    titleEl.textContent = `${silinecek.baslik} • #${silinecek.kod} (${silinecek.fiyat || "Fiyat Belirtilmedi"})`;
+  }
+
+  const digerInput = document.getElementById("delOtherReasonInput");
+  if (digerInput) digerInput.value = "";
+
+  const bandSelect = document.getElementById("delSoldDiscountBand");
+  if (bandSelect) bandSelect.value = "pazarlik_3";
+
+  portfoySilNedenSec("satildi");
+  portfoySilFiyatBandiDegisti();
+
+  const modal = document.getElementById("deletePortfolioSurveyModal");
+  if (modal) modal.classList.add("open");
+}
+
+function portfoySilModalKapat() {
+  const modal = document.getElementById("deletePortfolioSurveyModal");
+  if (modal) modal.classList.remove("open");
+  silinecekPortfoyKodu = null;
+}
+
+function portfoySilNedenSec(neden) {
+  seciliPortfoySilmeNedeni = neden;
+  const btnMap = {
+    satildi: "delReasonBtnSatildi",
+    satilmadi: "delReasonBtnSatilmadi",
+    diger: "delReasonBtnDiger"
+  };
+  Object.entries(btnMap).forEach(([k, id]) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle("selected", k === neden);
+  });
+
+  const soldBox = document.getElementById("delSurveySoldBox");
+  const otherBox = document.getElementById("delSurveyOtherBox");
+  if (soldBox) soldBox.style.display = neden === "satildi" ? "block" : "none";
+  if (otherBox) otherBox.style.display = neden === "diger" ? "block" : "none";
+}
+
+function portfoySilFiyatBandiDegisti() {
+  const silinecek = portfoyler.find(x => x.kod === silinecekPortfoyKodu);
+  const band = document.getElementById("delSoldDiscountBand")?.value || "pazarlik_3";
+  const priceInput = document.getElementById("delSoldFinalPriceInput");
+  if (!priceInput) return;
+
+  const hamListeRakam = Number(String(silinecek?.fiyat || "").replace(/\D/g, "")) || 0;
+  const oranMap = {
+    liste_fiyati: 1,
+    pazarlik_3: 0.97,
+    pazarlik_7: 0.935,
+    pazarlik_12: 0.88
+  };
+
+  if (band === "ozel_rakam") {
+    priceInput.focus();
+    return;
+  }
+
+  if (hamListeRakam > 0 && oranMap[band]) {
+    // Nokta atışı tapu bedeliyle eşleşmemesi için en yakın 25.000 TL bandına yuvarla
+    const tahmini = Math.round((hamListeRakam * oranMap[band]) / 25000) * 25000;
+    priceInput.value = tahmini.toLocaleString("tr-TR");
+  } else {
+    priceInput.value = "";
+  }
+}
+
+const ORNEK_ANONIM_EMSAL_VERILERI = [
+  {
+    donem: "Kasım 2026",
+    bolge: "Bağlıca Mah., Etimesgut / Ankara",
+    kategoriEtiketi: "Konut • Daire (Site İçi)",
+    tipOzeti: "3+1 • 2 Banyo",
+    alanBandi: "140-150 m²",
+    katYasOzeti: "4. Kat / 10 • 5 Yaş",
+    ozellikOzeti: "Doğalgaz/Kombi • Güney, Doğu • Asansör, Güvenlik, Kapalı Otopark",
+    sonuc: "satildi",
+    pazarlikBandi: "Küçük Pazarlıkla Satıldı (~%2 - %4 İskonto)",
+    kapanisFiyatBandi: "~5.100.000 ₺ Bandı",
+    anonimM2BirimEndeksi: "34.000 ₺/m²"
+  },
+  {
+    donem: "Kasım 2026",
+    bolge: "Çayyolu Mah., Çankaya / Ankara",
+    kategoriEtiketi: "Konut • Villa / Müstakil",
+    tipOzeti: "4+1 • 3 Banyo",
+    alanBandi: "220-230 m²",
+    katYasOzeti: "Bahçe Dubleks • 3 Yaş",
+    ozellikOzeti: "Yerden Isıtma • Güney, Batı • Açık Havuz, Güvenlik, Otopark",
+    sonuc: "satildi",
+    pazarlikBandi: "Orta Pazarlıkla Satıldı (~%5 - %8 İskonto)",
+    kapanisFiyatBandi: "~11.400.000 ₺ Bandı",
+    anonimM2BirimEndeksi: "50.500 ₺/m²"
+  },
+  {
+    donem: "Ekim 2026",
+    bolge: "İncek Mah., Gölbaşı / Ankara",
+    kategoriEtiketi: "İmarlı Arsa • Villa Parseli",
+    tipOzeti: "Villa Parseli • Emsal: 0,60",
+    alanBandi: "500-510 m²",
+    katYasOzeti: "Max 2 Kat • Hmax: 6,5 m",
+    ozellikOzeti: "Müstakil Tapu • Boş • Elektrik, Su, Yolu Açık, Köşe Parsel",
+    sonuc: "satildi",
+    pazarlikBandi: "İlan / Liste Fiyatından Satıldı (%0 İskonto)",
+    kapanisFiyatBandi: "~7.500.000 ₺ Bandı",
+    anonimM2BirimEndeksi: "15.000 ₺/m²"
+  }
+];
+
+function anonimBolgeEmsalListesiniGetir() {
+  try {
+    const kayitli = JSON.parse(localStorage.getItem(ANONIM_EMSAL_STORAGE_KEY) || "null");
+    if (Array.isArray(kayitli) && kayitli.length > 0) {
+      return kayitli;
+    }
+    localStorage.setItem(ANONIM_EMSAL_STORAGE_KEY, JSON.stringify(ORNEK_ANONIM_EMSAL_VERILERI));
+    return ORNEK_ANONIM_EMSAL_VERILERI;
+  } catch (e) {
+    return ORNEK_ANONIM_EMSAL_VERILERI;
+  }
+}
+
+function anonimBolgeEmsalVerisiKaydet(portfoy, kapanisDurumu, fiyatBandiEtiketi, yaklasikKapanisRakam) {
+  // SIFIR BAĞLANTILI ANONİMLEŞTİRME (ZERO-LINK ANONYMIZATION):
+  // Danışman ID, Danışman Adı, Vergi No, Mülk Sahibi Adı/Telefonu, 12 Haneli Takip Kodu ve Ada/Parsel ASLA KAYDEDİLMEZ.
+  // Sadece Bölge (İl/İlçe/Mahalle), Mülk Kategorisi, Daire/Arsa/Tarla Özellikleri ve Ay/Yıl bazlı m² endeksi tutulur.
+  const oz = portfoy.ozellikler || {};
+  const kategori = oz.mulkKategorisi || "konut";
+  const hamM2 = Number(oz.brutAlan || oz.arsaAlani || oz.araziAlani || 140) || 140;
+  // m² değerini birebir tapu m²'siyle eşleşmemesi için 10 m²'lik banda yuvarla (örn: 147 m² -> "140-150 m²")
+  const altM2 = Math.floor(hamM2 / 10) * 10;
+  const m2Bandi = `${altM2}-${altM2 + 10} m²`;
+  const yaklasikM2BirimFiyat =
+    yaklasikKapanisRakam > 0 && hamM2 > 0 ? Math.round(yaklasikKapanisRakam / hamM2 / 500) * 500 : 0;
+
+  const ayYil = new Date().toLocaleDateString("tr-TR", { month: "long", year: "numeric" });
+
+  let kategoriEtiketi = "Konut • Daire";
+  let tipOzeti = `${oz.odaSayisi || "3"}+${oz.salonSayisi || "1"} • ${oz.banyoSayisi || "1"} Banyo`;
+  let katYasOzeti = `${oz.bulunduguKat || "Ara"}. Kat / ${oz.binaKatSayisi || "-"} • ${oz.binaYasi || "0-5"} Yaş`;
+  let ozellikOzeti = [
+    oz.isitma || "Doğalgaz/Kombi",
+    Array.isArray(oz.cepheler) && oz.cepheler.length ? oz.cepheler.join(", ") : "",
+    Array.isArray(oz.olanaklar) && oz.olanaklar.length ? oz.olanaklar.slice(0, 4).join(", ") : ""
+  ]
+    .filter(Boolean)
+    .join(" • ");
+
+  if (kategori === "arsa") {
+    kategoriEtiketi = `İmarlı Arsa • ${oz.imarTipi || "Konut"}`;
+    tipOzeti = `${oz.imarTipi || "Konut"} • Emsal: ${oz.kaks || "-"} (TAKS: ${oz.taks || "-"})`;
+    katYasOzeti = `Max ${oz.maksimumKatIzni || "-"} Kat • Hmax: ${oz.hmax || "-"}`;
+    ozellikOzeti = [
+      oz.hisseliTapu === "Evet" ? "Hisseli Tapu" : "Müstakil Tapu",
+      oz.yapilasmaDurumu || "Boş",
+      Array.isArray(oz.olanaklar) && oz.olanaklar.length ? oz.olanaklar.join(", ") : ""
+    ]
+      .filter(Boolean)
+      .join(" • ");
+  } else if (kategori === "tarla") {
+    kategoriEtiketi = `Tarla / Bahçe • ${oz.araziTipi || "Tarla"}`;
+    tipOzeti = `${oz.araziTipi || "Tarla"} • Eğim: ${oz.egim || "Az Eğimli"}`;
+    katYasOzeti = `Asfalt: ${oz.asfaltUzaklik || "-"} km • Yerleşim: ${oz.yerlesimUzaklik || "-"} km`;
+    ozellikOzeti = [
+      oz.hisseliTapu === "Evet" ? "Hisseli Tapu" : "Müstakil Tapu",
+      Array.isArray(oz.olanaklar) && oz.olanaklar.length ? oz.olanaklar.join(", ") : ""
+    ]
+      .filter(Boolean)
+      .join(" • ");
+  } else {
+    kategoriEtiketi = `Konut • ${oz.apartmanTipi || oz.konutTipi || "Daire"} (${oz.kullanimDurumu || "Boş"})`;
+  }
+
+  const yuvarlanmisKapanis =
+    yaklasikKapanisRakam > 0 ? `~${(Math.round(yaklasikKapanisRakam / 25000) * 25000).toLocaleString("tr-TR")} ₺ Bandı` : "-";
+
+  const anonimKayit = {
+    donem: ayYil, // Gün/saat tutulmaz
+    bolge: portfoy.bolge || "Belirtilmedi",
+    kategori,
+    kategoriEtiketi,
+    tipOzeti,
+    alanBandi: m2Bandi,
+    katYasOzeti,
+    ozellikOzeti: ozellikOzeti || portfoy.ozellikDetay || "Standart Özellikler",
+    sonuc: kapanisDurumu, // "satildi" | "satilmadi"
+    pazarlikBandi: fiyatBandiEtiketi,
+    kapanisFiyatBandi: yuvarlanmisKapanis,
+    anonimM2BirimEndeksi: yaklasikM2BirimFiyat > 0 ? `${yaklasikM2BirimFiyat.toLocaleString("tr-TR")} ₺/m²` : "Belirtilmedi"
+  };
+
+  try {
+    const mevcut = anonimBolgeEmsalListesiniGetir();
+    mevcut.unshift(anonimKayit);
+    localStorage.setItem(ANONIM_EMSAL_STORAGE_KEY, JSON.stringify(mevcut));
+  } catch (e) {
+    // storage hatası olursa sessiz geç
+  }
+}
+
+function anonimBolgeEmsalTablosuRender() {
+  const tbody = document.getElementById("anonimBolgeEmsalTableBody");
+  const countBadge = document.getElementById("anonimEmsalCountBadge");
+  if (!tbody) return;
+
+  const liste = anonimBolgeEmsalListesiniGetir();
+  if (countBadge) countBadge.textContent = `${liste.length} Anonim Emsal Kaydı`;
+
+  tbody.innerHTML = liste
+    .map(item => {
+      const satildiMi = item.sonuc === "satildi";
+      const durumRozet = satildiMi
+        ? `<span style="display:inline-block;padding:2px 7px;border-radius:999px;font-size:0.68rem;font-weight:800;background:#DCFCE7;color:#166534;">✅ Satıldı</span>`
+        : `<span style="display:inline-block;padding:2px 7px;border-radius:999px;font-size:0.68rem;font-weight:800;background:#FEF3C7;color:#92400E;">⏳ Satılmadı</span>`;
+
+      return `
+        <tr style="border-bottom:1px solid #F1F5F9;">
+          <td style="padding:9px 10px;font-weight:700;color:#475569;white-space:nowrap;">${item.donem || "-"}</td>
+          <td style="padding:9px 10px;font-weight:700;color:#0F172A;">${item.bolge || "-"}</td>
+          <td style="padding:9px 10px;color:#334155;">${item.kategoriEtiketi || item.kategori || "Konut"}</td>
+          <td style="padding:9px 10px;font-weight:700;color:#1E40AF;">${item.tipOzeti || "-"}</td>
+          <td style="padding:9px 10px;font-weight:700;color:#0F172A;white-space:nowrap;">${item.alanBandi || "-"}</td>
+          <td style="padding:9px 10px;color:#475569;">${item.katYasOzeti || item.binaYasiBandi || "-"}</td>
+          <td style="padding:9px 10px;color:#475569;max-width:240px;">${item.ozellikOzeti || "-"}</td>
+          <td style="padding:9px 10px;">
+            <div>${durumRozet}</div>
+            <div style="font-size:0.69rem;color:#64748B;margin-top:2px;">${item.pazarlikBandi || ""}</div>
+          </td>
+          <td style="padding:9px 10px;white-space:nowrap;">
+            <div style="font-weight:800;color:#0F172A;">${item.kapanisFiyatBandi || "-"}</div>
+            <div style="font-size:0.72rem;font-weight:800;color:#15803D;">${item.anonimM2BirimEndeksi || "-"}</div>
+          </td>
+        </tr>
+      `;
+    })
+    .join("");
+}
+
+function portfoySilAnketOnayla() {
+  if (!silinecekPortfoyKodu) return;
+  const silinecek = portfoyler.find(x => x.kod === silinecekPortfoyKodu);
+  if (!silinecek) {
+    portfoySilModalKapat();
+    return;
+  }
+
+  if (seciliPortfoySilmeNedeni === "diger") {
+    const digerMetin = (document.getElementById("delOtherReasonInput")?.value || "").trim();
+    if (!digerMetin) {
+      alert("Lütfen 'Diğer' seçeneği için aşağıdaki açıklama kutucuğuna kaldırma nedeninizi yazınız.");
+      document.getElementById("delOtherReasonInput")?.focus();
+      return;
+    }
+  }
+
+  // 1) Eğer Satıldı veya Satılmadı ise kimliksiz/ada-parselsiz anonim bölge istatistik havuzuna işle
+  if (seciliPortfoySilmeNedeni === "satildi" || seciliPortfoySilmeNedeni === "satilmadi") {
+    const bandEl = document.getElementById("delSoldDiscountBand");
+    const bandText = bandEl && bandEl.selectedOptions[0] ? bandEl.selectedOptions[0].textContent : "";
+    const girilenFiyatRakam =
+      Number(String(document.getElementById("delSoldFinalPriceInput")?.value || "").replace(/\D/g, "")) || 0;
+    anonimBolgeEmsalVerisiKaydet(
+      silinecek,
+      seciliPortfoySilmeNedeni,
+      seciliPortfoySilmeNedeni === "satildi" ? bandText : "Satılmadı / Süre Bitti",
+      seciliPortfoySilmeNedeni === "satildi" ? girilenFiyatRakam : 0
+    );
+  }
+
+  // 2) Bu portföy için tekil takip kodu gönderilmiş, teklif vermiş veya yer gösterimi yapılmış tüm alıcıları otomatik olarak "Potansiyel Alıcılarım" havuzuna aktar
+  const aktarilanAliciSayisi =
+    typeof portfoyAlicilariniPotansiyelHavuzunaAktar === "function"
+      ? portfoyAlicilariniPotansiyelHavuzunaAktar(silinecek, seciliPortfoySilmeNedeni)
+      : 0;
+
+  const kod = silinecekPortfoyKodu;
 
   // Çalışma alanını silme öncesinde güvenli stage içine taşı
   const workspaceEl = document.getElementById("activePortfolioWorkspace");
@@ -1344,17 +1968,29 @@ function portfoySil(kod) {
     workspaceStage.appendChild(workspaceEl);
   }
 
+  // Portföyü (takip kodu, satıcı telefonu, ada/parsel dahil) aktif listeden tamamen sil (Hard Delete)
   portfoyler = portfoyler.filter(x => x.kod !== kod);
 
   if (acikAkordeonPortfoyKodu === kod) {
     acikAkordeonPortfoyKodu = null;
   }
   if (seciliKod === kod) {
-    seciliKod = portfoyler.length > 0 ? portfoyler[0].kod : "";
+    const kalanlar = aktifDanismaninGorunenPortfoyleri();
+    seciliKod = kalanlar.length > 0 ? kalanlar[0].kod : "";
   }
 
   verileriKaydet();
+  portfoySilModalKapat();
   panelYenile();
+  if (typeof igSolMenuGuncelle === "function") {
+    igSolMenuGuncelle("portfolios");
+  }
+
+  if (aktarilanAliciSayisi > 0) {
+    alert(
+      `✅ Portföy kapatıldı ve bu portföy için tekil takip kodu gönderilen ${aktarilanAliciSayisi} alıcı adayı otomatik olarak sol menüdeki "Potansiyel Alıcılarım" bölümünüze aktarıldı!`
+    );
+  }
 }
 
 function portfoySosyalMedyaLinkleriniGetir(p) {
@@ -2879,6 +3515,11 @@ function tekliflerVeGosterimlerRender() {
 
   p.teklifler = p.teklifler || [];
   p.yerGosterimleri = p.yerGosterimleri || [];
+  p.aliciTakipKodlari = p.aliciTakipKodlari || [];
+
+  if (typeof tekilAliciTakipKodlariRender === "function") {
+    tekilAliciTakipKodlariRender(p);
+  }
 
   const offersWrap = document.getElementById("agentOffersList");
   if (offersWrap) {
@@ -3033,10 +3674,596 @@ function yerGosterimiSil(idx) {
 }
 
 function bosYerGostermeBelgesiAc() {
-  const authTabBtn = document.querySelectorAll(".sub-tab-btn")[3];
+  const authTabBtn = document.getElementById("subTabBtnAuth");
   emlakciAltSekme("sub-auth", authTabBtn);
   const ygBtn = document.querySelectorAll("#contractTypeSelector .contract-type-btn")[7];
   sozlesmeTuruSec("yer_gosterme", ygBtn);
+}
+
+// ============================================================================
+// 4. ADIM: TEKİL ALICI MÜLK TAKİP KODLARI & "POTANSİYEL ALICILARIM" HAVUZU
+// ============================================================================
+const POTANSIYEL_ALICILAR_STORAGE_KEY = "mulkizle_potansiyel_alicilarim_v1";
+let aktifGirisYapanAliciKaydi = null;
+
+const VARSAYILAN_POTANSIYEL_ALICILAR = [
+  {
+    id: "pot_demo_1",
+    danismanId: "ahmet-demir",
+    ad: "Murat Karadağ & Ailesi",
+    telefon: "0532 612 44 88",
+    butce: "6.400.000 ₺ (Nakit + Konut Kredisi)",
+    arananBolge: "Çankaya, Ankara (Oran / Yıldız Mah.)",
+    arananKategori: "Konut • 3+1 Site İçi Daire",
+    tercihNotu: "Güney cephe, kapalı otoparklı, en az 135 m² daire arıyor. Önceki portföy satıldığı için havuza aktarıldı.",
+    kaynakPortfoyBaslik: "Çankaya Oran Mah. 3+1 Vadi Manzaralı Daire (Satıldı)",
+    eskiTekilKod: "741920384756",
+    aktarimNedeni: "İlgilendiği Portföy Satıldı",
+    aktarimTarihi: "19 Kasım 2026",
+    durum: "Aktif Alıcı Adayı"
+  },
+  {
+    id: "pot_demo_2",
+    danismanId: "ahmet-demir",
+    ad: "Dr. Elif Sönmez",
+    telefon: "0533 490 12 34",
+    butce: "5.250.000 ₺ (Peşin / Nakit)",
+    arananBolge: "Etimesgut / Bağlıca & Çankaya / Çayyolu",
+    arananKategori: "Konut • 3+1 veya İmarlı Villa Parseli",
+    tercihNotu: "Nakit alıcı, yatırım veya oturum amaçlı hızlı tapu devrine hazır.",
+    kaynakPortfoyBaslik: "Bağlıca Bulvar Cepheli 3+1 Ara Kat Daire (Satıldı)",
+    eskiTekilKod: "639104827364",
+    aktarimNedeni: "İlgilendiği Portföy Satıldı",
+    aktarimTarihi: "15 Kasım 2026",
+    durum: "Yüksek Öncelikli (Nakit)"
+  }
+];
+
+function tumPotansiyelAlicilariYukle() {
+  try {
+    const kayitli = JSON.parse(localStorage.getItem(POTANSIYEL_ALICILAR_STORAGE_KEY) || "null");
+    if (Array.isArray(kayitli)) return kayitli;
+    localStorage.setItem(POTANSIYEL_ALICILAR_STORAGE_KEY, JSON.stringify(VARSAYILAN_POTANSIYEL_ALICILAR));
+    return [...VARSAYILAN_POTANSIYEL_ALICILAR];
+  } catch (e) {
+    return [...VARSAYILAN_POTANSIYEL_ALICILAR];
+  }
+}
+
+function tumPotansiyelAlicilariKaydet(liste) {
+  try {
+    localStorage.setItem(POTANSIYEL_ALICILAR_STORAGE_KEY, JSON.stringify(liste || []));
+  } catch (e) {}
+}
+
+function potansiyelAlicilarListesiniGetir(danismanId) {
+  const hedefId = danismanId || (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const tumu = tumPotansiyelAlicilariYukle();
+  return tumu.filter(x => !x.danismanId || x.danismanId === hedefId);
+}
+
+function portfoyVarsayilanAliciKodlariniHazirla(p) {
+  if (!p) return [];
+  if (!Array.isArray(p.aliciTakipKodlari)) {
+    if (p.kod === "849201736410") {
+      p.aliciTakipKodlari = [
+        {
+          kod: "384920174650",
+          aliciAd: "Zeynep Kaya",
+          aliciTel: "0533 210 90 80",
+          butce: "6.600.000 ₺ (Nakit / Peşin)",
+          tercihNotu: "3+1 Vadi manzaralı, mimarıyla birlikte gezdi, resmi teklif verdi",
+          olusturmaTarihi: "20 Kasım 2026",
+          goruntulenmeSayisi: 3,
+          durum: "Teklif Verdi & Yer Gösterimi Yapıldı"
+        },
+        {
+          kod: "491028374615",
+          aliciAd: "Serkan Öztürk",
+          aliciTel: "0532 811 22 90",
+          butce: "6.700.000 ₺ (Banka Kredili)",
+          tercihNotu: "Oran veya Yıldız Mah. 3+1 site içi daire arıyor",
+          olusturmaTarihi: "21 Kasım 2026",
+          goruntulenmeSayisi: 1,
+          durum: "Kataloğu İnceliyor"
+        }
+      ];
+    } else {
+      p.aliciTakipKodlari = [];
+    }
+  }
+  return p.aliciTakipKodlari;
+}
+
+function tekilAliciTakipKodlariRender(portfoyObj) {
+  const p = portfoyObj || aktifPortfoy();
+  if (!p) return;
+  const liste = portfoyVarsayilanAliciKodlariniHazirla(p);
+
+  const badgeEl = document.getElementById("agentBuyerCodesCountBadge");
+  if (badgeEl) {
+    badgeEl.textContent = `${liste.length} Tekil Alıcı Kodu`;
+  }
+
+  const wrap = document.getElementById("agentBuyerCodesList");
+  if (!wrap) return;
+
+  if (liste.length === 0) {
+    wrap.innerHTML = `
+      <div style="background:#FFFFFF;border:1px dashed #93C5FD;border-radius:10px;padding:12px 14px;font-size:0.81rem;color:#475569;">
+        Bu portföy için henüz alıcıya özel tekil takip kodu üretilmedi. Yukarıdan alıcı adı ve telefonunu girerek her alıcıya <strong>farklı 12 haneli Mülk Takip Kodu</strong> oluşturabilirsiniz.
+      </div>
+    `;
+    return;
+  }
+
+  wrap.innerHTML = liste
+    .map((b, idx) => {
+      const formatli = String(b.kod || "").replace(/(\d{3})(?=\d)/g, "$1 ").trim();
+      const waMetin = encodeURIComponent(
+        `Merhaba Sayın ${b.aliciAd}, ilgilendiğiniz "${p.baslik}" (${p.bolge}) portföyümüzün size özel dijital sunum kataloğunu, 360° turunu ve teknik künyesini mülkizle.com üzerinden size özel üretilen #${b.kod} takip koduyla inceleyebilirsiniz.`
+      );
+      const temizTel = String(b.aliciTel || "").replace(/\D/g, "");
+
+      return `
+        <div class="diary-entry public-note" style="background:#FFFFFF;border:1px solid #BFDBFE;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+          <div style="flex:1;min-width:240px;">
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:5px;">
+              <span style="background:#1D4ED8;color:#FFFFFF;font-weight:800;font-size:0.76rem;padding:3px 10px;border-radius:999px;letter-spacing:0.04em;">
+                🔑 Alıcı Kodu: #${formatli}
+              </span>
+              <strong style="font-size:0.92rem;color:#0F172A;">👤 ${b.aliciAd}</strong>
+              <span class="saas-badge-neutral">📲 ${b.aliciTel}</span>
+              <span class="saas-badge-blue">${b.durum || "Katalog Gönderildi"}</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;font-size:0.78rem;color:#334155;">
+              <span>💰 <strong>Bütçe:</strong> ${b.butce || "Belirtilmedi"}</span>
+              <span>🎯 <strong>Tercih:</strong> ${b.tercihNotu || "Genel Aday"}</span>
+              <span>👁️ <strong>${b.goruntulenmeSayisi || 0} Kez İnceledi</strong></span>
+              <span style="color:#64748B;">📅 ${b.olusturmaTarihi || "Bugün"}</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+            <button
+              type="button"
+              class="saas-btn-outline-sm"
+              style="color:#1D4ED8;border-color:#93C5FD;background:#EFF6FF;"
+              onclick="tekilAliciKoduIleKatalogOnizle('${p.kod}', '${b.kod}')"
+              title="Bu alıcının kendi tekil koduyla göreceği ekranı aç"
+            >
+              <span>👁️ Alıcı Ekranını Gör</span>
+            </button>
+            <a
+              href="https://wa.me/9${temizTel}?text=${waMetin}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="saas-btn-outline-sm"
+              style="color:#15803D;border-color:#86EFAC;background:#F0FDF4;text-decoration:none;"
+            >
+              <span>💬 Kodu WhatsApp'tan Gönder</span>
+            </a>
+            <button type="button" class="saas-btn-outline-sm" onclick="tekilAliciTakipKoduSil(${idx})" title="Bu alıcı kodunu sil">✕</button>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function yeniTekilAliciTakipKoduOlustur() {
+  const p = aktifPortfoy();
+  if (!p) return;
+
+  const ad = (document.getElementById("newBuyerCodeName")?.value || "").trim();
+  const tel = (document.getElementById("newBuyerCodePhone")?.value || "").trim();
+  const butce = (document.getElementById("newBuyerCodeBudget")?.value || "").trim();
+  const tercih = (document.getElementById("newBuyerCodePref")?.value || "").trim();
+
+  if (!ad || !tel) {
+    alert("Lütfen tekil takip kodu üretilecek Alıcının Adı Soyadı ve Cep Telefonu numarasını girin.");
+    document.getElementById("newBuyerCodeName")?.focus();
+    return;
+  }
+
+  p.aliciTakipKodlari = portfoyVarsayilanAliciKodlariniHazirla(p);
+
+  // Her alıcıya portföyün ana kodundan ve diğer alıcıların kodundan tamamen farklı 12 haneli tekil kod üret
+  let yeniAliciKodu = rastgele12HaneliKodUret();
+  while (
+    yeniAliciKodu === p.kod ||
+    p.aliciTakipKodlari.some(x => x.kod === yeniAliciKodu)
+  ) {
+    yeniAliciKodu = rastgele12HaneliKodUret();
+  }
+
+  const bugun = new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
+
+  p.aliciTakipKodlari.unshift({
+    kod: yeniAliciKodu,
+    aliciAd: ad,
+    aliciTel: tel,
+    butce: butce || p.fiyat || "Belirtilmedi",
+    tercihNotu: tercih || `${p.bolge} • ${p.baslik}`,
+    olusturmaTarihi: bugun,
+    goruntulenmeSayisi: 0,
+    durum: "Tekil Kod Üretildi"
+  });
+
+  if (document.getElementById("newBuyerCodeName")) document.getElementById("newBuyerCodeName").value = "";
+  if (document.getElementById("newBuyerCodePhone")) document.getElementById("newBuyerCodePhone").value = "";
+  if (document.getElementById("newBuyerCodeBudget")) document.getElementById("newBuyerCodeBudget").value = "";
+  if (document.getElementById("newBuyerCodePref")) document.getElementById("newBuyerCodePref").value = "";
+
+  verileriKaydet();
+  tekilAliciTakipKodlariRender(p);
+  panelYenile();
+
+  alert(
+    `🔑 ALICIYA ÖZEL TEKİL MÜLK TAKİP KODU ÜRETİLDİ!\n\n` +
+      `Alıcı: ${ad} (${tel})\n` +
+      `Bu Alıcıya Özel 12 Haneli Takip Kodu: #${yeniAliciKodu}\n\n` +
+      `Not: Aynı portföy için her alıcıya ayrı kod verilir. Bu portföy satıldığında veya kapatıldığında ${ad} otomatik olarak "Potansiyel Alıcılarım" bölümünüze aktarılacaktır.`
+  );
+}
+
+function tekilAliciTakipKoduSil(idx) {
+  const p = aktifPortfoy();
+  if (!p || !Array.isArray(p.aliciTakipKodlari)) return;
+  p.aliciTakipKodlari.splice(idx, 1);
+  verileriKaydet();
+  tekilAliciTakipKodlariRender(p);
+  panelYenile();
+}
+
+function tekilAliciKoduIleKatalogOnizle(portfoyKodu, aliciKodu) {
+  const p = portfoyler.find(x => x.kod === portfoyKodu) || aktifPortfoy();
+  if (!p) return;
+  const liste = portfoyVarsayilanAliciKodlariniHazirla(p);
+  const aliciKaydi = liste.find(x => x.kod === aliciKodu) || null;
+  if (aliciKaydi) {
+    aliciKaydi.goruntulenmeSayisi = (Number(aliciKaydi.goruntulenmeSayisi) || 0) + 1;
+    aktifGirisYapanAliciKaydi = { ...aliciKaydi, anaPortfoyKodu: p.kod };
+    verileriKaydet();
+  }
+  seciliKod = p.kod;
+  gorunumDegistir("view-buyer");
+}
+
+function portfoyAlicilariniPotansiyelHavuzunaAktar(portfoy, kapanisNedeni) {
+  if (!portfoy) return 0;
+  const aktifDanismanId = portfoy.danismanId || (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const mevcutHavuz = tumPotansiyelAlicilariYukle();
+  const bugun = new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
+  const nedenMetni =
+    kapanisNedeni === "satildi"
+      ? "İlgilendiği Portföy Satıldı"
+      : kapanisNedeni === "satilmadi"
+      ? "İlgilendiği Portföy Kapatıldı"
+      : "Portföy Arşivlendi";
+
+  // 1) Tekil alıcı takip kodu verilen tüm alıcıları topla
+  const adayMap = new Map();
+  const kodListesi = portfoyVarsayilanAliciKodlariniHazirla(portfoy);
+  kodListesi.forEach(b => {
+    const key = `${(b.aliciAd || "").toLowerCase()}_${String(b.aliciTel || "").replace(/\D/g, "")}`;
+    adayMap.set(key, {
+      ad: b.aliciAd || "Alıcı Adayı",
+      telefon: b.aliciTel || "Belirtilmedi",
+      butce: b.butce || portfoy.fiyat || "Belirtilmedi",
+      tercihNotu: b.tercihNotu || `${portfoy.bolge} • ${portfoy.baslik}`,
+      eskiTekilKod: b.kod || portfoy.kod
+    });
+  });
+
+  // 2) Teklif veren veya yer gösterimi yapılan ama tekil kod listesinde olmayan alıcıları da kaçırmadan ekle
+  (portfoy.teklifler || []).forEach(t => {
+    const temizAd = (t.alici || "").replace(/\(.*\)/g, "").trim();
+    if (!temizAd) return;
+    const zatenVar = Array.from(adayMap.values()).some(x => x.ad.toLowerCase().includes(temizAd.toLowerCase()));
+    if (!zatenVar) {
+      adayMap.set(`teklif_${temizAd.toLowerCase()}`, {
+        ad: temizAd,
+        telefon: "Teklif Kaydından",
+        butce: t.tutar || portfoy.fiyat || "Belirtilmedi",
+        tercihNotu: t.not || `${portfoy.bolge} bölgesinde teklif verdi (${t.odemeSekli || ""})`,
+        eskiTekilKod: portfoy.kod
+      });
+    }
+  });
+
+  (portfoy.yerGosterimleri || []).forEach(g => {
+    const temizAd = (g.alici || "").replace(/\(.*\)/g, "").trim();
+    if (!temizAd) return;
+    const zatenVar = Array.from(adayMap.values()).some(x => x.ad.toLowerCase().includes(temizAd.toLowerCase()));
+    if (!zatenVar) {
+      adayMap.set(`gosterim_${temizAd.toLowerCase()}`, {
+        ad: temizAd,
+        telefon: g.telefon || "Belirtilmedi",
+        butce: portfoy.fiyat || "Belirtilmedi",
+        tercihNotu: g.not || `${portfoy.bolge} bölgesinde yer gösterimi yapıldı`,
+        eskiTekilKod: portfoy.kod
+      });
+    }
+  });
+
+  let eklenenSayisi = 0;
+  const oz = portfoy.ozellikler || {};
+  const kategoriOzet =
+    oz.mulkKategorisi === "arsa"
+      ? `İmarlı Arsa • ${oz.imarTipi || "Konut"} (${oz.arsaAlani || "-"} m²)`
+      : oz.mulkKategorisi === "tarla"
+      ? `Tarla / Bahçe • ${oz.araziTipi || "Tarla"} (${oz.araziAlani || "-"} m²)`
+      : `Konut • ${oz.odaSayisi || "3"}+${oz.salonSayisi || "1"} (${oz.brutAlan || "140"} m²)`;
+
+  adayMap.forEach(aday => {
+    mevcutHavuz.unshift({
+      id: `pot_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+      danismanId: aktifDanismanId,
+      ad: aday.ad,
+      telefon: aday.telefon,
+      butce: aday.butce,
+      arananBolge: portfoy.bolge || "Ankara",
+      arananKategori: kategoriOzet,
+      tercihNotu: aday.tercihNotu,
+      kaynakPortfoyBaslik: `${portfoy.baslik} (${nedenMetni})`,
+      eskiTekilKod: aday.eskiTekilKod,
+      aktarimNedeni: nedenMetni,
+      aktarimTarihi: bugun,
+      durum: "Yeni Portföy Bekliyor"
+    });
+    eklenenSayisi++;
+  });
+
+  if (eklenenSayisi > 0) {
+    tumPotansiyelAlicilariKaydet(mevcutHavuz);
+  }
+  return eklenenSayisi;
+}
+
+function potansiyelAlicilarimPanelRender() {
+  const container = document.getElementById("agentPotentialBuyersContainer");
+  if (!container) return;
+
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const liste = potansiyelAlicilarListesiniGetir(aktifId);
+  const aktifPortfoylerim = aktifDanismaninGorunenPortfoyleri();
+
+  const portfoySecenekleriHtml =
+    aktifPortfoylerim.length > 0
+      ? aktifPortfoylerim
+          .map(p => `<option value="${p.kod}">#${p.kod} — ${p.baslik} (${p.fiyat})</option>`)
+          .join("")
+      : `<option value="">Aktif portföyünüz bulunmuyor</option>`;
+
+  container.innerHTML = `
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <h2 class="saas-h2" style="margin:0;">👥 Potansiyel Alıcılarım Havuzu</h2>
+          <span class="saas-badge-blue">${liste.length} Hazır Alıcı Adayı</span>
+        </div>
+        <div class="saas-text-xs" style="margin-top:3px;">
+          Satılan veya kapatılan portföylerinizde <strong>tekil mülk takip kodu gönderdiğiniz, yer gösterimi yaptığınız veya teklif aldığınız</strong> tüm alıcılar otomatik olarak buraya aktarılır.
+        </div>
+      </div>
+      <button type="button" class="saas-btn-outline-sm" onclick="manuelPotansiyelAliciEkleFormuToggle()">
+        <span>+ Manuel Potansiyel Alıcı Ekle</span>
+      </button>
+    </div>
+
+    <!-- MANUEL POTANSİYEL ALICI EKLEME KUTUSU -->
+    <div id="manualPotentialBuyerFormBox" class="saas-card" style="display:none;background:#F8FAFC;border:1.5px solid #BFDBFE;margin-bottom:16px;">
+      <h4 style="font-size:0.92rem;font-weight:800;margin:0 0 10px;color:#0F172A;">Yeni Potansiyel Alıcı Adayı Kaydet</h4>
+      <div class="form-grid-3">
+        <div class="field">
+          <label>Alıcı Adı Soyadı *</label>
+          <input type="text" id="potNewName" placeholder="Örn: Hakan Çelik" />
+        </div>
+        <div class="field">
+          <label>Cep Telefonu *</label>
+          <input type="text" id="potNewPhone" placeholder="0532 000 00 00" />
+        </div>
+        <div class="field">
+          <label>Hazır Bütçesi &amp; Ödeme Şekli</label>
+          <input type="text" id="potNewBudget" placeholder="Örn: 7.500.000 ₺ (Nakit)" />
+        </div>
+      </div>
+      <div class="form-grid-2">
+        <div class="field">
+          <label>Aradığı Bölge &amp; Mülk Tipi</label>
+          <input type="text" id="potNewRegion" placeholder="Örn: Çankaya Çayyolu / 3+1 veya Villa Parseli" />
+        </div>
+        <div class="field">
+          <label>Özel Tercih &amp; Danışman Notu</label>
+          <input type="text" id="potNewNote" placeholder="Örn: Evi satıldı, 15 gün içinde alım yapacak..." />
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;">
+        <button type="button" class="saas-btn-outline-sm" onclick="manuelPotansiyelAliciEkleFormuToggle()">Vazgeç</button>
+        <button type="button" class="saas-btn-primary-sm" onclick="manuelPotansiyelAliciKaydet()">+ Havuza Kaydet</button>
+      </div>
+    </div>
+
+    <!-- GÖRSEL POTANSİYEL ALICI KARTLARI (%70 GÖRSEL ANLATIM) -->
+    ${
+      liste.length === 0
+        ? `<div class="saas-card" style="text-align:center;padding:32px 20px;">
+            <div style="font-size:1.8rem;margin-bottom:6px;">👥</div>
+            <div style="font-size:0.95rem;font-weight:700;color:#0F172A;margin-bottom:4px;">Potansiyel Alıcı Havuzunuz Henüz Boş</div>
+            <div class="saas-text-xs">Bir portföyünüze tekil alıcı takip kodu tanımlayıp o portföyü "Satıldı" olarak kapattığınızda diğer tüm alıcılar otomatik buraya aktarılır.</div>
+          </div>`
+        : `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;">
+            ${liste
+              .map(item => {
+                const temizTel = String(item.telefon || "").replace(/\D/g, "");
+                const waLink = `https://wa.me/9${temizTel}?text=${encodeURIComponent(
+                  `Merhaba Sayın ${item.ad}, daha önce ilgilendiğiniz ${item.arananBolge} bölgesindeki kriterlerinize uygun yeni bir portföyümüz geldi. Size özel yeni Mülk Takip Kodunuzu göndermemi ister misiniz?`
+                )}`;
+
+                return `
+                  <div class="saas-card" style="padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;border-left:4px solid #2563EB;">
+                    <div>
+                      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;">
+                        <div>
+                          <span style="display:inline-block;font-size:0.68rem;font-weight:800;background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;padding:2px 8px;border-radius:999px;margin-bottom:4px;">
+                            🔄 ${item.aktarimNedeni || "Satılan Portföyden Aktarıldı"} • ${item.aktarimTarihi || ""}
+                          </span>
+                          <h3 style="font-size:1.02rem;font-weight:800;color:#0F172A;margin:0;">👤 ${item.ad}</h3>
+                        </div>
+                        <button type="button" class="saas-btn-outline-sm" style="padding:3px 8px;color:#DC2626;" onclick="potansiyelAliciSil('${item.id}')" title="Havuzdan Kaldır">✕</button>
+                      </div>
+
+                      <!-- GÖRSEL BİLGİ ROZETLERİ -->
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:0.77rem;">
+                        <div>
+                          <div style="font-size:0.66rem;font-weight:700;color:#64748B;text-transform:uppercase;">Hazır Bütçe</div>
+                          <div style="font-weight:800;color:#15803D;">💰 ${item.butce || "Belirtilmedi"}</div>
+                        </div>
+                        <div>
+                          <div style="font-size:0.66rem;font-weight:700;color:#64748B;text-transform:uppercase;">İletişim Telefonu</div>
+                          <div style="font-weight:800;color:#0F172A;">📲 ${item.telefon || "-"}</div>
+                        </div>
+                        <div>
+                          <div style="font-size:0.66rem;font-weight:700;color:#64748B;text-transform:uppercase;">Aradığı Bölge</div>
+                          <div style="font-weight:700;color:#1E40AF;">📍 ${item.arananBolge || "-"}</div>
+                        </div>
+                        <div>
+                          <div style="font-size:0.66rem;font-weight:700;color:#64748B;text-transform:uppercase;">Aradığı Mülk Tipi</div>
+                          <div style="font-weight:700;color:#0F172A;">🏠 ${item.arananKategori || "Konut"}</div>
+                        </div>
+                      </div>
+
+                      <div style="font-size:0.76rem;color:#334155;background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:7px 10px;margin-bottom:8px;">
+                        <strong>Önceki İlgilendiği Portföy:</strong> ${item.kaynakPortfoyBaslik || "-"}
+                        ${item.eskiTekilKod ? `<span style="color:#1D4ED8;font-weight:700;"> (Eski Tekil Kod: #${item.eskiTekilKod})</span>` : ""}
+                      </div>
+
+                      <div style="font-size:0.76rem;color:#475569;line-height:1.45;">
+                        <strong>🎯 Tercih &amp; Not:</strong> ${item.tercihNotu || "-"}
+                      </div>
+                    </div>
+
+                    <!-- BU POTANSİYEL ALICIYA AKTİF BİR PORTFÖYDEN YENİ TEKİL KOD ATAMA -->
+                    <div style="padding-top:10px;border-top:1px solid #E2E8F0;display:flex;flex-direction:column;gap:8px;">
+                      <div style="display:flex;gap:6px;align-items:center;">
+                        <select id="potAssignSelect_${item.id}" class="saas-input-compact" style="flex:1;font-size:0.75rem;padding:6px 8px;">
+                          ${portfoySecenekleriHtml}
+                        </select>
+                        <button
+                          type="button"
+                          class="saas-btn-primary-sm"
+                          style="padding:6px 10px;font-size:0.74rem;white-space:nowrap;"
+                          onclick="potansiyelAliciyaYeniPortfoyKoduAta('${item.id}')"
+                        >
+                          <span>🔑 Yeni Tekil Kod Üret</span>
+                        </button>
+                      </div>
+
+                      <div style="display:flex;gap:6px;">
+                        <a href="tel:${temizTel}" class="saas-btn-outline-sm" style="flex:1;justify-content:center;text-decoration:none;">
+                          <span>📞 Hemen Ara</span>
+                        </a>
+                        <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="saas-btn-outline-sm" style="flex:1;justify-content:center;color:#15803D;border-color:#86EFAC;background:#F0FDF4;text-decoration:none;">
+                          <span>💬 WhatsApp'tan Yaz</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              })
+              .join("")}
+          </div>`
+    }
+  `;
+}
+
+function manuelPotansiyelAliciEkleFormuToggle() {
+  const box = document.getElementById("manualPotentialBuyerFormBox");
+  if (!box) return;
+  box.style.display = box.style.display === "none" ? "block" : "none";
+}
+
+function manuelPotansiyelAliciKaydet() {
+  const ad = (document.getElementById("potNewName")?.value || "").trim();
+  const tel = (document.getElementById("potNewPhone")?.value || "").trim();
+  const butce = (document.getElementById("potNewBudget")?.value || "").trim();
+  const bolge = (document.getElementById("potNewRegion")?.value || "").trim();
+  const not = (document.getElementById("potNewNote")?.value || "").trim();
+
+  if (!ad || !tel) {
+    alert("Lütfen alıcı adı soyadı ve telefon numarasını girin.");
+    return;
+  }
+
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const bugun = new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
+  const tumu = tumPotansiyelAlicilariYukle();
+
+  tumu.unshift({
+    id: `pot_${Date.now()}`,
+    danismanId: aktifId,
+    ad,
+    telefon: tel,
+    butce: butce || "Belirtilmedi",
+    arananBolge: bolge || "Ankara",
+    arananKategori: bolge || "Konut / Arsa",
+    tercihNotu: not || "Danışman tarafından manuel eklendi.",
+    kaynakPortfoyBaslik: "Manuel Kayıt",
+    eskiTekilKod: "",
+    aktarimNedeni: "Manuel Eklendi",
+    aktarimTarihi: bugun,
+    durum: "Aktif Alıcı Adayı"
+  });
+
+  tumPotansiyelAlicilariKaydet(tumu);
+  potansiyelAlicilarimPanelRender();
+  igSolMenuGuncelle("potential-buyers");
+}
+
+function potansiyelAliciSil(id) {
+  const tumu = tumPotansiyelAlicilariYukle().filter(x => x.id !== id);
+  tumPotansiyelAlicilariKaydet(tumu);
+  potansiyelAlicilarimPanelRender();
+  igSolMenuGuncelle("potential-buyers");
+}
+
+function potansiyelAliciyaYeniPortfoyKoduAta(potId) {
+  const tumu = tumPotansiyelAlicilariYukle();
+  const alici = tumu.find(x => x.id === potId);
+  const selEl = document.getElementById(`potAssignSelect_${potId}`);
+  const hedefPortfoyKodu = selEl?.value || "";
+  const p = portfoyler.find(x => x.kod === hedefPortfoyKodu);
+
+  if (!alici || !p) {
+    alert("Lütfen önce geçerli bir aktif portföy seçin.");
+    return;
+  }
+
+  p.aliciTakipKodlari = portfoyVarsayilanAliciKodlariniHazirla(p);
+  let yeniKod = rastgele12HaneliKodUret();
+  while (yeniKod === p.kod || p.aliciTakipKodlari.some(x => x.kod === yeniKod)) {
+    yeniKod = rastgele12HaneliKodUret();
+  }
+
+  const bugun = new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
+  p.aliciTakipKodlari.unshift({
+    kod: yeniKod,
+    aliciAd: alici.ad,
+    aliciTel: alici.telefon,
+    butce: alici.butce,
+    tercihNotu: alici.tercihNotu,
+    olusturmaTarihi: bugun,
+    goruntulenmeSayisi: 0,
+    durum: "Potansiyel Havuzdan Yeni Kod Atandı"
+  });
+
+  verileriKaydet();
+  alert(
+    `🔑 YENİ TEKİL MÜLK TAKİP KODU ÜRETİLDİ!\n\n` +
+      `Alıcı: ${alici.ad} (${alici.telefon})\n` +
+      `Atanan Portföy: ${p.baslik}\n` +
+      `Bu Alıcıya Özel Yeni 12 Haneli Takip Kodu: #${yeniKod}`
+  );
 }
 
 // Seçili yer gösterimi için hazır Taşınmaz Yer Gösterme Belgesi penceresi açma
@@ -4078,6 +5305,69 @@ const STANDART_ILCE_MAHALLELERI = [
 ];
 
 let aktifYeniPortfoySayfasi = 1;
+let aktifYeniPortfoyKategorisi = "konut"; // "konut" | "arsa" | "tarla"
+
+function npMulkKategorisiSec(kategori) {
+  aktifYeniPortfoyKategorisi = kategori === "arsa" ? "arsa" : kategori === "tarla" ? "tarla" : "konut";
+  const btnKonut = document.getElementById("npCatBtnKonut");
+  const btnArsa = document.getElementById("npCatBtnArsa");
+  const btnTarla = document.getElementById("npCatBtnTarla");
+  if (btnKonut) btnKonut.classList.toggle("selected", aktifYeniPortfoyKategorisi === "konut");
+  if (btnArsa) btnArsa.classList.toggle("selected", aktifYeniPortfoyKategorisi === "arsa");
+  if (btnTarla) btnTarla.classList.toggle("selected", aktifYeniPortfoyKategorisi === "tarla");
+
+  const konutP2 = document.getElementById("npKonutPage2Block");
+  const arsaP2 = document.getElementById("npArsaPage2Block");
+  const tarlaP2 = document.getElementById("npTarlaPage2Block");
+  const konutP3 = document.getElementById("npKonutPage3Block");
+  const arsaP3 = document.getElementById("npArsaPage3Block");
+  const tarlaP3 = document.getElementById("npTarlaPage3Block");
+
+  if (konutP2) konutP2.style.display = aktifYeniPortfoyKategorisi === "konut" ? "block" : "none";
+  if (arsaP2) arsaP2.style.display = aktifYeniPortfoyKategorisi === "arsa" ? "block" : "none";
+  if (tarlaP2) tarlaP2.style.display = aktifYeniPortfoyKategorisi === "tarla" ? "block" : "none";
+  if (konutP3) konutP3.style.display = aktifYeniPortfoyKategorisi === "konut" ? "block" : "none";
+  if (arsaP3) arsaP3.style.display = aktifYeniPortfoyKategorisi === "arsa" ? "block" : "none";
+  if (tarlaP3) tarlaP3.style.display = aktifYeniPortfoyKategorisi === "tarla" ? "block" : "none";
+
+  const pills = document.querySelectorAll("#npWizardProgress .np-wizard-step-pill");
+  if (pills.length >= 6) {
+    if (aktifYeniPortfoyKategorisi === "arsa") {
+      pills[1].textContent = "2. Arsa İmar Bilgileri";
+      pills[2].textContent = "3. Ek Özellikler & Olanaklar";
+      pills[3].style.display = "none";
+    } else if (aktifYeniPortfoyKategorisi === "tarla") {
+      pills[1].textContent = "2. Tarla / Bağ Özellikleri";
+      pills[2].textContent = "3. Olanaklar & Manzara";
+      pills[3].style.display = "none";
+    } else {
+      pills[1].textContent = "2. Konut Özellikleri";
+      pills[2].textContent = "3. Ek Özellikler";
+      pills[3].style.display = "";
+    }
+  }
+
+  const baslikInput = document.getElementById("npBaslik");
+  if (baslikInput) {
+    if (aktifYeniPortfoyKategorisi === "arsa" && (baslikInput.value.includes("3+1") || baslikInput.value.includes("Tarla"))) {
+      baslikInput.value = "Gölbaşı İncek 500 m² Villa İmarlı Arsa Parseli";
+    } else if (aktifYeniPortfoyKategorisi === "tarla" && (baslikInput.value.includes("3+1") || baslikInput.value.includes("İmarlı"))) {
+      baslikInput.value = "Gölbaşı Karaoğlan 5.000 m² Yola Yakın Tarla / Bağ";
+    } else if (aktifYeniPortfoyKategorisi === "konut" && (baslikInput.value.includes("Arsa") || baslikInput.value.includes("Tarla"))) {
+      baslikInput.value = "Bağlıca 3+1 Site İçi Ara Kat Daire";
+    }
+  }
+}
+
+function npOndalikSayiDegistir(inputId, delta, minVal = 0, decimals = 1) {
+  const el = document.getElementById(inputId);
+  if (!el) return;
+  const raw = String(el.value || "0").replace(",", ".");
+  const mevcut = parseFloat(raw);
+  const taban = isNaN(mevcut) ? (minVal || 0) : mevcut;
+  const yeni = Math.max(minVal, Number((taban + delta).toFixed(decimals)));
+  el.value = decimals > 0 ? String(yeni).replace(".", ",") : String(Math.round(yeni));
+}
 
 function npUlkeleriDoldur() {
   const ulkeSel = document.getElementById("npUlke");
@@ -4204,6 +5494,66 @@ function npSeciliChipleriAl(groupName) {
 }
 
 function npOzellikOzetiniOlustur() {
+  const ada = (document.getElementById("npAdaNo")?.value || "").trim();
+  const parsel = (document.getElementById("npParselNo")?.value || "").trim();
+  const adaParselEtiket = ada || parsel ? `Ada/Parsel: ${ada || "-"}/${parsel || "-"}` : "";
+
+  if (aktifYeniPortfoyKategorisi === "tarla") {
+    const araziTipi = npSeciliChipleriAl("tarlaAraziTipi")[0] || "Tarla";
+    const hisseli = npSeciliChipleriAl("tarlaHisseliTapu")[0] || "Hayır";
+    const alan = document.getElementById("npTarlaAlan")?.value || "5000";
+    const egim = npSeciliChipleriAl("tarlaEgim")[0] || "Az Eğimli (%4-15)";
+    const asfalt = document.getElementById("npTarlaAsfaltUzaklik")?.value || "0,54";
+    const yerlesim = document.getElementById("npTarlaYerlesimUzaklik")?.value || "1,5";
+    const suUzaklik = document.getElementById("npTarlaSuUzaklik")?.value || "";
+    const olanaklar = npSeciliChipleriAl("tarlaOlanaklar").join(", ");
+    const manzaralar = npSeciliChipleriAl("tarlaManzara").join(", ");
+
+    return [
+      `Arazi Tipi: ${araziTipi}`,
+      adaParselEtiket,
+      `${alan} m²`,
+      `Eğim: ${egim}`,
+      `Asfalt Yola: ${asfalt} km`,
+      `Yerleşime: ${yerlesim} km`,
+      suUzaklik ? `Su Kaynağına: ${suUzaklik} km` : "",
+      `Hisseli Tapu: ${hisseli}`,
+      olanaklar ? `Olanaklar: ${olanaklar}` : "",
+      manzaralar ? `Manzara: ${manzaralar}` : ""
+    ]
+      .filter(Boolean)
+      .join(" • ");
+  }
+
+  if (aktifYeniPortfoyKategorisi === "arsa") {
+    const imarTipi = npSeciliChipleriAl("arsaImarTipi")[0] || "Konut";
+    const hisseli = npSeciliChipleriAl("arsaHisseliTapu")[0] || "Hayır";
+    const alan = document.getElementById("npArsaAlan")?.value || "500";
+    const hmax = document.getElementById("npArsaHmax")?.value || "15,5";
+    const maxKat = document.getElementById("npArsaMaxKat")?.value || "5";
+    const taks = document.getElementById("npArsaTaks")?.value || "0,4";
+    const kaks = document.getElementById("npArsaKaks")?.value || "2";
+    const yapilasma = npSeciliChipleriAl("arsaYapilasmaDurumu")[0] || "Boş";
+    const olanaklar = npSeciliChipleriAl("arsaOlanaklar").join(", ");
+    const manzaralar = npSeciliChipleriAl("arsaManzara").join(", ");
+
+    return [
+      "İmarlı Arsa",
+      adaParselEtiket,
+      `İmar Tipi: ${imarTipi}`,
+      `${alan} m²`,
+      `KAKS (Emsal): ${kaks}`,
+      `TAKS: ${taks}`,
+      `Hmax: ${hmax} m / ${maxKat} Kat İzni`,
+      `Hisseli Tapu: ${hisseli}`,
+      `Yapılaşma: ${yapilasma}`,
+      olanaklar ? `Olanaklar: ${olanaklar}` : "",
+      manzaralar ? `Manzara: ${manzaralar}` : ""
+    ]
+      .filter(Boolean)
+      .join(" • ");
+  }
+
   const konutTipi = npSeciliChipleriAl("konutTipi")[0] || "Apartman";
   const apartmanTipi = npSeciliChipleriAl("apartmanTipi")[0] || "Daire";
   const kullanim = npSeciliChipleriAl("kullanimDurumu")[0] || "Boş";
@@ -4223,6 +5573,7 @@ function npOzellikOzetiniOlustur() {
   const olanaklar = npSeciliChipleriAl("olanaklar").join(", ");
 
   const parcalar = [
+    adaParselEtiket,
     `${oda}+${salon}`,
     `${brut} m² Brüt${teras ? ` (+${teras} m² Teras)` : ""}`,
     `${konutTipi} / ${apartmanTipi}`,
@@ -4363,9 +5714,31 @@ function npHizmetKutulariniSifirla() {
 }
 
 function yeniPortfoyModalAc() {
-  if (!proPaketAktif && portfoyler.length >= UCRETSIZ_LIMIT) {
+  const proMu = aktifDanismanProMu();
+  const kendiAktifPortfoyleri = aktifDanismaninGorunenPortfoyleri();
+  const kullanilan = kendiAktifPortfoyleri.length;
+
+  if (!proMu && kullanilan >= UCRETSIZ_LIMIT) {
+    const badgeEl = document.getElementById("paywallModalBadge");
+    const titleEl = document.getElementById("paywallModalTitle");
+    const descEl = document.getElementById("paywallModalDesc");
+
+    if (badgeEl) badgeEl.textContent = `📊 AKTİF PORTFÖY SAYACI: ${kullanilan} / ${UCRETSIZ_LIMIT} DOLDU`;
+    if (titleEl) titleEl.textContent = `Aktif Portföy Sayınız Doldu (${kullanilan} / ${UCRETSIZ_LIMIT})`;
+    if (descEl) {
+      descEl.textContent =
+        "Aktif portföy sayınız dolduğu için maalesef mülk takip kodu oluşturamıyorsunuz. Dilerseniz aktif portföy sayınızı azaltabilir ya da sınırsız aktif portföy oluşturabilmek için Pro pakete geçebilirsiniz.";
+    }
+
     document.getElementById("paywallModal").classList.add("open");
     return;
+  }
+
+  const modalCounterEl = document.getElementById("newPortfolioQuotaCounterBadge");
+  if (modalCounterEl) {
+    modalCounterEl.textContent = proMu
+      ? `Aktif Portföy Sayacı: ${kullanilan} / ∞ (Pro Paket)`
+      : `Aktif Portföy Sayacı: ${kullanilan} / ${UCRETSIZ_LIMIT}`;
   }
 
   npUlkeleriDoldur();
@@ -4444,6 +5817,11 @@ function yeniPortfoyOlusturOnayla() {
       : `${girilenFiyatRakam} ₺`
     : "Pazar Analizi Sonrası Belirlenecek";
 
+  const adaNo = (document.getElementById("npAdaNo")?.value || "").trim();
+  const parselNo = (document.getElementById("npParselNo")?.value || "").trim();
+  const isArsa = aktifYeniPortfoyKategorisi === "arsa";
+  const isTarla = aktifYeniPortfoyKategorisi === "tarla";
+
   const oda = document.getElementById("npOdaSayisi")?.value || "3";
   const salon = document.getElementById("npSalonSayisi")?.value || "1";
   const banyo = document.getElementById("npBanyoSayisi")?.value || "2";
@@ -4452,26 +5830,86 @@ function yeniPortfoyOlusturOnayla() {
   const binaYasi = document.getElementById("npBinaYasi")?.value || "5";
   const binaKat = document.getElementById("npBinaKatSayisi")?.value || "10";
   const kat = document.getElementById("npBulunduguKat")?.value || "4";
-  const kisaEtiket = `${oda}+${salon} • ${brut} m² • ${kat}. Kat`;
 
-  const seciliOzelliklerObj = {
-    konutTipi: npSeciliChipleriAl("konutTipi")[0] || "Apartman",
-    apartmanTipi: npSeciliChipleriAl("apartmanTipi")[0] || "Daire",
-    kullanimDurumu: npSeciliChipleriAl("kullanimDurumu")[0] || "Boş",
-    yapiDurumu: npSeciliChipleriAl("yapiDurumu")[0] || "Standart",
-    odaSayisi: oda,
-    salonSayisi: salon,
-    banyoSayisi: banyo,
-    brutAlan: brut,
-    terasAlan: teras,
-    binaYasi: binaYasi,
-    binaKatSayisi: binaKat,
-    bulunduguKat: kat,
-    cepheler: npSeciliChipleriAl("cepheDurumu"),
-    manzaralar: npSeciliChipleriAl("manzara"),
-    isitma: npSeciliChipleriAl("isitmaSistemi")[0] || "Doğalgaz/Kombi",
-    olanaklar: npSeciliChipleriAl("olanaklar")
-  };
+  const arsaImarTipi = npSeciliChipleriAl("arsaImarTipi")[0] || "Konut";
+  const arsaHisseli = npSeciliChipleriAl("arsaHisseliTapu")[0] || "Hayır";
+  const arsaAlan = document.getElementById("npArsaAlan")?.value || "500";
+  const arsaHmax = document.getElementById("npArsaHmax")?.value || "15,5";
+  const arsaMaxKat = document.getElementById("npArsaMaxKat")?.value || "5";
+  const arsaTaks = document.getElementById("npArsaTaks")?.value || "0,4";
+  const arsaKaks = document.getElementById("npArsaKaks")?.value || "2";
+  const arsaYapilasma = npSeciliChipleriAl("arsaYapilasmaDurumu")[0] || "Boş";
+  const arsaOlanaklar = npSeciliChipleriAl("arsaOlanaklar");
+  const arsaManzaralar = npSeciliChipleriAl("arsaManzara");
+
+  const tarlaAraziTipi = npSeciliChipleriAl("tarlaAraziTipi")[0] || "Tarla";
+  const tarlaHisseli = npSeciliChipleriAl("tarlaHisseliTapu")[0] || "Hayır";
+  const tarlaAlan = document.getElementById("npTarlaAlan")?.value || "5000";
+  const tarlaEgim = npSeciliChipleriAl("tarlaEgim")[0] || "Az Eğimli (%4-15)";
+  const tarlaAsfalt = document.getElementById("npTarlaAsfaltUzaklik")?.value || "0,54";
+  const tarlaYerlesim = document.getElementById("npTarlaYerlesimUzaklik")?.value || "1,5";
+  const tarlaSuUzaklik = document.getElementById("npTarlaSuUzaklik")?.value || "";
+  const tarlaOlanaklar = npSeciliChipleriAl("tarlaOlanaklar");
+  const tarlaManzaralar = npSeciliChipleriAl("tarlaManzara");
+
+  const kisaEtiket = isTarla
+    ? `${tarlaAraziTipi} • ${tarlaAlan} m² • ${tarlaEgim}`
+    : isArsa
+    ? `${arsaImarTipi} İmarlı • ${arsaAlan} m² • Emsal: ${arsaKaks}`
+    : `${oda}+${salon} • ${brut} m² • ${kat}. Kat`;
+
+  const seciliOzelliklerObj = isTarla
+    ? {
+        mulkKategorisi: "tarla",
+        adaNo,
+        parselNo,
+        araziTipi: tarlaAraziTipi,
+        hisseliTapu: tarlaHisseli,
+        araziAlani: tarlaAlan,
+        egim: tarlaEgim,
+        asfaltUzaklik: tarlaAsfalt,
+        yerlesimUzaklik: tarlaYerlesim,
+        suUzaklik: tarlaSuUzaklik,
+        olanaklar: tarlaOlanaklar,
+        manzaralar: tarlaManzaralar
+      }
+    : isArsa
+    ? {
+        mulkKategorisi: "arsa",
+        adaNo,
+        parselNo,
+        imarTipi: arsaImarTipi,
+        hisseliTapu: arsaHisseli,
+        arsaAlani: arsaAlan,
+        hmax: arsaHmax,
+        maksimumKatIzni: arsaMaxKat,
+        taks: arsaTaks,
+        kaks: arsaKaks,
+        yapilasmaDurumu: arsaYapilasma,
+        olanaklar: arsaOlanaklar,
+        manzaralar: arsaManzaralar
+      }
+    : {
+        mulkKategorisi: "konut",
+        adaNo,
+        parselNo,
+        konutTipi: npSeciliChipleriAl("konutTipi")[0] || "Apartman",
+        apartmanTipi: npSeciliChipleriAl("apartmanTipi")[0] || "Daire",
+        kullanimDurumu: npSeciliChipleriAl("kullanimDurumu")[0] || "Boş",
+        yapiDurumu: npSeciliChipleriAl("yapiDurumu")[0] || "Standart",
+        odaSayisi: oda,
+        salonSayisi: salon,
+        banyoSayisi: banyo,
+        brutAlan: brut,
+        terasAlan: teras,
+        binaYasi: binaYasi,
+        binaKatSayisi: binaKat,
+        bulunduguKat: kat,
+        cepheler: npSeciliChipleriAl("cepheDurumu"),
+        manzaralar: npSeciliChipleriAl("manzara"),
+        isitma: npSeciliChipleriAl("isitmaSistemi")[0] || "Doğalgaz/Kombi",
+        olanaklar: npSeciliChipleriAl("olanaklar")
+      };
 
   if (!danismanProfili) profilYukle();
   const aktifDanismanAd =
@@ -4483,8 +5921,11 @@ function yeniPortfoyOlusturOnayla() {
 
   const pazarAnaliziSecildi = secilenler.some(h => /pazar\s*analiz/i.test(h.ad || ""));
 
+  const aktifDanismanId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+
   const yeniPortfoy = {
     kod: yeniKod,
+    danismanId: aktifDanismanId,
     baslik: `${baslik} (${kisaEtiket})`,
     fiyat: sonFiyat,
     mulkSahibi: saticiAd,
@@ -4579,6 +6020,119 @@ const WHATSAPP_OFFICIAL_SVG = `<svg width="15" height="15" viewBox="0 0 24 24" f
 
 function mulkKatalogOzellikleriHtml(p) {
   const oz = p.ozellikler || {};
+  const adaParselMetni =
+    oz.adaNo || oz.parselNo ? `Ada ${oz.adaNo || "-"} / Parsel ${oz.parselNo || "-"}` : "Belirtilmedi";
+
+  if (oz.mulkKategorisi === "tarla") {
+    const olanaklarTarla =
+      Array.isArray(oz.olanaklar) && oz.olanaklar.length > 0
+        ? oz.olanaklar
+        : ["Elektrik", "Su", "Yolu Açık"];
+    const manzaralarTarla =
+      Array.isArray(oz.manzaralar) && oz.manzaralar.length > 0 ? oz.manzaralar.join(", ") : "Doğa";
+
+    return `
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid #F1F5F9;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <h2 class="saas-h2" style="margin:0;font-size:0.96rem;">🌾 Tarla, Bağ &amp; Bahçe Künyesi</h2>
+          <span class="saas-badge-blue">Ada / Parsel: ${adaParselMetni}</span>
+        </div>
+        <div class="catalog-specs-grid">
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Arazi Tipi</span>
+            <span class="catalog-spec-value">${oz.araziTipi || "Tarla"}</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Arazi Alanı (m²)</span>
+            <span class="catalog-spec-value">${oz.araziAlani || "5000"} m²</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Eğimi</span>
+            <span class="catalog-spec-value">${oz.egim || "Az Eğimli (%4-15)"}</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Asfalt Yola Uzaklık</span>
+            <span class="catalog-spec-value">${oz.asfaltUzaklik || "0,54"} km</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Yerleşime Uzaklık</span>
+            <span class="catalog-spec-value">${oz.yerlesimUzaklik || "1,5"} km</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Su Kaynağına Uzaklık</span>
+            <span class="catalog-spec-value">${oz.suUzaklik ? `${oz.suUzaklik} km` : "Belirtilmedi"}</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Hisseli Tapu &amp; Ada/Parsel</span>
+            <span class="catalog-spec-value">${oz.hisseliTapu || "Hayır"} (${adaParselMetni})</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Manzara</span>
+            <span class="catalog-spec-value">${manzaralarTarla}</span>
+          </div>
+        </div>
+        <div class="catalog-amenities-row">
+          ${olanaklarTarla.map(ol => `<span class="catalog-amenity-pill">${ol}</span>`).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  if (oz.mulkKategorisi === "arsa") {
+    const olanaklarArsa =
+      Array.isArray(oz.olanaklar) && oz.olanaklar.length > 0
+        ? oz.olanaklar
+        : ["Elektrik", "Su", "Yolu Açık"];
+    const manzaralarArsa =
+      Array.isArray(oz.manzaralar) && oz.manzaralar.length > 0 ? oz.manzaralar.join(", ") : "Doğa";
+
+    return `
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid #F1F5F9;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <h2 class="saas-h2" style="margin:0;font-size:0.96rem;">🗺️ İmarlı Arsa Künyesi &amp; İmar Bilgileri</h2>
+          <span class="saas-badge-blue">Ada / Parsel: ${adaParselMetni}</span>
+        </div>
+        <div class="catalog-specs-grid">
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">İmar Tipi</span>
+            <span class="catalog-spec-value">${oz.imarTipi || "Konut"}</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Arsa Alanı (m²)</span>
+            <span class="catalog-spec-value">${oz.arsaAlani || "500"} m²</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">KAKS (Emsal) &amp; TAKS</span>
+            <span class="catalog-spec-value">Emsal: ${oz.kaks || "2"} • TAKS: ${oz.taks || "0,4"}</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Hmax &amp; Maks. Kat İzni</span>
+            <span class="catalog-spec-value">${oz.hmax || "15,5"} m • ${oz.maksimumKatIzni || "5"} Kat</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Hisseli Tapu</span>
+            <span class="catalog-spec-value">${oz.hisseliTapu || "Hayır"}</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Ada / Parsel</span>
+            <span class="catalog-spec-value">${adaParselMetni}</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Yapılaşma Durumu</span>
+            <span class="catalog-spec-value">${oz.yapilasmaDurumu || "Boş"}</span>
+          </div>
+          <div class="catalog-spec-item">
+            <span class="catalog-spec-label">Manzara</span>
+            <span class="catalog-spec-value">${manzaralarArsa}</span>
+          </div>
+        </div>
+        <div class="catalog-amenities-row">
+          ${olanaklarArsa.map(ol => `<span class="catalog-amenity-pill">${ol}</span>`).join("")}
+        </div>
+      </div>
+    `;
+  }
+
   const konutTipi = oz.konutTipi || "Daire";
   const apartmanTipi = oz.apartmanTipi || "Site İçi";
   const odaSalon =
@@ -5222,13 +6776,28 @@ function aliciPaneliniGoster(kod) {
     )
     .join("");
 
+  const aktifAliciKaydi =
+    aktifGirisYapanAliciKaydi && aktifGirisYapanAliciKaydi.anaPortfoyKodu === p.kod
+      ? aktifGirisYapanAliciKaydi
+      : null;
+  const gosterilenTakipKodu = aktifAliciKaydi ? aktifAliciKaydi.kod : p.kod;
+  const aliciKisiselBannerHtml = aktifAliciKaydi
+    ? `<div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;">
+        <div style="font-size:0.81rem;color:#1E3A8A;">
+          🔑 <strong>Sayın ${aktifAliciKaydi.aliciAd} İçin Özel Tekil Alıcı Takip Kodu:</strong> <strong style="color:#2563EB;">#${aktifAliciKaydi.kod}</strong>
+        </div>
+        <span class="saas-badge-blue">Kişiye Özel Dijital Sunum Kataloğu</span>
+      </div>`
+    : "";
+
   container.innerHTML = `
     <!-- 1. EN BAŞTA: MÜLK BAŞLIĞI, SORUMLU DANIŞMAN VE MÜLKÜN ÖZELLİKLERİ KATALOĞU -->
     <div class="saas-card">
+      ${aliciKisiselBannerHtml}
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:16px;">
         <div>
           <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
-            <span class="saas-badge-neutral">Mülk Takip No: #${p.kod}</span>
+            <span class="saas-badge-neutral">Mülk Takip No: #${gosterilenTakipKodu}</span>
             <span class="hb-portfolio-view-counter" title="Portföy Görüntülenme Sayacı">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               <span>${portfoyGoruntulenmeSayisiniAl(p).toLocaleString("tr-TR")} Görüntülenme</span>
@@ -5304,11 +6873,11 @@ function aliciPaneliniGoster(kod) {
       <div class="form-grid-3">
         <div class="field">
           <label>Adınız Soyadınız</label>
-          <input type="text" id="buyerName" value="" placeholder="Adınız Soyadınız" />
+          <input type="text" id="buyerName" value="${aktifAliciKaydi ? aktifAliciKaydi.aliciAd : ""}" placeholder="Adınız Soyadınız" />
         </div>
         <div class="field">
           <label>Cep Telefonunuz</label>
-          <input type="text" id="buyerPhone" value="" placeholder="0532 000 00 00" />
+          <input type="text" id="buyerPhone" value="${aktifAliciKaydi ? aktifAliciKaydi.aliciTel : ""}" placeholder="0532 000 00 00" />
         </div>
         <div class="field">
           <label>Talep Türü</label>
@@ -6655,6 +8224,25 @@ function bcSeciliMahalleAdiniAl() {
   return mahSel?.value || "Tüm Mahalleler";
 }
 
+let aktifAriyorumKategorisi = "konut"; // "konut" | "arsa" | "tarla"
+
+function ariyorumKategoriSec(kategori) {
+  aktifAriyorumKategorisi = kategori === "arsa" ? "arsa" : kategori === "tarla" ? "tarla" : "konut";
+  const btnKonut = document.getElementById("bcCatBtnKonut");
+  const btnArsa = document.getElementById("bcCatBtnArsa");
+  const btnTarla = document.getElementById("bcCatBtnTarla");
+  if (btnKonut) btnKonut.classList.toggle("selected", aktifAriyorumKategorisi === "konut");
+  if (btnArsa) btnArsa.classList.toggle("selected", aktifAriyorumKategorisi === "arsa");
+  if (btnTarla) btnTarla.classList.toggle("selected", aktifAriyorumKategorisi === "tarla");
+
+  const konutWrap = document.getElementById("bcKonutFieldsWrap");
+  const arsaWrap = document.getElementById("bcArsaFieldsWrap");
+  const tarlaWrap = document.getElementById("bcTarlaFieldsWrap");
+  if (konutWrap) konutWrap.style.display = aktifAriyorumKategorisi === "konut" ? "block" : "none";
+  if (arsaWrap) arsaWrap.style.display = aktifAriyorumKategorisi === "arsa" ? "block" : "none";
+  if (tarlaWrap) tarlaWrap.style.display = aktifAriyorumKategorisi === "tarla" ? "block" : "none";
+}
+
 function yeniAliciCoopTalebiOlustur() {
   if (!aliciCoopTalepleri.length) aliciCoopYukle();
   if (!danismanProfili) profilYukle();
@@ -6667,17 +8255,71 @@ function yeniAliciCoopTalebiOlustur() {
     seciliSemtRaw && seciliSemtRaw !== "Tüm Semtler"
       ? seciliSemtRaw
       : mahalledenSemtBul(il, ilce, mahalle) || `${ilce} Geneli`;
+  const adaNo = (document.getElementById("bcAdaNo")?.value || "").trim();
+  const parselNo = (document.getElementById("bcParselNo")?.value || "").trim();
+  const adaParselEtiketi = adaNo || parselNo ? `Ada ${adaNo || "-"} / Parsel ${parselNo || "-"}` : "";
   const fiyatAraligi = (document.getElementById("bcPriceRange")?.value || "5.000.000 ₺ - 6.000.000 ₺").trim();
-  const oda = (document.getElementById("bcRooms")?.value || "3+1").split("|")[0];
-  const kat = (document.getElementById("bcFloor")?.value || "Ara Kat").split("|")[0];
-  const cephe = (document.getElementById("bcFacade")?.value || "Güney - Doğu Cephe").split("|")[0];
-  const binaYasi = (document.getElementById("bcBuildingAge")?.value || "5-10 Yaş Arası").split("|")[0];
-  const krediDurumu = (document.getElementById("bcCredit")?.value || "Krediye Uygun (Kredi Limiti: 3.000.000 ₺)").split("|")[0];
-  const tapuDurumu = (document.getElementById("bcDeed")?.value || "Kök Tapulu (Kat Mülkiyetli)").split("|")[0];
-  const alimZamani = (document.getElementById("bcTimeline")?.value || "Hemen Almak İstiyor").split("|")[0];
+
+  const isArsa = aktifAriyorumKategorisi === "arsa";
+  const isTarla = aktifAriyorumKategorisi === "tarla";
+  let oda = "";
+  let kat = "";
+  let cephe = "";
+  let binaYasi = "";
+  let krediDurumu = "";
+  let tapuDurumu = "";
+  let alimZamani = (document.getElementById("bcTimeline")?.value || "Hemen Almak İstiyor").split("|")[0];
+
+  if (isTarla) {
+    const araziTipi = npSeciliChipleriAl("bcTarlaAraziTipi")[0] || "Tarla";
+    const hisseli = npSeciliChipleriAl("bcTarlaHisseliTapu")[0] || "Hayır";
+    const alan = document.getElementById("bcTarlaAlan")?.value || "5000";
+    const egim = npSeciliChipleriAl("bcTarlaEgim")[0] || "Az Eğimli (%4-15)";
+    const asfalt = document.getElementById("bcTarlaAsfaltUzaklik")?.value || "0,5";
+    const yerlesim = document.getElementById("bcTarlaYerlesimUzaklik")?.value || "1,5";
+    const suUzaklik = document.getElementById("bcTarlaSuUzaklik")?.value || "";
+    const olanaklar = npSeciliChipleriAl("bcTarlaOlanaklar").join(", ");
+    const manzara = npSeciliChipleriAl("bcTarlaManzara").join(", ");
+
+    oda = `🌾 ${araziTipi} (${alan} m²)`;
+    kat = `Eğim: ${egim}`;
+    cephe = `Asfalt Yola: ${asfalt} km • Yerleşime: ${yerlesim} km${suUzaklik ? ` • Suya: ${suUzaklik} km` : ""}`;
+    binaYasi = adaParselEtiketi || `Hisseli Tapu: ${hisseli}`;
+    krediDurumu = olanaklar ? `Olanaklar: ${olanaklar}` : "Yolu Açık";
+    tapuDurumu = `Hisseli Tapu: ${hisseli}${manzara ? ` • Manzara: ${manzara}` : ""}`;
+  } else if (isArsa) {
+    const imarTipi = npSeciliChipleriAl("bcArsaImarTipi")[0] || "Konut";
+    const hisseli = npSeciliChipleriAl("bcArsaHisseliTapu")[0] || "Hayır";
+    const alan = document.getElementById("bcArsaAlan")?.value || "500";
+    const hmax = document.getElementById("bcArsaHmax")?.value || "15,5";
+    const maxKat = document.getElementById("bcArsaMaxKat")?.value || "5";
+    const taks = document.getElementById("bcArsaTaks")?.value || "0,4";
+    const kaks = document.getElementById("bcArsaKaks")?.value || "2";
+    const yapilasma = npSeciliChipleriAl("bcArsaYapilasma")[0] || "Boş";
+    const olanaklar = npSeciliChipleriAl("bcArsaOlanaklar").join(", ");
+    const manzara = npSeciliChipleriAl("bcArsaManzara").join(", ");
+
+    oda = `🗺️ İmarlı Arsa (${imarTipi} • ${alan} m²)`;
+    kat = `Emsal (KAKS): ${kaks} • TAKS: ${taks}`;
+    cephe = `Hmax: ${hmax}m / ${maxKat} Kat • Yapılaşma: ${yapilasma}`;
+    binaYasi = adaParselEtiketi || `Hisseli Tapu: ${hisseli}`;
+    krediDurumu = olanaklar ? `Olanaklar: ${olanaklar}` : "Altyapı Hazır";
+    tapuDurumu = `Hisseli Tapu: ${hisseli}${manzara ? ` • Manzara: ${manzara}` : ""}`;
+  } else {
+    oda = (document.getElementById("bcRooms")?.value || "3+1").split("|")[0];
+    kat = (document.getElementById("bcFloor")?.value || "Ara Kat").split("|")[0];
+    cephe = (document.getElementById("bcFacade")?.value || "Güney - Doğu Cephe").split("|")[0];
+    binaYasi = (document.getElementById("bcBuildingAge")?.value || "5-10 Yaş Arası").split("|")[0];
+    krediDurumu = (document.getElementById("bcCredit")?.value || "Krediye Uygun (Kredi Limiti: 3.000.000 ₺)").split("|")[0];
+    tapuDurumu = (document.getElementById("bcDeed")?.value || "Kök Tapulu (Kat Mülkiyetli)").split("|")[0];
+    if (adaParselEtiketi) {
+      tapuDurumu = `${tapuDurumu} (${adaParselEtiketi})`;
+    }
+  }
+
   const not =
     (document.getElementById("bcBuyerNote")?.value || "").trim() ||
-    `Alıcım ${il} / ${ilce} — ${semt} semtinde (${mahalle}) ${oda}, ${kat}, ${cephe}, ${binaYasi}, ${krediDurumu}, ${tapuDurumu} mülk arıyor. Bütçesi ${fiyatAraligi}, ${alimZamani.toLowerCase()}. Uygun aktif portföyünüzü mesaj kutuma gönderebilirsiniz.`;
+    `Alıcım ${il} / ${ilce} — ${semt} semtinde (${mahalle}${adaParselEtiketi ? ` • ${adaParselEtiketi}` : ""}) ${oda}, ${kat}, ${cephe} özelliklerinde mülk arıyor. Bütçesi ${fiyatAraligi}. Uygun aktif portföyünüzü mesaj kutuma gönderebilirsiniz.`;
 
   const bugun = new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
   const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
@@ -7407,29 +9049,68 @@ function paylasimliCalismaTeklifGonderVeKabulEt(uzmanId) {
 // ============================================================================
 let dogrulanacakKod = "849201736410";
 
+function portfoyVeKodTipiniBul(arananKod) {
+  const temiz = String(arananKod || "").replace(/\s+/g, "").trim();
+  for (const item of portfoyler) {
+    if (item.kod === temiz) {
+      return { portfoy: item, tip: "seller", aliciKaydi: null };
+    }
+    if (item.coopKod && item.coopKod === temiz) {
+      return { portfoy: item, tip: "coop", aliciKaydi: null };
+    }
+    const aliciListesi =
+      typeof portfoyVarsayilanAliciKodlariniHazirla === "function"
+        ? portfoyVarsayilanAliciKodlariniHazirla(item)
+        : item.aliciTakipKodlari || [];
+    const bulunanAlici = aliciListesi.find(b => b.kod === temiz);
+    if (bulunanAlici) {
+      return { portfoy: item, tip: "buyer", aliciKaydi: bulunanAlici };
+    }
+  }
+  return { portfoy: portfoyler[0] || null, tip: "seller", aliciKaydi: null };
+}
+
 function heroKodSecVeDogrula(kod) {
-  const aranan = (kod || document.getElementById("heroTrackingInput")?.value || "849201736410").trim();
+  const aranan = (kod || document.getElementById("heroTrackingInput")?.value || "849201736410")
+    .replace(/\s+/g, "")
+    .trim();
   const inputEl = document.getElementById("heroTrackingInput");
   if (inputEl) inputEl.value = aranan;
 
-  const p =
-    portfoyler.find(x => x.kod === aranan || (x.coopKod && x.coopKod === aranan)) || portfoyler[0];
-  const isCoopCode = Boolean(p && p.coopKod && p.coopKod === aranan);
-  dogrulanacakKod = p ? (isCoopCode ? p.coopKod : p.kod) : aranan;
+  const { portfoy: p, tip, aliciKaydi } = portfoyVeKodTipiniBul(aranan);
+  const isCoopCode = tip === "coop";
+  const isBuyerCode = tip === "buyer";
+  dogrulanacakKod = p
+    ? isCoopCode
+      ? p.coopKod
+      : isBuyerCode && aliciKaydi
+      ? aliciKaydi.kod
+      : p.kod
+    : aranan;
 
   const codeLabel = document.getElementById("verifyModalCodeLabel");
   if (codeLabel) {
-    codeLabel.textContent = isCoopCode ? `${dogrulanacakKod} (Co-Op Ortak Danışman Kodu)` : dogrulanacakKod;
+    codeLabel.textContent = isCoopCode
+      ? `${dogrulanacakKod} (Co-Op Ortak Danışman Kodu)`
+      : isBuyerCode && aliciKaydi
+      ? `${dogrulanacakKod} (${aliciKaydi.aliciAd} • Tekil Alıcı Kodu)`
+      : dogrulanacakKod;
   }
 
   const phoneInput = document.getElementById("verifyPhoneInput");
   const phoneHint = document.getElementById("verifyDefinedPhoneHint");
   if (p) {
-    const hedefTel = isCoopCode ? p.coopDanismanTel || "0532 000 00 00" : p.mulkSahibiTel || "0532 410 20 30";
+    const hedefTel = isCoopCode
+      ? p.coopDanismanTel || "0532 000 00 00"
+      : isBuyerCode && aliciKaydi
+      ? aliciKaydi.aliciTel || "0533 210 90 80"
+      : p.mulkSahibiTel || "0532 410 20 30";
     if (phoneInput) phoneInput.value = hedefTel;
     if (phoneHint) {
       phoneHint.textContent = isCoopCode
         ? `🤝 Co-Op Ortak Çalışma Kodu Algılandı: Yönlendiren danışman (${p.coopYonlendirenDanisman}) için tanımlı telefon numarası (${hedefTel}) otomatik dolduruldu.`
+        : isBuyerCode && aliciKaydi
+        ? `🔑 Tekil Alıcı Takip Kodu Algılandı: Sayın ${aliciKaydi.aliciAd} için tanımlı telefon numarası (${hedefTel}) otomatik dolduruldu.`
         : `Demo İpucu: Bu 12 haneli satıcı takip kodu için tanımlı telefon numarası (${hedefTel}) otomatik dolduruldu.`;
     }
   }
@@ -7442,10 +9123,9 @@ function dogrulamaModalKapat() {
 }
 
 function takipKoduTelefonDogrulaOnayla() {
-  const p =
-    portfoyler.find(x => x.kod === dogrulanacakKod || (x.coopKod && x.coopKod === dogrulanacakKod)) ||
-    portfoyler[0];
-  const isCoopCode = Boolean(p && p.coopKod && p.coopKod === dogrulanacakKod);
+  const { portfoy: p, tip, aliciKaydi } = portfoyVeKodTipiniBul(dogrulanacakKod);
+  const isCoopCode = tip === "coop";
+  const isBuyerCode = tip === "buyer";
   const girilenTel = (document.getElementById("verifyPhoneInput")?.value || "").replace(/\D/g, "");
   const girilenOtp = (document.getElementById("verifyOtpInput")?.value || "").trim();
 
@@ -7458,13 +9138,17 @@ function takipKoduTelefonDogrulaOnayla() {
     return;
   }
 
-  const beklenenTelHam = isCoopCode ? p?.coopDanismanTel : p?.mulkSahibiTel;
+  const beklenenTelHam = isCoopCode
+    ? p?.coopDanismanTel
+    : isBuyerCode && aliciKaydi
+    ? aliciKaydi.aliciTel
+    : p?.mulkSahibiTel;
   if (p && beklenenTelHam) {
     const tanimliTel = beklenenTelHam.replace(/\D/g, "");
     if (tanimliTel && girilenTel !== tanimliTel) {
       alert(
         `Girdiğiniz telefon numarası bu 12 haneli ${
-          isCoopCode ? "Co-Op Ortak Danışman" : "Mülk Sahibi"
+          isCoopCode ? "Co-Op Ortak Danışman" : isBuyerCode ? "Tekil Alıcı" : "Mülk Sahibi"
         } takip kodu için tanımlı numara (${beklenenTelHam}) ile eşleşmiyor!`
       );
       return;
@@ -7474,6 +9158,16 @@ function takipKoduTelefonDogrulaOnayla() {
   dogrulamaModalKapat();
   seciliKod = p ? p.kod : dogrulanacakKod;
   aktifTakipKoduGiris = dogrulanacakKod;
+
+  if (isBuyerCode && p && aliciKaydi) {
+    aliciKaydi.goruntulenmeSayisi = (Number(aliciKaydi.goruntulenmeSayisi) || 0) + 1;
+    aktifGirisYapanAliciKaydi = { ...aliciKaydi, anaPortfoyKodu: p.kod };
+    verileriKaydet();
+    gorunumDegistir("view-buyer");
+    return;
+  }
+
+  aktifGirisYapanAliciKaydi = null;
   gorunumDegistir("view-seller");
   saticiPaneliniGoster(dogrulanacakKod);
 }
@@ -7898,6 +9592,10 @@ function mobilUygulamaSekmeSec(sekme) {
   Object.keys(tabMap).forEach(k => {
     const btn = document.getElementById(tabMap[k]);
     if (btn) btn.classList.toggle("active", k === aktifMobilSekme);
+    const quickBtn = document.getElementById(`mQuickBtn-${k}`);
+    if (quickBtn) {
+      quickBtn.className = k === aktifMobilSekme ? "saas-btn-primary-sm" : "saas-btn-outline-sm";
+    }
   });
 
   const subEl = document.getElementById("mobileSimSubtitle");
@@ -10025,6 +11723,7 @@ document.addEventListener("DOMContentLoaded", () => {
   panelYenile();
   saticiPaneliniGoster(seciliKod);
   mobilUygulamaSimulasyonRender();
+  uyelikFormuKonumlariniHazirla();
   anaSayfaSayaclariniGuncelle();
 
   // Tarayıcı ve Mouse Geri / İleri Tuşları (HTML5 History API) Desteği

@@ -8,28 +8,39 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
 
 ## 🚨 Öncelikli Yeni Özellik Talepleri (Gencay — Sıradaki Geliştirmeler)
 
-- [ ] **1. Tekil Alıcı Mülk Takip Kodu Sistemi (Aynı Portföy İçin Her Alıcıya Ayrı Kod):**
+- [x] **1. Tekil Alıcı Mülk Takip Kodu Sistemi (Aynı Portföy İçin Her Alıcıya Ayrı Kod):**
   - Aynı portföy için birden fazla alıcıya **aynı mülk takip kodu gitmeyecek**; her alıcıya özel tekil takip kodu üretilecek (böylece hangi alıcının incelediği, teklif verdiği veya yer gösterimi onayladığı kişi bazlı takip edilecek).
-- [ ] **2. "Potansiyel Alıcılarım" Havuzu (Satılan Portföyün Alıcılarını Aktarma):**
+- [x] **2. "Potansiyel Alıcılarım" Havuzu (Satılan Portföyün Alıcılarını Aktarma):**
   - Bir portföy için birden fazla alıcıya mülk takip kodu atıldığında ve o portföy satıldığında (veya kapatıldığında), o portföyle ilgilenmiş diğer tüm alıcıların iletişim ve bütçe/tercih bilgileri otomatik olarak danışmanın **"Potansiyel Alıcılarım"** bölümüne aktarılacak; sol menüde/panelde böyle özel bir bölüm açılacak.
-- [ ] **3. Mülk Arama ve Portföy Sistemine "Arsa" Kategorisi Eklenmesi:**
-  - Mülk arama (`Arıyorum!`) ve portföy oluşturma ekranlarına Konut dışında **Arsa** (Ada/Parsel, İmar Durumu, $m^2$, KAKS/EMSAL, Gabari vb.) seçeneği eklenecek.
+- [x] **3. Mülk Arama ve Portföy Sistemine "Arsa" Kategorisi Eklenmesi:**
+  - Mülk arama (`Arıyorum!`) ve portföy oluşturma ekranlarına Konut dışında **İmarlı Arsa** (İl/İlçe/Semt/Mahalle + Ada/Parsel, İmar Tipi, Hisseli Tapu, Alan $m^2$, Hmax, Maksimum Kat İzni, TAKS, KAKS/Emsal, Yapılaşma Durumu, Olanaklar ve Manzara) seçeneği eklendi.
 - [ ] **4. Arıyorum!'dan Mesajla Gelen Portföyün Tıklanabilir Olması:**
   - `Arıyorum!` talebine karşılık bir danışman **"📤 Aktif Portföyümü Gönder"** dediğinde ve bu portföy talep sahibinin **Mesajlar** kutusuna düştüğünde, mesaj içindeki portföy kartı/kodu **tıklanabilir** olacak; tıklandığında ilgili portföyün detay/katalog ekranı açılacak.
-- [ ] **5. Üye Olma ve Üye Girişi Ekranlarına "Ben Robot Değilim" Kutucuğu:**
-  - Yeni Danışman / Ofis Üyelik Formuna (`#view-membership-form`) ve Üye Girişi penceresine (`#agentLoginModal`) bot/spam koruması için **"Ben robot değilim"** onay kutucuğu eklenecek.
+- [x] **5. Üye Olma ve Üye Girişi Ekranlarına "Ben Robot Değilim" Kutucuğu:**
+  - Yeni Danışman / Ofis Üyelik Formuna (`#view-membership-form`) ve Üye Girişi penceresine (`#agentLoginModal`) bot/spam koruması için **"Ben robot değilim"** onay kutucuğu eklendi.
 
 ---
 
-## 🧭 7 Adımlı "Tek Seferde Tek Ekran" Çalışma Sırası
+## 🧭 "%70 Görsel Anlatım / %30 Kısa Metin" 7 Adımlı Çalışma Programı
 
-- [ ] **1. ADIM: Vitrin & Tanıtım Sayfaları** (*Üst Menü, Ana Sayfa, Neden Mülkİzle?, Hizmetlerimiz, Mobil Uygulama, Biz Kimiz?*)
-- [ ] **2. ADIM: Üye Ol (5'li Paket Seçimi) → Ayrı Sayfada Üyelik Formu & Üye Girişi** (*"Ben robot değilim" kutucuğu dahil*)
-- [ ] **3. ADIM: Yeni Mülk Takip Kodu Oluşturma Sihirbazı (`+` Butonu)** (*Konut + Arsa desteği dahil*)
-- [ ] **4. ADIM: Aktif Portföylerim, Tekil Alıcı Kodları & "Potansiyel Alıcılarım" Bölümü**
-- [ ] **5. ADIM: Mülk Sahibi (Satıcı) & Alıcı Katalog Ekranları**
-- [ ] **6. ADIM: Danışman Günlük Operasyon Araçları** (*Bildirimler, Mesajlar [tıklanabilir portföy kartı dahil], Mülk Ajandam*)
-- [ ] **7. ADIM: Pro Network Özellikleri** (*Arıyorum! [Arsa filtreli] ve Profilim `mulkizle.com/adiniz`*)
+> **Tasarım Prensibi:** Hiçbir sayfada uzun paragraflar veya yorucu metin duvarları olmayacak. Her özellik **%70 görsel bileşenlerle** (mini ekran maketleri, canlı ilerleme çubukları, ikonlu durum etiketleri, görsel kartlar) ve **%30 tek cümlelik net başlıklarla** anlatılacak.
+
+- [x] **1. ADIM: Vitrin & Tanıtım Sayfaları (%70 Görsel Dönüşüm Tamamlandı ✅)**
+  - *Ana Sayfa:* 3 Adımda Nasıl Çalışır? (mini ekran maketli), görsel etiketli 3 değer kartı, tek tıkla açılan kısa SSS ve arka planda aktif çalışan (görünümde gizli) sayaçlar.
+  - *Neden Mülkİzle?:* Danışman, Mülk Sahibi ve Alıcı kartlarına mini ekran maketleri, tek satırlık maddeler ve doğrudan canlı önizleme butonları eklendi.
+  - *Hizmetlerimiz:* 6 Bento kartına `ÜCRETSİZ + PRO` / `PRO PAKET` rozetleri ve görsel mini widget önizlemeleri eklendi.
+  - *Biz Kimiz? & Global Footer:* 4'lü görsel güven kartı (KVKK, SMS Kilit, TürkPatent/Filigran, 81 İl Ağı), iletişim şeridi ve 4 sütunlu kurumsal Footer eklendi.
+- [x] **2. ADIM: Üye Ol (5'li Paket Seçimi) → Ayrı Sayfada Üyelik Formu & Üye Girişi (Tamamlandı ✅)**
+  - 5'li paket kartlarına görsel ikonlar, kullanıcı/portföy kota rozetleri ve 2 adımlı görsel ilerleme çubuğu (`1. Paket Seçimi → 2. Üyelik Formu`) eklendi.
+  - Ayrı sayfada açılan üyelik formuna **Seçilen Paket Görsel Özet Barı** ve hem üyelik formuna hem de Üye Girişi penceresine **"Ben robot değilim" (`Mülkİzle Shield`)** doğrulama kutucuğu eklendi.
+- [x] **3. ADIM: Yeni Mülk Takip Kodu Oluşturma Sihirbazı (`+` Butonu) & Arıyorum! İmarlı Arsa Seçimi (Tamamlandı ✅)**
+  - En başta İl • İlçe • Semt • Mahalle + Ada / Parsel seçimi ile `🏠 Konut` ve `🗺️ İmarlı Arsa` (İmar Tipi, Hisseli Tapu, Alan $m^2$, Hmax, Kat İzni, TAKS, KAKS/Emsal, Yapılaşma Durumu, Olanaklar, Manzara) seçenekleri hem Yeni Portföy Sihirbazına hem de `Arıyorum!` talep açma ekranına eklendi.
+- [x] **4. ADIM: Aktif Portföylerim, Tekil Alıcı Kodları & "Potansiyel Alıcılarım" Bölümü (Tamamlandı ✅)**
+  - Her portföy içinde her alıcıya ayrı 12 haneli tekil takip kodu üretme, kişi bazlı inceleme sayacı, WhatsApp'tan kod gönderme ve tekil alıcı koduyla giriş doğrulaması eklendi.
+  - Sol menüye **"Potansiyel Alıcılarım"** (`#igNavPotentialBuyers`) eklendi; bir portföy satıldığında/kapatıldığında o portföyle ilgilenen tüm alıcılar bütçe ve tercihleriyle otomatik olarak bu havuza aktarılıyor ve havuzdan yeni bir aktif portföy için tek tıkla yeni tekil kod üretilebiliyor.
+- [ ] **5. ADIM: Mülk Sahibi (Satıcı) & Alıcı Katalog Ekranları** (*%70 görsel zaman tüneli, galeri ve tek sayfa katalog künyesi*)
+- [ ] **6. ADIM: Danışman Günlük Operasyon Araçları** (*Bildirimler, Mesajlar [tıklanabilir görsel portföy kartı dahil], Mülk Ajandam*)
+- [ ] **7. ADIM: Pro Network Özellikleri** (*Arıyorum! [Arsa filtreli görsel talep kartları] ve Profilim `mulkizle.com/adiniz`*)
 
 ---
 
@@ -73,7 +84,29 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
 
 ---
 
-## 💬 4. Karşılıklı İstek & Not Köşesi
+## 🛡️ 4. Canlıya Geçince Yapılacaklar (Veri Güvenliği, Bulut Veritabanı & KVKK Altyapısı)
+
+> **Not:** Bu bölüm `mulkizle.com` gerçek sunucuya ve veritabanına bağlanırken (bkz. `ORTAK_CALISMA_REHBERI.md` Bölüm 5 ve `KVKK_AYDINLATMA_METNI.md`) sırasıyla tamamlanacak teknik güvenlik listesidir.
+
+- [ ] **1. Bulut Veritabanı & Satır Bazlı Güvenlik (Supabase / Firebase RLS):**
+  - `localStorage` yapısının Supabase (Avrupa/Frankfurt sunucusu) veya Firebase'e taşınması.
+  - Mülk sahibi telefon numaraları ve kişisel notların yalnızca portföy sahibi danışman (`danisman_id`) tarafından okunabilmesini sağlayan **Row Level Security (RLS)** kurallarının yazılması.
+  - Danışman şifrelerinin `Bcrypt / Auth` ile şifrelenerek (hashlenerek) saklanması.
+- [ ] **2. Cloudflare & 256-Bit SSL + Bot/Brute-Force Koruması:**
+  - `mulkizle.com` alan adının Cloudflare arkasına alınarak zorunlu `HTTPS (256-Bit SSL)` aktif edilmesi.
+  - 12 haneli takip kodu sorgulama ve giriş ekranlarına IP bazlı deneme limiti (Rate Limiting) ve gerçek Cloudflare Turnstile / reCAPTCHA bağlanması.
+- [ ] **3. Gerçek WhatsApp Business API / SMS OTP Entegrasyonu:**
+  - Üye girişi, yeni üyelik ve 12 haneli mülk takip kodu doğrulamasındaki tek kullanımlık doğrulama kodlarının gerçek WhatsApp API veya kurumsal SMS servisiyle gönderilmesi.
+- [ ] **4. KVKK Onay Zaman Damgası (Timestamp) & Otomatik Veri İmha Politikası:**
+  - Danışmanın üyelik formunda baştan sona scroll yaparak onayladığı KVKK metninin onay tarihi, saati ve IP adresinin veritabanına (`kvkk_approved_at`) kaydedilmesi.
+  - Kapatılan veya satılan portföylerdeki müşteri telefon numaralarını yasal süre sonunda otomatik maskeleyen/anonimleştiren temizlik kuralının (`cron job`) kurulması.
+- [ ] **5. Sadece Admin Yetkisine Özel "Anonim Bölge & Mülk Özellikleri Kapanış İstatistik Tablosu":**
+  - Portföy silme anketinden (*Satıldı / Satılmadı*) toplanan kimliksiz daire/arsa/tarla özellikleri ve kapanış fiyat bandı (`₺/m²`) tablosunu (`#anonimBolgeEmsalTabloCard` / `anonim_bolge_emsal_havuzu`) sitede **hiçbir normal veya Pro üye görmeyecek**.
+  - Bu tablo arka planda toplanmaya devam edecek ve canlıya geçildiğinde yalnızca **Süper Admin (`role = 'admin'`)** panelinde görüntülenecek; daha sonra karar verilecek stratejiye göre *Detaylı Pazar Analizi* veya *Arıyorum!* modüllerinde nasıl kullanılacağı belirlenecek.
+
+---
+
+## 💬 5. Karşılıklı İstek & Not Köşesi
 
 > **Kullanım:** Gencay tasarım/buton ihtiyacı duyduğunda aşağıya yazar; Abisi bir ekran için metin/içerik ihtiyacı duyduğunda aşağıya yazar.
 

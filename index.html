@@ -31,8 +31,10 @@
           <path d="M27 15L15 25.5H18.5V36.5H24.5V29.5H29.5V36.5H35.5V25.5H39L27 15Z" fill="#0B1F3A" />
           <rect x="31.5" y="16.5" width="3.2" height="6" fill="#0B1F3A" />
         </svg>
-        <span class="brand-wordmark">mülk<span class="izle">izle</span><span class="com">.com</span></span>
-        <span class="brand-slogan">Profesyonel danışmanların dijital vitrini.</span>
+        <div class="brand-text-col">
+          <span class="brand-wordmark">mülk<span class="izle">izle</span><span class="com">.com</span></span>
+          <span class="brand-slogan">Profesyonel danışmanların dijital vitrini.</span>
+        </div>
       </a>
 
       <div class="view-tabs" id="publicTopNavTabs" role="tablist">
@@ -145,7 +147,21 @@
         <span class="ig-nav-label">Mülk Ajandam</span>
       </button>
 
-      <!-- 6. Arıyorum! (Büyüteç İkonu — Ayrı Sayfada Açılan Bölge Uzmanı & Ortak Çalışma) -->
+      <!-- 6. Potansiyel Alıcılarım (Kişiler / Alıcı Havuzu İkonu — Satılan/Kapanan Portföylerden Aktarılan Alıcılar) -->
+      <button type="button" class="ig-nav-item" id="igNavPotentialBuyers" onclick="danismanSolMenuSec('potential-buyers')">
+        <span class="ig-nav-icon" style="position:relative;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span class="ig-unread-red-badge" id="igSidebarPotentialBuyersBadge" style="background:#2563EB;">0</span>
+        </span>
+        <span class="ig-nav-label">Potansiyel Alıcılarım</span>
+      </button>
+
+      <!-- 7. Arıyorum! (Büyüteç İkonu — Ayrı Sayfada Açılan Bölge Uzmanı & Ortak Çalışma) -->
       <button type="button" class="ig-nav-item" id="igNavAriyorum" onclick="danismanSolMenuSec('ariyorum')">
         <span class="ig-nav-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -187,7 +203,7 @@
   <main class="container">
 
     <!-- ======================================================================
-         ANA SAYFA: ODAKLANMIŞ 12 HANELİ TAKİP NUMARASI SORGULAMA MERKEZİ
+         ANA SAYFA: %70 GÖRSEL ANLATIMLI 12 HANELİ TAKİP & VİTRİN MERKEZİ
          ====================================================================== -->
     <section id="view-landing" class="app-view active">
       <div class="cargo-hero">
@@ -196,9 +212,9 @@
             <span class="modern-hero-badge-dot"></span>
             <span>CANLI GAYRİMENKUL SÜREÇ &amp; PORTFÖY TAKİP PLATFORMU</span>
           </div>
-          <h1>Gayrimenkulün Sürecini ve Güncel Durumunu Şeffafça Sorgulayın</h1>
+          <h1>Mülkünüzün Pazarlama Sürecini Kargo Takip Eder Gibi Canlı İzleyin</h1>
           <p>
-            Danışmanınızın ilettiği 12 haneli Mülkİzle Takip Kodu ile yürütülen tüm pazarlama çalışmalarını, rakip fiyat analizlerini ve gelen teklifleri canlı görüntüleyin.
+            12 haneli Mülkİzle Takip Kodunuzu girin; yapılan çekimleri, rakip fiyat analizini ve gelen teklifleri tek ekranda görüntüleyin.
           </p>
 
           <!-- MERKEZİ 12 HANELİ KARGO TAKİP NUMARASI SORGULAMA KARTI -->
@@ -223,23 +239,26 @@
             </form>
 
             <div class="hero-sample-codes-bar">
-              <span>Hızlı Test İçin Örnek Takip Kodları:</span>
+              <span>Canlı Örnek Ekranlar:</span>
               <div class="hero-sample-pills">
                 <button type="button" class="hero-sample-pill" onclick="heroKodSecVeDogrula('849201736410')">
-                  <span>#849 201 736 410 (Çankaya 3+1)</span>
+                  <span>#849 201 736 410 • Çankaya 3+1</span>
+                  <strong style="color:#2563EB;margin-left:4px;">Canlı Gör →</strong>
                 </button>
                 <button type="button" class="hero-sample-pill" onclick="heroKodSecVeDogrula('592837461029')">
-                  <span>#592 837 461 029 (Çayyolu Villa)</span>
+                  <span>#592 837 461 029 • Çayyolu Villa</span>
+                  <strong style="color:#2563EB;margin-left:4px;">Canlı Gör →</strong>
                 </button>
                 <button type="button" class="hero-sample-pill" onclick="heroKodSecVeDogrula('640192837465')">
-                  <span>#640 192 837 465 (Kadıköy Suadiye)</span>
+                  <span>#640 192 837 465 • Kadıköy 3+1</span>
+                  <strong style="color:#2563EB;margin-left:4px;">Canlı Gör →</strong>
                 </button>
               </div>
             </div>
           </div>
 
-          <!-- ANA SAYFA CANLI SAYAÇLAR (AKTİF KULLANICI • AKTİF PORTFÖY • TOPLAM PORTFÖY GÖRÜNTÜLENME) -->
-          <div class="home-live-counters-strip" id="homeLiveCountersStrip" aria-label="Platform Canlı İstatistik Sayaçları">
+          <!-- ANA SAYFA CANLI SAYAÇLAR (ARKA PLANDA AKTİF SAYAR, ŞİMDİLİK GİZLİ — 250+ GÖRÜNTÜLENMEDE AÇILACAK) -->
+          <div class="home-live-counters-strip" id="homeLiveCountersStrip" style="display:none;" aria-label="Platform Canlı İstatistik Sayaçları">
             <div class="home-counter-card">
               <div class="home-counter-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -273,40 +292,123 @@
         </div>
       </div>
 
-      <!-- EMLAK DANIŞMANLARININ VERDİĞİ PROFESYONEL HİZMETİ PARLATAN BÖLÜM -->
+      <!-- %70 GÖRSEL ANLATIM: 3 ADIMDA NASIL ÇALIŞIR? (MİNİ EKRAN MAKETLİ) -->
+      <div class="visual-section-header">
+        <span class="modern-section-badge">3 ADIMDA ŞEFFAF SÜREÇ</span>
+        <h2>Nasıl Çalışır?</h2>
+      </div>
+
+      <div class="visual-how-grid">
+        <!-- Adım 1 Görsel Kart -->
+        <div class="visual-how-card">
+          <div class="visual-how-step-tag">ADIM 01 • DANIŞMAN</div>
+          <div class="visual-mockup-box">
+            <div class="vm-code-row">
+              <span class="vm-pill-blue">#849 201 736 410</span>
+              <span class="vm-pill-green">🔒 SMS Onaylı</span>
+            </div>
+            <div class="vm-mini-bar">
+              <span>📍 Çankaya 3+1 Daire</span>
+              <strong>6.750.000 ₺</strong>
+            </div>
+          </div>
+          <h3>12 Haneli Takip Kodu Üretilir</h3>
+          <p>Danışman portföyü açar; mülk sahibine ve alıcıya özel takip kodu gönderir.</p>
+        </div>
+
+        <!-- Adım 2 Görsel Kart -->
+        <div class="visual-how-card">
+          <div class="visual-how-step-tag">ADIM 02 • CANLI ZAMAN ÇİZELGESİ</div>
+          <div class="visual-mockup-box">
+            <div class="vm-progress-head">
+              <span>Pazarlama İlerlemesi</span>
+              <strong style="color:#2563EB;">%85 Tamamlandı</strong>
+            </div>
+            <div class="vm-progress-track"><div class="vm-progress-fill" style="width:85%;"></div></div>
+            <div class="vm-chips-row">
+              <span class="vm-chip-done">✓ Drone &amp; 360°</span>
+              <span class="vm-chip-done">✓ Pazar Analizi</span>
+              <span class="vm-chip-active">● İlan Yayında</span>
+            </div>
+          </div>
+          <h3>Her Adım Canlı İzlenir</h3>
+          <p>Çekimler, rakip ilan analizleri ve portal istatistikleri anlık güncellenir.</p>
+        </div>
+
+        <!-- Adım 3 Görsel Kart -->
+        <div class="visual-how-card">
+          <div class="visual-how-step-tag">ADIM 03 • TEKLİF &amp; PAYLAŞIM AĞI</div>
+          <div class="visual-mockup-box">
+            <div class="vm-offer-row">
+              <div>
+                <div style="font-size:0.7rem;color:#64748B;font-weight:700;">RESMİ ALICI TEKLİFİ</div>
+                <strong style="font-size:0.95rem;color:#0F172A;">6.600.000 ₺ (Peşin)</strong>
+              </div>
+              <span class="vm-approve-btn">Onayla ✓</span>
+            </div>
+            <div class="vm-chips-row" style="margin-top:6px;">
+              <span class="vm-chip-done">🟢 81 İl Paylaşıma Açık</span>
+            </div>
+          </div>
+          <h3>Dijital Teklif &amp; Hızlı Satış</h3>
+          <p>Teklifler tek tuşla onaylanır; 81 il danışman ağıyla satış hızlanır.</p>
+        </div>
+      </div>
+
+      <!-- 3 GÖRSEL DEĞER KARTI (MİNİMAL METİN + GÖRSEL ÖNİZLEME) -->
       <div class="trust-pillars-grid">
         <div class="trust-pillar-card">
-          <div class="pillar-icon-box">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
-              <circle cx="12" cy="13" r="3"/>
-            </svg>
+          <div class="pillar-visual-banner">
+            <span class="pv-tag">📸 Çapraz Filigran</span>
+            <span class="pv-tag">🚁 4K Drone</span>
+            <span class="pv-tag">🌐 360° Tur</span>
           </div>
-          <h3>Profesyonel Görsel &amp; Saha Hazırlığı</h3>
-          <p>Fotoğraf çekimi, drone, 360° sanal tur ve portal ilan yayınları kronolojik olarak kayıt altına alınır ve mülk sahibine bildirilir.</p>
+          <h3>Görsel Koruma &amp; Dijital Katalog</h3>
+          <p>Fotoğraflarınıza otomatik danışman filigranı basılır; alıcıya tek sayfa katalog sunulur.</p>
         </div>
 
         <div class="trust-pillar-card">
-          <div class="pillar-icon-box">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="20" x2="18" y2="10"/>
-              <line x1="12" y1="20" x2="12" y2="4"/>
-              <line x1="6" y1="20" x2="6" y2="14"/>
-            </svg>
+          <div class="pillar-visual-banner">
+            <span class="pv-tag">📊 Emsal Kıyaslama</span>
+            <span class="pv-tag">📄 A4 PDF Rapor</span>
           </div>
-          <h3>Veriye Dayalı Pazar &amp; Rakip Analizi</h3>
-          <p>Bölgedeki rakip ilanlar ve gerçekleşmiş emsal satışlarla hazırlanan fiyat analiz raporunu gerçek verilerle sunarsınız.</p>
+          <h3>Gerçek Rakip &amp; Pazar Analizi</h3>
+          <p>Bölgedeki rakip ilanlar ve saha yorumlarınızla mülk sahibine gerçek fiyatı gösterin.</p>
         </div>
 
         <div class="trust-pillar-card">
-          <div class="pillar-icon-box">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <path d="m9 12 2 2 4-4"/>
-            </svg>
+          <div class="pillar-visual-banner">
+            <span class="pv-tag">📝 8 Hazır Sözleşme</span>
+            <span class="pv-tag">✍️ Mobil İmza</span>
           </div>
-          <h3>Kayıtlı Yer Gösterimi &amp; Resmi Teklif</h3>
-          <p>Yer gösterim randevuları, görüntülenme istatistikleri ve gelen fiyat teklifleri şeffafça tek ekrandan yönetilir.</p>
+          <h3>Kayıtlı Gösterim &amp; Sözleşme</h3>
+          <p>Yer gösterme belgesi, yetki sözleşmesi ve resmi fiyat tekliflerini dijital yönetin.</p>
+        </div>
+      </div>
+
+      <!-- KOMPAKT SIKÇA SORULAN SORULAR (SSS — TEK TIKLA AÇILIR KISA CEVAPLAR) -->
+      <div class="visual-faq-section">
+        <div class="visual-section-header" style="margin-bottom:14px;">
+          <span class="modern-section-badge">SIKÇA SORULAN SORULAR</span>
+          <h2>Merak Edilenler</h2>
+        </div>
+        <div class="visual-faq-grid">
+          <details class="visual-faq-item">
+            <summary>Mülk sahibi veya alıcı takip kodunu sorgularken ücret öder mi?</summary>
+            <p>Hayır. Mülk sahipleri ve alıcılar üyelik açmadan, 12 haneli takip koduyla tamamen ücretsiz sorgulama yapar.</p>
+          </details>
+          <details class="visual-faq-item">
+            <summary>Mülk sahibinin telefon numarasını diğer emlakçılar görebilir mi?</summary>
+            <p>Asla göremez. Mülk sahibi bilgileri ve özel notlarınız yalnızca portföy sahibi danışmana özeldir ve şifrelenir.</p>
+          </details>
+          <details class="visual-faq-item">
+            <summary>Ücretsiz üyelikte kredi kartı veya süre sınırı var mı?</summary>
+            <p>Kredi kartı gerekmez. İlk 3 aktif portföyünüzü süre sınırı olmadan ücretsiz yönetebilirsiniz.</p>
+          </details>
+          <details class="visual-faq-item">
+            <summary>Kişisel web sitem (mulkizle.com/adiniz) nasıl oluşuyor?</summary>
+            <p>Pro pakette kayıt olduğunuz anda paylaşıma açık portföyleriniz ve blog yazılarınızla kişisel siteniz otomatik yayına girer.</p>
+          </details>
         </div>
       </div>
 
@@ -314,8 +416,8 @@
       <div class="modern-cta-banner">
         <div>
           <span class="modern-cta-eyebrow">GAYRİMENKUL DANIŞMANLARI &amp; OFİSLER İÇİN</span>
-          <h2>Portföylerinizi Şeffafça Yönetin, Paylaşım Ağıyla Daha Hızlı Satın</h2>
-          <p>İlk 3 aktif portföyünüz için kredi kartsız hemen ücretsiz başlayın; kişisel web siteniz ve 81 il danışman networküyle fark yaratın.</p>
+          <h2>İlk 3 Aktif Portföyünüzü Kredi Kartsız Ücretsiz Yönetin</h2>
+          <p>Hemen ücretsiz hesabınızı açın; 12 haneli takip kodu ve 81 il paylaşım ağıyla tanışın.</p>
         </div>
         <div class="modern-cta-actions">
           <button type="button" class="btn btn-outline" onclick="uyeGirisiTetikle()">
@@ -329,18 +431,18 @@
     </section>
 
     <!-- ======================================================================
-         NEDEN MÜLKİZLE? (DANIŞMAN • MÜLK SAHİBİ • ALICI FAYDALARI SAYFASI)
+         NEDEN MÜLKİZLE? (%70 GÖRSEL ANLATIM + MİNİ EKRAN MAKETLERİ + KISA MADDELER)
          ====================================================================== -->
     <section id="view-why-mulkizle" class="app-view">
       <div class="modern-section-hero">
-        <span class="modern-section-badge">NEDEN MÜLKİZLE? • ŞEFFAF SÜREÇ YÖNETİMİ</span>
-        <h1>Emlakçının Emeğini Görünür Kılan, Mülk Sahibinin Güvenini Kazandıran Yeni Nesil Şeffaflık Platformu</h1>
+        <span class="modern-section-badge">NEDEN MÜLKİZLE? • 3 TARAF İÇİN KAZANÇ</span>
+        <h1>Emeği Görünür Kılan, Satışı Hızlandıran Dijital Vitrin</h1>
         <p>
-          Mülk sahipleri <em>"Emlakçım ilanı koyduktan sonra mülküm için ne yapıyor?"</em> diye merak eder; danışmanlar ise arka planda harcadığı zamanı, bütçeyi ve emeği anlatmakta zorlanır. <strong>Mülkİzle</strong>, 12 haneli tek bir takip koduyla bu kopukluğu ortadan kaldırır ve paylaşımlı portföy ağıyla satış sürecini hızlandırır.
+          Uzun telefon trafikleri yerine 12 haneli tek bir kodla Danışman, Mülk Sahibi ve Alıcıyı şeffaf bir ekranda buluşturur.
         </p>
       </div>
 
-      <!-- 3 ANA TARAF İÇİN FAYDALAR (DANIŞMAN • MÜLK SAHİBİ • ALICI) -->
+      <!-- 3 ANA TARAF İÇİN GÖRSEL MAKETLİ & KISA MADDELİ KARTLAR -->
       <div class="modern-why-grid">
         <!-- 1. GAYRİMENKUL DANIŞMANLARI İÇİN -->
         <div class="modern-why-card accent-blue">
@@ -349,8 +451,20 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
             </div>
             <div>
-              <span class="saas-badge-blue">GAYRİMENKUL DANIŞMANLARI İÇİN</span>
-              <h2>Yetki Almayı Kolaylaştırır, Paylaşımla Satışı Hızlandırır</h2>
+              <span class="saas-badge-blue">1. DANIŞMANLAR İÇİN</span>
+              <h2>Kolay Yetki &amp; Hızlı Ortak Satış</h2>
+            </div>
+          </div>
+
+          <!-- Görsel Mini Maket -->
+          <div class="visual-mockup-box">
+            <div class="vm-code-row">
+              <span class="vm-pill-blue">🌐 mulkizle.com/adiniz</span>
+              <span class="vm-pill-green">🟢 Paylaşıma Açık</span>
+            </div>
+            <div class="vm-chips-row">
+              <span class="vm-chip-done">✓ Pazar Analizi PDF</span>
+              <span class="vm-chip-done">✓ Çapraz Filigran</span>
             </div>
           </div>
 
@@ -358,38 +472,37 @@
             <div class="modern-why-item">
               <span class="modern-check-circle blue">✓</span>
               <div>
-                <strong>Tek Yetki Sözleşmesi Almayı Kolaylaştırır</strong>
-                <p>Mülk sahibine <em>"Size 12 haneli bir Mülkİzle Takip Kodu vereceğim; yaptığım her çekimi, her reklamı ve gelen her teklifi kargo takip eder gibi canlı izleyeceksiniz"</em> dediğiniz anda güven kazanır ve yetkiyi alırsınız.</p>
+                <strong>Tek Yetki Almayı Kolaylaştırır</strong>
+                <p>Canlı takip kodu vaadiyle mülk sahibinden güvenle yetki alırsınız.</p>
               </div>
             </div>
             <div class="modern-why-item">
               <span class="modern-check-circle blue">✓</span>
               <div>
-                <strong>Emeğinizi ve Masrafınızı Somut Olarak Kanıtlar</strong>
-                <p>Yerinde keşif, drone çekimi, 360° sanal tur, afiş/branda, sosyal medya reklamı ve tapu kontrolü gibi arka planda yaptığınız tüm profesyonel adımları mülk sahibine adım adım gösterirsiniz.</p>
-              </div>
-            </div>
-            <div class="modern-why-item">
-              <span class="modern-check-circle blue">✓</span>
-              <div>
-                <strong>Mülk Sahibinize Gerçek Fiyatları Göz Önüne Sunun</strong>
-                <p>Mülk sahibinize gerçek fiyatları göz önüne sunun; bölgedeki rakip ilanları ve sahadaki gerçek yorumlarınızı şık bir <strong>Detaylı Pazar Analizi</strong> raporuyla sunarsınız.</p>
+                <strong>Mülk Sahibine Gerçek Fiyatları Sunun</strong>
+                <p>Bölgedeki rakip ilanları ve saha yorumlarınızı şık bir Pazar Analiziyle sunarsınız.</p>
               </div>
             </div>
             <div class="modern-why-item">
               <span class="modern-check-circle blue">✓</span>
               <div>
                 <strong>Paylaşım ile Daha Hızlı Satış İmkanı</strong>
-                <p>Türkiye genelinde portföyünüzü bütün üye danışmanlarla paylaşıma açık hale getirerek ve 81 il/ilçe/semt bazlı <strong>Arıyorum!</strong> ağındaki hazır alıcı talepleriyle eşleşerek çok daha hızlı satış yaparsınız.</p>
+                <p>Portföyünüzü Türkiye genelindeki üye danışmanlarla paylaşıma açarak hızlı satarsınız.</p>
               </div>
             </div>
             <div class="modern-why-item">
               <span class="modern-check-circle blue">✓</span>
               <div>
-                <strong>Otomatik Çapraz Filigran &amp; Kişisel Web Sitesi</strong>
-                <p>Yüklediğiniz tüm mülk fotoğraflarına adınız, telefonunuz ve takip kodunuz otomatik olarak basılır; kendi adınıza kurumsal dijital vitrininizi (<code>mulkizle.com/adiniz</code>) oluşturursunuz.</p>
+                <strong>Kişisel Web Sitesi &amp; Otomatik Filigran</strong>
+                <p>Fotoğraflarınız filigranla korunur, kişisel vitrininiz otomatik oluşur.</p>
               </div>
             </div>
+          </div>
+
+          <div class="modern-why-card-footer">
+            <button type="button" class="btn btn-primary btn-sm" style="width:100%;justify-content:center;" onclick="gorunumDegistir('view-membership')">
+              <span>Ücretsiz Danışman Hesabı Aç →</span>
+            </button>
           </div>
         </div>
 
@@ -400,8 +513,21 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/></svg>
             </div>
             <div>
-              <span class="saas-badge-neutral">MÜLK SAHİPLERİ (SATICILAR) İÇİN</span>
-              <h2>7/24 Canlı Süreç Takibi ve Tam Şeffaflık</h2>
+              <span class="saas-badge-neutral">2. MÜLK SAHİPLERİ İÇİN</span>
+              <h2>7/24 Canlı Süreç &amp; Fiyat Takibi</h2>
+            </div>
+          </div>
+
+          <!-- Görsel Mini Maket -->
+          <div class="visual-mockup-box">
+            <div class="vm-progress-head">
+              <span>9/9 Pazarlama Adımı</span>
+              <strong style="color:#16A34A;">%100 Aktif</strong>
+            </div>
+            <div class="vm-progress-track"><div class="vm-progress-fill" style="width:100%;background:#16A34A;"></div></div>
+            <div class="vm-mini-bar" style="margin-top:6px;">
+              <span>📊 Önerilen Emsal:</span>
+              <strong>6.50M – 6.85M ₺</strong>
             </div>
           </div>
 
@@ -410,30 +536,36 @@
               <span class="modern-check-circle navy">✓</span>
               <div>
                 <strong>"Emlakçım Ne Yapıyor?" Sorusuna Son</strong>
-                <p>Danışmanınızı telefonla arayıp sormaya gerek kalmadan, size özel 12 haneli takip kodunuzla mülkünüz için hangi pazarlama çalışmalarının tamamlandığını 7/24 canlı takip edersiniz.</p>
+                <p>12 haneli kodunuzla yapılan tüm çekim ve reklamları 7/24 canlı izlersiniz.</p>
               </div>
             </div>
             <div class="modern-why-item">
               <span class="modern-check-circle navy">✓</span>
               <div>
-                <strong>Bölgedeki Rakip İlanları ve Gerçek Piyasa Analizini Görün</strong>
-                <p>Mülkünüzün bulunduğu bölgedeki emsal satılık ilanları ve danışmanınızın her bir rakip ilan için yaptığı saha analizlerini tek ekranda inceleyerek doğru fiyat stratejisini görürsünüz.</p>
+                <strong>Rakip İlanları ve Gerçek Piyasayı Görün</strong>
+                <p>Bölgedeki emsal ilanları ve danışmanınızın saha analizlerini tek ekranda incelersiniz.</p>
               </div>
             </div>
             <div class="modern-why-item">
               <span class="modern-check-circle navy">✓</span>
               <div>
-                <strong>Resmi Teklifleri ve Yer Gösterimlerini Şeffafça Yönetin</strong>
-                <p>Mülkünüzü kaç ailenin gezdiğini, ilan görüntülenme istatistiklerini ve hangi alıcının ne kadar resmi fiyat teklifi verdiğini ekranınızdan görür; tek tuşla onaylar veya reddedersiniz.</p>
+                <strong>Teklif ve Gösterimleri Tek Tuşla Yönetin</strong>
+                <p>Mülkünüzü kaç ailenin gezdiğini ve gelen resmi teklifleri anında onaylarsınız.</p>
               </div>
             </div>
             <div class="modern-why-item">
               <span class="modern-check-circle navy">✓</span>
               <div>
-                <strong>Her Adıma Yorum ve Geri Bildirim Bırakın</strong>
-                <p>Danışmanınızın tamamladığı fotoğraf çekimi, sosyal medya videosu veya pazar analizi adımlarına doğrudan takip ekranınızdan yorum ve beğeni bırakarak sürece aktif katılırsınız.</p>
+                <strong>Her Adıma Yorum Bırakın</strong>
+                <p>Tamamlanan pazarlama adımlarına doğrudan ekranınızdan yorum yazarsınız.</p>
               </div>
             </div>
+          </div>
+
+          <div class="modern-why-card-footer">
+            <button type="button" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;" onclick="seciliKod='849201736410'; aktifTakipKoduGiris='849201736410'; gorunumDegistir('view-seller');">
+              <span>Örnek Satıcı Takip Ekranını Gör →</span>
+            </button>
           </div>
         </div>
 
@@ -444,8 +576,20 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </div>
             <div>
-              <span class="saas-badge-blue" style="background:#ECFDF5;color:#059669;border-color:#A7F3D0;">ALICILAR İÇİN</span>
-              <h2>Size Özel Tek Sayfa Dijital Mülk Kataloğu</h2>
+              <span class="saas-badge-emerald">3. ALICILAR İÇİN</span>
+              <h2>Tek Sayfa Özel Dijital Katalog</h2>
+            </div>
+          </div>
+
+          <!-- Görsel Mini Maket -->
+          <div class="visual-mockup-box">
+            <div class="vm-code-row">
+              <span class="vm-pill-blue">🏠 3+1 • 145 m²</span>
+              <span class="vm-pill-green">🌐 360° Sanal Tur</span>
+            </div>
+            <div class="vm-chips-row">
+              <span class="vm-chip-done">📸 HD Galeri</span>
+              <span class="vm-chip-done">📅 Randevu &amp; Teklif</span>
             </div>
           </div>
 
@@ -453,53 +597,72 @@
             <div class="modern-why-item">
               <span class="modern-check-circle emerald">✓</span>
               <div>
-                <strong>Size Özel Detaylı Katalog Halinde Tek Sayfada Görüntüleme</strong>
-                <p>Beğendiğiniz mülkü; karmaşık ilan siteleri ve reklamlar arasında kaybolmadan, size özel hazırlanmış detaylı bir dijital katalog halinde tek sayfada görüntüleyebilirsiniz.</p>
+                <strong>Tek Sayfada Detaylı Mülk Kataloğu</strong>
+                <p>Beğendiğiniz mülkü size özel detaylı katalog halinde tek sayfada görüntülersiniz.</p>
               </div>
             </div>
             <div class="modern-why-item">
               <span class="modern-check-circle emerald">✓</span>
               <div>
-                <strong>Yüksek Çözünürlüklü Galeri, Sosyal Medya &amp; 360° Tur</strong>
-                <p>Mülkün tüm teknik özellik künyesini, tam ekran fotoğraflarını, sosyal medya tanıtım videolarını ve 360° sanal turunu aynı sayfada inceleyebilirsiniz.</p>
+                <strong>HD Galeri, Sosyal Medya &amp; 360° Tur</strong>
+                <p>Tüm teknik özellikleri, videoları ve 360° sanal turu reklamsız incelersiniz.</p>
               </div>
             </div>
             <div class="modern-why-item">
               <span class="modern-check-circle emerald">✓</span>
               <div>
-                <strong>Doğrudan Dijital Teklif &amp; Yer Gösterim Randevusu</strong>
-                <p>İncelediğiniz mülk için sorumlu gayrimenkul danışmanına doğrudan resmi fiyat teklifi gönderebilir veya yer gösterim randevusu talep edebilirsiniz.</p>
+                <strong>Doğrudan Dijital Teklif &amp; Randevu</strong>
+                <p>Sorumlu danışmana tek tıkla resmi fiyat teklifi veya yer gösterim talebi iletirsiniz.</p>
               </div>
             </div>
+            <div class="modern-why-item">
+              <span class="modern-check-circle emerald">✓</span>
+              <div>
+                <strong>Şeffaf &amp; Doğrulanmış Portföy Künyesi</strong>
+                <p>Tapu, ısınma, kat ve site olanaklarını doğrulanmış katalog künyesinde görürsünüz.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="modern-why-card-footer">
+            <button type="button" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;" onclick="seciliKod='849201736410'; gorunumDegistir('view-buyer');">
+              <span>Örnek Alıcı Kataloğunu Gör →</span>
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- KLASİK YÖNTEM VS MÜLKİZLE KARŞILAŞTIRMA KARTI -->
+      <!-- GÖRSEL KARŞILAŞTIRMA KARTI (KLASİK VS MÜLKİZLE) -->
       <div class="modern-compare-card">
-        <h3>Klasik Emlak Süreci vs. Mülkİzle ile Dijital Süreç</h3>
+        <h3>Klasik Emlak Süreci vs. Mülkİzle Dijital Süreç</h3>
         <div class="modern-compare-grid">
           <div class="modern-compare-box negative">
-            <div class="modern-compare-title">❌ Klasik Yöntemde Yaşananlar</div>
-            <p>
-              <em>"İlanı portala koydum, arayan olursa haber veririm."</em> — Mülk sahibi yapılan çalışmaları göremez, fiyat analizinden habersiz kalır, iletişim kopar ve yetki sözleşmesi yenilenmez.
-            </p>
+            <div class="modern-compare-title">❌ Klasik Yöntem</div>
+            <div class="vm-chips-row" style="margin-bottom:8px;">
+              <span class="vm-chip-neg">Raporlama Yok</span>
+              <span class="vm-chip-neg">Fiyat Karmaşası</span>
+              <span class="vm-chip-neg">Yavaş Satış</span>
+            </div>
+            <p>Mülk sahibi yapılan çalışmaları göremez, iletişim kopar ve yetki yenilenmez.</p>
           </div>
           <div class="modern-compare-box positive">
-            <div class="modern-compare-title">✅ Mülkİzle ile Profesyonel Süreç</div>
-            <p>
-              <em>"12 haneli takip kodunuzla yaptığım tüm pazarlama adımlarını, rakip fiyat analizini ve gelen teklifleri canlı izleyin."</em> — Tam güven, şeffaf raporlama ve Türkiye geneli danışman paylaşım ağıyla hızlı satış.
-            </p>
+            <div class="modern-compare-title">✅ Mülkİzle Dijital Vitrin</div>
+            <div class="vm-chips-row" style="margin-bottom:8px;">
+              <span class="vm-chip-done">12 Haneli Canlı Kod</span>
+              <span class="vm-chip-done">Emsal Fiyat Raporu</span>
+              <span class="vm-chip-done">81 İl Paylaşım Ağı</span>
+            </div>
+            <p>Tam şeffaflık, PDF pazar analizi ve Türkiye geneli danışman ağıyla hızlı satış.</p>
           </div>
         </div>
         <div class="modern-compare-footer">
-          <span>İlk 3 aktif portföyünüz için kredi kartsız hemen ücretsiz başlayabilirsiniz.</span>
+          <span>İlk 3 aktif portföyünüz için kredi kartsız hemen ücretsiz başlayın.</span>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
             <button type="button" class="btn btn-outline btn-sm" onclick="gorunumDegistir('view-landing')">
               <span>Takip Kodu Sorgula</span>
             </button>
             <button type="button" class="btn btn-primary btn-sm" onclick="gorunumDegistir('view-membership')">
-              <span>Ücretsiz Üye Ol &amp; Paketleri Gör →</span>
+              <span>Ücretsiz Üye Ol →</span>
             </button>
           </div>
         </div>
@@ -507,14 +670,14 @@
     </section>
 
     <!-- ======================================================================
-         HİZMETLERİMİZ (PRO PAKETTE SUNULAN DİJİTAL HİZMETLER & ÖZELLİKLER)
+         HİZMETLERİMİZ (%70 GÖRSEL BENTO GRID + PAKET ROZETLERİ + MİNİ WIDGET)
          ====================================================================== -->
     <section id="view-services" class="app-view">
       <div class="modern-section-hero">
-        <span class="modern-section-badge">HİZMETLERİMİZ • MÜLKİZLE PRO DANIŞMAN EKOSİSTEMİ</span>
-        <h1>Mülkİzle Pro Pakette Gayrimenkul Danışmanlarına Sunulan Hizmetler</h1>
+        <span class="modern-section-badge">HİZMETLERİMİZ • DİJİTAL DANIŞMAN ARAÇLARI</span>
+        <h1>Portföy Alımından Tapu Devrine Tüm Dijital Araçlar Tek Ekranda</h1>
         <p>
-          Portföy alımından tapu devrine kadar bir gayrimenkul danışmanının ihtiyaç duyduğu kişisel web sitesi, 12 haneli canlı süreç takibi, Türkiye geneli danışman paylaşım ağı, pazar analizi ve online sözleşme araçlarının tamamı tek bir platformda sunulur.
+          Mülkİzle ekosisteminde sunduğumuz 6 temel dijital hizmeti ve canlı ekran önizlemelerini inceleyin.
         </p>
       </div>
 
@@ -525,12 +688,17 @@
             <div class="modern-service-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             </div>
-            <span class="modern-service-num">01</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="service-tier-pill free">ÜCRETSİZ (3) • PRO (SINIRSIZ)</span>
+              <span class="modern-service-num">01</span>
+            </div>
           </div>
-          <h3>Sınırsız Aktif Portföy &amp; 12 Haneli Mülk Takip Kodu</h3>
-          <p>
-            Her portföyünüz için mülk sahibine özel 12 haneli bir takip kodu üretirsiniz. Yerinde keşif, drone/360° çekim, ilan yayını ve afiş gibi yürüttüğünüz tüm pazarlama adımlarını mülk sahibine canlı olarak izletirsiniz.
-          </p>
+          <div class="visual-mockup-box compact">
+            <span class="vm-pill-blue">#849 201 736 410</span>
+            <span class="vm-chip-done">✓ 9/9 Adım Canlı</span>
+          </div>
+          <h3>12 Haneli Canlı Mülk Takip Kodu</h3>
+          <p>Keşif, drone/360° çekim ve ilan adımlarını mülk sahibine 7/24 canlı izletin.</p>
         </div>
 
         <!-- Hizmet 2 -->
@@ -539,12 +707,17 @@
             <div class="modern-service-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             </div>
-            <span class="modern-service-num">02</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="service-tier-pill pro">PRO PAKET</span>
+              <span class="modern-service-num">02</span>
+            </div>
+          </div>
+          <div class="visual-mockup-box compact">
+            <span class="vm-pill-blue">🌐 mulkizle.com/selin</span>
+            <span class="vm-chip-done">✓ Vitrin &amp; Blog</span>
           </div>
           <h3>Kişisel Web Sitesi (<code>mulkizle.com/adiniz</code>)</h3>
-          <p>
-            Kendi adınıza özel kişisel web siteniz otomatik oluşur. Paylaşıma açık aktif portföylerinizi, uzmanlık semtlerinizi, kazandığınız uzmanlık rozetlerini ve fotoğraflı bölge analizi / blog yazılarınızı tek linkle sosyal medya profillerinizde paylaşırsınız.
-          </p>
+          <p>Paylaşıma açık portföyleriniz, uzmanlık rozetleriniz ve blog yazılarınızla kişisel siteniz.</p>
         </div>
 
         <!-- Hizmet 3 -->
@@ -553,12 +726,17 @@
             <div class="modern-service-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
-            <span class="modern-service-num">03</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="service-tier-pill pro">PRO PAKET</span>
+              <span class="modern-service-num">03</span>
+            </div>
           </div>
-          <h3>Türkiye Geneli Danışman Networkü (Arıyorum! &amp; Özel Mesaj)</h3>
-          <p>
-            81 İl, İlçe, Semt ve Mahalle bazında alıcı arama talebi açabilir veya uzmanlık bölgenizde açılan taleplerden anında bildirim alırsınız. Paylaşıma açık aktif portföyünüzü tek tıkla talep açan meslektaşınızın özel mesaj kutusuna göndererek hızlı ortak satış yaparsınız.
-          </p>
+          <div class="visual-mockup-box compact">
+            <span class="vm-chip-done">📍 81 İl • İlçe • Semt</span>
+            <span class="vm-pill-green">📤 Portföy Gönder</span>
+          </div>
+          <h3>Türkiye Geneli Danışman Networkü (Arıyorum!)</h3>
+          <p>81 il/ilçe/semt bazlı alıcı taleplerine özel mesajla aktif portföyünüzü gönderin.</p>
         </div>
 
         <!-- Hizmet 4 -->
@@ -567,12 +745,17 @@
             <div class="modern-service-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
-            <span class="modern-service-num">04</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="service-tier-pill pro">PRO PAKET</span>
+              <span class="modern-service-num">04</span>
+            </div>
+          </div>
+          <div class="visual-mockup-box compact">
+            <span class="vm-chip-done">💰 6.600.000 ₺ Teklif</span>
+            <span class="vm-approve-btn">Onayla ✓</span>
           </div>
           <h3>Canlı Teklif Onayı &amp; Yer Gösterim Onayı</h3>
-          <p>
-            Alıcıların tek sayfalık dijital mülk kataloğu üzerinden gönderdiği resmi fiyat tekliflerini ve yer gösterim randevularını kayıt altına alır; mülk sahibinin kendi ekranından tek tuşla onaylamasını veya karşı teklif vermesini sağlarsınız.
-          </p>
+          <p>Alıcıların gönderdiği resmi teklifleri ve randevuları mülk sahibine tek tuşla onaylatın.</p>
         </div>
 
         <!-- Hizmet 5 -->
@@ -581,12 +764,17 @@
             <div class="modern-service-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </div>
-            <span class="modern-service-num">05</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="service-tier-pill free">TASLAKLAR ÜCRETSİZ • İMZA PRO</span>
+              <span class="modern-service-num">05</span>
+            </div>
           </div>
-          <h3>Online Sözleşme İmzalatma &amp; 8 Hazır Sözleşme Taslağı</h3>
-          <p>
-            Satış/Kiralama Yetki Belgesi, Alım-Satım Aracılık Sözleşmesi, Kira Kontratı, Tahliye Taahhütnamesi ve Dijital Yer Gösterme Belgesi dahil 8 hazır hukuki taslağı saniyeler içinde doldurur, mülk sahibine veya alıcıya mobil/online onaylatırsınız.
-          </p>
+          <div class="visual-mockup-box compact">
+            <span class="vm-chip-done">📄 8 Hukuki Şablon</span>
+            <span class="vm-pill-blue">✍️ Dijital İmza</span>
+          </div>
+          <h3>Online Sözleşme İmzalatma &amp; 8 Hazır Şablon</h3>
+          <p>Yetki belgesi, yer gösterme, kira ve satış sözleşmelerini dijital doldurup imzalatın.</p>
         </div>
 
         <!-- Hizmet 6 -->
@@ -595,20 +783,25 @@
             <div class="modern-service-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             </div>
-            <span class="modern-service-num">06</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="service-tier-pill free">ÜCRETSİZ + PRO</span>
+              <span class="modern-service-num">06</span>
+            </div>
           </div>
-          <h3>Detaylı Pazar Analizi, Çapraz Filigran &amp; Mülk Ajandam</h3>
-          <p>
-            Bölgedeki rakip ilanlarla karşılaştırmalı Pazar Analizi raporu hazırlar, fotoğraflarınızı adınız ve telefonunuz yazılı çapraz filigranla korur, Mülk Ajandam ile gün/tarih/saatli randevu ve hatırlatmalarınızı yönetirsiniz.
-          </p>
+          <div class="visual-mockup-box compact">
+            <span class="vm-chip-done">📊 Pazar Analizi PDF</span>
+            <span class="vm-chip-done">🛡️ Çapraz Filigran</span>
+          </div>
+          <h3>Detaylı Pazar Analizi, Filigran &amp; Mülk Ajandam</h3>
+          <p>Rakip ilanlarla A4 PDF pazar analizi üretin, fotoğrafları filigranla koruyun.</p>
         </div>
       </div>
 
       <div class="modern-cta-banner">
         <div>
           <span class="modern-cta-eyebrow">MÜLKİZLE PRO EKOSİSTEMİ</span>
-          <h2>Tüm Pro Hizmetleri Hemen Deneyimleyin</h2>
-          <p>Ücretsiz başlangıç paketiyle hemen kayıt olabilir veya Pro Danışman paketiyle tüm özellikleri sınırsız açabilirsiniz.</p>
+          <h2>Tüm Dijital Hizmetleri Hemen Deneyimleyin</h2>
+          <p>İlk 3 portföyünüz için ücretsiz başlayın veya Pro paketle tüm özellikleri sınırsız açın.</p>
         </div>
         <div class="modern-cta-actions">
           <button type="button" class="btn btn-outline" onclick="uyeGirisiTetikle()">
@@ -622,66 +815,100 @@
     </section>
 
     <!-- ======================================================================
-         BİZ KİMİZ? (KURUMSAL HAKKIMIZDA & VİZYON SAYFASI)
+         BİZ KİMİZ? (%70 GÖRSEL KURUMSAL GÜVEN, KVKK, TÜRKPATENT & İLETİŞİM SAYFASI)
          ====================================================================== -->
     <section id="view-about" class="app-view">
-      <div class="saas-card">
-        <h1 class="saas-h1" style="margin-bottom:8px;">
-          Gayrimenkul Danışmanlarının Profesyonel Emeğini Görünür Kılan Şeffaf Süreç Platformu
-        </h1>
-        <p class="saas-text-sm" style="margin-bottom:24px;">
-          mülkizle.com, gayrimenkul pazarlama sürecindeki tapu incelemesi, fotoğraf/drone çekimi, rakip fiyat analizi ve yer gösterimlerini adım adım izlenebilir hale getirir.
+      <div class="modern-section-hero">
+        <span class="modern-section-badge">BİZ KİMİZ? • KURUMSAL VİZYON &amp; VERİ GÜVENLİĞİ</span>
+        <h1>Gayrimenkul Danışmanlarının Dijital Vitrini ve Şeffaf Süreç Altyapısı</h1>
+        <p>
+          <strong>mülkizle.com</strong>, Türkiye'deki gayrimenkul danışmanlarının sahadaki profesyonel emeğini görünür kılmak, mülk sahiplerine 7/24 şeffaf takip sunmak ve danışmanlar arası güvenli paylaşım ağı oluşturmak için geliştirilmiş yerli PropTech SaaS platformudur.
         </p>
+      </div>
 
-        <div class="trust-pillars-grid" style="margin-bottom:24px;">
-          <div class="trust-pillar-card" style="background:#F8FAFC;">
-            <h3>Danışman Operasyonunu Tekilleştirir</h3>
-            <p>Pazar analizi, çapraz filigranlı fotoğraf koruma, 8 hazır sözleşme şablonu ve mülk günlüğünü tek ekranda toplar.</p>
-          </div>
-          <div class="trust-pillar-card" style="background:#F8FAFC;">
-            <h3>Satıcı İçin Tam Şeffaflık Sağlar</h3>
-            <p>Mülkün aşaması, rakip fiyat analizleri, ilan istatistikleri, randevular ve teklifler 12 haneli takip koduyla izlenir.</p>
-          </div>
-          <div class="trust-pillar-card" style="background:#F8FAFC;">
-            <h3>Alıcı İçin Doğrulanmış Dijital Sunum</h3>
-            <p>Alıcılar filigranlı görselleri ve 360° sanal turu inceler; doğrudan danışman kontrolünde randevu veya teklif iletir.</p>
-          </div>
+      <!-- 4'LÜ GÖRSEL KURUMSAL GÜVEN VE UYUMLULUK KARTLARI -->
+      <div class="about-trust-grid">
+        <div class="about-trust-card">
+          <div class="about-trust-icon blue">🔒</div>
+          <span class="vm-pill-blue">6698 SAYILI KVKK &amp; SSL</span>
+          <h3>%100 Müşteri &amp; Telefon Gizliliği</h3>
+          <p>Mülk sahibi telefon numaralarınız ve özel saha notlarınız şifrelenir; diğer danışmanlarla veya üçüncü kişilerle asla paylaşılmaz.</p>
         </div>
 
-        <div style="display:flex;flex-wrap:wrap;gap:8px;">
-          <button type="button" class="saas-btn-primary-sm" onclick="gorunumDegistir('view-landing')">
-            <span>Mülk Takip Kodu Sorgula</span>
-          </button>
-          <button type="button" class="saas-btn-outline-sm" onclick="gorunumDegistir('view-membership')">
-            <span>Danışman Üyelik Paketleri</span>
+        <div class="about-trust-card">
+          <div class="about-trust-icon green">📲</div>
+          <span class="vm-pill-green">KAPALI DEVRE TAKİP</span>
+          <h3>SMS Doğrulamalı Özel Ekran</h3>
+          <p>12 haneli mülk takip ekranı dışarıya kapalıdır; yalnızca danışmanın tanımladığı mülk sahibi telefonuna gelen SMS koduyla açılır.</p>
+        </div>
+
+        <div class="about-trust-card">
+          <div class="about-trust-icon navy">🛡️</div>
+          <span class="vm-chip-done">TÜRKPATENT &amp; FİLİGRAN</span>
+          <h3>Marka &amp; Görsel Telif Koruması</h3>
+          <p>Yüklediğiniz her mülk fotoğrafına danışman adınız, telefonunuz ve takip numaranız otomatik çapraz filigran olarak işlenir.</p>
+        </div>
+
+        <div class="about-trust-card">
+          <div class="about-trust-icon amber">🤝</div>
+          <span class="vm-chip-done">81 İL DANIŞMAN AĞI</span>
+          <h3>EİDS &amp; Sektörel Standartlara Uyum</h3>
+          <p>Yetki sözleşmesi, yer gösterme belgesi ve şeffaf pazar analizi raporlarıyla modern gayrimenkul mevzuatına tam uyumludur.</p>
+        </div>
+      </div>
+
+      <!-- KURUMSAL İLETİŞİM & DESTEK KARTI -->
+      <div class="about-contact-strip">
+        <div>
+          <span class="saas-badge-blue" style="margin-bottom:6px;display:inline-flex;">KURUMSAL İLETİŞİM &amp; DESTEK</span>
+          <h3 style="font-size:1.15rem;font-weight:800;color:#0F172A;margin:0 0 4px;">Sorularınız ve Kurumsal Ofis / Broker Çözümleri İçin Yanınızdayız</h3>
+          <p class="saas-text-sm" style="margin:0;">Bireysel danışmanlık, takım veya 25+ kullanıcılı kurumsal ofis entegrasyonları için bize ulaşabilirsiniz.</p>
+        </div>
+        <div class="about-contact-pills">
+          <a href="mailto:destek@mulkizle.com" class="about-contact-pill">
+            <span>✉️ destek@mulkizle.com</span>
+          </a>
+          <a href="https://wa.me/?text=Merhaba%2C%20m%C3%BClkizle.com%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="about-contact-pill whatsapp">
+            <span>💬 WhatsApp Kurumsal Destek</span>
+          </a>
+          <button type="button" class="btn btn-primary btn-sm" onclick="gorunumDegistir('view-membership')">
+            <span>Üyelik Paketlerini İncele →</span>
           </button>
         </div>
       </div>
     </section>
 
     <!-- ======================================================================
-         ÜYE OL & DANIŞMAN PAKETLERİ SAYFASI (1. ADIM: PAKET SEÇİMİ)
+         ÜYE OL & DANIŞMAN PAKETLERİ SAYFASI (1. ADIM: %70 GÖRSEL PAKET SEÇİMİ)
          ====================================================================== -->
     <section id="view-membership" class="app-view">
-      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;margin-bottom:20px;">
-        <div>
-          <span class="saas-badge-blue" style="margin-bottom:6px;display:inline-flex;">ADIM 1 / 2 • PAKET SEÇİMİ</span>
-          <h1 class="saas-h1">Gayrimenkul Danışmanı Üyelik Paketleri</h1>
-          <p class="saas-text-sm">Size uygun üyelik paketini seçin; bir sonraki sayfada danışman / ofis üyelik formunuzu tamamlayın.</p>
+      <div class="modern-section-hero" style="padding:26px 28px;margin-bottom:20px;">
+        <div class="visual-step-indicator">
+          <span class="v-step-pill active">1. Paket Seçimi</span>
+          <span class="v-step-arrow">→</span>
+          <span class="v-step-pill">2. Danışman / Ofis Üyelik Formu</span>
         </div>
+        <h1 style="font-size:1.75rem;margin-bottom:6px;">Size Uygun Üyelik Paketini Seçin</h1>
+        <p style="font-size:0.9rem;margin-bottom:12px;">
+          Paketinizi seçtiğinizde bir sonraki sayfada danışman / ofis üyelik formunuz açılır.
+        </p>
         <button type="button" class="saas-btn-outline-sm" onclick="uyeGirisiTetikle()">
-          <span>Mevcut Hesabım Var / Üye Girişi</span>
+          <span>Mevcut Hesabım Var / Üye Girişi →</span>
         </button>
       </div>
 
       <!-- 5 ÖDEME PLANI YAN YANA (ÜCRETSİZ • PRO • TAKIM LİDERİ • BROKER • KURUMSAL 25+) -->
-      <div class="pricing-grid-five-side" style="display:grid;grid-template-columns:repeat(5, minmax(0, 1fr));gap:12px;margin-top:18px;align-items:stretch;">
+      <div class="pricing-grid-five-side" style="display:grid;grid-template-columns:repeat(5, minmax(0, 1fr));gap:12px;margin-top:14px;align-items:stretch;">
         <!-- 1. Ücretsiz Üyelik -->
-        <div class="price-card" style="padding:16px 14px;">
+        <div class="price-card" style="padding:18px 14px;">
           <div>
-            <span class="pill-badge" style="margin-bottom:6px;font-size:0.65rem;">BAŞLANGIÇ</span>
+            <div class="price-visual-top">
+              <span class="price-visual-icon">🌱</span>
+              <span class="pill-badge" style="margin:0;font-size:0.64rem;">BAŞLANGIÇ</span>
+            </div>
             <h3 style="font-size:1.05rem;font-weight:800;">Ücretsiz üyelik</h3>
             <div class="price-amount" style="font-size:1.55rem;margin:6px 0;">0 ₺ <small>/ 3 portföy</small></div>
+            <div class="price-visual-quota-chip">👤 1 Kullanıcı • 3 Aktif Portföy</div>
             <ul class="feature-list" style="font-size:0.78rem;margin:10px 0 14px;">
               <li><strong>1 Kullanıcı • 3 Aktif Portföy</strong></li>
               <li>Mülk takip kodu oluşturma</li>
@@ -692,21 +919,25 @@
               <li>Genel Sözleşme taslakları</li>
             </ul>
           </div>
-          <button type="button" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;font-size:0.76rem;padding:8px 10px;" onclick="paketSecVeFormaOdaklan('ucretsiz')">
+          <button type="button" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;font-size:0.76rem;padding:9px 10px;" onclick="paketSecVeFormaOdaklan('ucretsiz')">
             Ücretsiz Başla →
           </button>
         </div>
 
         <!-- 2. Pro Paket (799 TL) -->
-        <div class="price-card featured" style="padding:16px 14px;">
+        <div class="price-card featured" style="padding:18px 14px;">
           <span class="popular-tag" style="font-size:0.62rem;padding:3px 9px;">EN ÇOK TERCİH EDİLEN</span>
           <div>
-            <span class="pill-badge" style="margin-bottom:6px;font-size:0.65rem;">BİREYSEL PRO</span>
+            <div class="price-visual-top">
+              <span class="price-visual-icon blue">💎</span>
+              <span class="pill-badge" style="margin:0;font-size:0.64rem;">BİREYSEL PRO</span>
+            </div>
             <h3 style="font-size:1.05rem;font-weight:800;">Pro</h3>
             <div style="display:flex;align-items:baseline;gap:6px;margin:6px 0;">
               <div class="price-amount" style="font-size:1.55rem;margin:0;">799 ₺ <small>/ ay</small></div>
               <span style="font-size:0.74rem;color:var(--text-muted);text-decoration:line-through;font-weight:700;">1.290 ₺</span>
             </div>
+            <div class="price-visual-quota-chip blue">🚀 1 Kullanıcı • Sınırsız Portföy</div>
             <ul class="feature-list" style="font-size:0.78rem;margin:10px 0 14px;">
               <li><strong>1 Kullanıcı • Sınırsız Aktif Portföy</strong></li>
               <li>Kişisel Web Sitesi</li>
@@ -715,19 +946,23 @@
               <li>Online Sözleşme imzalatma</li>
             </ul>
           </div>
-          <button type="button" class="btn btn-primary btn-sm" style="width:100%;justify-content:center;font-size:0.76rem;padding:8px 10px;" onclick="paketSecVeFormaOdaklan('pro')">
+          <button type="button" class="btn btn-primary btn-sm" style="width:100%;justify-content:center;font-size:0.76rem;padding:9px 10px;" onclick="paketSecVeFormaOdaklan('pro')">
             Pro Paketi Seç →
           </button>
         </div>
 
         <!-- 3. Takım Lideri Paketi (5 Kullanıcı) -->
-        <div class="price-card" style="padding:16px 14px;">
+        <div class="price-card" style="padding:18px 14px;">
           <div>
-            <span class="pill-badge" style="margin-bottom:6px;font-size:0.65rem;">5 KULLANICIYA KADAR</span>
+            <div class="price-visual-top">
+              <span class="price-visual-icon">👥</span>
+              <span class="pill-badge" style="margin:0;font-size:0.64rem;">5 KULLANICIYA KADAR</span>
+            </div>
             <h3 style="font-size:1.05rem;font-weight:800;">Takım Lideri Paketi</h3>
             <div style="display:flex;align-items:baseline;gap:6px;margin:6px 0;">
               <div class="price-amount" style="font-size:1.55rem;margin:0;">2.999 ₺ <small>/ ay</small></div>
             </div>
+            <div class="price-visual-quota-chip">👥 5 Kullanıcı • Sınırsız Portföy</div>
             <ul class="feature-list" style="font-size:0.78rem;margin:10px 0 14px;">
               <li><strong>5 Kullanıcı • Sınırsız Aktif Portföy</strong></li>
               <li>Her Danışmana Özel Kişisel Web Sitesi</li>
@@ -736,19 +971,23 @@
               <li>Canlı Teklif, Yer Gösterim &amp; Online Sözleşme</li>
             </ul>
           </div>
-          <button type="button" class="btn btn-indigo btn-sm" style="width:100%;justify-content:center;font-size:0.76rem;padding:8px 10px;" onclick="paketSecVeFormaOdaklan('takim')">
+          <button type="button" class="btn btn-indigo btn-sm" style="width:100%;justify-content:center;font-size:0.76rem;padding:9px 10px;" onclick="paketSecVeFormaOdaklan('takim')">
             Takım Paketi Seç →
           </button>
         </div>
 
         <!-- 4. Broker / Ofis Paketi (25 Kullanıcı) -->
-        <div class="price-card" style="padding:16px 14px;">
+        <div class="price-card" style="padding:18px 14px;">
           <div>
-            <span class="pill-badge" style="margin-bottom:6px;font-size:0.65rem;">25 KULLANICIYA KADAR</span>
+            <div class="price-visual-top">
+              <span class="price-visual-icon">🏢</span>
+              <span class="pill-badge" style="margin:0;font-size:0.64rem;">25 KULLANICIYA KADAR</span>
+            </div>
             <h3 style="font-size:1.05rem;font-weight:800;">Broker / Ofis Paketi</h3>
             <div style="display:flex;align-items:baseline;gap:6px;margin:6px 0;">
               <div class="price-amount" style="font-size:1.55rem;margin:0;">11.999 ₺ <small>/ ay</small></div>
             </div>
+            <div class="price-visual-quota-chip">🏢 25 Kullanıcı • Sınırsız Portföy</div>
             <ul class="feature-list" style="font-size:0.78rem;margin:10px 0 14px;">
               <li><strong>25 Kullanıcı • Sınırsız Aktif Portföy</strong></li>
               <li>25 Danışmana Özel Kişisel Web Sitesi</li>
@@ -757,17 +996,21 @@
               <li>Canlı Teklif, Yer Gösterim &amp; Online Sözleşme</li>
             </ul>
           </div>
-          <button type="button" class="btn btn-accent btn-sm" style="width:100%;justify-content:center;font-size:0.76rem;padding:8px 10px;" onclick="paketSecVeFormaOdaklan('broker')">
+          <button type="button" class="btn btn-accent btn-sm" style="width:100%;justify-content:center;font-size:0.76rem;padding:9px 10px;" onclick="paketSecVeFormaOdaklan('broker')">
             Broker Paketi Seç →
           </button>
         </div>
 
         <!-- 5. Kurumsal & Şube Paketi (25+ Kullanıcı) -->
-        <div class="price-card" style="padding:16px 14px;background:var(--bg-page);">
+        <div class="price-card" style="padding:18px 14px;background:var(--bg-page);">
           <div>
-            <span class="pill-badge" style="margin-bottom:6px;font-size:0.65rem;background:var(--navy-900);color:#fff;border-color:var(--navy-900);">25+ KULLANICI</span>
+            <div class="price-visual-top">
+              <span class="price-visual-icon">🌐</span>
+              <span class="pill-badge" style="margin:0;font-size:0.64rem;background:var(--navy-900);color:#fff;border-color:var(--navy-900);">25+ KULLANICI</span>
+            </div>
             <h3 style="font-size:1.05rem;font-weight:800;">Kurumsal &amp; Şube</h3>
             <div class="price-amount" style="font-size:1.45rem;margin:6px 0;">Görüşelim</div>
+            <div class="price-visual-quota-chip">🌐 25+ Danışman • Çoklu Şube</div>
             <ul class="feature-list" style="font-size:0.78rem;margin:10px 0 14px;">
               <li><strong>25+ Danışman • Çoklu Şube</strong></li>
               <li>Özel Alan Adı &amp; Kurumsal API Çözümü</li>
@@ -781,7 +1024,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="btn btn-outline btn-sm"
-            style="width:100%;justify-content:center;font-size:0.76rem;padding:8px 10px;"
+            style="width:100%;justify-content:center;font-size:0.76rem;padding:9px 10px;"
           >
             25+ İçin Görüşelim →
           </a>
@@ -793,21 +1036,31 @@
          YENİ DANIŞMAN / OFİS ÜYELİK FORMU SAYFASI (2. ADIM: PAKET SEÇİMİNDEN SONRA AYRI SAYFADA AÇILIR)
          ====================================================================== -->
     <section id="view-membership-form" class="app-view">
-      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;margin-bottom:20px;">
-        <div>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
-            <span class="saas-badge-blue">ADIM 2 / 2 • HESAP BİLGİLERİ</span>
-            <span class="saas-badge-neutral" id="selectedPlanSummaryBadge">Seçilen Paket: Ücretsiz Başlangıç (0 ₺)</span>
-          </div>
-          <h1 class="saas-h1">Yeni Danışman / Ofis Üyelik Formu</h1>
-          <p class="saas-text-sm">Seçtiğiniz paket ile danışman hesabınızı hemen oluşturun veya Google hesabınızla hızlı kayıt olun.</p>
+      <div class="modern-section-hero" style="padding:22px 26px;margin-bottom:18px;">
+        <div class="visual-step-indicator">
+          <button type="button" class="v-step-pill done" onclick="gorunumDegistir('view-membership')" style="cursor:pointer;">✓ 1. Paket Seçildi</button>
+          <span class="v-step-arrow">→</span>
+          <span class="v-step-pill active">2. Danışman / Ofis Üyelik Formu</span>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <h1 style="font-size:1.6rem;margin-bottom:4px;">Yeni Danışman / Ofis Üyelik Formu</h1>
+        <p style="font-size:0.86rem;margin-bottom:0;">Bilgilerinizi tamamlayın veya Google hesabınızla tek tıkla kaydınızı oluşturun.</p>
+      </div>
+
+      <!-- SEÇİLEN PAKET GÖRSEL ÖZET BARI -->
+      <div class="selected-plan-visual-bar" id="selectedPlanVisualBanner">
+        <div class="spv-left">
+          <span class="spv-icon" id="selectedPlanIcon">🌱</span>
+          <div>
+            <div class="spv-label">SEÇİLEN BAŞLANGIÇ PAKETİ</div>
+            <strong class="spv-title" id="selectedPlanSummaryBadge">Ücretsiz Başlangıç (0 ₺ / 3 Aktif Portföy)</strong>
+          </div>
+        </div>
+        <div class="spv-right">
           <button type="button" class="saas-btn-outline-sm" onclick="gorunumDegistir('view-membership')">
-            <span>← Paket Seçimine Geri Dön</span>
+            <span>← Paketi Değiştir</span>
           </button>
           <button type="button" class="saas-btn-outline-sm" onclick="uyeGirisiTetikle()">
-            <span>Mevcut Hesabım Var / Üye Girişi</span>
+            <span>Üye Girişi</span>
           </button>
         </div>
       </div>
@@ -816,8 +1069,8 @@
       <div class="saas-card" id="membershipRegisterCard" style="margin-bottom:24px;">
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid #E2E8F0;margin-bottom:16px;">
           <div>
-            <h2 class="saas-h2">Yeni Danışman / Ofis Üyelik Formu</h2>
-            <div class="saas-text-xs">İlk 3 portföyünüzü kredi kartsız ücretsiz yönetebilirsiniz.</div>
+            <h2 class="saas-h2">Danışman &amp; Ofis Bilgileri</h2>
+            <div class="saas-text-xs">Telefon numaranız fotoğraflardaki çapraz filigran ve SMS bildirimleri için kullanılır.</div>
           </div>
 
           <button
@@ -840,30 +1093,45 @@
           <div class="form-grid-3">
             <div class="field">
               <label>Adınız Soyadınız *</label>
-              <input type="text" id="regFullName" placeholder="Örn: Gencay Çelikkan" required />
+              <input type="text" id="regFullName" placeholder="Adınız Soyadınız" required />
             </div>
             <div class="field">
               <label>Çalıştığınız Firma / Gayrimenkul Ofisi *</label>
-              <input type="text" id="regCompany" placeholder="Örn: RE/MAX, Coldwell Banker, KW veya Ofis Adınız" required />
+              <input type="text" id="regCompany" placeholder="Firma veya Gayrimenkul Ofisi Adı" required />
             </div>
             <div class="field">
-              <label>Cep Telefonu Numaranız (Filigran &amp; SMS İçin) *</label>
-              <input type="text" id="regPhone" placeholder="Örn: 0532 000 00 00" required />
+              <label>Vergi Kimlik Numarası *</label>
+              <input type="text" id="regTaxNumber" maxlength="11" inputmode="numeric" placeholder="Vergi Kimlik Numarası" required />
             </div>
           </div>
 
           <div class="form-grid-3">
             <div class="field">
+              <label>Cep Telefonu Numaranız (Filigran &amp; SMS İçin) *</label>
+              <input type="text" id="regPhone" placeholder="05XX XXX XX XX" required />
+            </div>
+            <div class="field">
               <label>E-Posta Adresiniz *</label>
-              <input type="email" id="regEmail" placeholder="ornek@emlakofisi.com" required />
+              <input type="email" id="regEmail" placeholder="E-posta adresiniz" required />
             </div>
             <div class="field">
               <label>Şifreniz *</label>
               <input type="password" id="regPassword" placeholder="En az 6 karakter şifre belirleyin" required />
             </div>
+          </div>
+
+          <div class="form-grid-3">
             <div class="field">
-              <label>Çalıştığınız İl &amp; İlçe (Co-Op Ağı İçin)</label>
-              <input type="text" id="regCityDistrict" placeholder="Örn: Ankara / Çankaya veya Antalya / Konyaaltı" />
+              <label>Çalıştığınız İl *</label>
+              <select id="regCitySelect" onchange="uyelikFormuIlDegisti()"></select>
+            </div>
+            <div class="field">
+              <label>Çalıştığınız İlçe *</label>
+              <select id="regDistrictSelect" onchange="uyelikFormuIlceDegisti()"></select>
+            </div>
+            <div class="field">
+              <label>Çalıştığınız Mahalle *</label>
+              <select id="regNeighborhoodSelect"></select>
             </div>
           </div>
 
@@ -878,26 +1146,73 @@
               </select>
             </div>
             <div class="field">
-              <label>Referans / Eğitmen / Influencer Kodu (Varsa %20 İndirim Sağlar)</label>
+              <label>İndirim Kodu</label>
               <div style="display:flex;gap:8px;">
                 <input
                   type="text"
                   id="regReferralCode"
-                  placeholder="Örn: GENCAY20, BARIS20, SERIF20 (Opsiyonel)"
-                  style="text-transform:uppercase;font-weight:800;"
+                  placeholder="İndirim kodu ekle"
+                  style="text-transform:uppercase;font-weight:700;"
                   oninput="referansKoduKontrolEt()"
                 />
                 <button type="button" class="btn btn-indigo btn-sm" onclick="referansKoduKontrolEt(true)">
                   Kodu Uygula
                 </button>
               </div>
-              <small id="regReferralFeedback" style="display:block;margin-top:4px;font-size:0.75rem;color:var(--text-muted);font-weight:700;">
-                Davet veya iş birliği kodunuz varsa girdiğinizde paket ücretinize anında %20 indirim tanımlanır.
-              </small>
+              <small id="regReferralFeedback" style="display:none;margin-top:4px;font-size:0.75rem;color:#15803D;font-weight:700;"></small>
             </div>
           </div>
 
-          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:10px;">
+          <!-- WHATSAPP DOĞRULAMA KODU & BEN ROBOT DEĞİLİM (ÜYE OLMA FORMU) -->
+          <div class="form-grid-2" style="align-items:stretch;margin-top:8px;">
+            <div class="wa-otp-box">
+              <div class="wa-otp-top">
+                <span class="wa-otp-badge">💬 WHATSAPP DOĞRULAMA</span>
+                <button type="button" class="wa-send-code-btn" onclick="uyelikWhatsappKoduGonder()">
+                  <span>WhatsApp Kodu Gönder</span>
+                </button>
+              </div>
+              <div class="wa-otp-input-row">
+                <input
+                  type="text"
+                  id="regWhatsappOtpInput"
+                  maxlength="6"
+                  placeholder="6 Haneli WhatsApp Kodu"
+                  class="wa-otp-input"
+                />
+                <span class="wa-otp-status" id="regWhatsappOtpHint">Telefonunuza WhatsApp'tan kod gönderin</span>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:8px;justify-content:space-between;">
+              <!-- KVKK OKUDUM ANLADIM KUTUCUĞU (TIKLAYINCA POP-UP AÇILIR, SONUNA KADAR SCROLL YAPINCA AKTİF OLUR) -->
+              <div class="kvkk-trigger-box" id="regKvkkTriggerBox" onclick="kvkkKutucukTiklandi(event)">
+                <div class="not-robot-left">
+                  <input type="checkbox" id="regKvkkCheck" class="not-robot-checkbox" />
+                  <span class="not-robot-custom-check" id="regKvkkCustomCheck"></span>
+                  <span class="not-robot-label" style="font-size:0.8rem;">
+                    <strong style="color:#2563EB;text-decoration:underline;">KVKK Aydınlatma Metni ve Veri Taahhütnamesi</strong>'ni okudum, anladım
+                  </span>
+                </div>
+                <span class="kvkk-status-pill" id="regKvkkStatusPill">Metni Oku →</span>
+              </div>
+
+              <!-- BEN ROBOT DEĞİLİM KUTUCUĞU -->
+              <label class="not-robot-box" for="regNotRobotCheck" style="width:100%;">
+                <div class="not-robot-left">
+                  <input type="checkbox" id="regNotRobotCheck" class="not-robot-checkbox" />
+                  <span class="not-robot-custom-check"></span>
+                  <span class="not-robot-label">Ben robot değilim</span>
+                </div>
+                <div class="not-robot-brand">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                  <span>Mülkİzle Shield</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px;">
             <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px 22px;">
               Yeni Hesabımı Oluştur &amp; Danışman Paneline Giriş Yap →
             </button>
@@ -928,7 +1243,7 @@
           <div>
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
               <h2 class="saas-h2" style="margin:0;">Aktif Portföylerim</h2>
-              <span class="saas-badge-blue" id="quotaStatusText">2 / 3 Ücretsiz İş Kullanıldı</span>
+              <span class="saas-badge-blue" id="quotaStatusText">Aktif Portföy Sayacı: 2 / 3</span>
             </div>
             <div class="saas-text-xs" style="margin-top:2px;">Detaylarını, mülk günlüğünü ve süreç adımlarını yönetmek istediğiniz portföy satırına tıklayın.</div>
           </div>
@@ -939,6 +1254,43 @@
 
         <!-- Yatay Akordeon Portföy Satırları Listesi -->
         <div id="portfolioListSidebar" class="hb-portfolio-accordion-stack"></div>
+
+        <!-- %100 ANONİM BÖLGE & DAİRE ÖZELLİKLERİ EMSAL İSTATİSTİK TABLOSU (SADECE ADMİN PANELİNE ÖZEL — HİÇBİR ÜYE GÖRMEZ) -->
+        <details class="saas-card" id="anonimBolgeEmsalTabloCard" style="display:none;margin-top:18px;padding:14px 18px;background:#F8FAFC;">
+          <summary style="cursor:pointer;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;list-style:none;">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <span style="font-size:0.95rem;font-weight:800;color:#0F172A;">📊 Anonim Bölge &amp; Mülk Özellikleri Kapanış İstatistik Tablosu</span>
+              <span class="saas-badge-blue" id="anonimEmsalCountBadge">0 Kayıt</span>
+              <span style="font-size:0.7rem;font-weight:700;background:#DCFCE7;color:#166534;padding:2px 8px;border-radius:999px;">🔒 KVKK Md. 28/1-b Kimliksiz Veri</span>
+            </div>
+            <span style="font-size:0.76rem;font-weight:700;color:#2563EB;">Tabloyu Aç / Gizle ▾</span>
+          </summary>
+
+          <div style="margin-top:12px;">
+            <div class="saas-text-xs" style="margin-bottom:10px;color:#475569;">
+              Kapanan/silinen portföylerden <strong>Danışman, Vergi No, Mülk Sahibi, Takip Kodu ve Ada/Parsel bilgileri tamamen kazınarak</strong> yalnızca mülk özellikleriyle oluşturulan anonim piyasa veri tablosudur. (İleride <em>Detaylı Pazar Analizi</em> ve <em>Arıyorum!</em> modüllerinde bölge referansı olarak kullanılabilir.)
+            </div>
+
+            <div style="overflow-x:auto;border:1px solid #E2E8F0;border-radius:10px;background:#FFFFFF;">
+              <table style="width:100%;border-collapse:collapse;font-size:0.77rem;text-align:left;">
+                <thead>
+                  <tr style="background:#F1F5F9;color:#334155;border-bottom:1px solid #E2E8F0;">
+                    <th style="padding:9px 10px;font-weight:800;">Dönem</th>
+                    <th style="padding:9px 10px;font-weight:800;">Bölge (İl / İlçe / Mahalle)</th>
+                    <th style="padding:9px 10px;font-weight:800;">Kategori &amp; Tip</th>
+                    <th style="padding:9px 10px;font-weight:800;">Oda / İmar</th>
+                    <th style="padding:9px 10px;font-weight:800;">Alan Bandı</th>
+                    <th style="padding:9px 10px;font-weight:800;">Kat &amp; Bina Yaşı</th>
+                    <th style="padding:9px 10px;font-weight:800;">Isıtma / Cephe &amp; Olanaklar</th>
+                    <th style="padding:9px 10px;font-weight:800;">Sonuç &amp; Pazarlık</th>
+                    <th style="padding:9px 10px;font-weight:800;">Kapanış Bandı / ₺/m²</th>
+                  </tr>
+                </thead>
+                <tbody id="anonimBolgeEmsalTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </details>
 
         <!-- Açılan Portföyün İçine Otomatik Yerleşen Çalışma Alanı (DOM Taşıyıcı) -->
         <div id="portfolioWorkspaceStage" style="display:none;">
@@ -1203,9 +1555,51 @@
             </div>
 
             <!-- ==============================================================
-                 MÜLK SEKMESİ 03: TEKLİFLER & YER GÖSTERİMLERİ
+                 MÜLK SEKMESİ 04: TEKİL ALICI MÜLK TAKİP KODLARI, TEKLİFLER & YER GÖSTERİMLERİ
                  ============================================================== -->
             <div id="sub-offers" class="sub-panel">
+              <!-- BÖLÜM 0: HER ALICIYA AYRI TEKİL 12 HANELİ MÜLK TAKİP KODU ÜRETME & TAKİP KARTLARI -->
+              <div style="background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:12px;padding:16px;margin-bottom:20px;">
+                <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;">
+                  <div>
+                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                      <h4 style="font-size:0.96rem;font-weight:800;color:#0F172A;margin:0;">🔑 Tekil Alıcı Mülk Takip Kodları (Her Alıcıya Özel Ayrı Kod)</h4>
+                      <span class="saas-badge-blue" id="agentBuyerCodesCountBadge">0 Alıcı Kodu</span>
+                    </div>
+                    <div class="saas-text-xs" style="margin-top:2px;color:#334155;">
+                      Aynı portföy için her alıcı adayına <strong>farklı 12 haneli takip kodu</strong> üretilir. Portföy satıldığında veya kapatıldığında buradaki tüm alıcılar otomatik olarak <strong>"Potansiyel Alıcılarım"</strong> havuzunuza aktarılır.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-grid-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:10px;">
+                  <div class="field" style="margin-bottom:0;">
+                    <label>Alıcı Adı Soyadı *</label>
+                    <input type="text" id="newBuyerCodeName" placeholder="Örn: Zeynep Kaya" style="background:#FFFFFF;" />
+                  </div>
+                  <div class="field" style="margin-bottom:0;">
+                    <label>Alıcı Cep Telefonu (SMS / WhatsApp) *</label>
+                    <input type="text" id="newBuyerCodePhone" placeholder="0533 210 90 80" style="background:#FFFFFF;" />
+                  </div>
+                  <div class="field" style="margin-bottom:0;">
+                    <label>Alıcı Bütçesi &amp; Ödeme Tipi</label>
+                    <input type="text" id="newBuyerCodeBudget" placeholder="Örn: 6.750.000 ₺ (Nakit + Kredi)" style="background:#FFFFFF;" />
+                  </div>
+                  <div class="field" style="margin-bottom:0;">
+                    <label>Aradığı Özellik / Tercih Notu</label>
+                    <input type="text" id="newBuyerCodePref" placeholder="Örn: 3+1 Güney cephe, site içi" style="background:#FFFFFF;" />
+                  </div>
+                </div>
+
+                <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px;">
+                  <button type="button" class="btn btn-primary btn-sm" onclick="yeniTekilAliciTakipKoduOlustur()">
+                    <span>+ Bu Alıcıya Özel 12 Haneli Mülk Takip Kodu Üret</span>
+                  </button>
+                </div>
+
+                <div id="agentBuyerCodesList" class="diary-list"></div>
+              </div>
+
               <div style="background:var(--bg-page);border:1px solid var(--border-color);border-radius:12px;padding:16px;margin-bottom:20px;">
                 <h4 style="font-size:0.94rem;font-weight:800;margin-bottom:10px;">Yeni Fiyat Teklifi Ekle (Satıcı Onayına Gönder)</h4>
                 <div class="form-grid-3">
@@ -1624,6 +2018,13 @@
       <div id="mode-notifications" class="agent-mode-section">
         <div id="agentNotificationsContainer"></div>
       </div>
+
+      <!-- ====================================================================
+           ANA MODÜL 7: POTANSİYEL ALICILARIM HAVUZU (SATILAN/KAPANAN PORTFÖYLERDEN AKTARILAN ALICILAR)
+           ==================================================================== -->
+      <div id="mode-potential-buyers" class="agent-mode-section">
+        <div id="agentPotentialBuyersContainer"></div>
+      </div>
     </section>
 
     <!-- ======================================================================
@@ -1657,30 +2058,47 @@
                 <span class="pill-badge" style="margin-bottom:4px;">YENİ ARAMA TALEBİ • 81 İL / İLÇE / SEMT / MAHALLE</span>
                 <h4 style="font-size:1.05rem;font-weight:800;color:var(--navy-900);margin:0;">Alıcım İçin Yeni Arama Talebi Aç</h4>
                 <p style="font-size:0.79rem;color:var(--text-body);margin-top:3px;">
-                  Seçtiğiniz <strong>İl, İlçe, Semt (Bölge) ve Mahalleyi</strong> uzmanlık alanı olarak kaydetmiş tüm gayrimenkul danışmanlarına anında <strong>Bildirim</strong> düşer. Elinde uygun portföyü olan danışmanlar <strong>"Aktif Portföyümü Gönder"</strong> diyerek doğrudan sizin <strong>Mesaj Kutunuza</strong> portföylerini iletir.
+                  Önce aradığınız mülk kategorisini (<strong>Konut</strong> veya <strong>İmarlı Arsa</strong>) ve konumu seçin; o bölgedeki uzman danışmanlara anında bildirim düşsün.
                 </p>
               </div>
               <button type="button" class="saas-btn-outline-sm" onclick="ariyorumYeniTalepFormuToggle(false)">✕ Kapat</button>
             </div>
 
+            <!-- KATEGORİ SEÇİMİ: KONUT ARIYORUM | İMARLI ARSA ARIYORUM | TARLA / BAĞ / BAHÇE ARIYORUM -->
+            <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+              <button type="button" id="bcCatBtnKonut" class="np-chip-btn selected" style="flex:1;justify-content:center;padding:10px 14px;font-size:0.84rem;" onclick="ariyorumKategoriSec('konut')">
+                <span>🏠 Konut Arıyorum</span>
+                <span class="np-chip-check">✓</span>
+              </button>
+              <button type="button" id="bcCatBtnArsa" class="np-chip-btn" style="flex:1;justify-content:center;padding:10px 14px;font-size:0.84rem;" onclick="ariyorumKategoriSec('arsa')">
+                <span>🗺️ İmarlı Arsa Arıyorum</span>
+                <span class="np-chip-check">✓</span>
+              </button>
+              <button type="button" id="bcCatBtnTarla" class="np-chip-btn" style="flex:1;justify-content:center;padding:10px 14px;font-size:0.84rem;" onclick="ariyorumKategoriSec('tarla')">
+                <span>🌾 Tarla / Bağ / Bahçe Arıyorum</span>
+                <span class="np-chip-check">✓</span>
+              </button>
+            </div>
+
+            <!-- 1. ADIM: EN BAŞTA İL • İLÇE • SEMT • MAHALLE + ADA / PARSEL -->
             <div class="form-grid-2">
               <div class="field">
-                <label>Aranan İl (81 İl)</label>
+                <label>Aranan İl (81 İl) *</label>
                 <select id="bcCity" onchange="aliciCoopIlDegisti()"></select>
               </div>
               <div class="field">
-                <label>Aranan İlçe</label>
+                <label>Aranan İlçe *</label>
                 <select id="bcDistrict" onchange="aliciCoopIlceDegisti()"></select>
               </div>
             </div>
 
             <div class="form-grid-2">
               <div class="field">
-                <label>Aranan Semt / Bölge (Örn: Çayyolu, Bağlıca, Bahçelievler)</label>
+                <label>Aranan Semt / Bölge</label>
                 <select id="bcSemt" onchange="aliciCoopSemtDegisti()"></select>
               </div>
               <div class="field">
-                <label>Aranan Mahalle (Semt Geneli veya Tekil Mahalle)</label>
+                <label>Aranan Mahalle *</label>
                 <select id="bcNeighborhood" onchange="aliciCoopMahalleDegisti()"></select>
                 <input
                   type="text"
@@ -1693,68 +2111,317 @@
 
             <div class="form-grid-3">
               <div class="field">
-                <label>Alıcının Fiyat / Bütçe Aralığı</label>
+                <label>Ada No (İsteğe Bağlı)</label>
+                <input type="text" id="bcAdaNo" placeholder="Örn: 4821" inputmode="numeric" />
+              </div>
+              <div class="field">
+                <label>Parsel No (İsteğe Bağlı)</label>
+                <input type="text" id="bcParselNo" placeholder="Örn: 12" inputmode="numeric" />
+              </div>
+              <div class="field">
+                <label>Alıcının Fiyat / Bütçe Aralığı *</label>
                 <input type="text" id="bcPriceRange" value="5.000.000 ₺ - 6.000.000 ₺" placeholder="Örn: 5.000.000 ₺ - 6.000.000 ₺" />
-              </div>
-              <div class="field">
-                <label>Oda Sayısı</label>
-                <select id="bcRooms">
-                  <option value="3+1" selected>3+1 Daire</option>
-                  <option value="2+1">2+1 Daire</option>
-                  <option value="1+1">1+1 Daire</option>
-                  <option value="4+1 / Dubleks">4+1 / Dubleks</option>
-                  <option value="Müstakil Villa">Müstakil Villa</option>
-                  <option value="Ticari / İşyeri / Arsa">Ticari / İşyeri / Arsa</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>Kat Tercihi</label>
-                <select id="bcFloor">
-                  <option value="Ara Kat" selected>Ara Kat</option>
-                  <option value="Bahçe Katı / Giriş">Bahçe Katı / Giriş</option>
-                  <option value="Üst Katlar / Manzaralı">Üst Katlar / Manzaralı</option>
-                  <option value="Kat Fark Etmez">Kat Fark Etmez</option>
-                </select>
               </div>
             </div>
 
-            <div class="form-grid-3">
-              <div class="field">
-                <label>Cephe &amp; Bina Yaşı</label>
-                <div style="display:flex;gap:6px;">
-                  <select id="bcFacade" style="flex:1;">
-                    <option value="Güney - Doğu Cephe" selected>Güney-Doğu</option>
-                    <option value="Güney - Batı Cephe">Güney-Batı</option>
-                    <option value="Cephe Fark Etmez">Fark Etmez</option>
-                  </select>
-                  <select id="bcBuildingAge" style="flex:1;">
-                    <option value="5-10 Yaş Arası" selected>5-10 Yaş</option>
-                    <option value="0-5 Yaş (Sıfır/Yeni)">0-5 Yaş</option>
-                    <option value="10-15 Yaş Arası">10-15 Yaş</option>
+            <!-- A) KONUT ARAMA ÖZELLİKLERİ -->
+            <div id="bcKonutFieldsWrap">
+              <div class="form-grid-3">
+                <div class="field">
+                  <label>Oda Sayısı</label>
+                  <select id="bcRooms">
+                    <option value="3+1" selected>3+1 Daire</option>
+                    <option value="2+1">2+1 Daire</option>
+                    <option value="1+1">1+1 Daire</option>
+                    <option value="4+1 / Dubleks">4+1 / Dubleks</option>
+                    <option value="Müstakil Villa">Müstakil Villa</option>
                   </select>
                 </div>
-              </div>
-              <div class="field">
-                <label>Krediye Uygunluk &amp; Kredi Limiti</label>
-                <select id="bcCredit">
-                  <option value="Krediye Uygun (Kredi Limiti: 3.000.000 ₺)" selected>Krediye Uygun (Kredi Limiti: 3 Milyon ₺)</option>
-                  <option value="Krediye Uygun (Kredi Limiti: 2.000.000 ₺)">Krediye Uygun (Kredi Limiti: 2 Milyon ₺)</option>
-                  <option value="Tamamı Peşin / Nakit Alıcı">Tamamı Peşin / Nakit Alıcı</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>Kök Tapu &amp; Alım Zamanı</label>
-                <div style="display:flex;gap:6px;">
-                  <select id="bcDeed" style="flex:1;">
-                    <option value="Kök Tapulu (Kat Mülkiyetli)" selected>Kök Tapulu</option>
-                    <option value="Kat İrtifaklı (İskanlı)">Kat İrtifaklı</option>
-                    <option value="Tapu Türü Fark Etmez">Fark Etmez</option>
+                <div class="field">
+                  <label>Kat Tercihi</label>
+                  <select id="bcFloor">
+                    <option value="Ara Kat" selected>Ara Kat</option>
+                    <option value="Bahçe Katı / Giriş">Bahçe Katı / Giriş</option>
+                    <option value="Üst Katlar / Manzaralı">Üst Katlar / Manzaralı</option>
+                    <option value="Kat Fark Etmez">Kat Fark Etmez</option>
                   </select>
-                  <select id="bcTimeline" style="flex:1;">
-                    <option value="Hemen Almak İstiyor" selected>Hemen Alacak</option>
-                    <option value="3 Ay İçinde">3 Ay İçinde</option>
-                    <option value="3 - 6 Ay İçinde">3-6 Ay</option>
+                </div>
+                <div class="field">
+                  <label>Cephe &amp; Bina Yaşı</label>
+                  <div style="display:flex;gap:6px;">
+                    <select id="bcFacade" style="flex:1;">
+                      <option value="Güney - Doğu Cephe" selected>Güney-Doğu</option>
+                      <option value="Güney - Batı Cephe">Güney-Batı</option>
+                      <option value="Cephe Fark Etmez">Fark Etmez</option>
+                    </select>
+                    <select id="bcBuildingAge" style="flex:1;">
+                      <option value="5-10 Yaş Arası" selected>5-10 Yaş</option>
+                      <option value="0-5 Yaş (Sıfır/Yeni)">0-5 Yaş</option>
+                      <option value="10-15 Yaş Arası">10-15 Yaş</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="field">
+                  <label>Krediye Uygunluk &amp; Kredi Limiti</label>
+                  <select id="bcCredit">
+                    <option value="Krediye Uygun (Kredi Limiti: 3.000.000 ₺)" selected>Krediye Uygun (Kredi Limiti: 3 Milyon ₺)</option>
+                    <option value="Krediye Uygun (Kredi Limiti: 2.000.000 ₺)">Krediye Uygun (Kredi Limiti: 2 Milyon ₺)</option>
+                    <option value="Tamamı Peşin / Nakit Alıcı">Tamamı Peşin / Nakit Alıcı</option>
                   </select>
+                </div>
+                <div class="field">
+                  <label>Kök Tapu &amp; Alım Zamanı</label>
+                  <div style="display:flex;gap:6px;">
+                    <select id="bcDeed" style="flex:1;">
+                      <option value="Kök Tapulu (Kat Mülkiyetli)" selected>Kök Tapulu</option>
+                      <option value="Kat İrtifaklı (İskanlı)">Kat İrtifaklı</option>
+                      <option value="Tapu Türü Fark Etmez">Fark Etmez</option>
+                    </select>
+                    <select id="bcTimeline" style="flex:1;">
+                      <option value="Hemen Almak İstiyor" selected>Hemen Alacak</option>
+                      <option value="3 Ay İçinde">3 Ay İçinde</option>
+                      <option value="3 - 6 Ay İçinde">3-6 Ay</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- B) İMARLI ARSA ARAMA ÖZELLİKLERİ (EKRAN GÖRÜNTÜSÜ 1 & 2 İLE BİREBİR) -->
+            <div id="bcArsaFieldsWrap" style="display:none;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;padding:16px;margin-bottom:14px;">
+              <div style="font-size:0.9rem;font-weight:800;color:#0F172A;margin-bottom:12px;">
+                🗺️ Arsa İmar Bilgileri &amp; Ek Özellikleri
+              </div>
+
+              <div class="form-grid-2">
+                <div class="np-field-group">
+                  <label class="np-field-label">İmar Tipi <span class="req-star">*</span></label>
+                  <div class="np-chip-list" data-group="bcArsaImarTipi" data-multi="false">
+                    <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Konut</span><span class="np-chip-check">✓</span></button>
+                    <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Konut + Ticari</span><span class="np-chip-check">✓</span></button>
+                    <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Villa Parseli</span><span class="np-chip-check">✓</span></button>
+                    <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Köyiçi</span><span class="np-chip-check">✓</span></button>
+                    <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Ticari İmarlı</span><span class="np-chip-check">✓</span></button>
+                  </div>
+                </div>
+
+                <div class="np-field-group">
+                  <label class="np-field-label">Hisseli Tapu <span class="req-star">*</span></label>
+                  <div class="np-chip-list" data-group="bcArsaHisseliTapu" data-multi="false">
+                    <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Hayır</span><span class="np-chip-check">✓</span></button>
+                    <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Evet</span><span class="np-chip-check">✓</span></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-grid-3" style="margin-top:6px;">
+                <div class="np-field-group">
+                  <label class="np-field-label">Alanı (m²) <span class="req-star">*</span></label>
+                  <div class="np-num-stepper">
+                    <input type="number" id="bcArsaAlan" value="500" />
+                    <div class="np-num-stepper-btns">
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcArsaAlan', -50, 50, 0)">−</button>
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcArsaAlan', 50, 50, 0)">+</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="np-field-group">
+                  <label class="np-field-label">Hmax (m) <span class="req-star">*</span> <span class="hint-sub">(- ve/veya - Kat İzni)</span></label>
+                  <div class="np-num-stepper">
+                    <input type="text" id="bcArsaHmax" value="15,5" />
+                    <span style="font-size:0.72rem;color:#64748B;font-weight:700;padding:0 6px;cursor:pointer;" onclick="document.getElementById('bcArsaHmax').value='Serbest'">Serbest</span>
+                    <div class="np-num-stepper-btns">
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcArsaHmax', -0.5, 3, 1)">−</button>
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcArsaHmax', 0.5, 3, 1)">+</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="np-field-group">
+                  <label class="np-field-label">Maksimum Kat İzni</label>
+                  <div class="np-num-stepper">
+                    <input type="number" id="bcArsaMaxKat" value="5" />
+                    <div class="np-num-stepper-btns">
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcArsaMaxKat', -1, 1, 0)">−</button>
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcArsaMaxKat', 1, 1, 0)">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="np-field-group">
+                  <label class="np-field-label">TAKS</label>
+                  <div class="np-num-stepper">
+                    <input type="text" id="bcArsaTaks" value="0,4" />
+                    <div class="np-num-stepper-btns">
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcArsaTaks', -0.05, 0.05, 2)">−</button>
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcArsaTaks', 0.05, 0.05, 2)">+</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="np-field-group">
+                  <label class="np-field-label">KAKS (Emsal) <span class="req-star">*</span></label>
+                  <div class="np-num-stepper">
+                    <input type="text" id="bcArsaKaks" value="2" />
+                    <div class="np-num-stepper-btns">
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcArsaKaks', -0.1, 0.1, 2)">−</button>
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcArsaKaks', 0.1, 0.1, 2)">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="np-field-group">
+                <label class="np-field-label">Yapılaşma Durumu <span class="req-star">*</span></label>
+                <div class="np-chip-list" data-group="bcArsaYapilasma" data-multi="false">
+                  <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Boş</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Üzerinde Kullanılan Yapı Var</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Üzerinde Metruk Yapı Var</span><span class="np-chip-check">✓</span></button>
+                </div>
+              </div>
+
+              <div class="np-field-group">
+                <label class="np-field-label">Olanaklar <span class="hint-sub">(Birden fazla seçenek işaretleyebilirsiniz)</span></label>
+                <div class="np-chip-list" data-group="bcArsaOlanaklar" data-multi="true">
+                  <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Elektrik</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Su</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Yolu Açık</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Köşe Parsel</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>İfraz Görmüş</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Denize Sıfır</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Denize Yakın</span><span class="np-chip-check">✓</span></button>
+                </div>
+              </div>
+
+              <div class="np-field-group" style="margin-bottom:0;">
+                <label class="np-field-label">Manzara <span class="hint-sub">(Birden fazla seçenek işaretleyebilirsiniz)</span></label>
+                <div class="np-chip-list" data-group="bcArsaManzara" data-multi="true">
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Şehir</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Doğa</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Göl</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Deniz</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Boğaz</span><span class="np-chip-check">✓</span></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- C) TARLA, BAĞ, BAHÇE (İMARSIZ ARAZİ) ARAMA ÖZELLİKLERİ (EKRAN GÖRÜNTÜSÜ 1 & 2 İLE BİREBİR) -->
+            <div id="bcTarlaFieldsWrap" style="display:none;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;padding:16px;margin-bottom:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+                <div style="font-size:0.9rem;font-weight:800;color:#0F172A;">
+                  🌾 Tarla, Bağ, Bahçe Özellikleri &amp; Ek Olanaklar
+                </div>
+                <button type="button" class="saas-btn-outline-sm" onclick="ariyorumKategoriSec('arsa')" style="font-size:0.72rem;">
+                  İmarlı arsa aramak için tıklayın →
+                </button>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="np-field-group">
+                  <label class="np-field-label">Arazi Tipi <span class="req-star">*</span></label>
+                  <div class="np-chip-list" data-group="bcTarlaAraziTipi" data-multi="false">
+                    <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Tarla</span><span class="np-chip-check">✓</span></button>
+                    <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Bağ, Bahçe</span><span class="np-chip-check">✓</span></button>
+                    <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Zeytinlik</span><span class="np-chip-check">✓</span></button>
+                  </div>
+                </div>
+
+                <div class="np-field-group">
+                  <label class="np-field-label">Hisseli Tapu <span class="req-star">*</span></label>
+                  <div class="np-chip-list" data-group="bcTarlaHisseliTapu" data-multi="false">
+                    <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Hayır</span><span class="np-chip-check">✓</span></button>
+                    <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Evet</span><span class="np-chip-check">✓</span></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="np-field-group">
+                  <label class="np-field-label">Alanı (m²) <span class="req-star">*</span></label>
+                  <div class="np-num-stepper">
+                    <input type="number" id="bcTarlaAlan" value="5000" placeholder="Alanı" />
+                    <div class="np-num-stepper-btns">
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcTarlaAlan', -250, 10, 0)">−</button>
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcTarlaAlan', 250, 10, 0)">+</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="np-field-group">
+                  <label class="np-field-label">Eğimi</label>
+                  <div class="np-chip-list" data-group="bcTarlaEgim" data-multi="false">
+                    <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Düz Arazi (%0-3)</span><span class="np-chip-check">✓</span></button>
+                    <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Az Eğimli (%4-15)</span><span class="np-chip-check">✓</span></button>
+                    <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Eğimli (%15+)</span><span class="np-chip-check">✓</span></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-grid-3">
+                <div class="np-field-group">
+                  <label class="np-field-label">Asfalt Yola Uzaklık (km)</label>
+                  <div class="np-num-stepper">
+                    <input type="text" id="bcTarlaAsfaltUzaklik" value="0,5" />
+                    <div class="np-num-stepper-btns">
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcTarlaAsfaltUzaklik', -0.1, 0, 2)">−</button>
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcTarlaAsfaltUzaklik', 0.1, 0, 2)">+</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="np-field-group">
+                  <label class="np-field-label">Yerleşim Yerine Uzaklık (km)</label>
+                  <div class="np-num-stepper">
+                    <input type="text" id="bcTarlaYerlesimUzaklik" value="1,5" />
+                    <div class="np-num-stepper-btns">
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcTarlaYerlesimUzaklik', -0.5, 0, 1)">−</button>
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcTarlaYerlesimUzaklik', 0.5, 0, 1)">+</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="np-field-group">
+                  <label class="np-field-label">Su Kaynağına Uzaklık (km)</label>
+                  <div class="np-num-stepper">
+                    <input type="text" id="bcTarlaSuUzaklik" value="" placeholder="Su Kaynağına Uzaklık" />
+                    <div class="np-num-stepper-btns">
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcTarlaSuUzaklik', -0.2, 0, 1)">−</button>
+                      <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('bcTarlaSuUzaklik', 0.2, 0, 1)">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="np-field-group">
+                <label class="np-field-label">Olanaklar <span class="hint-sub">(Birden fazla seçenek işaretleyebilirsiniz)</span></label>
+                <div class="np-chip-list" data-group="bcTarlaOlanaklar" data-multi="true">
+                  <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Elektrik</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Su</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Yolu Açık</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Doğalgaz</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Telefon</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Kanalizasyon</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Zemin Etüdü</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Yola Yakın</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Denize Sıfır</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Denize Yakın</span><span class="np-chip-check">✓</span></button>
+                </div>
+              </div>
+
+              <div class="np-field-group" style="margin-bottom:0;">
+                <label class="np-field-label">Manzara <span class="hint-sub">(Birden fazla seçenek işaretleyebilirsiniz)</span></label>
+                <div class="np-chip-list" data-group="bcTarlaManzara" data-multi="true">
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Şehir</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Doğa</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Göl</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Deniz</span><span class="np-chip-check">✓</span></button>
+                  <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Boğaz</span><span class="np-chip-check">✓</span></button>
                 </div>
               </div>
             </div>
@@ -1955,16 +2622,16 @@
             </p>
 
             <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid #E2E8F0;">
-              <button type="button" class="saas-btn-primary-sm" onclick="mobilUygulamaSekmeSec('field')">
+              <button type="button" id="mQuickBtn-field" class="saas-btn-primary-sm" onclick="mobilUygulamaSekmeSec('field')">
                 <span>1. Saha &amp; Mülk Günlüğü</span>
               </button>
-              <button type="button" class="saas-btn-outline-sm" onclick="mobilUygulamaSekmeSec('camera')">
+              <button type="button" id="mQuickBtn-camera" class="saas-btn-outline-sm" onclick="mobilUygulamaSekmeSec('camera')">
                 <span>2. Filigranlı Kamera</span>
               </button>
-              <button type="button" class="saas-btn-outline-sm" onclick="mobilUygulamaSekmeSec('sign')">
+              <button type="button" id="mQuickBtn-sign" class="saas-btn-outline-sm" onclick="mobilUygulamaSekmeSec('sign')">
                 <span>3. Parmakla Yer Gösterme İmzası</span>
               </button>
-              <button type="button" class="saas-btn-outline-sm" onclick="mobilUygulamaSekmeSec('seller')">
+              <button type="button" id="mQuickBtn-seller" class="saas-btn-outline-sm" onclick="mobilUygulamaSekmeSec('seller')">
                 <span>4. Satıcı Push Bildirim</span>
               </button>
             </div>
@@ -2021,6 +2688,65 @@
 
   </main>
 
+  <!-- GLOBAL KURUMSAL FOOTER (VİTRİN VE TANITIM SAYFALARININ ALTINDA GÖRÜNÜR) -->
+  <footer class="site-footer" id="publicSiteFooter">
+    <div class="container">
+      <div class="site-footer-grid">
+        <div class="site-footer-brand">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <svg width="30" height="30" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="27" cy="27" r="19" stroke="#2563EB" stroke-width="5.5" fill="#FFFFFF" />
+              <path d="M41 41L56 56" stroke="#2563EB" stroke-width="7.5" stroke-linecap="round" />
+              <path d="M27 15L15 25.5H18.5V36.5H24.5V29.5H29.5V36.5H35.5V25.5H39L27 15Z" fill="#0F172A" />
+            </svg>
+            <span style="font-size:1.25rem;font-weight:800;color:#0F172A;letter-spacing:-0.03em;">mülk<span style="color:#2563EB;">izle</span>.com</span>
+          </div>
+          <p class="saas-text-xs" style="max-width:300px;line-height:1.55;margin-bottom:10px;">
+            Profesyonel danışmanların dijital vitrini. 12 haneli canlı portföy takip kodu, pazar analizi ve 81 il danışman paylaşım ağı.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <span class="vm-pill-blue">🔒 256-Bit SSL &amp; KVKK</span>
+            <span class="vm-pill-green">📲 SMS Doğrulamalı</span>
+          </div>
+        </div>
+
+        <div class="site-footer-col">
+          <h4>Vitrin &amp; Platform</h4>
+          <button type="button" onclick="gorunumDegistir('view-landing')">Ana Sayfa &amp; Kod Sorgula</button>
+          <button type="button" onclick="gorunumDegistir('view-why-mulkizle')">Neden Mülkİzle?</button>
+          <button type="button" onclick="gorunumDegistir('view-services')">Hizmetlerimiz</button>
+          <button type="button" onclick="gorunumDegistir('view-mobile-app')">Mobil Saha Uygulaması</button>
+          <button type="button" onclick="gorunumDegistir('view-about')">Biz Kimiz?</button>
+        </div>
+
+        <div class="site-footer-col">
+          <h4>Danışman &amp; Paketler</h4>
+          <button type="button" onclick="gorunumDegistir('view-membership')">Üyelik Paketleri (5 Plan)</button>
+          <button type="button" onclick="paketSecVeFormaOdaklan('ucretsiz')">Ücretsiz Üyelik Başlat</button>
+          <button type="button" onclick="paketSecVeFormaOdaklan('pro')">Pro Danışman Paketi</button>
+          <button type="button" onclick="uyeGirisiTetikle()">Danışman Üye Girişi</button>
+        </div>
+
+        <div class="site-footer-col">
+          <h4>Canlı Örnek Ekranlar</h4>
+          <button type="button" onclick="seciliKod='849201736410'; aktifTakipKoduGiris='849201736410'; gorunumDegistir('view-seller');">Örnek Satıcı Takip Ekranı</button>
+          <button type="button" onclick="seciliKod='849201736410'; gorunumDegistir('view-buyer');">Örnek Alıcı Dijital Kataloğu</button>
+          <button type="button" onclick="profilGoruntuleyenModu='guest'; incelenenWebSitesiDanismanId='selin-yilmaz'; gorunumDegistir('view-agent-profile');">Örnek Kişisel Web Sitesi</button>
+          <a href="mailto:destek@mulkizle.com">destek@mulkizle.com</a>
+        </div>
+      </div>
+
+      <div class="site-footer-bottom">
+        <span>© 2026 mülkizle.com — Tüm Hakları Saklıdır.</span>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <button type="button" onclick="kvkkModalAc()" style="border:none;background:none;color:#2563EB;font-weight:700;font-size:0.76rem;cursor:pointer;text-decoration:underline;padding:0;">KVKK Aydınlatma Metni</button>
+          <span>Gizlilik &amp; Çerez Politikası</span>
+          <span>Kullanıcı Sözleşmesi</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
   <!-- 12 HANELİ TAKİP KODU & TANIMLI TELEFON NUMARASI + SMS DOĞRULAMA MODALI -->
   <div class="paywall-backdrop" id="trackVerifyModal" onclick="if(event.target === this) dogrulamaModalKapat()">
     <div class="paywall-modal" style="max-width:480px;">
@@ -2039,13 +2765,14 @@
       </div>
 
       <div class="field">
-        <label>Telefonunuza Gelen 4 Haneli SMS Onay Kodu</label>
-        <div style="display:flex;gap:8px;">
-          <input type="text" id="verifyOtpInput" value="4829" placeholder="Örn: 4829" style="font-weight:800;font-size:0.96rem;letter-spacing:0.12em;" />
-          <button type="button" class="btn btn-indigo btn-sm" onclick="alert('📲 Tanımlı telefon numaranıza tek kullanımlık SMS onay kodu (4829) gönderildi.')">
-            SMS Kodu Gönder
+        <label>WhatsApp / SMS Onay Kodu</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input type="text" id="verifyOtpInput" value="4829" placeholder="Örn: 4829" style="flex:1;min-width:120px;font-weight:800;font-size:0.96rem;letter-spacing:0.12em;" />
+          <button type="button" class="wa-send-code-btn" onclick="takipKoduWhatsappOnayGonder()">
+            <span>💬 WhatsApp Kodu Gönder</span>
           </button>
         </div>
+        <small id="trackVerifyWaFeedback" style="display:none;margin-top:6px;font-size:0.75rem;color:#15803D;font-weight:700;"></small>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:18px;">
@@ -2062,10 +2789,13 @@
   <!-- YENİ PORTFÖY AÇMA MODALI: 6 SAYFALI ADIM ADIM MÜLK TAKİP KODU OLUŞTURMA SİHİRBAZI -->
   <div class="paywall-backdrop" id="newPortfolioModal" onclick="if(event.target === this) yeniPortfoyModalKapat()">
     <div class="paywall-modal" style="max-width:640px;max-height:90vh;overflow-y:auto;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <h3 style="font-size:1.25rem;font-weight:800;margin:0;color:#0F172A;">
-          Mülk Takip Kodu Oluştur
-        </h3>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <h3 style="font-size:1.25rem;font-weight:800;margin:0;color:#0F172A;">
+            Mülk Takip Kodu Oluştur
+          </h3>
+          <span class="saas-badge-blue" id="newPortfolioQuotaCounterBadge">Aktif Portföy Sayacı: 2 / 3</span>
+        </div>
         <button type="button" onclick="yeniPortfoyModalKapat()" style="border:1px solid #E2E8F0;background:#FFFFFF;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:700;color:#64748B;">✕</button>
       </div>
 
@@ -2080,23 +2810,42 @@
       </div>
 
       <!-- ==================================================================
-           SAYFA 1: ADI SOYADI, CEP TELEFONU NUMARASI, MÜLK BAŞLIĞI & ÜLKE/İL/İLÇE/MAHALLE
+           SAYFA 1: KATEGORİ (KONUT / İMARLI ARSA), İLETİŞİM, KONUM & ADA/PARSEL
            ================================================================== -->
       <div class="np-wizard-page active" id="npWizardPage1">
+        <!-- MÜLK KATEGORİSİ SEÇİMİ: KONUT | İMARLI ARSA | TARLA / BAĞ / BAHÇE -->
+        <div class="np-field-group" style="margin-bottom:12px;">
+          <label class="np-field-label">Mülk Kategorisi <span class="req-star">*</span></label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" id="npCatBtnKonut" class="np-chip-btn selected" style="flex:1;justify-content:center;padding:10px 12px;" onclick="npMulkKategorisiSec('konut')">
+              <span>🏠 Konut</span>
+              <span class="np-chip-check">✓</span>
+            </button>
+            <button type="button" id="npCatBtnArsa" class="np-chip-btn" style="flex:1;justify-content:center;padding:10px 12px;" onclick="npMulkKategorisiSec('arsa')">
+              <span>🗺️ İmarlı Arsa</span>
+              <span class="np-chip-check">✓</span>
+            </button>
+            <button type="button" id="npCatBtnTarla" class="np-chip-btn" style="flex:1;justify-content:center;padding:10px 12px;" onclick="npMulkKategorisiSec('tarla')">
+              <span>🌾 Tarla / Bağ / Bahçe</span>
+              <span class="np-chip-check">✓</span>
+            </button>
+          </div>
+        </div>
+
         <div class="form-grid-2">
           <div class="field">
-            <label>Adı Soyadı</label>
+            <label>Mülk Sahibi Adı Soyadı</label>
             <input type="text" id="npMulkSahibi" value="" placeholder="Adı Soyadı" />
           </div>
           <div class="field">
-            <label>Cep Telefonu Numarası</label>
+            <label>Cep Telefonu Numarası *</label>
             <input type="text" id="npMulkSahibiTel" value="0532 410 20 30" required />
           </div>
         </div>
 
         <div class="field">
           <label>Mülk Başlığı</label>
-          <input type="text" id="npBaslik" value="Bağlıca 3+1 Site İçi Ara Kat Daire" placeholder="Örn: Bağlıca 3+1 Site İçi Ara Kat Daire" />
+          <input type="text" id="npBaslik" value="Bağlıca 3+1 Site İçi Ara Kat Daire" placeholder="Örn: Bağlıca 3+1 Daire veya Gölbaşı İncek 500 m² Villa Parseli" />
         </div>
 
         <div class="form-grid-2">
@@ -2105,14 +2854,14 @@
             <select id="npUlke" onchange="npKonumUlkeDegisti()"></select>
           </div>
           <div class="field">
-            <label>İl</label>
+            <label>İl *</label>
             <select id="npIl" onchange="npKonumIlDegisti()"></select>
           </div>
         </div>
 
         <div class="form-grid-3">
           <div class="field">
-            <label>İlçe</label>
+            <label>İlçe *</label>
             <select id="npIlce" onchange="npKonumIlceDegisti()"></select>
           </div>
           <div class="field">
@@ -2120,7 +2869,7 @@
             <select id="npSemt" onchange="npKonumSemtDegisti()"></select>
           </div>
           <div class="field">
-            <label>Mahalle</label>
+            <label>Mahalle *</label>
             <select id="npMahalle" onchange="npKonumMahalleDegisti()"></select>
             <input
               type="text"
@@ -2128,6 +2877,17 @@
               placeholder="Mahalle adını yazınız (Örn: Bağlıca Mah.)"
               style="display:none;margin-top:6px;"
             />
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="field">
+            <label>Ada No</label>
+            <input type="text" id="npAdaNo" placeholder="Örn: 4821" inputmode="numeric" />
+          </div>
+          <div class="field">
+            <label>Parsel No</label>
+            <input type="text" id="npParselNo" placeholder="Örn: 12" inputmode="numeric" />
           </div>
         </div>
 
@@ -2140,9 +2900,11 @@
       </div>
 
       <!-- ==================================================================
-           SAYFA 2 (EKRAN GÖRÜNTÜSÜ 1): KONUTUN ÖZELLİKLERİNİ KONTROL EDEREK GEREKLİYSE DÜZELTİNİZ
+           SAYFA 2: KONUT ÖZELLİKLERİ VEYA ARSA İMAR BİLGİLERİ
            ================================================================== -->
       <div class="np-wizard-page" id="npWizardPage2">
+        <!-- A) KONUT ÖZELLİKLERİ BLOĞU -->
+        <div id="npKonutPage2Block">
         <div class="np-wizard-subtitle">Konutun özelliklerini kontrol ederek gerekliyse düzeltiniz</div>
 
         <div class="np-field-group">
@@ -2282,12 +3044,196 @@
           <button type="button" class="saas-btn-outline-sm" onclick="yeniPortfoyAdimGit(1)">← Önceki Adım</button>
           <button type="button" class="saas-btn-primary-sm" style="padding:9px 20px;" onclick="yeniPortfoyAdimGit(3)">Sonraki Adım →</button>
         </div>
+        </div>
+
+        <!-- B) İMARLI ARSA İMAR BİLGİLERİ BLOĞU (EKRAN GÖRÜNTÜSÜ 1 İLE BİREBİR) -->
+        <div id="npArsaPage2Block" style="display:none;">
+          <div class="np-wizard-subtitle" style="margin-bottom:4px;">Arsa imar bilgilerini giriniz</div>
+          <div style="text-align:center;margin-bottom:14px;">
+            <button type="button" onclick="npMulkKategorisiSec('tarla')" style="border:none;background:none;color:#64748B;font-size:0.75rem;text-decoration:underline;cursor:pointer;">
+              Bağ, bahçe tipinde imar bilgisi olmayan araziler için lütfen buraya tıklayarak devam edin.
+            </button>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">İmar Tipi <span class="req-star">*</span></label>
+            <div class="np-chip-list" data-group="arsaImarTipi" data-multi="false">
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Konut</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Konut + Ticari</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Villa Parseli</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Köyiçi</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Ticari İmarlı</span><span class="np-chip-check">✓</span></button>
+            </div>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Hisseli Tapu <span class="req-star">*</span></label>
+            <div class="np-chip-list" data-group="arsaHisseliTapu" data-multi="false">
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Hayır</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Evet</span><span class="np-chip-check">✓</span></button>
+            </div>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Alanı (m²) <span class="req-star">*</span></label>
+            <div class="np-num-stepper">
+              <input type="number" id="npArsaAlan" value="500" />
+              <div class="np-num-stepper-btns">
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npArsaAlan', -50, 50, 0)">−</button>
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npArsaAlan', 50, 50, 0)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="np-field-group" style="margin-bottom:6px;">
+            <label class="np-field-label">Hmax (m) <span class="req-star">*</span></label>
+            <div class="np-num-stepper">
+              <input type="text" id="npArsaHmax" value="15,5" />
+              <span style="font-size:0.75rem;color:#64748B;font-weight:700;padding:0 8px;cursor:pointer;" onclick="document.getElementById('npArsaHmax').value='Serbest'">Serbest</span>
+              <div class="np-num-stepper-btns">
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npArsaHmax', -0.5, 3, 1)">−</button>
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npArsaHmax', 0.5, 3, 1)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:0.74rem;color:#64748B;font-weight:600;margin:4px 0;">- ve/veya -</div>
+
+          <div class="np-field-group" style="margin-bottom:6px;">
+            <label class="np-field-label">Maksimum Kat İzni</label>
+            <div class="np-num-stepper">
+              <input type="number" id="npArsaMaxKat" value="5" />
+              <div class="np-num-stepper-btns">
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npArsaMaxKat', -1, 1, 0)">−</button>
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npArsaMaxKat', 1, 1, 0)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:0.74rem;color:#64748B;font-weight:600;margin:4px 0;">- ve -</div>
+
+          <div class="np-field-group" style="margin-bottom:6px;">
+            <label class="np-field-label">TAKS</label>
+            <div class="np-num-stepper">
+              <input type="text" id="npArsaTaks" value="0,4" />
+              <div class="np-num-stepper-btns">
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npArsaTaks', -0.05, 0.05, 2)">−</button>
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npArsaTaks', 0.05, 0.05, 2)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align:center;font-size:0.74rem;color:#64748B;font-weight:600;margin:4px 0;">- ve -</div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">KAKS (Emsal) <span class="req-star">*</span></label>
+            <div class="np-num-stepper">
+              <input type="text" id="npArsaKaks" value="2" />
+              <div class="np-num-stepper-btns">
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npArsaKaks', -0.1, 0.1, 2)">−</button>
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npArsaKaks', 0.1, 0.1, 2)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="np-wizard-footer">
+            <button type="button" class="saas-btn-outline-sm" onclick="yeniPortfoyAdimGit(1)">← Önceki Adım</button>
+            <button type="button" class="saas-btn-primary-sm" style="padding:9px 20px;" onclick="yeniPortfoyAdimGit(3)">Sonraki Adım →</button>
+          </div>
+        </div>
+
+        <!-- C) TARLA, BAĞ, BAHÇE ÖZELLİKLERİ BLOĞU (EKRAN GÖRÜNTÜSÜ 1 İLE BİREBİR) -->
+        <div id="npTarlaPage2Block" style="display:none;">
+          <div class="np-wizard-subtitle" style="margin-bottom:4px;">Tarla, bağ, bahçe özelliklerini giriniz</div>
+          <div style="text-align:center;margin-bottom:14px;">
+            <button type="button" onclick="npMulkKategorisiSec('arsa')" style="border:none;background:none;color:#64748B;font-size:0.75rem;text-decoration:underline;cursor:pointer;">
+              İmar bilgisi girerek arsa oluşturmak için lütfen buraya tıklayarak devam edin.
+            </button>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Arazi Tipi <span class="req-star">*</span></label>
+            <div class="np-chip-list" data-group="tarlaAraziTipi" data-multi="false">
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Tarla</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Bağ, Bahçe</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Zeytinlik</span><span class="np-chip-check">✓</span></button>
+            </div>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Hisseli Tapu <span class="req-star">*</span></label>
+            <div class="np-chip-list" data-group="tarlaHisseliTapu" data-multi="false">
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Hayır</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Evet</span><span class="np-chip-check">✓</span></button>
+            </div>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Alanı (m²) <span class="req-star">*</span></label>
+            <div class="np-num-stepper">
+              <input type="number" id="npTarlaAlan" value="5000" placeholder="Alanı" />
+              <div class="np-num-stepper-btns">
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npTarlaAlan', -250, 10, 0)">−</button>
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npTarlaAlan', 250, 10, 0)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Eğimi</label>
+            <div class="np-chip-list" data-group="tarlaEgim" data-multi="false">
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Düz Arazi (%0-3)</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Az Eğimli (%4-15)</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Eğimli (%15+)</span><span class="np-chip-check">✓</span></button>
+            </div>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Asfalt Yola Uzaklık (km)</label>
+            <div class="np-num-stepper">
+              <input type="text" id="npTarlaAsfaltUzaklik" value="0,54" />
+              <div class="np-num-stepper-btns">
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npTarlaAsfaltUzaklik', -0.1, 0, 2)">−</button>
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npTarlaAsfaltUzaklik', 0.1, 0, 2)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Yerleşim Yerine Uzaklık (km)</label>
+            <div class="np-num-stepper">
+              <input type="text" id="npTarlaYerlesimUzaklik" value="1,5" />
+              <div class="np-num-stepper-btns">
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npTarlaYerlesimUzaklik', -0.5, 0, 1)">−</button>
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npTarlaYerlesimUzaklik', 0.5, 0, 1)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Su Kaynağına Uzaklık (km)</label>
+            <div class="np-num-stepper">
+              <input type="text" id="npTarlaSuUzaklik" value="" placeholder="Su Kaynağına Uzaklık" />
+              <div class="np-num-stepper-btns">
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npTarlaSuUzaklik', -0.2, 0, 1)">−</button>
+                <button type="button" class="np-num-btn" onclick="npOndalikSayiDegistir('npTarlaSuUzaklik', 0.2, 0, 1)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="np-wizard-footer">
+            <button type="button" class="saas-btn-outline-sm" onclick="yeniPortfoyAdimGit(1)">← Önceki Adım</button>
+            <button type="button" class="saas-btn-primary-sm" style="padding:9px 20px;" onclick="yeniPortfoyAdimGit(3)">Sonraki Adım →</button>
+          </div>
+        </div>
       </div>
 
       <!-- ==================================================================
-           SAYFA 3 (EKRAN GÖRÜNTÜSÜ 2): EK ÖZELLİKLERİNİ GİRİNİZ (CEPHE, MANZARA, ISITMA)
+           SAYFA 3: KONUT EK ÖZELLİKLERİ VEYA ARSA EK ÖZELLİKLERİ (YAPILAŞMA, OLANAKLAR, MANZARA)
            ================================================================== -->
       <div class="np-wizard-page" id="npWizardPage3">
+        <!-- A) KONUT EK ÖZELLİKLERİ BLOĞU -->
+        <div id="npKonutPage3Block">
         <div class="np-wizard-subtitle">Ek özelliklerini giriniz</div>
 
         <div class="np-field-group">
@@ -2334,6 +3280,87 @@
         <div class="np-wizard-footer">
           <button type="button" class="saas-btn-outline-sm" onclick="yeniPortfoyAdimGit(2)">← Önceki Adım</button>
           <button type="button" class="saas-btn-primary-sm" style="padding:9px 20px;" onclick="yeniPortfoyAdimGit(4)">Sonraki Adım →</button>
+        </div>
+        </div>
+
+        <!-- B) İMARLI ARSA EK ÖZELLİKLERİ BLOĞU (EKRAN GÖRÜNTÜSÜ 2 İLE BİREBİR) -->
+        <div id="npArsaPage3Block" style="display:none;">
+          <div class="np-wizard-subtitle">Ek özelliklerini giriniz</div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Yapılaşma Durumu <span class="req-star">*</span></label>
+            <div class="np-chip-list" data-group="arsaYapilasmaDurumu" data-multi="false">
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Boş</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Üzerinde Kullanılan Yapı Var</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Üzerinde Metruk Yapı Var</span><span class="np-chip-check">✓</span></button>
+            </div>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Olanaklar <span class="hint-sub">(Birden fazla seçenek işaretleyebilirsiniz)</span></label>
+            <div class="np-chip-list" data-group="arsaOlanaklar" data-multi="true">
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Elektrik</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Su</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Yolu Açık</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Köşe Parsel</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>İfraz Görmüş</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Denize Sıfır</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Denize Yakın</span><span class="np-chip-check">✓</span></button>
+            </div>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Manzara <span class="hint-sub">(Birden fazla seçenek işaretleyebilirsiniz)</span></label>
+            <div class="np-chip-list" data-group="arsaManzara" data-multi="true">
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Şehir</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Doğa</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Göl</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Deniz</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Boğaz</span><span class="np-chip-check">✓</span></button>
+            </div>
+          </div>
+
+          <div class="np-wizard-footer">
+            <button type="button" class="saas-btn-outline-sm" onclick="yeniPortfoyAdimGit(2)">← Önceki Adım</button>
+            <button type="button" class="saas-btn-primary-sm" style="padding:9px 20px;" onclick="yeniPortfoyAdimGit(5)">Sonraki Adım →</button>
+          </div>
+        </div>
+
+        <!-- C) TARLA, BAĞ, BAHÇE EK ÖZELLİKLERİ BLOĞU (EKRAN GÖRÜNTÜSÜ 2 İLE BİREBİR) -->
+        <div id="npTarlaPage3Block" style="display:none;">
+          <div class="np-wizard-subtitle">Ek özelliklerini giriniz</div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Olanaklar <span class="hint-sub">(Birden fazla seçenek işaretleyebilirsiniz)</span></label>
+            <div class="np-chip-list" data-group="tarlaOlanaklar" data-multi="true">
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Elektrik</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Su</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Yolu Açık</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Doğalgaz</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Telefon</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Kanalizasyon</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Zemin Etüdü</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Yola Yakın</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Denize Sıfır</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Denize Yakın</span><span class="np-chip-check">✓</span></button>
+            </div>
+          </div>
+
+          <div class="np-field-group">
+            <label class="np-field-label">Manzara <span class="hint-sub">(Birden fazla seçenek işaretleyebilirsiniz)</span></label>
+            <div class="np-chip-list" data-group="tarlaManzara" data-multi="true">
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Şehir</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn selected" onclick="npChipSec(this)"><span>Doğa</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Göl</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Deniz</span><span class="np-chip-check">✓</span></button>
+              <button type="button" class="np-chip-btn" onclick="npChipSec(this)"><span>Boğaz</span><span class="np-chip-check">✓</span></button>
+            </div>
+          </div>
+
+          <div class="np-wizard-footer">
+            <button type="button" class="saas-btn-outline-sm" onclick="yeniPortfoyAdimGit(2)">← Önceki Adım</button>
+            <button type="button" class="saas-btn-primary-sm" style="padding:9px 20px;" onclick="yeniPortfoyAdimGit(5)">Sonraki Adım →</button>
+          </div>
         </div>
       </div>
 
@@ -2392,7 +3419,7 @@
         </div>
 
         <div class="np-wizard-footer">
-          <button type="button" class="saas-btn-outline-sm" onclick="yeniPortfoyAdimGit(4)">← Önceki Adım</button>
+          <button type="button" class="saas-btn-outline-sm" onclick="yeniPortfoyAdimGit(aktifYeniPortfoyKategorisi !== 'konut' ? 3 : 4)">← Önceki Adım</button>
           <button type="button" class="saas-btn-primary-sm" style="padding:9px 20px;" onclick="yeniPortfoyAdimGit(6)">Sonraki Adım →</button>
         </div>
       </div>
@@ -2506,7 +3533,42 @@
         <input type="password" id="agentLoginPassword" value="" placeholder="••••••••" />
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:8px;margin-top:16px;">
+      <!-- WHATSAPP ÜZERİNDEN DOĞRULAMA KODU GÖNDERME KUTUSU (ÜYE GİRİŞİ) -->
+      <div class="wa-otp-box" style="margin-top:10px;">
+        <div class="wa-otp-top">
+          <span class="wa-otp-badge">💬 WHATSAPP GİRİŞ KODU</span>
+          <button type="button" class="wa-send-code-btn" onclick="girisWhatsappKoduGonder()">
+            <span>WhatsApp Kodu Gönder</span>
+          </button>
+        </div>
+        <div class="wa-otp-input-row">
+          <input
+            type="text"
+            id="loginWhatsappOtpInput"
+            maxlength="6"
+            placeholder="6 Haneli Kod"
+            class="wa-otp-input"
+          />
+          <span class="wa-otp-status" id="loginWhatsappOtpHint">Kayıtlı telefonunuza kod gönderilir</span>
+        </div>
+      </div>
+
+      <!-- BEN ROBOT DEĞİLİM GÜVENLİK DOĞRULAMA KUTUCUĞU (ÜYE GİRİŞİ) -->
+      <div class="not-robot-row" style="margin-top:10px;">
+        <label class="not-robot-box" for="loginNotRobotCheck">
+          <div class="not-robot-left">
+            <input type="checkbox" id="loginNotRobotCheck" class="not-robot-checkbox" />
+            <span class="not-robot-custom-check"></span>
+            <span class="not-robot-label">Ben robot değilim</span>
+          </div>
+          <div class="not-robot-brand">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>Mülkİzle Shield</span>
+          </div>
+        </label>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px;">
         <button type="button" class="btn btn-primary" style="width:100%;justify-content:center;" onclick="danismanGirisOnayla()">
           Giriş Yap
         </button>
@@ -2544,6 +3606,219 @@
   <div class="paywall-backdrop" id="memberMessageModal" onclick="if(event.target === this) uyeMesajModalKapat()">
     <div class="paywall-modal" style="max-width:600px;text-align:left;">
       <div id="memberMessageModalContent"></div>
+    </div>
+  </div>
+
+  <!-- KVKK AYDINLATMA METNİ & BAŞTAN AŞAĞI SCROLL ZORUNLU ONAY POP-UP MODALI -->
+  <div class="paywall-backdrop" id="kvkkConsentModal">
+    <div class="paywall-modal" style="max-width:680px;text-align:left;padding:22px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;">
+        <div>
+          <span class="saas-badge-blue" style="margin-bottom:4px;display:inline-flex;">6698 SAYILI KVKK &amp; VERİ GÜVENLİĞİ</span>
+          <h3 style="font-size:1.15rem;font-weight:800;color:#0F172A;margin:0;">
+            KVKK Aydınlatma Metni ve Danışman Veri Taahhütnamesi
+          </h3>
+        </div>
+        <button
+          type="button"
+          onclick="kvkkModalKapat()"
+          aria-label="Kapat"
+          style="border:1px solid #E2E8F0;background:#FFFFFF;width:32px;height:32px;border-radius:8px;cursor:pointer;font-weight:700;color:#64748B;"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- OKUMA İLERLEME ÇUBUĞU -->
+      <div class="kvkk-progress-wrap">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.73rem;font-weight:700;color:#475569;margin-bottom:5px;">
+          <span id="kvkkScrollHintText">⬇️ Onay kutucuğunun açılması için lütfen metni sonuna kadar aşağı kaydırın</span>
+          <strong id="kvkkScrollPercentLabel" style="color:#2563EB;">%0 Okundu</strong>
+        </div>
+        <div class="vm-progress-track">
+          <div class="vm-progress-fill" id="kvkkScrollProgressBar" style="width:0%;transition:width 0.12s ease;"></div>
+        </div>
+      </div>
+
+      <!-- BAŞTAN AŞAĞI KAYDIRILABİLİR KVKK METİN ALANI -->
+      <div class="kvkk-scroll-body" id="kvkkScrollContainer" onscroll="kvkkScrollKontrolEt(this)">
+        <h4>1. Veri Sorumlusu ve Veri İşleyen Sıfatlarının Tanımı</h4>
+        <p>
+          <strong>1.1. Platform Yönetimi (mülkizle.com):</strong> <code>mulkizle.com</code> alan adlı internet sitesi ve uygulaması (<strong>"Mülkİzle"</strong>), platforma üye olan Gayrimenkul Danışmanları ve Emlak Ofislerinin (<strong>"Üye Danışman"</strong>) kendi üyelik verileri bakımından 6698 sayılı Kişisel Verilerin Korunması Kanunu (<strong>"KVKK"</strong>) kapsamında <strong>"Veri Sorumlusu"</strong> sıfatını haizdir. (İletişim: <code>destek@mulkizle.com</code>)
+        </p>
+        <p>
+          <strong>1.2. Danışman Tarafından Girilen Müşteri (Satıcı &amp; Alıcı) Verileri:</strong> Üye Danışmanın; portföy takibi, 12 haneli Mülk Takip Kodu üretimi, pazar analizi sunumu, dijital yer gösterme belgesi ve fiyat teklifi onayı amacıyla sisteme kaydettiği <strong>Mülk Sahibi (Satıcı)</strong> ve <strong>Alıcı</strong> ad-soyad ile cep telefonu numaraları bakımından; müşteri ile doğrudan aracılık ilişkisi kuran <strong>Üye Danışman / Ofis "Veri Sorumlusu"</strong>, yalnızca bulut tabanlı teknik altyapıyı sağlayan <strong>Mülkİzle ise "Veri İşleyen"</strong> konumundadır.
+        </p>
+
+        <h4>2. İşlenen Kişisel Veri Kategorileri</h4>
+        <p>
+          <strong>A) Üye Danışman Verileri:</strong> Ad, soyad, çalışılan gayrimenkul ofisi/firma unvanı, Vergi Kimlik Numarası, cep telefonu numarası, e-posta adresi, çalışılan İl/İlçe/Mahalle bilgisi, profil fotoğrafı, yüklenen portföy fotoğrafları (çapraz filigran basımı için) ve WhatsApp/SMS doğrulama kayıtları.
+        </p>
+        <p>
+          <strong>B) Mülk Sahibi (Satıcı) ve Alıcı Verileri:</strong> Ad, soyad, cep telefonu numarası (12 haneli takip koduna erişim ve WhatsApp/SMS doğrulama kodu gönderimi için), mülk özellikleri, yürütülen pazarlama adımları, mülk sahibi yorumları, alıcı fiyat teklifleri ve yer gösterim randevu kayıtları.
+        </p>
+
+        <h4>3. Kişisel Verilerin İşlenme Amaçları ve Hukuki Sebepleri</h4>
+        <p>
+          Kişisel verileriniz KVKK Madde 5/2 kapsamında; sözleşmenin kurulması ve ifası, hukuki yükümlülüklerin yerine getirilmesi, bir hakkın tesisi/korunması ve meşru menfaat hukuki sebeplerine dayanılarak; danışman üyeliğinin oluşturulması, WhatsApp/SMS doğrulama koduyla güvenli giriş sağlanması, 12 haneli kapalı devre mülk takip sisteminin işletilmesi, fotoğraflara otomatik çapraz danışman filigranı basılması, kişisel danışman web sitesinin (<code>mulkizle.com/adiniz</code>) oluşturulması ve 81 il danışman paylaşım ağının (Arıyorum!) çalıştırılması amaçlarıyla işlenir.
+        </p>
+
+        <h4>4. Üye Gayrimenkul Danışmanının Müşteri Verilerine İlişkin Beyan ve Taahhüdü</h4>
+        <p>
+          Platforma üye olan Gayrimenkul Danışmanı / Ofis; sisteme kaydettiği Mülk Sahibi (Satıcı) ve Alıcı adaylarına ait ad-soyad ve cep telefonu numaralarını hukuka uygun olarak elde ettiğini; ilgili müşterisini gayrimenkul pazarlama sürecinin <strong>mülkizle.com</strong> üzerinden 12 haneli takip koduyla canlı izlenebileceği ve kendisine süreç/doğrulama bildirimlerinin (WhatsApp / SMS) gönderileceği konusunda <strong>önceden aydınlattığını ve gerekli iletişim/açık rıza onaylarını aldığını</strong>; bu yükümlülüğe aykırı olarak izinsiz veri girilmesinden doğabilecek her türlü hukuki ve idari sorumluluğun kendisine ait olduğunu kabul, beyan ve taahhüt eder.
+        </p>
+
+        <h4>5. Veri Güvenliği, Telefon İzolasyonu ve Bulut / Mesajlaşma Aktarımı</h4>
+        <p>
+          Bir Üye Danışmanın sisteme girdiği Mülk Sahibi (Satıcı) telefon numarası ve Kişisel Notlar alanı <strong>kesinlikle diğer üye danışmanlara veya kamuya gösterilmez.</strong> 12 haneli Mülk Takip Kodu ekranı yalnızca o koda tanımlı cep telefonuna gönderilen WhatsApp/SMS doğrulama koduyla açılır. Hizmetin kesintisiz sunulması, 256-bit SSL güvenliği ve WhatsApp/SMS doğrulama kodlarının iletilmesi amacıyla veriler güvenli bulut sunucu ve mesajlaşma API altyapıları üzerinden şifreli olarak işlenmektedir.
+        </p>
+        <p>
+          <strong>5.1. Portföy Silme Sonrası Kalıcı İmha ve %100 Anonim Bölge Emsal İstatistiği (KVKK Madde 7 &amp; 28/1-b):</strong> Üye Danışman bir portföyü sildiğinde; ilgili portföye ait <strong>12 haneli Mülk Takip Kodu, Mülk Sahibi (Satıcı) adı/telefonu, Danışman kimlik/vergi numarası bağı ve Tapu Ada/Parsel numarası kalıcı olarak silinir (Hard Delete).</strong> Silme anketinden (<em>Satıldı / Satılmadı</em>) elde edilen veriler ise KVKK Madde 28/1-(b) uyarınca hiçbir kişi, danışman veya tapu kaydıyla eşleştirilemeyecek şekilde <strong>sıfır bağlantılı olarak anonimleştirilerek</strong> (yalnızca <em>Ay/Yıl, İl/İlçe/Mahalle, Mülk Tipi, Oda/m² Bandı, Kat/Yaş ve Yaklaşık ₺/m² Birim Endeksi</em>) bölgesel piyasa istatistiği amacıyla anonim emsal havuzunda işlenir.
+        </p>
+
+        <h4>6. İlgili Kişinin KVKK Madde 11 Kapsamındaki Hakları ve Başvuru</h4>
+        <p>
+          Kişisel veri sahipleri (Danışmanlar, Mülk Sahipleri ve Alıcılar), KVKK'nın 11. maddesi kapsamındaki bilgi talep etme, düzeltme ve verilerin silinmesini/yok edilmesini isteme haklarına ilişkin taleplerini <strong><code>destek@mulkizle.com</code></strong> adresine iletebilirler. Başvurular en geç 30 (otuz) gün içinde ücretsiz olarak sonuçlandırılır.
+        </p>
+      </div>
+
+      <!-- SADECE EN ALTA KADAR SCROLL YAPILDIĞINDA AÇILAN ONAY KUTUCUĞU -->
+      <div class="kvkk-confirm-unlock-box" id="kvkkModalConfirmWrap" style="display:none;">
+        <label class="kvkk-modal-check-label" for="kvkkModalInnerCheckbox">
+          <input type="checkbox" id="kvkkModalInnerCheckbox" onchange="kvkkModalIciKutucukDegisti(this.checked)" />
+          <span>
+            <strong>KVKK Aydınlatma Metni ve Danışman Veri Taahhütnamesi'ni okudum, anladım ve onaylıyorum.</strong>
+          </span>
+        </label>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          id="kvkkModalApproveBtn"
+          disabled
+          style="opacity:0.5;cursor:not-allowed;"
+          onclick="kvkkOnayiniTamamlaVeKapat()"
+        >
+          <span>Onayla ve Devam Et →</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTFÖY SİLME NEDENİ ANKETİ & %100 ANONİM BÖLGE EMSAL HAVUZU MODALI -->
+  <div class="paywall-backdrop" id="deletePortfolioSurveyModal" onclick="if(event.target === this) portfoySilModalKapat()">
+    <div class="paywall-modal" style="max-width:520px;text-align:left;padding:22px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px;">
+        <div>
+          <span class="saas-badge-blue" style="margin-bottom:4px;display:inline-flex;">PORTFÖY KALDIRMA &amp; KAPANIŞ ANKETİ</span>
+          <h3 style="font-size:1.15rem;font-weight:800;color:#0F172A;margin:0;">
+            Bu Portföyü Neden Kaldırıyorsunuz?
+          </h3>
+          <div id="deletePortfolioTargetTitle" class="saas-text-xs" style="margin-top:3px;font-weight:700;color:#475569;"></div>
+        </div>
+        <button
+          type="button"
+          onclick="portfoySilModalKapat()"
+          aria-label="Kapat"
+          style="border:1px solid #E2E8F0;background:#FFFFFF;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:700;color:#64748B;"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- 3 SEÇENEKLİ ANKET: SATILDI / SATILMADI / DİĞER -->
+      <div style="display:flex;flex-direction:column;gap:8px;margin:14px 0;">
+        <button
+          type="button"
+          id="delReasonBtnSatildi"
+          class="np-chip-btn selected"
+          style="width:100%;justify-content:space-between;padding:11px 14px;font-size:0.88rem;"
+          onclick="portfoySilNedenSec('satildi')"
+        >
+          <span>✅ <strong>Satıldı</strong> <small style="color:#64748B;font-weight:600;">(Satış / Kiralama tamamlandı)</small></span>
+          <span class="np-chip-check">✓</span>
+        </button>
+
+        <button
+          type="button"
+          id="delReasonBtnSatilmadi"
+          class="np-chip-btn"
+          style="width:100%;justify-content:space-between;padding:11px 14px;font-size:0.88rem;"
+          onclick="portfoySilNedenSec('satilmadi')"
+        >
+          <span>⏳ <strong>Satılmadı</strong> <small style="color:#64748B;font-weight:600;">(Yetki süresi bitti / Mülk sahibi vazgeçti)</small></span>
+          <span class="np-chip-check">✓</span>
+        </button>
+
+        <button
+          type="button"
+          id="delReasonBtnDiger"
+          class="np-chip-btn"
+          style="width:100%;justify-content:space-between;padding:11px 14px;font-size:0.88rem;"
+          onclick="portfoySilNedenSec('diger')"
+        >
+          <span>📝 <strong>Diğer</strong> <small style="color:#64748B;font-weight:600;">(Farklı bir nedenle kaldırıyorum)</small></span>
+          <span class="np-chip-check">✓</span>
+        </button>
+      </div>
+
+      <!-- 1) "SATILDI" SEÇİLDİĞİNDE AÇILAN %100 ANONİM BÖLGE EMSAL HAVUZU KUTUSU -->
+      <div id="delSurveySoldBox" style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:14px;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;">
+          <span style="font-size:0.78rem;font-weight:800;color:#15803D;">📊 Bölge m² Emsal Endeksi (Anonim Piyasa Verisi)</span>
+          <span style="font-size:0.68rem;font-weight:800;background:#DCFCE7;color:#166534;padding:2px 8px;border-radius:999px;">🔒 KİMLİKSİZ &amp; ANONİM</span>
+        </div>
+
+        <div class="field" style="margin-bottom:10px;">
+          <label style="font-size:0.78rem;font-weight:700;color:#0F172A;">Kapanış / Pazarlık Oranı veya Yaklaşık Satış Bandı</label>
+          <select id="delSoldDiscountBand" onchange="portfoySilFiyatBandiDegisti()" style="font-size:0.82rem;font-weight:700;">
+            <option value="liste_fiyati">İlan / Liste Fiyatından Satıldı (%0 İskonto)</option>
+            <option value="pazarlik_3" selected>Küçük Pazarlıkla Satıldı (~%2 - %4 İskonto)</option>
+            <option value="pazarlik_7">Orta Pazarlıkla Satıldı (~%5 - %8 İskonto)</option>
+            <option value="pazarlik_12">Yüksek Pazarlıkla Satıldı (~%10 - %15 İskonto)</option>
+            <option value="ozel_rakam">Yaklaşık Kapanış Rakamını Kendim Girmek İstiyorum</option>
+          </select>
+        </div>
+
+        <div class="field" id="delSoldCustomPriceWrap" style="margin-bottom:8px;">
+          <label style="font-size:0.76rem;font-weight:700;color:#166534;">Bölge Endeksine İşlenecek Yaklaşık Kapanış Fiyatı (İsteğe Bağlı)</label>
+          <input
+            type="text"
+            id="delSoldFinalPriceInput"
+            placeholder="Örn: 5.100.000 ₺"
+            oninput="npFiyatRakamFormatla(this)"
+            style="font-weight:800;font-size:0.92rem;background:#FFFFFF;"
+          />
+        </div>
+
+        <div style="font-size:0.72rem;color:#166534;line-height:1.45;background:#FFFFFF;border:1px solid #DCFCE7;border-radius:8px;padding:8px 10px;">
+          🛡️ <strong>Sıfır Bağlantılı Anonimleştirme Garantisi:</strong> Bu portföy silindiğinde <strong>Danışman Adınız, Vergi No, Mülk Sahibi, Takip Kodu ve Ada/Parsel numarası kalıcı olarak silinir.</strong> Yalnızca <em>"İlçe / Mahalle / Oda Sayısı / m² Birim Fiyat Bandı"</em> kimliksiz olarak bölge emsal havuzuna eklenir; hiçbir kişi veya tapu kaydıyla eşleştirilemez.
+        </div>
+      </div>
+
+      <!-- 2) "DİĞER" SEÇİLDİĞİNDE AÇILAN AÇIKLAMA KUTUCUĞU -->
+      <div id="delSurveyOtherBox" style="display:none;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:12px 14px;margin-bottom:14px;">
+        <div class="field" style="margin-bottom:0;">
+          <label style="font-size:0.8rem;font-weight:700;color:#0F172A;">Açıklama (Neden sildiğinizi kısaca belirtiniz) *</label>
+          <textarea
+            id="delOtherReasonInput"
+            rows="3"
+            placeholder="Lütfen portföyü kaldırma nedeninizi buraya yazınız..."
+            style="width:100%;padding:9px 11px;border:1px solid #CBD5E1;border-radius:8px;font-size:0.84rem;margin-top:4px;font-family:inherit;"
+          ></textarea>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:12px;">
+        <button type="button" class="saas-btn-outline-sm" onclick="portfoySilModalKapat()">Vazgeç</button>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          style="background:#DC2626;border-color:#DC2626;"
+          onclick="portfoySilAnketOnayla()"
+        >
+          <span>Anketi Kaydet ve Portföyü Sil</span>
+        </button>
+      </div>
     </div>
   </div>
 
