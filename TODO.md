@@ -35,9 +35,9 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
   - Ayrı sayfada açılan üyelik formuna **Seçilen Paket Görsel Özet Barı** ve hem üyelik formuna hem de Üye Girişi penceresine **"Ben robot değilim" (`Mülkİzle Shield`)** doğrulama kutucuğu eklendi.
 - [x] **3. ADIM: Yeni Mülk Takip Kodu Oluşturma Sihirbazı (`+` Butonu) & Arıyorum! İmarlı Arsa Seçimi (Tamamlandı ✅)**
   - En başta İl • İlçe • Semt • Mahalle + Ada / Parsel seçimi ile `🏠 Konut` ve `🗺️ İmarlı Arsa` (İmar Tipi, Hisseli Tapu, Alan $m^2$, Hmax, Kat İzni, TAKS, KAKS/Emsal, Yapılaşma Durumu, Olanaklar, Manzara) seçenekleri hem Yeni Portföy Sihirbazına hem de `Arıyorum!` talep açma ekranına eklendi.
-- [x] **4. ADIM: Aktif Portföylerim, Tekil Alıcı Kodları & "Potansiyel Alıcılarım" Bölümü (Tamamlandı ✅)**
+- [x] **4. ADIM: Aktif Portföylerim, Tekil Alıcı Kodları & "Müşteri & Referans Havuzum" Bölümü (Tamamlandı ✅)**
   - Her portföy içinde her alıcıya ayrı 12 haneli tekil takip kodu üretme, kişi bazlı inceleme sayacı, WhatsApp'tan kod gönderme ve tekil alıcı koduyla giriş doğrulaması eklendi.
-  - Sol menüye **"Potansiyel Alıcılarım"** (`#igNavPotentialBuyers`) eklendi; bir portföy satıldığında/kapatıldığında o portföyle ilgilenen tüm alıcılar bütçe ve tercihleriyle otomatik olarak bu havuza aktarılıyor ve havuzdan yeni bir aktif portföy için tek tıkla yeni tekil kod üretilebiliyor.
+  - Sol menüye **"Müşteri & Referans Havuzum"** (`#igNavPotentialBuyers`) eklendi; bir portföy satıldığında **Mülk Sahibi (Satıcı)** ve **Evi Satın Alan Alıcı** otomatik olarak **"Referans Müşterilerim (Ev Sattıklarım / Aldırdıklarım)"** sekmesine (WhatsApp Bayram tebriği, hal-hatır sorma şablonları, arama kutusu ve telefonla arama takibiyle), evi alamayan diğer alıcılar ise eski mülkün özellikleri ve notlarıyla **"Potansiyel Alıcılarım"** sekmesine aktarılıyor.
 - [x] **5. ADIM: Mülk Sahibi (Satıcı) & Alıcı Katalog Ekranları (Tamamlandı ✅)** (*%70 görsel 4'lü performans şeridi, zaman tüneli, gelen teklif onay/red ve yer gösterimi randevu kartları, galeri ve tek sayfa katalog künyesi*)
 - [x] **6. ADIM: Danışman Günlük Operasyon Araçları (Tamamlandı ✅)** (*Bildirimler, Mesajlar [tıklanabilir görsel portföy kartı dahil], Mülk Ajandam 4'lü görsel özet barları*)
 - [x] **7. ADIM: Pro Network Özellikleri (Tamamlandı ✅)** (*Arıyorum! [Günlük 5 talep spam limiti + Taleplerim sekmesi + Konut/Arsa/Tarla filtreli görsel talep kartları] ve Profilim `mulkizle.com/adiniz` [Arıyorum! özelliği kişisel web sitesinden gizlendi]*)
@@ -47,12 +47,12 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
 ## 🎨 1. UI/UX ve Tasarım Görevleri (Abisi)
 
 ### Genel Arayüz & Responsive (Mobil Uyum)
-- [ ] Tüm ekranların gerçek mobil telefon çözünürlüklerinde (`375px` - `430px`) taşma veya kayma olmadan görünmesinin kontrol edilmesi (`styles.css`)
-- [ ] Üst menü ve Danışman Sol Navigasyon (`#igLeftSidebar`) menüsünün mobil cihazlarda alt bar (bottom navigation) veya açılır çekmece (drawer) olarak optimize edilmesi
-- [ ] **Ana Sayfa (Girişsiz):** Hero alanı, 12 haneli takip kodu sorgulama kutusu ve paket kartlarının görsel hiyerarşisinin iyileştirilmesi
-- [ ] **Danışman Paneli:** Yatay akordeon portföy listesinin ve 5 alt sekmenin (`Süreç & Mülk Günlüğü`, `Mülk`, `Detaylı Pazar Analizi`, `Teklifler & Yer Gösterimi`, `Sözleşmeler`) mobilde rahat kullanılabilir hale getirilmesi
-- [ ] **Satıcı & Alıcı Takip Ekranları:** Kargo takip tarzı zaman çizelgesi (timeline) ve süreç adımlarının görsel tasarımının parlatılması
-- [ ] **Kişisel Web Sitesi Görünümü:** Danışman dijital vitrin sayfasının (Sahibi / Diğer Üye / Üye Olmayan görünümleri) tasarım kontrolü
+- [x] Tüm ekranların gerçek mobil telefon çözünürlüklerinde (`375px` - `430px`) taşma veya kayma olmadan görünmesinin kontrol edilmesi (`styles.css`)
+- [x] Üst menü ve Danışman Sol Navigasyon (`#igLeftSidebar`) menüsünün mobil cihazlarda **Öneri 1 (Instagram/LinkedIn Modeli: Üst barda `Bildirimler + Mesajlar + Profilim + Çıkış`, Alt sabit barda `Portföyler + Arıyorum! + [＋ Kod Aç] + Müşteriler + Ajandam`)** olarak optimize edilmesi
+- [x] **Ana Sayfa (Girişsiz):** Hero alanı, 12 haneli takip kodu sorgulama kutusu ve paket kartlarının görsel hiyerarşisinin iyileştirilmesi
+- [x] **Danışman Paneli:** Yatay akordeon portföy listesinin ve 5 alt sekmenin (`Süreç & Mülk Günlüğü`, `Mülk`, `Detaylı Pazar Analizi`, `Teklifler & Yer Gösterimi`, `Sözleşmeler`) mobilde rahat kullanılabilir hale getirilmesi
+- [x] **Satıcı & Alıcı Takip Ekranları:** Kargo takip tarzı zaman çizelgesi (timeline) ve süreç adımlarının görsel tasarımının parlatılması
+- [x] **Kişisel Web Sitesi Görünümü:** Danışman dijital vitrin sayfasının (Sahibi / Diğer Üye / Üye Olmayan görünümleri) tasarım kontrolü
 
 ---
 
