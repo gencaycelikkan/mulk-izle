@@ -844,6 +844,10 @@ function danismanGirisOnayla() {
   if (avatarEl && danismanProfili?.foto) {
     avatarEl.src = danismanProfili.foto;
   }
+  const mobileTopAvatarEl = document.getElementById("mobileTopAvatarImg");
+  if (mobileTopAvatarEl && danismanProfili?.foto) {
+    mobileTopAvatarEl.src = danismanProfili.foto;
+  }
 
   danismanGirisModalKapat();
 
@@ -1362,6 +1366,18 @@ function igSolMenuGuncelle(aktifSecim) {
     if (el) el.classList.toggle("active", key === aktifSecim);
   });
 
+  // Mobil üst bardaki 3 aksiyonun (Bildirimler, Mesajlar, Profilim) aktif durumunu senkronize et
+  const mmNotifBtn = document.getElementById("mmTopBtnNotifications");
+  if (mmNotifBtn) mmNotifBtn.classList.toggle("active", aktifSecim === "notifications");
+  const mmMsgBtn = document.getElementById("mmTopBtnMessages");
+  if (mmMsgBtn) mmMsgBtn.classList.toggle("active", aktifSecim === "messages");
+  const mmProfBtn = document.getElementById("mmTopBtnProfile");
+  if (mmProfBtn) mmProfBtn.classList.toggle("active", aktifSecim === "view-website");
+  const mobileTopAvatarEl = document.getElementById("mobileTopAvatarImg");
+  if (mobileTopAvatarEl && danismanProfili?.foto) {
+    mobileTopAvatarEl.src = danismanProfili.foto;
+  }
+
   // Sol bardaki tüm menü öğeleri her zaman görünür ve tıklanabilir;
   // Bildirimler ücretsiz üyede de açıktır. Diğer Pro özelliklerin yanında küçük "PRO" etiketi çıkar ve tıklayınca Ücretli Üyelik (Paywall) paneli açılır!
   const proMu = aktifDanismanProMu();
@@ -1391,6 +1407,11 @@ function igSolMenuGuncelle(aktifSecim) {
       redBadge.textContent = `${okunmamis}`;
       redBadge.style.display = proMu && okunmamis > 0 ? "inline-flex" : "none";
     }
+    const mobileTopUnread = document.getElementById("mobileTopUnreadBadge");
+    if (mobileTopUnread) {
+      mobileTopUnread.textContent = `${okunmamis}`;
+      mobileTopUnread.style.display = proMu && okunmamis > 0 ? "inline-flex" : "none";
+    }
   }
 
   if (typeof danismanBildirimleriniGetir === "function") {
@@ -1402,15 +1423,22 @@ function igSolMenuGuncelle(aktifSecim) {
       notifBadge.textContent = `${okunmamisB}`;
       notifBadge.style.display = okunmamisB > 0 ? "inline-flex" : "none";
     }
+    const mobileTopNotif = document.getElementById("mobileTopNotifBadge");
+    if (mobileTopNotif) {
+      mobileTopNotif.textContent = `${okunmamisB}`;
+      mobileTopNotif.style.display = okunmamisB > 0 ? "inline-flex" : "none";
+    }
   }
 
   if (typeof potansiyelAlicilarListesiniGetir === "function") {
     const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
     const potListe = potansiyelAlicilarListesiniGetir(aktifId);
+    const refListe = typeof referansMusterilerListesiniGetir === "function" ? referansMusterilerListesiniGetir(aktifId) : [];
+    const toplamSayi = potListe.length + refListe.length;
     const potBadge = document.getElementById("igSidebarPotentialBuyersBadge");
     if (potBadge) {
-      potBadge.textContent = `${potListe.length}`;
-      potBadge.style.display = potListe.length > 0 ? "inline-flex" : "none";
+      potBadge.textContent = `${toplamSayi}`;
+      potBadge.style.display = toplamSayi > 0 ? "inline-flex" : "none";
     }
   }
 }
@@ -2001,6 +2029,12 @@ function portfoySilAnketOnayla() {
       ? portfoyAlicilariniPotansiyelHavuzunaAktar(silinecek, seciliPortfoySilmeNedeni, satinAlanSecimi)
       : 0;
 
+  // 3) Eğer "Satıldı" seçildiyse Mülk Sahibini (Satıcıyı) ve Evi Satın Alan Alıcıyı otomatik olarak "Referans Müşterilerim (Ev Sattıklarım & Aldırdıklarım)" havuzuna kaydet!
+  const aktarilanReferansSayisi =
+    seciliPortfoySilmeNedeni === "satildi" && typeof satilanPortfoyuReferansHavuzunaAktar === "function"
+      ? satilanPortfoyuReferansHavuzunaAktar(silinecek, satinAlanSecimi)
+      : 0;
+
   const kod = silinecekPortfoyKodu;
 
   // Çalışma alanını silme öncesinde güvenli stage içine taşı
@@ -2028,9 +2062,15 @@ function portfoySilAnketOnayla() {
     igSolMenuGuncelle("portfolios");
   }
 
-  if (aktarilanAliciSayisi > 0) {
+  if (aktarilanAliciSayisi > 0 || aktarilanReferansSayisi > 0) {
     alert(
-      `✅ Portföy kapatıldı ve bu portföy için tekil takip kodu gönderilen ${aktarilanAliciSayisi} alıcı adayı otomatik olarak sol menüdeki "Potansiyel Alıcılarım" bölümünüze aktarıldı!`
+      `✅ Portföy kapatıldı!\n` +
+        (aktarilanReferansSayisi > 0
+          ? `• Evi sattığınız Mülk Sahibi ve Alıcı (${aktarilanReferansSayisi} kişi) otomatik olarak "Müşteri & Referans Havuzum → Referans Müşterilerim" bölümüne kaydedildi.\n`
+          : "") +
+        (aktarilanAliciSayisi > 0
+          ? `• Evi alamayan diğer ${aktarilanAliciSayisi} alıcı adayı ise eski mülkün özellikleriyle "Potansiyel Alıcılarım" bölümüne aktarıldı!`
+          : "")
     );
   }
 }
@@ -4246,6 +4286,289 @@ function portfoyAlicilariniPotansiyelHavuzunaAktar(portfoy, kapanisNedeni, satin
   return eklenenSayisi;
 }
 
+// ============================================================================
+// MÜŞTERİ & REFERANS HAVUZUM (EV SATTIKLARIM & EV ALDIRDIKLARIM — BAYRAM, HAL-HATIR & ARAMA TAKİBİ)
+// ============================================================================
+const REFERRAL_CLIENTS_STORAGE_KEY = "mulkizle_referans_musteriler_v1";
+let musteriHavuzuAktifAltSekme = "potential"; // "potential" | "referrals"
+let referansRolFiltresi = "tumu"; // "tumu" | "satici" | "alici"
+let referansAramaMetni = "";
+let seciliReferansMesajSablonu = "bayram"; // "bayram" | "halhatir" | "yildonumu" | "ozel"
+let ozelReferansMesajMetni = "Merhaba [Ad], nasılsınız? Sizinle çalışmak çok keyifliydi, her şey yolunda mı diye halinizi hatırınızı sormak istedim. Çevrenizde gayrimenkul satmayı veya almayı düşünen dostlarınız olursa memnuniyetle yardımcı olurum.";
+let manuelReferansEkleAcikMi = false;
+
+const VARSAYILAN_REFERANS_MUSTERILER = [
+  {
+    id: "ref_default_1",
+    danismanId: "ahmet-demir",
+    ad: "Hakan & Sibel Çetin",
+    telefon: "0532 612 34 56",
+    rolTipi: "satici",
+    rolEtiketi: "🏡 Evi Satıldı (Satıcı Referansı)",
+    islemMulkBaslik: "Çankaya Oran Mah. 3+1 Site İçi Daire",
+    islemBolge: "Çankaya, Ankara (Oran Mah.)",
+    islemFiyat: "6.650.000 ₺",
+    islemTarihi: "Ekim 2026",
+    danismanNotu: "19 günde satışını tamamladık. Çok memnun kaldılar, komşularını da yönlendirecekler.",
+    sonIletisimDurumu: "Henüz Bayram / Hal-Hatır Mesajı Gönderilmedi",
+    sonIletisimTipi: ""
+  },
+  {
+    id: "ref_default_2",
+    danismanId: "ahmet-demir",
+    ad: "Dr. Emre Karakoç",
+    telefon: "0533 498 76 54",
+    rolTipi: "alici",
+    rolEtiketi: "🔑 Ev Aldırıldı (Alıcı Referansı)",
+    islemMulkBaslik: "Çankaya Oran Mah. 3+1 Site İçi Daire",
+    islemBolge: "Çankaya, Ankara (Oran Mah.)",
+    islemFiyat: "6.650.000 ₺",
+    islemTarihi: "Ekim 2026",
+    danismanNotu: "Evi satın alan doktor müşterimiz. Hastanedeki meslektaşlarına bizi tavsiye ediyor.",
+    sonIletisimDurumu: "Henüz Bayram / Hal-Hatır Mesajı Gönderilmedi",
+    sonIletisimTipi: ""
+  },
+  {
+    id: "ref_default_3",
+    danismanId: "ahmet-demir",
+    ad: "Mehmet Ali & Ayşe Aydın",
+    telefon: "0535 321 88 99",
+    rolTipi: "satici",
+    rolEtiketi: "🏡 Evi Satıldı (Satıcı Referansı)",
+    islemMulkBaslik: "Etimesgut Bağlıca 4+1 Ara Kat Daire",
+    islemBolge: "Bağlıca Mah., Etimesgut / Ankara",
+    islemFiyat: "7.800.000 ₺",
+    islemTarihi: "Eylül 2026",
+    danismanNotu: "Bağlıca'daki dairelerini satıp Gölbaşı'ndan arsa baktılar.",
+    sonIletisimDurumu: "✓ Telefonla Arandı (Hal-Hatır Soruldu)",
+    sonIletisimTipi: "arama"
+  }
+];
+
+function tumReferansMusterileriYukle() {
+  try {
+    const raw = localStorage.getItem(REFERRAL_CLIENTS_STORAGE_KEY);
+    if (!raw) return [...VARSAYILAN_REFERANS_MUSTERILER];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : [...VARSAYILAN_REFERANS_MUSTERILER];
+  } catch (e) {
+    return [...VARSAYILAN_REFERANS_MUSTERILER];
+  }
+}
+
+function tumReferansMusterileriKaydet(liste) {
+  try {
+    localStorage.setItem(REFERRAL_CLIENTS_STORAGE_KEY, JSON.stringify(liste));
+  } catch (e) {}
+}
+
+function referansMusterilerListesiniGetir(danismanId) {
+  const id = danismanId || (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const tumu = tumReferansMusterileriYukle();
+  return tumu.filter(x => !x.danismanId || x.danismanId === id);
+}
+
+function satilanPortfoyuReferansHavuzunaAktar(portfoy, satinAlanSecimi = "__EXTERNAL__") {
+  if (!portfoy) return 0;
+  const aktifDanismanId = (aktifKullanici && aktifKullanici.id) || portfoy.danismanId || "ahmet-demir";
+  const mevcutListe = tumReferansMusterileriYukle();
+  const bugun = new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
+  let eklenen = 0;
+
+  // 1) Mülk Sahibini (Satıcıyı) "Evi Satıldı" referansı olarak ekle
+  if (portfoy.mulkSahibi) {
+    mevcutListe.unshift({
+      id: `ref_seller_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+      danismanId: aktifDanismanId,
+      ad: portfoy.mulkSahibi,
+      telefon: portfoy.mulkSahibiTel || "0532 410 20 30",
+      rolTipi: "satici",
+      rolEtiketi: "🏡 Evi Satıldı (Satıcı Referansı)",
+      islemMulkBaslik: portfoy.baslik || "Satılan Portföy",
+      islemBolge: portfoy.bolge || "Ankara",
+      islemFiyat: portfoy.fiyat || "",
+      islemTarihi: bugun,
+      danismanNotu: `#${portfoy.kod} takip kodlu mülkünün satışı başarıyla tamamlandı.`,
+      sonIletisimDurumu: "Yeni Tamamlanan Satış Referansı",
+      sonIletisimTipi: ""
+    });
+    eklenen++;
+  }
+
+  // 2) Eğer evi satın alan alıcı sistemdeki kayıtlı alıcılardan seçildiyse onu da "Ev Aldırıldı" referansı olarak ekle
+  const kodListesi = portfoyVarsayilanAliciKodlariniHazirla(portfoy);
+  let kazananAliciObj = null;
+  if (String(satinAlanSecimi).startsWith("KOD:")) {
+    const kKod = String(satinAlanSecimi).replace("KOD:", "").trim();
+    const b = kodListesi.find(x => x.kod === kKod);
+    if (b) {
+      kazananAliciObj = {
+        ad: b.aliciAd,
+        telefon: b.aliciTel || "0533 210 90 80",
+        not: b.danismanOzelNotu || b.tercihNotu || ""
+      };
+    }
+  } else if (String(satinAlanSecimi).startsWith("AD:")) {
+    const kAd = String(satinAlanSecimi).replace("AD:", "").trim();
+    const g = (portfoy.yerGosterimleri || []).find(x => (x.alici || "").toLowerCase().includes(kAd.toLowerCase()));
+    kazananAliciObj = {
+      ad: kAd,
+      telefon: (g && g.telefon) || "Belirtilmedi",
+      not: "Portföyü satın alan alıcı müşterimiz."
+    };
+  }
+
+  if (kazananAliciObj && kazananAliciObj.ad) {
+    mevcutListe.unshift({
+      id: `ref_buyer_${Date.now() + 1}_${Math.random().toString(36).slice(2, 6)}`,
+      danismanId: aktifDanismanId,
+      ad: kazananAliciObj.ad,
+      telefon: kazananAliciObj.telefon,
+      rolTipi: "alici",
+      rolEtiketi: "🔑 Ev Aldırıldı (Alıcı Referansı)",
+      islemMulkBaslik: portfoy.baslik || "Satın Alınan Portföy",
+      islemBolge: portfoy.bolge || "Ankara",
+      islemFiyat: portfoy.fiyat || "",
+      islemTarihi: bugun,
+      danismanNotu: kazananAliciObj.not || `${portfoy.baslik} portföyümüzü satın alan müşterimiz.`,
+      sonIletisimDurumu: "Yeni Tamamlanan Alıcı Referansı",
+      sonIletisimTipi: ""
+    });
+    eklenen++;
+  }
+
+  if (eklenen > 0) {
+    tumReferansMusterileriKaydet(mevcutListe);
+  }
+  return eklenen;
+}
+
+function musteriHavuzuAltSekmeSec(sekme) {
+  musteriHavuzuAktifAltSekme = sekme === "referrals" ? "referrals" : "potential";
+  potansiyelAlicilarimPanelRender();
+}
+
+function referansRolFiltreSec(rol) {
+  referansRolFiltresi = rol || "tumu";
+  potansiyelAlicilarimPanelRender();
+}
+
+function referansAramaDegisti(val) {
+  referansAramaMetni = (val || "").trim();
+  potansiyelAlicilarimPanelRender();
+}
+
+function referansMesajSablonuSec(sablonId) {
+  seciliReferansMesajSablonu = sablonId || "bayram";
+  potansiyelAlicilarimPanelRender();
+}
+
+function referansOzelMesajDegisti(val) {
+  ozelReferansMesajMetni = val || "";
+}
+
+function referansMusteriIcinMesajMetniOlustur(item) {
+  const dAd = (danismanProfili && danismanProfili.ad) || (aktifKullanici && aktifKullanici.ad) || "Gayrimenkul Danışmanınız";
+  const dOfis = (danismanProfili && danismanProfili.ofis) || (aktifKullanici && aktifKullanici.ofis) || "";
+  const imza = dOfis ? `${dAd} (${dOfis})` : dAd;
+  const musteriAd = item.ad || "Değerli Müşterimiz";
+  const mulkAd = item.islemMulkBaslik || item.islemBolge || "gayrimenkul";
+
+  if (seciliReferansMesajSablonu === "bayram") {
+    return `Merhaba Sayın ${musteriAd}, bayramınızı en içten dileklerimle kutlar; aileniz ve sevdiklerinizle birlikte sağlık, mutluluk ve huzur dolu nice bayramlar dilerim. Selamlar, ${imza}`;
+  }
+  if (seciliReferansMesajSablonu === "halhatir") {
+    return `Merhaba Sayın ${musteriAd}, nasılsınız? Birlikte tamamladığımız ${mulkAd} işlemimizin üzerinden biraz vakit geçti; her şey yolunda mı diye halinizi hatırınızı sormak istedim. Uygun bir zamanınızda kahveye beklerim. Selamlar, ${imza}`;
+  }
+  if (seciliReferansMesajSablonu === "yildonumu") {
+    return `Merhaba Sayın ${musteriAd}, birlikte gerçekleştirdiğimiz ${mulkAd} işleminin yıl dönümünde sizi ve ailenizi sevgiyle selamlıyorum. Bölgenizdeki güncel piyasa değerleri oldukça hareketli; çevrenizde gayrimenkul satmayı veya almayı düşünen dostlarınız olursa referansınızla memnuniyetle yardımcı olurum. — ${imza}`;
+  }
+  return (ozelReferansMesajMetni || "")
+    .replace(/\[Ad\]/gi, musteriAd)
+    .replace(/\[Mülk\]/gi, mulkAd) + ` — ${imza}`;
+}
+
+function referansMusteriIletisimKaydet(refId, tip) {
+  const tumu = tumReferansMusterileriYukle();
+  const hedef = tumu.find(x => x.id === refId);
+  if (!hedef) return;
+  const bugun = new Date().toLocaleDateString("tr-TR", { day: "numeric", month: "long" });
+  const sablonEtiketMap = {
+    bayram: "🎉 Bayram Tebriği Gönderildi",
+    halhatir: "☕ Hal-Hatır Mesajı Gönderildi",
+    yildonumu: "🏡 Yıl Dönümü & Referans Mesajı Gönderildi",
+    ozel: "💬 Özel WhatsApp Mesajı Gönderildi"
+  };
+  if (tip === "arama") {
+    hedef.sonIletisimDurumu = `📞 ${bugun} • Telefonla Arandı (Hal-Hatır Soruldu)`;
+    hedef.sonIletisimTipi = "arama";
+  } else {
+    hedef.sonIletisimDurumu = `✓ ${bugun} • ${sablonEtiketMap[seciliReferansMesajSablonu] || "WhatsApp Mesajı Gönderildi"}`;
+    hedef.sonIletisimTipi = "whatsapp";
+  }
+  tumReferansMusterileriKaydet(tumu);
+  setTimeout(() => potansiyelAlicilarimPanelRender(), 200);
+}
+
+function referansMusteriNotGuncelle(refId) {
+  const tumu = tumReferansMusterileriYukle();
+  const hedef = tumu.find(x => x.id === refId);
+  if (!hedef) return;
+  const yeniNot = (document.getElementById(`refAgentNoteInput_${refId}`)?.value || "").trim();
+  hedef.danismanNotu = yeniNot;
+  tumReferansMusterileriKaydet(tumu);
+  potansiyelAlicilarimPanelRender();
+  alert(`✅ ${hedef.ad} için referans notunuz kaydedildi.`);
+}
+
+function referansMusteriSil(refId) {
+  const tumu = tumReferansMusterileriYukle().filter(x => x.id !== refId);
+  tumReferansMusterileriKaydet(tumu);
+  potansiyelAlicilarimPanelRender();
+  igSolMenuGuncelle("potential-buyers");
+}
+
+function manuelReferansFormuToggle() {
+  manuelReferansEkleAcikMi = !manuelReferansEkleAcikMi;
+  potansiyelAlicilarimPanelRender();
+}
+
+function manuelReferansMusteriKaydet() {
+  const ad = (document.getElementById("newRefClientName")?.value || "").trim();
+  const tel = (document.getElementById("newRefClientPhone")?.value || "").trim();
+  const rol = document.getElementById("newRefClientRole")?.value || "satici";
+  const mulk = (document.getElementById("newRefClientProp")?.value || "").trim();
+  const not = (document.getElementById("newRefClientNote")?.value || "").trim();
+
+  if (!ad || !tel) {
+    alert("Lütfen referans müşterinizin Ad Soyad ve Cep Telefonu bilgilerini girin.");
+    return;
+  }
+
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const bugun = new Date().toLocaleDateString("tr-TR", { month: "long", year: "numeric" });
+  const tumu = tumReferansMusterileriYukle();
+  tumu.unshift({
+    id: `ref_manual_${Date.now()}`,
+    danismanId: aktifId,
+    ad,
+    telefon: tel,
+    rolTipi: rol,
+    rolEtiketi: rol === "alici" ? "🔑 Ev Aldırıldı (Alıcı Referansı)" : "🏡 Evi Satıldı (Satıcı Referansı)",
+    islemMulkBaslik: mulk || "Tamamlanan Gayrimenkul İşlemi",
+    islemBolge: (danismanProfili && danismanProfili.il) || "Ankara",
+    islemFiyat: "",
+    islemTarihi: bugun,
+    danismanNotu: not || "Manuel eklenen referans müşterimiz.",
+    sonIletisimDurumu: "Henüz Bayram / Hal-Hatır Mesajı Gönderilmedi",
+    sonIletisimTipi: ""
+  });
+  tumReferansMusterileriKaydet(tumu);
+  manuelReferansEkleAcikMi = false;
+  potansiyelAlicilarimPanelRender();
+  igSolMenuGuncelle("potential-buyers");
+}
+
 function potansiyelAliciKategoriFiltreSec(kat) {
   potansiyelAliciAktifKategoriFiltresi = kat || "tumu";
   potansiyelAlicilarimPanelRender();
@@ -4300,7 +4623,370 @@ function potansiyelAlicilarimPanelRender() {
 
   const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
   const hamListe = potansiyelAlicilarListesiniGetir(aktifId);
+  const hamReferansListe = referansMusterilerListesiniGetir(aktifId);
   const aktifPortfoylerim = aktifDanismaninGorunenPortfoyleri();
+
+  const ustSekmeBariHtml = `
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <h2 class="saas-h2" style="margin:0;">👥 Müşteri &amp; Referans Havuzum</h2>
+          <span class="saas-badge-blue">${hamListe.length} Potansiyel Alıcı</span>
+          <span class="saas-badge-emerald">${hamReferansListe.length} Mutlu Müşteri &amp; Referans</span>
+        </div>
+        <div class="saas-text-xs" style="margin-top:3px;">
+          Yeni sekme kalabalığı olmadan hem aktif mülk arayan <strong>Potansiyel Alıcılarınızı</strong> hem de daha önce ev sattığınız / ev aldırdığınız <strong>En İyi Referans Müşterilerinizi</strong> (Bayram mesajı, hal-hatır sorma ve telefonla arama takibiyle) tek merkezden yönetin.
+        </div>
+      </div>
+    </div>
+
+    <!-- 2'Lİ ANA GEÇİŞ SEKMESİ: POTANSİYEL ALICILARIM | REFERANS MÜŞTERİLERİM (EV SATTIKLARIM & ALDIRDIKLARIM) -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:16px;">
+      <button
+        type="button"
+        onclick="musteriHavuzuAltSekmeSec('potential')"
+        style="cursor:pointer;text-align:left;padding:13px 16px;border-radius:14px;border:2px solid ${
+          musteriHavuzuAktifAltSekme === "potential" ? "#2563EB" : "#E2E8F0"
+        };background:${
+          musteriHavuzuAktifAltSekme === "potential" ? "#EFF6FF" : "#FFFFFF"
+        };display:flex;align-items:center;justify-content:space-between;gap:10px;"
+      >
+        <div style="display:flex;align-items:center;gap:11px;">
+          <span style="width:38px;height:38px;border-radius:10px;background:#2563EB;color:#FFFFFF;display:inline-flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">🎯</span>
+          <div>
+            <div style="font-size:0.92rem;font-weight:800;color:#0F172A;">1. Potansiyel Alıcılarım (Aktif Arayanlar)</div>
+            <div class="saas-text-xs">Satılan portföylerden evi alamayıp yeni portföy bekleyen alıcılar</div>
+          </div>
+        </div>
+        <span class="saas-badge-blue">${hamListe.length} Kişi</span>
+      </button>
+
+      <button
+        type="button"
+        onclick="musteriHavuzuAltSekmeSec('referrals')"
+        style="cursor:pointer;text-align:left;padding:13px 16px;border-radius:14px;border:2px solid ${
+          musteriHavuzuAktifAltSekme === "referrals" ? "#16A34A" : "#E2E8F0"
+        };background:${
+          musteriHavuzuAktifAltSekme === "referrals" ? "#F0FDF4" : "#FFFFFF"
+        };display:flex;align-items:center;justify-content:space-between;gap:10px;"
+      >
+        <div style="display:flex;align-items:center;gap:11px;">
+          <span style="width:38px;height:38px;border-radius:10px;background:#16A34A;color:#FFFFFF;display:inline-flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">🤝</span>
+          <div>
+            <div style="font-size:0.92rem;font-weight:800;color:#0F172A;">2. Referans Müşterilerim (Ev Sattıklarım / Aldırdıklarım)</div>
+            <div class="saas-text-xs">WhatsApp Bayram tebriği, hal-hatır mesajı ve telefonla arama takibi</div>
+          </div>
+        </div>
+        <span class="saas-badge-emerald">${hamReferansListe.length} Referans</span>
+      </button>
+    </div>
+  `;
+
+  if (musteriHavuzuAktifAltSekme === "referrals") {
+    const filtrelenmisReferanslar = hamReferansListe.filter(item => {
+      if (referansRolFiltresi !== "tumu" && item.rolTipi !== referansRolFiltresi) return false;
+      if (referansAramaMetni) {
+        const q = referansAramaMetni.toLowerCase();
+        const birlesik = [item.ad, item.telefon, item.islemMulkBaslik, item.islemBolge, item.danismanNotu, item.rolEtiketi]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        if (!birlesik.includes(q)) return false;
+      }
+      return true;
+    });
+
+    const saticiRefSayisi = hamReferansListe.filter(x => x.rolTipi === "satici").length;
+    const aliciRefSayisi = hamReferansListe.filter(x => x.rolTipi === "alici").length;
+    const iletisimKurulanSayisi = hamReferansListe.filter(x => x.sonIletisimTipi === "whatsapp" || x.sonIletisimTipi === "arama").length;
+
+    const ornekOnizlemeMusterisi = filtrelenmisReferanslar[0] || {
+      ad: "Kemal Soylu",
+      islemMulkBaslik: "Çankaya Oran 3+1 Daire",
+      islemBolge: "Çankaya / Ankara"
+    };
+
+    container.innerHTML = `
+      ${ustSekmeBariHtml}
+
+      <!-- %70 GÖRSEL ANLATIM: WHATSAPP BAYRAM / HAL-HATIR ŞABLON SEÇİCİ & TELEFONLA ARAMA MERKEZİ -->
+      <div class="saas-card" style="padding:16px 18px;margin-bottom:16px;background:linear-gradient(180deg,#F0FDF4 0%,#FFFFFF 100%);border:1.5px solid #86EFAC;">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px;">
+          <div>
+            <span class="saas-badge-emerald" style="margin-bottom:4px;">📲 WHATSAPP TOPLU / SIRALI MESAJ &amp; HAL-HATIR ARAMA MERKEZİ</span>
+            <h3 class="saas-h2" style="margin:0;font-size:1rem;">Aşağıdan Mesaj Şablonunuzu Seçin — Her Müşterinin Adıyla Otomatik Hazırlansın</h3>
+            <div class="saas-text-xs" style="margin-top:2px;">
+              Bir portföyü <strong>"Satıldı"</strong> olarak kapattığınızda hem <strong>Mülk Sahibi (Satıcı)</strong> hem de <strong>Evi Alan Alıcı</strong> otomatik olarak bu referans havuzuna düşer. Şablonu seçip kartlardaki <strong>"💬 WhatsApp Gönder"</strong> veya <strong>"📞 Telefonla Ara"</strong> butonuna tıkladığınızda kime ulaştığınız yeşil tikle işaretlenir.
+            </div>
+          </div>
+          <button type="button" class="saas-btn-outline-sm" onclick="manuelReferansFormuToggle()">
+            <span>${manuelReferansEkleAcikMi ? "✕ Formu Kapat" : "+ Eski Müşteri / Referans Ekle"}</span>
+          </button>
+        </div>
+
+        ${
+          manuelReferansEkleAcikMi
+            ? `<div style="background:#FFFFFF;border:1px solid #BBF7D0;border-radius:12px;padding:12px 14px;margin-bottom:12px;">
+                <div style="font-size:0.82rem;font-weight:800;color:#0F172A;margin-bottom:8px;">+ Eski Müşterinizi Referans Havuzuna Manuel Ekleyin</div>
+                <div class="form-grid-4" style="margin-bottom:8px;">
+                  <div class="field" style="margin-bottom:0;">
+                    <label>Müşteri Adı Soyadı *</label>
+                    <input type="text" id="newRefClientName" placeholder="Örn: Ahmet & Ayşe Yılmaz" />
+                  </div>
+                  <div class="field" style="margin-bottom:0;">
+                    <label>Cep Telefonu *</label>
+                    <input type="text" id="newRefClientPhone" placeholder="0532 000 00 00" />
+                  </div>
+                  <div class="field" style="margin-bottom:0;">
+                    <label>Referans Türü</label>
+                    <select id="newRefClientRole">
+                      <option value="satici">🏡 Evi Satıldı (Satıcı Referansı)</option>
+                      <option value="alici">🔑 Ev Aldırıldı (Alıcı Referansı)</option>
+                    </select>
+                  </div>
+                  <div class="field" style="margin-bottom:0;">
+                    <label>Satılan / Alınan Mülk</label>
+                    <input type="text" id="newRefClientProp" placeholder="Örn: Bağlıca 3+1 Daire" />
+                  </div>
+                </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                  <input type="text" id="newRefClientNote" placeholder="Özel notunuz (Örn: 2025'te evini sattık, çevresi geniş...)" style="flex:1;padding:7px 11px;border:1px solid #CBD5E1;border-radius:8px;font-size:0.8rem;" />
+                  <button type="button" class="saas-btn-primary-sm" style="background:#16A34A;border-color:#16A34A;padding:8px 14px;" onclick="manuelReferansMusteriKaydet()">
+                    <span>✓ Referans Havuzuna Kaydet</span>
+                  </button>
+                </div>
+              </div>`
+            : ""
+        }
+
+        <!-- 4 HAZIR ŞABLON SEÇİM BUTONU -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin-bottom:10px;">
+          <button
+            type="button"
+            onclick="referansMesajSablonuSec('bayram')"
+            style="cursor:pointer;padding:10px 12px;border-radius:10px;text-align:left;border:1.5px solid ${
+              seciliReferansMesajSablonu === "bayram" ? "#16A34A" : "#CBD5E1"
+            };background:${seciliReferansMesajSablonu === "bayram" ? "#DCFCE7" : "#FFFFFF"};"
+          >
+            <div style="font-size:0.82rem;font-weight:800;color:#0F172A;">🎉 1. Bayram Tebriği Mesajı</div>
+            <div class="saas-text-xs">İyi bayramlar &amp; aileye sağlık/huzur dileği</div>
+          </button>
+
+          <button
+            type="button"
+            onclick="referansMesajSablonuSec('halhatir')"
+            style="cursor:pointer;padding:10px 12px;border-radius:10px;text-align:left;border:1.5px solid ${
+              seciliReferansMesajSablonu === "halhatir" ? "#16A34A" : "#CBD5E1"
+            };background:${seciliReferansMesajSablonu === "halhatir" ? "#DCFCE7" : "#FFFFFF"};"
+          >
+            <div style="font-size:0.82rem;font-weight:800;color:#0F172A;">☕ 2. Hal-Hatır &amp; Kahve Mesajı</div>
+            <div class="saas-text-xs">"Her şey yolunda mı, kahveye beklerim"</div>
+          </button>
+
+          <button
+            type="button"
+            onclick="referansMesajSablonuSec('yildonumu')"
+            style="cursor:pointer;padding:10px 12px;border-radius:10px;text-align:left;border:1.5px solid ${
+              seciliReferansMesajSablonu === "yildonumu" ? "#16A34A" : "#CBD5E1"
+            };background:${seciliReferansMesajSablonu === "yildonumu" ? "#DCFCE7" : "#FFFFFF"};"
+          >
+            <div style="font-size:0.82rem;font-weight:800;color:#0F172A;">🏡 3. Yıl Dönümü &amp; Referans İsteği</div>
+            <div class="saas-text-xs">Bölge değerlemesi &amp; eş-dost yönlendirme</div>
+          </button>
+
+          <button
+            type="button"
+            onclick="referansMesajSablonuSec('ozel')"
+            style="cursor:pointer;padding:10px 12px;border-radius:10px;text-align:left;border:1.5px solid ${
+              seciliReferansMesajSablonu === "ozel" ? "#16A34A" : "#CBD5E1"
+            };background:${seciliReferansMesajSablonu === "ozel" ? "#DCFCE7" : "#FFFFFF"};"
+          >
+            <div style="font-size:0.82rem;font-weight:800;color:#0F172A;">✍️ 4. Kendi Özel Mesajımı Yaz</div>
+            <div class="saas-text-xs">[Ad] yazarak kişiye özel toplu şablon</div>
+          </button>
+        </div>
+
+        ${
+          seciliReferansMesajSablonu === "ozel"
+            ? `<div style="margin-bottom:8px;">
+                <textarea
+                  rows="2"
+                  oninput="referansOzelMesajDegisti(this.value)"
+                  placeholder="Mesajınızı yazın ([Ad] yazdığınız yere müşterinin adı otomatik gelir)..."
+                  style="width:100%;padding:8px 11px;border:1px solid #86EFAC;border-radius:8px;font-size:0.8rem;font-family:inherit;"
+                >${ozelReferansMesajMetni}</textarea>
+              </div>`
+            : ""
+        }
+
+        <div style="background:#FFFFFF;border:1px solid #BBF7D0;border-radius:10px;padding:9px 12px;font-size:0.77rem;color:#166534;">
+          <strong>👀 Seçili Şablon Canlı Önizlemesi:</strong> "${referansMusteriIcinMesajMetniOlustur(ornekOnizlemeMusterisi)}"
+        </div>
+      </div>
+
+      <!-- FİLTRE PİLL'LERİ VE ARAMA KUTUSU (ALTINA ARAMA EKLENDİ) -->
+      <div class="saas-card" style="padding:12px 14px;margin-bottom:16px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <button
+            type="button"
+            class="${referansRolFiltresi === "tumu" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}"
+            onclick="referansRolFiltreSec('tumu')"
+          >
+            <span>Tümü (${hamReferansListe.length})</span>
+          </button>
+          <button
+            type="button"
+            class="${referansRolFiltresi === "satici" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}"
+            onclick="referansRolFiltreSec('satici')"
+          >
+            <span>🏡 Ev Sattıklarım (${saticiRefSayisi})</span>
+          </button>
+          <button
+            type="button"
+            class="${referansRolFiltresi === "alici" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}"
+            onclick="referansRolFiltreSec('alici')"
+          >
+            <span>🔑 Ev Aldırdıklarım (${aliciRefSayisi})</span>
+          </button>
+          <span class="saas-badge-emerald" style="align-self:center;">✓ Bu Dönem Ulaşılan: ${iletisimKurulanSayisi} / ${hamReferansListe.length}</span>
+        </div>
+
+        <div style="min-width:240px;flex:1;max-width:360px;">
+          <input
+            type="text"
+            value="${referansAramaMetni.replace(/"/g, "&quot;")}"
+            placeholder="🔍 Referans müşteri adı, telefon, mahalle veya mülk ara..."
+            oninput="referansAramaDegisti(this.value)"
+            style="width:100%;padding:7px 11px;border:1px solid #CBD5E1;border-radius:8px;font-size:0.8rem;"
+          />
+        </div>
+      </div>
+
+      <!-- REFERANS MÜŞTERİ KARTLARI -->
+      ${
+        filtrelenmisReferanslar.length === 0
+          ? `<div class="saas-card" style="text-align:center;padding:32px 20px;">
+              <div style="font-size:1.8rem;margin-bottom:6px;">🤝</div>
+              <div style="font-size:0.95rem;font-weight:700;color:#0F172A;margin-bottom:4px;">Aramanıza Uygun Referans Müşteri Bulunamadı</div>
+              <div class="saas-text-xs">Bir portföyünüzü "Satıldı" olarak kapattığınızda Mülk Sahibi ve Evi Alan Alıcı otomatik olarak buraya eklenir.</div>
+            </div>`
+          : `<div class="potential-buyers-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px;">
+              ${filtrelenmisReferanslar
+                .map(item => {
+                  const temizTel = String(item.telefon || "").replace(/\D/g, "");
+                  const kisiselMesaj = referansMusteriIcinMesajMetniOlustur(item);
+                  const waLink = `https://wa.me/9${temizTel}?text=${encodeURIComponent(kisiselMesaj)}`;
+                  const ulastiMi = item.sonIletisimTipi === "whatsapp" || item.sonIletisimTipi === "arama";
+
+                  return `
+                    <div class="saas-card" style="padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;gap:12px;border-left:4px solid ${
+                      item.rolTipi === "alici" ? "#2563EB" : "#16A34A"
+                    };">
+                      <div>
+                        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;">
+                          <div>
+                            <span style="display:inline-block;font-size:0.68rem;font-weight:800;background:${
+                              item.rolTipi === "alici" ? "#EFF6FF" : "#F0FDF4"
+                            };color:${
+                    item.rolTipi === "alici" ? "#1D4ED8" : "#15803D"
+                  };border:1px solid ${
+                    item.rolTipi === "alici" ? "#BFDBFE" : "#BBF7D0"
+                  };padding:2px 8px;border-radius:999px;margin-bottom:4px;">
+                              ${item.rolEtiketi} • ${item.islemTarihi || ""}
+                            </span>
+                            <h3 style="font-size:1.02rem;font-weight:800;color:#0F172A;margin:0;">👤 ${item.ad}</h3>
+                          </div>
+                          <button type="button" class="saas-btn-outline-sm" style="padding:3px 8px;color:#DC2626;" onclick="referansMusteriSil('${item.id}')" title="Referans Havuzundan Kaldır">✕</button>
+                        </div>
+
+                        <!-- İŞLEM YAPILAN MÜLK & İLETİŞİM BİLGİSİ -->
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:0.77rem;">
+                          <div>
+                            <div style="font-size:0.66rem;font-weight:700;color:#64748B;text-transform:uppercase;">Cep Telefonu</div>
+                            <div style="font-weight:800;color:#0F172A;">📲 ${item.telefon || "-"}</div>
+                          </div>
+                          <div>
+                            <div style="font-size:0.66rem;font-weight:700;color:#64748B;text-transform:uppercase;">İşlem Bedeli</div>
+                            <div style="font-weight:800;color:#15803D;">💰 ${item.islemFiyat || "Tamamlandı"}</div>
+                          </div>
+                          <div style="grid-column:span 2;">
+                            <div style="font-size:0.66rem;font-weight:700;color:#64748B;text-transform:uppercase;">Satılan / Alınan Mülk &amp; Bölge</div>
+                            <div style="font-weight:700;color:#0F172A;">🏠 ${item.islemMulkBaslik || "-"}</div>
+                            <div class="saas-text-xs">📍 ${item.islemBolge || "-"}</div>
+                          </div>
+                        </div>
+
+                        <!-- SON İLETİŞİM (BAYRAM / HAL-HATIR / ARAMA) DURUM ROZETİ -->
+                        <div style="background:${ulastiMi ? "#F0FDF4" : "#FFFBEB"};border:1px solid ${
+                    ulastiMi ? "#86EFAC" : "#FDE68A"
+                  };border-radius:9px;padding:8px 11px;margin-bottom:10px;font-size:0.75rem;color:${
+                    ulastiMi ? "#166534" : "#92400E"
+                  };font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:6px;">
+                          <span>${item.sonIletisimDurumu || "Henüz Bayram / Hal-Hatır Mesajı Gönderilmedi"}</span>
+                        </div>
+
+                        <!-- DANIŞMANIN REFERANS NOTU -->
+                        <div style="background:#F8FAFC;border:1px solid #CBD5E1;border-radius:9px;padding:8px 11px;font-size:0.76rem;">
+                          <div style="font-weight:800;color:#0F172A;margin-bottom:4px;">📝 Referans &amp; Hal-Hatır Notunuz:</div>
+                          <div style="display:flex;gap:6px;align-items:center;">
+                            <input
+                              type="text"
+                              id="refAgentNoteInput_${item.id}"
+                              value="${(item.danismanNotu || "").replace(/"/g, "&quot;")}"
+                              placeholder="Örn: Bayramda aradım, kardeşine de daire bakıyoruz..."
+                              style="flex:1;padding:6px 9px;border:1px solid #CBD5E1;border-radius:7px;font-size:0.75rem;background:#FFFFFF;"
+                            />
+                            <button
+                              type="button"
+                              class="saas-btn-outline-sm"
+                              style="padding:5px 10px;font-size:0.72rem;white-space:nowrap;"
+                              onclick="referansMusteriNotGuncelle('${item.id}')"
+                            >
+                              <span>Kaydet</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- TEK TIKLA WHATSAPP ŞABLONLU MESAJ GÖNDERME VE TELEFONLA ARAMA BUTONLARI -->
+                      <div style="padding-top:10px;border-top:1px solid #E2E8F0;display:flex;gap:8px;flex-wrap:wrap;">
+                        <a
+                          href="${waLink}"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onclick="referansMusteriIletisimKaydet('${item.id}', 'whatsapp')"
+                          class="saas-btn-primary-sm"
+                          style="flex:1.4;justify-content:center;background:#16A34A;border-color:#16A34A;text-decoration:none;padding:8px 12px;font-size:0.76rem;"
+                        >
+                          <span>💬 WhatsApp (${
+                            seciliReferansMesajSablonu === "bayram"
+                              ? "Bayram Tebriği"
+                              : seciliReferansMesajSablonu === "halhatir"
+                              ? "Hal-Hatır Sor"
+                              : seciliReferansMesajSablonu === "yildonumu"
+                              ? "Yıl Dönümü"
+                              : "Özel Mesaj"
+                          })</span>
+                        </a>
+
+                        <a
+                          href="tel:${temizTel}"
+                          onclick="referansMusteriIletisimKaydet('${item.id}', 'arama')"
+                          class="saas-btn-outline-sm"
+                          style="flex:1;justify-content:center;text-decoration:none;padding:8px 12px;font-size:0.76rem;color:#0F172A;border-color:#94A3B8;background:#FFFFFF;"
+                        >
+                          <span>📞 Telefonla Ara</span>
+                        </a>
+                      </div>
+                    </div>
+                  `;
+                })
+                .join("")}
+            </div>`
+      }
+    `;
+    return;
+  }
 
   const liste = hamListe.filter(item => {
     const itemKat =
@@ -4341,17 +5027,7 @@ function potansiyelAlicilarimPanelRender() {
       : `<option value="">Aktif portföyünüz bulunmuyor</option>`;
 
   container.innerHTML = `
-    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;">
-      <div>
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-          <h2 class="saas-h2" style="margin:0;">👥 Potansiyel Alıcılarım Havuzu</h2>
-          <span class="saas-badge-blue">${hamListe.length} Hazır Alıcı Adayı</span>
-        </div>
-        <div class="saas-text-xs" style="margin-top:3px;">
-          Satılan veya kapatılan portföylerinizde <strong>evi satın alan kişi hariç</strong> tekil mülk takip kodu gönderdiğiniz diğer tüm alıcılar; <strong>eski mülkün özellikleri, alıcının kendi yazdığı notlar ve sizin alıcıya özel notunuzla</strong> otomatik olarak buraya aktarılır.
-        </div>
-      </div>
-    </div>
+    ${ustSekmeBariHtml}
 
     <!-- HIZLI KATEGORİ & BÖLGE / İSİM FİLTRE BARI -->
     <div class="saas-card" style="padding:12px 14px;margin-bottom:16px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;">
