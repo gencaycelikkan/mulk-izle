@@ -46,20 +46,37 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
 
 ## 🏗️ Sıradaki Büyük Vizyon: İnşaat Projeleri & Satış Ofisleri Özel Paketi (Ayrı Fiyatlandırma)
 
-> **Not:** Müteahhit / İnşaat Firması Satış Ofisleri ve Proje Pazarlama Ekipleri için bireysel emlak danışmanı paketlerinden bağımsız, **ayrı fiyatlandırılacak** kurumsal modül yol haritası:
+> **Not:** Müteahhit / İnşaat Firması Satış Ofisleri ve birden fazla şantiyenin satış ofisini işleten Kurumsal Emlak Ofisleri (Örn: *Realty World Çizgi Gayrimenkul gibi 4 ayrı şantiyenin satış ofisini yöneten ofisler*) için bireysel paketlerden bağımsız, **daire (bağımsız bölüm) sayısına göre ayrı fiyatlandırılacak** kurumsal modül yol haritası:
 
-- [ ] **1. Satış Ofisi Özel CRM & Müşteri Takip Sistemi:**
-  - Satış ofisine gelen (Walk-in), telefonla arayan veya reklam formundan düşen proje müşterilerinin satış temsilcilerine atanması, görüşme geçmişi, sıcak/ılık/soğuk alıcı takibi, WhatsApp toplu/şablonlu bilgilendirme ve geri arama (follow-up) hatırlatmaları.
-- [ ] **2. İnteraktif Online Proje Kataloğu & Dijital Maket / Vaziyet Planı:**
-  - Projenin vaziyet planı, blok/kat/daire tipleri (`1+1`, `2+1`, `3+1`, `Bahçe Dubleks`, `Ticari Ünite`), kat planları, 360° örnek daire sanal turu, inşaat ilerleme yüzdesi (şantiye canlı zaman tüneli) ve kişiye özel tekil 12 haneli Proje Sunum & Takip Kodu gönderimi.
-- [ ] **3. Canlı Blok / Daire Stok & Durum Matrisi (`Satışta` / `Opsiyonlu` / `Satıldı`):**
-  - Satış ofisi ekranında hangi blokta hangi dairenin boş, hangisinin kaporası alınmış/opsiyonlu, hangisinin satılmış olduğunun renkli görsel matris üzerinde anlık takibi.
-- [ ] **4. Kişiye Özel Ödeme Planı & Lansman Teklif Simülatörü:**
-  - Peşinat, ara ödeme, inşaat firması içi senet/vade veya banka kredisi seçenekleriyle alıcıya özel PDF ve 12 haneli dijital ödeme planı teklifi oluşturma.
-- [ ] **5. Mülkİzle 81 İl Üye Danışman Ağına Proje Paylaşımı (Co-Op / Yetkili Acente Ağı):**
-  - Satış ofisinin dilerse projesini Mülkİzle'deki Pro danışmanlara komisyon paylaşımıyla açabilmesi (danışman kendi alıcısını satış ofisine sistem üzerinden kayıtlı yönlendirir, müşteri koruma garantisi sağlanır).
-- [ ] **6. Satış Ofisi Paketinin Ayrı Fiyatlandırılması:**
-  - Mevcut bireysel/ofis danışman paketlerinden ayrı olarak proje büyüklüğüne ve satış temsilcisi sayısına göre özel **Satış Ofisi / Proje Paketi** fiyatlandırma kartı ve kurgusu.
+- [ ] **1. İki Farklı İşletme Modu ("Müteahhit Kendi Satış Ofisi" vs. "Çoklu Proje Yöneten Yetkili Emlak Ofisi"):**
+  - **Mod A — Müteahhit Kendi Satış Ofisi:** Tek veya çoklu projesini kendi bünyesindeki satış müdürü, satış danışmanları ve şantiye şefiyle yönetir.
+  - **Mod B — Çoklu Şantiye Yöneten Emlak Ofisi (Örn: 4 Ayrı Şantiyenin Satış Ofisini İşleten Broker/Ofis):**
+    - Üstte **"🏗️ Aktif Şantiye / Proje Seçici"** barı yer alır (`1. Şantiye: Çizgi Panorama` | `2. Şantiye: Bağlıca Konakları` | `3. Şantiye: İncek Prestij` | `4. Şantiye: Gölbaşı Villaları`).
+    - **Her Şantiyenin Müteahhidine Özel İzole Patron Kodu / Ekranı:** 1. şantiyenin müteahhidi girdiğinde **sadece kendi şantiyesinin** satışlarını, sıcak müşterilerini ve haftalık raporunu görür; emlak ofisinin yönettiği diğer 3 şantiyeyi kesinlikle göremez!
+    - **Ortak Alıcı Havuzu & Çapraz Proje Önerisi (Cross-Sell):** 1. şantiyeye gelen alıcıya daire uymadıysa, satış müdürü tek tıkla o müşteriyi kendi işlettiği 2. veya 3. şantiyeye yönlendirebilir.
+- [ ] **2. 4 Rol & Yetki İzolasyonu + Silinemez "Kara Kutu" Denetim Logu (Audit Log):**
+  - **👑 1. Müteahhit (Patron Ekranı):** Karmaşık form doldurmaz; sadece 4 büyük KPI kartını (Gelen Müşteri, Sıcak/Opsiyonlu/Satılan Daire, Danışman Performans Tablosu) görür ve tek tuşla **Haftalık PDF / WhatsApp Raporu** alır.
+  - **🎼 2. Satış Ofisi Müdürü (Orkestra Şefi):** Tüm satış danışmanlarının müşterilerini görür, kendi VIP müşterilerini girebilir, müşterileri satış danışmanlarına **atama/devretme** yetkisine sahiptir ve hangi emlakçının "Onaylı Paydaş" olacağına karar verir.
+  - **🧑‍💼 3. Satış Danışmanı (Sorumlu):** Yalnızca **kendi müşterilerini** görür (müşteri listesini kopyalayıp götüremez). Kayıt açarken girdiği telefon numarası başka bir danışmanda kayıtlıysa sistem **"⛔ Bu müşteri [Tarih/Saat] itibarıyla [Danışman Adı] adına kayıtlıdır, mükerrer kayıt açılamaz!"** uyarısı verir. Kayıt silemez ve başka danışmana devredemez.
+  - **ヘルメット 4. Şantiye Şefi (Saha & Teslim Sorumlusu):** Müşteri bütçelerini ve satış fiyatlarını görmez. Sadece genel inşaat aşamalarını ve daire bazlı termin/eksik checklist'ini yönetir.
+  - **🛡️ Silinemez Kara Kutu Log:** Birden fazla müdür veya danışman olduğunda; kimin hangi gün/saatte kayıt açtığı, kimin hangi müşteriyi hangi danışmana devrettiği veya pasife/silinenlere aldığı saniyesi saniyesine değiştirilemez log tablosunda tutulur.
+- [ ] **3. Satış Ofisi Özel CRM & Stok Daire Matrisi Bağlantısı:**
+  - Müşteri Adı Soyadı, Cep Telefonu, **🌡️ Sıcak / Ilık / Soğuk Alıcı** kategorizasyonu, kayıt gün/saati, kaydı açan satış sorumlusu, zaman damgalı görüşme geçmişi ve geri arama (follow-up) hatırlatması.
+  - Müşteri kartında ilgilendiği **Blok / Kat / Daire No veya Daire Tipi (`2+1`, `3+1`, `4+1`, `Ticari`)** seçimi doğrudan **Canlı Blok / Daire Stok Matrisi (`🟢 Satışta` | `🟡 Opsiyonlu` | `🔴 Satıldı`)** ile entegre çalışır.
+- [ ] **4. Emlakçı Kavgalarını Bitiren "Proje Paylaşım Şalteri" & "Onaylı Paydaş Emlakçı + Fiziki Gösterim Çift Onayı":**
+  - Satış Ofisi Müdürü projeyi **`🔒 Paylaşıma Kapalı`** veya **`🤝 Sadece Yetki Verdiğim Paydaş Emlakçılara Açık`** olarak ayarlar.
+  - Sırf WhatsApp'tan katalog attı diye müşteri sahiplenilmesini önlemek için: Paydaş emlakçı Mülkİzle'den müşteri adı/telefonu ve randevu saatini girerek **"⏳ Ön Kayıt / Takip Talebi"** açar; ancak müşteri emlakçıyla birlikte satış ofisine fiziki olarak gelip Satış Ofisi Sorumlusu ekrandan **"✓ Müşteri Satış Ofisine Geldi / Eşleşmeyi Onayla"** butonuna basmadığı sürece o kayıt resmiyet kazanmaz. Onaylandığında ise emlakçı 12 haneli ortak takip koduyla müşterisinin satış sürecini canlı izler.
+- [ ] **5. İki Katmanlı İnşaat Termin Planı ("İç Termin Sayacı" vs. "Müşteri Kontrollü Takvim") & Online Proje Kataloğu:**
+  - Proje açılırken standart inşaat adımları (*Ruhsat → Hafriyat → Temel → 1. Kat Betonu → Kaba İnşaat → Pencere & Dış Cephe → İnce İşçilik → Peyzaj → İskan & Teslim*) ve termin tarihleri seçilir.
+  - **Katman 1 (Ekip İçi Gerçek Gün Sayacı):** Müteahhit, Müdür ve Şantiye Şefi kalan günleri ve iç gecikmeyi canlı sayaçla görür.
+  - **Katman 2 (Alıcı Online Kataloğu — Gri Bölge Çözümü):** Müşterilerin %80 gecikmeden korkmaması için alıcı ekranında korkutucu kırmızı "Gecikti" alarmı çıkmaz; dönem/ay bazlı hedef gösterilir ve gecikme olduğunda Müdür tek tıkla kurumsal revize açıklaması (*Hava muhalefeti / Beton kürlenme güvenliği / Resmi kurum trafo-iskan süreci*) yayınlar.
+  - Şantiye şefi veya satış ofisi bir adımın (Örn: *1. Kat Betonu Atıldı*) fotoğrafını yükleyip **Satış Müdürü "✓ Onayla & Katalogda Yayınla"** dediğinde tüm alıcıların 12 haneli Online Proje Kataloğundaki zaman tünelinde o adım fotoğraflı olarak tamamlanır.
+- [ ] **6. Şantiye Şefi "Fotoğraflı Daire Teslim Checklist'i" ("Fotoğraf Yoksa Tamamlandı Yok!" Kuralı):**
+  - Teslim aşamasına gelen her dairenin (`Örn: A Blok Daire 12`) içinde 7 maddelik teslim kontrol listesi (*1. Vestiyer & İç Kapılar, 2. Mutfak Dolabı & Ankastre, 3. Banyo & Duşakabin, 4. Parke & Süpürgelik, 5. PVC & Cam Balkon, 6. Kombi & Tesisat Testi, 7. İnce Temizlik*) yer alır.
+  - Satış ofisi dairede eksik gördüğünde (*"Vestiyer takılmamış"*) tek tıkla girer; şantiye şefinin ekranına aciliyet sırasıyla düşer.
+  - Şantiye şefi takılan vestiyerin **gerçek fotoğrafını çekip yüklemeden** o maddeyi `✓ Tamamlandı` olarak işaretleyemez! Böylece şantiye şefi telefon trafiğinden kurtulur, yanlış/eksik daire teslimi sıfırlanır.
+- [ ] **7. Daire (Bağımsız Bölüm) Sayısına Göre Ayrı Fiyatlandırma (`1-30 Daire` | `31-100 Daire` | `101-300+ Daire`):**
+  - Sabit paket yerine projenin daire sayısına göre kademeli fiyatlandırma + ekranda **"Daire Başına Aylık Maliyeti Gösteren Canlı Hesaplayıcı Kaydıracı (Slider)"** ve enflasyona karşı **Yıllık Peşin / 2-3 Yıllık Peşin Proje Lisansı** modeli.
 
 ---
 
