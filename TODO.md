@@ -47,6 +47,7 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
 ## 🏗️ Sıradaki Büyük Vizyon: İnşaat Projeleri & Satış Ofisleri Özel Paketi (Ayrı Fiyatlandırma)
 
 > **Not:** Müteahhit / İnşaat Firması Satış Ofisleri ve birden fazla şantiyenin satış ofisini işleten Kurumsal Emlak Ofisleri (Örn: *Realty World Çizgi Gayrimenkul gibi 4 ayrı şantiyenin satış ofisini yöneten ofisler*) için bireysel paketlerden bağımsız, **daire (bağımsız bölüm) sayısına göre ayrı fiyatlandırılacak** kurumsal modül yol haritası:
+> **Mimari Durum (`satis-ofisi/` — Faz 2'ye Park Edildi):** Ana `app.js` dosyasını şişirmemek için ayrı modüler iskelet (`satis-ofisi/index.html`, `styles.css`, `js/...`) + canlı uydu üzerinde ilk 3B prototip (`satis-ofisi/demo-3d.html` — *UBK Viv Gölbaşı 3 bloklu demo*) olarak kenarda hazırlandı; öncelik **Ana Mülkİzle**'yi tamamlayıp canlıya almakta.
 
 - [ ] **1. İki Farklı İşletme Modu & "Şantiye (Proje) Bazlı Esnek Ortaklık ve Rol Matrisi":**
   - **Mod A — Müteahhit Kendi Satış Ofisi:** Tek veya çoklu projesini kendi bünyesindeki satış müdürü, satış danışmanları ve şantiye şefiyle yönetir.
@@ -70,7 +71,7 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
   - **👑 1. Müteahhit (Patron Ekranı):** Karmaşık form doldurmaz; sadece 4 büyük KPI kartını (Gelen Müşteri, Sıcak/Opsiyonlu/Satılan Daire, Fiyat Direnci & Son Satış Fiyatı, Danışman Performans Tablosu) görür ve tek tuşla **Haftalık PDF / WhatsApp Raporu** alır.
   - **🎼 2. Satış Ofisi Müdürü / Proje Ortağı (Orkestra Şefi):** Tüm satış danışmanlarının müşterilerini ve performans karnesini görür, kendi VIP müşterilerini girebilir, müşterileri satış danışmanlarına **atama/devretme** yetkisine sahiptir ve hangi emlakçının "Onaylı Paydaş" olacağına karar verir.
   - **🧑‍💼 3. Satış Danışmanı (Satış Ofisi Sorumlusu):** Yalnızca **kendi müşterilerini** görür (müşteri listesini kopyalayıp götüremez). Kayıt açarken girdiği telefon numarası başka bir danışmanda kayıtlıysa sistem **"⛔ Bu müşteri [Tarih/Saat] itibarıyla [Danışman Adı] adına kayıtlıdır, mükerrer kayıt açılamaz!"** uyarısı verir. Kayıt silemez ve başka danışmana devredemez.
-  - **ヘルメット 4. Şantiye Şefi (Saha & Teslim Sorumlusu):** Müşteri bütçelerini ve satış fiyatlarını görmez. Sadece genel inşaat aşamalarını ve daire bazlı termin/eksik checklist'ini yönetir.
+  - **👷‍♂️ 4. Şantiye Şefi (Saha & Teslim Sorumlusu):** Müşteri bütçelerini ve satış fiyatlarını görmez. Sadece genel inşaat aşamalarını ve daire bazlı termin/eksik checklist'ini yönetir.
   - **🛡️ Silinemez Kara Kutu Log:** Birden fazla müdür, ortak veya danışman olduğunda; kimin hangi gün/saatte kayıt açtığı, kimin hangi müşteriyi hangi danışmana devrettiği veya pasife/silinenlere aldığı saniyesi saniyesine değiştirilemez log tablosunda tutulur.
 - [ ] **5. Satış Ofisi Özel CRM & Stok Daire Matrisi Bağlantısı:**
   - Müşteri Adı Soyadı, Cep Telefonu, **🌡️ Sıcak / Ilık / Soğuk Alıcı** kategorizasyonu, müşterinin teklif ettiği bütçe/fiyat tepkisi, kayıt gün/saati, kaydı açan satış sorumlusu, zaman damgalı görüşme geçmişi ve geri arama (follow-up) hatırlatması.
@@ -89,6 +90,11 @@ Bu dosya **Gencay (İçerik & Emlak Kurgusu)** ve **Abisi (UI/UX & Mobil Uygulam
   - Şantiye şefi takılan vestiyerin **gerçek fotoğrafını çekip yüklemeden** o maddeyi `✓ Tamamlandı` olarak işaretleyemez! Böylece şantiye şefi telefon trafiğinden kurtulur, yanlış/eksik daire teslimi sıfırlanır.
 - [ ] **9. Daire (Bağımsız Bölüm) Sayısına Göre Ayrı Fiyatlandırma (`1-30 Daire` | `31-100 Daire` | `101-300+ Daire`):**
   - Sabit paket yerine projenin daire sayısına göre kademeli fiyatlandırma + ekranda **"Daire Başına Aylık Maliyeti Gösteren Canlı Hesaplayıcı Kaydıracı (Slider)"** ve enflasyona karşı **Yıllık Peşin / 2-3 Yıllık Peşin Proje Lisansı** modeli.
+- [ ] **10. Faz 2 — Uydu / Google Earth Üzerinde 3B Çizgisel Bloklar, Otomatik Pusula Cepheleri & "Anahtar Teslim 3B Kurulum" Hizmeti:**
+  - **3B Çizgisel Satış Tahtası (`MapLibre GL` + Uydu / Google Earth Altlığı):** Her daire gerçek uydu görüntüsü üstünde kat kat tıklanabilir 3B çizgisel kutu olarak yükselir (`🟢 Satışta`, `🟡 Opsiyonlu`, `🔴 Satıldı`, `🟣 Barter`, `🔵 Arsa Sahibi`), 360° döndürülebilir, üst katlar **Kat Süzgeci** ile kesilebilir ve blok açısına göre **pusula cepheleri (Tek / Çift / 3 Cephe)** otomatik hesaplanır.
+  - **Eksi Katlar, Apartman Giriş Katı & Değişken Kat Planı:** Bodrum katlar (`-2`, `-1`), apartman giriş katı işareti (`🚪 -1` veya `0`), kat aralıklarına göre değişen daire sayıları (Örn: *1–10. katlar 6 daire, 11–14. katlar 4 daire*) ve yazdırılabilir renkli **Mimari Satış Tahtası (Şema PDF)** desteği.
+  - **Müteahhitten İstenecek "Altın 3'lü Paket" (Hızlı Kurulum Standardı):** *(1)* **Vaziyet Planı** (varsa `DXF/DWG`, yoksa `PDF`), *(2)* **Tip Kat Planı** (`PDF/görsel` — aynı zamanda daireye tıklayınca 2B kat planı olarak gösterilir), *(3)* **Ada/Parsel + Güncel Fiyat & Stok Listesi** (`Excel/PDF`).
+  - **Hibrit İş Modeli:** Basit/standart binalarda kullanıcı hazır blok şablonlarıyla (`Dikdörtgen`, `Kare`, `L-Blok`, `U-Blok`) kendi oturtabilir; büyük projelerde **"24 Saatte Anahtar Teslim 3B Kurulum Hizmeti"** (ek kurulum bedeli veya 2–3 yıllık peşin lisans alana ücretsiz kanca) sunulur.
 
 ---
 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mülkİzle | İnşaat Projeleri & Satış Ofisi Modülü</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css?v=4" />
+</head>
+<body>
+
+  <!-- ÜST KURUMSAL BAR & AKTİF KULLANICI GEÇİŞİ -->
+  <header class="so-topbar">
+    <div class="so-topbar-inner">
+      <a href="../index.html" class="so-brand" title="Mülkİzle Ana Sayfa">
+        <svg class="so-brand-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="27" cy="27" r="19" stroke="#1D5FE8" stroke-width="5.5" fill="#FFFFFF" />
+          <path d="M41 41L56 56" stroke="#1D5FE8" stroke-width="7.5" stroke-linecap="round" />
+          <path d="M27 15L15 25.5H18.5V36.5H24.5V29.5H29.5V36.5H35.5V25.5H39L27 15Z" fill="#0B1F3A" />
+          <rect x="31.5" y="16.5" width="3.2" height="6" fill="#0B1F3A" />
+        </svg>
+        <div class="so-brand-title">
+          <span class="so-wordmark">mülk<span class="izle">izle</span><span class="com">.com</span></span>
+          <span class="so-module-badge">SATIŞ OFİSİ</span>
+        </div>
+      </a>
+
+      <div class="so-topbar-right">
+        <a href="demo-3d.html" class="so-btn so-btn-primary so-btn-sm" style="text-decoration:none;">🌍 3B Uydu Demo</a>
+        <a href="../index.html" class="so-back-link">← Ana Mülkİzle</a>
+
+        <div class="so-user-switcher">
+          <label for="soUserSelect">Aktif Kullanıcı:</label>
+          <select id="soUserSelect" onchange="SOApp.kullaniciDegistir(this.value)"></select>
+        </div>
+
+        <span id="soRoleBadge" class="so-role-pill">Rol</span>
+
+        <button type="button" class="so-btn so-btn-sm" onclick="SOApp.demoSifirla()" title="Tüm verileri temizle">
+          🗑️ Sıfırla
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- AKTİF ŞANTİYE SEÇİCİ BAR (KULLANICININ YETKİLİ OLDUĞU ŞANTİYELER) -->
+  <div class="so-site-bar" id="soSiteBar"></div>
+
+  <!-- ANA ÇALIŞMA ALANI -->
+  <div class="so-layout">
+    <aside class="so-sidebar" id="soSidebarNav"></aside>
+    <main class="so-main" id="soMainContent"></main>
+  </div>
+
+  <!-- ORTAK MODAL -->
+  <div class="so-modal-backdrop" id="soModalBackdrop" onclick="if(event.target===this) SOApp.closeModal()">
+    <div class="so-modal">
+      <div class="so-modal-head">
+        <h3 id="soModalTitle" class="so-card-title">Detay</h3>
+        <button type="button" class="so-btn so-btn-sm" onclick="SOApp.closeModal()">✕ Kapat</button>
+      </div>
+      <div id="soModalBody"></div>
+    </div>
+  </div>
+
+  <!-- TOAST BİLDİRİMİ -->
+  <div class="so-toast" id="soToast"></div>
+
+  <!-- MODÜLER SCRIPTLER -->
+  <script src="js/state.js?v=4"></script>
+  <script src="js/rapor.js?v=4"></script>
+  <script src="js/stok.js?v=4"></script>
+  <script src="js/crm.js?v=4"></script>
+  <script src="js/santiye.js?v=4"></script>
+  <script src="js/app.js?v=4"></script>
+</body>
+</html>

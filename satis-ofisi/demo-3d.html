@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mülkİzle | UBK Viv Gölbaşı — 3B Uydu Satış Tahtası Demosu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="demo-3d.css?v=2" />
+</head>
+<body>
+
+  <!-- CANLI 3B UYDU HARİTASI -->
+  <div id="d3Map"></div>
+
+  <!-- ÜST BAR -->
+  <header class="d3-topbar">
+    <a href="index.html" class="d3-brand" title="Satış Ofisine Dön">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="27" cy="27" r="19" stroke="#1D5FE8" stroke-width="5.5" fill="#FFFFFF" />
+        <path d="M41 41L56 56" stroke="#1D5FE8" stroke-width="7.5" stroke-linecap="round" />
+        <path d="M27 15L15 25.5H18.5V36.5H24.5V29.5H29.5V36.5H35.5V25.5H39L27 15Z" fill="#0B1F3A" />
+        <rect x="31.5" y="16.5" width="3.2" height="6" fill="#0B1F3A" />
+      </svg>
+      <div>
+        <div class="d3-brand-title">UBK Viv Gölbaşı <span class="d3-pill-badge">3B UYDU DEMO</span></div>
+        <div class="d3-brand-sub">39°47'33.07"N 32°49'14.48"E • Çizgisel 3B Blok &amp; Canlı Cephe</div>
+      </div>
+    </a>
+
+    <div class="d3-toolbar">
+      <div class="d3-seg" title="Harita Altlığı">
+        <button type="button" id="bmGoogle" class="active" onclick="D3Demo.setBasemap('google')">🛰️ Google</button>
+        <button type="button" id="bmSat" onclick="D3Demo.setBasemap('satellite')">🛰️ Esri</button>
+        <button type="button" id="bmOsm" onclick="D3Demo.setBasemap('osm')">🗺️ Sokak</button>
+        <button type="button" id="bmDark" onclick="D3Demo.setBasemap('dark')">🌑 Mimari</button>
+      </div>
+
+      <button type="button" class="d3-btn active" id="btnEarthPhoto" onclick="D3Demo.toggleEarthPhoto()" title="Yüklenen Google Earth fotoğrafını aç/kapat">
+        📸 GE Foto
+      </button>
+
+      <div class="d3-seg" title="Pusula &amp; Bakış Açısı">
+        <button type="button" onclick="D3Demo.flyCompass(0)">K</button>
+        <button type="button" onclick="D3Demo.flyCompass(90)">D</button>
+        <button type="button" onclick="D3Demo.flyCompass(180)">G</button>
+        <button type="button" onclick="D3Demo.flyCompass(270)">B</button>
+        <button type="button" onclick="D3Demo.togglePitch()">🦅 3B/2B</button>
+      </div>
+
+      <button type="button" class="d3-btn" id="btnTour" onclick="D3Demo.toggleTour()">🔄 360° Tur</button>
+      <button type="button" class="d3-btn" onclick="D3Demo.resetDemo()">↺ Sıfırla</button>
+      <a href="index.html" class="d3-btn">← Satış Ofisi</a>
+    </div>
+  </header>
+
+  <!-- SOL KONTROL PANELİ -->
+  <aside class="d3-left-panel" id="d3LeftPanel"></aside>
+
+  <!-- SAĞ DAİRE İNCELEME & DÜZENLEME PANELİ -->
+  <aside class="d3-right-panel" id="d3RightPanel"></aside>
+
+  <!-- MOUSE HOVER TOOLTIP -->
+  <div class="d3-tooltip" id="d3Tooltip"></div>
+
+  <!-- TOAST -->
+  <div class="d3-toast" id="d3Toast"></div>
+
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="js/demo-3d.js?v=2"></script>
+</body>
+</html>

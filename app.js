@@ -37,380 +37,6 @@ const ORNEK_FOTOGRAFLAR = [
   }
 ];
 
-const VARSAYILAN_PORTFOYLER = [
-  {
-    kod: "849201736410",
-    baslik: "Bağlıca Mah. 3+1 Site İçi Ara Kat Daire",
-    fiyat: "4.850.000 ₺",
-    mulkSahibi: "Ahmet Yılmaz",
-    mulkSahibiTel: "0532 410 20 30",
-    danisman: "Gencay Çelikkan",
-    danismanTel: "0532 000 00 00",
-    ofis: "Gayrimenkul Danışmanlık Ofisi",
-    bolge: "Bağlıca, Ankara",
-    durumEtiketi: "Yayında • Aktif Gösterim & Teklif Sürecinde",
-    sonGuncelleme: "16 Kasım 2026",
-    sahibindenUrl: "https://www.sahibinden.com/",
-    videoUrl: "https://www.instagram.com/gencaycelikkan/reels/",
-    matterportUrl: "https://my.matterport.com/show/?m=SxQL3iGyoDo",
-    sosyalMedyaLinkleri: [
-      {
-        platform: "Instagram Reels Tanıtımı",
-        url: "https://www.instagram.com/gencaycelikkan/"
-      },
-      {
-        platform: "Twitter (X) Portföy Paylaşımı",
-        url: "https://x.com/elonmusk"
-      },
-      {
-        platform: "LinkedIn Kurumsal Portföy Sunumu",
-        url: "https://www.linkedin.com/company/elon-muskbusiness"
-      }
-    ],
-    takyidatUrl: "",
-    goruntulenme: "1.840",
-    favori: "46",
-    telefon: "19 Arama",
-    gosterim: "6 Aile Gezdi",
-    sosyalErisim: "12.400 İzlenme • 385 Beğeni",
-    // Yetki Belgesi Ayarları (yok | taslak_yukle | mobil_onay)
-    yetkiModu: "mobil_onay",
-    yetkiSuresi: "",
-    komisyon: "",
-    yetkiOnaylandiMi: false,
-    yetkiBelgesiDosyaAdi: "",
-    yetkiOnayDetayi: "",
-    // Seçilen kronolojik hizmetler
-    hizmetler: [
-      {
-        ad: "Yerinde Keşif",
-        durum: "done",
-        emoji: "👍",
-        saticiYorumu: ""
-      },
-      {
-        ad: "Profesyonel Fotoğraf Çekimi",
-        durum: "done",
-        emoji: "❤️",
-        saticiYorumu: "Fotoğraflar ve açılar çok güzel çıkmış, elinize sağlık Gencay Bey."
-      },
-      {
-        ad: "Detaylı Pazar Analizi",
-        durum: "done",
-        emoji: "👏",
-        saticiYorumu: "Rakip daire analizleri çok açıklayıcı olmuş, 5M - 5.25M aralığı bizim için uygundur."
-      },
-      { ad: "Tapu Takyidat & İmar Kontrolü", durum: "done", emoji: "👍", saticiYorumu: "" },
-      { ad: "Yetki Sözleşmesi", durum: "done", emoji: "", saticiYorumu: "" },
-      { ad: "Afiş / Branda Asılması", durum: "done", emoji: "🔥", saticiYorumu: "" },
-      { ad: "Drone ile Havadan Çekim", durum: "done", emoji: "❤️", saticiYorumu: "" },
-      { ad: "360 Derece Çekim", durum: "done", emoji: "", saticiYorumu: "" },
-      { ad: "Sosyal Medya Tanıtımı", durum: "done", emoji: "", saticiYorumu: "" },
-      { ad: "İlan Portalında Yayınlama", durum: "done", emoji: "", saticiYorumu: "" }
-    ],
-    // Kolay Pazar Analizi Verileri
-    pazarAnalizi: {
-      tamamlandiMi: true,
-      danismanFoto: "../assets/gencay-hero-portre.jpg",
-      danismanBio:
-        "Ankara Bağlıca, Yaşamkent ve Çayyolu bölgelerinde uzman gayrimenkul danışmanı olarak; profesyonel drone çekimi, 360° sanal tur, doğru emsal fiyatlandırma ve şeffaf raporlama ile mülkünüzü en doğru alıcıyla buluşturuyorum.",
-      referansMulkler:
-        "Bağlıca Mah. 3+1 Site İçi Daire — 21 Günde Satıldı (5.100.000 ₺)\nYaşamkent 4+1 Bahçe Dubleks — 18 Günde Satıldı (7.350.000 ₺)\nÇayyolu 3+1 Ara Kat Daire — 14 Günde Satıldı (5.400.000 ₺)",
-      minFiyat: "5.000.000 ₺",
-      maxFiyat: "5.250.000 ₺",
-      finalDegerlendirme:
-        "Yaptığım yerinde fotoğraf çekimi, şerefiye incelemesi ve bölgedeki rakip ilanların emlakçılarıyla yaptığım görüşmeler sonucunda; mülkünüzün 5.000.000 TL ile 5.250.000 TL aralığında satılacağına inanıyorum. Bu mülk için yapacağım hizmetler aşağıda yer almaktadır.",
-      rakipler: [
-        {
-          url: "https://www.sahibinden.com/ilan/emlak-konut-satilik-baglica-3-1-ornek-1",
-          baslik: "Bağlıca Aynı Bölge 3+1 130 m² Kuzey Cephe Daire",
-          fiyat: "5.450.000 ₺",
-          sure: "3 Aydır İlanda (Satılmadı)",
-          yorum:
-            "Burası yapısız (tadilatsız) ve kuzey cephe. Bu ilandaki emlakçıyla konuşuldu; 3 aydır ilanda olduğu ve fiyat yüksek kaldığı için ciddi teklif almadığı söylendi."
-        },
-        {
-          url: "https://www.sahibinden.com/ilan/emlak-konut-satilik-baglica-3-1-ornek-2",
-          baslik: "Bağlıca Site İçi 3+1 1. Kat Daire",
-          fiyat: "4.900.000 ₺",
-          sure: "45 Gündür İlanda",
-          yorum:
-            "Bu daire 1. katta ve kapalı otoparkı yok. Bizim mülkümüz ara kat, güney cephe ve ebeveyn banyolu olduğu için bu rakibin üzerinde konumlanmalıdır."
-        }
-      ]
-    },
-    // Mülk Günlüğüm (Sadece danışmana özel saha, kapıcı, anahtar ve pazarlık notları — Satıcı panelinde görünmez!)
-    gunluk: [
-      {
-        tarih: "16 Kasım 2026 • 14:30",
-        metin: "Kapıcı Arif Koçyiğit Telefonu: 0549 000 00 00 — Yedek anahtar kendisinde, yer gösteriminden 30 dk önce haber verilecek.",
-        gorunurluk: "private"
-      },
-      {
-        tarih: "15 Kasım 2026 • 18:10",
-        metin: "Mülk sahibi Ahmet Bey nakit alıcı olursa 4.700.000 TL'ye kadar inebileceğini söyledi, pazarlık payını buna göre yönetelim.",
-        gorunurluk: "private"
-      },
-      {
-        tarih: "14 Kasım 2026 • 11:20",
-        metin: "Site yönetimi aidat: 1.850 TL • Panjur kumandası mutfak çekmecesinde, kombi sigortası vestiyer dolabının içinde.",
-        gorunurluk: "private"
-      }
-    ],
-    medya: [...ORNEK_FOTOGRAFLAR],
-    teklifler: [
-      {
-        alici: "Mehmet Ziyagil",
-        tutar: "4.650.000 ₺",
-        odemeSekli: "Nakit / Peşin",
-        tarih: "17 Kasım 2026",
-        not: "Alıcı peşin ödeme yapacak, tapu devrini bu hafta içi hemen gerçekleştirmeye hazır.",
-        durum: "pending", // pending | approved | rejected
-        saticiYaniti: ""
-      },
-      {
-        alici: "Kaan Soylu",
-        tutar: "4.500.000 ₺",
-        odemeSekli: "Banka Kredili",
-        tarih: "14 Kasım 2026",
-        not: "2.000.000 TL kredi + 2.500.000 TL nakit teklif edildi.",
-        durum: "rejected",
-        saticiYaniti: "Rakam düşük bulundu."
-      }
-    ],
-    yerGosterimleri: [
-      {
-        alici: "Selin Demir & Ailesi",
-        telefon: "0532 888 77 66",
-        tarihSaat: "21 Kasım Cumartesi • 14:30",
-        not: "4 kişilik aile, daireyi 2. kez detaylı görmek istiyorlar.",
-        durum: "pending", // pending | approved | rejected
-        saticiYaniti: ""
-      },
-      {
-        alici: "Mehmet Ziyagil",
-        telefon: "0533 444 55 66",
-        tarihSaat: "15 Kasım Pazar • 16:00",
-        not: "Yer gösterme belgesi imzalatılarak daire gezdirildi.",
-        durum: "approved",
-        saticiYaniti: "Satıcı onayladı, gösterim tamamlandı."
-      }
-    ],
-    taleplerMetni:
-      "16 Kasım | Sahibinden & Telefon | Krediye uygunluk soruldu, Cumartesi 14:00 için 2. aile gösterimi planlandı. | Sıcak Alıcı\n14 Kasım | Instagram Reels | Tanıtım videosundan ulaşan yatırımcı alıcı daireyi gezdi, teklif hazırlıyor. | Teklif Bekleniyor"
-  },
-  {
-    kod: "592837461029",
-    baslik: "Yaşamkent 4+1 Bahçe Kullanımlı Daire",
-    fiyat: "7.400.000 ₺",
-    mulkSahibi: "Zeynep Kaya",
-    mulkSahibiTel: "0533 210 90 80",
-    danisman: "Gencay Çelikkan",
-    danismanTel: "0532 000 00 00",
-    ofis: "Gayrimenkul Danışmanlık Ofisi",
-    bolge: "Yaşamkent, Ankara",
-    durumEtiketi: "Pazar Analizi & Branda Aşamasında (Henüz İlanda Değil)",
-    sonGuncelleme: "16 Kasım 2026",
-    sahibindenUrl: "",
-    videoUrl: "https://www.instagram.com/gencaycelikkan/reels/",
-    matterportUrl: "", // Bu mülkte 360 çekim yapılmadı!
-    takyidatUrl: "",
-    goruntulenme: "620",
-    favori: "19",
-    telefon: "7 Arama",
-    gosterim: "2 Aile Gezdi",
-    sosyalErisim: "5.900 İzlenme • 142 Beğeni",
-    yetkiModu: "yok", // Sözlü yetkiyle pazarlanıyor (Zorunlu değil)
-    yetkiSuresi: "",
-    komisyon: "",
-    yetkiOnaylandiMi: false,
-    yetkiBelgesiDosyaAdi: "",
-    yetkiOnayDetayi: "",
-    // Bu mülkte Drone ve 360 seçilmedi, onun yerine El İlanı ve Branda seçildi!
-    hizmetler: [
-      { ad: "Yerinde Keşif", durum: "done", emoji: "👍", saticiYorumu: "" },
-      { ad: "Profesyonel Fotoğraf Çekimi", durum: "done", emoji: "👍", saticiYorumu: "Teşekkürler." },
-      { ad: "Detaylı Pazar Analizi", durum: "done", emoji: "❤️", saticiYorumu: "" },
-      { ad: "Tapu Takyidat & İmar Kontrolü", durum: "done", emoji: "", saticiYorumu: "" },
-      { ad: "Afiş / Branda Asılması", durum: "done", emoji: "", saticiYorumu: "" },
-      { ad: "Bölgeye El İlanı / Broşür Dağıtımı", durum: "done", emoji: "", saticiYorumu: "" },
-      { ad: "İlan Portalında Yayınlama", durum: "pending", emoji: "", saticiYorumu: "" }
-    ],
-    pazarAnalizi: {
-      tamamlandiMi: true,
-      danismanFoto: "../assets/gencay-hero-portre.jpg",
-      danismanBio:
-        "Yaşamkent ve Çayyolu bölgesinde lüks konut ve bahçe katı portföylerde uzmanlaşmış gayrimenkul danışmanı.",
-      referansMulkler:
-        "Yaşamkent 4+1 Bahçe Dubleks — 18 Günde Satıldı (7.350.000 ₺)\nBağlıca 3+1 Site İçi Daire — 21 Günde Satıldı (5.100.000 ₺)",
-      minFiyat: "7.200.000 ₺",
-      maxFiyat: "7.450.000 ₺",
-      finalDegerlendirme:
-        "Bölgedeki rakip 4+1 bahçe kullanımlı daireler incelendiğinde mülkünüzün 7.200.000 TL ile 7.450.000 TL aralığında satılacağına inanıyorum.",
-      rakipler: [
-        {
-          url: "https://www.sahibinden.com/ilan/emlak-konut-satilik-yasamkent-4-1-ornek",
-          baslik: "Yaşamkent Yan Site 4+1 Bahçe Katı Daire",
-          fiyat: "7.750.000 ₺",
-          sure: "4 Aydır İlanda",
-          yorum: "Bu ilandaki emlakçıyla görüşüldü; 4 aydır ilanda olduğu ve mutfak/banyo tadilatı gerektiği öğrenildi."
-        }
-      ]
-    },
-    gunluk: [
-      {
-        tarih: "16 Kasım 2026 • 13:00",
-        metin: "Site Görevlisi Arif Koçyiğit Tel: 0549 000 00 00 — Bahçe kapısı anahtarı güvenlik kulübesinden teslim alınıyor.",
-        gorunurluk: "private"
-      },
-      {
-        tarih: "15 Kasım 2026 • 16:45",
-        metin: "Zeynep Hanım sözlü yetki ile çalışıyor. Komşu daire 7.650.000 TL'den satılık, 7.150.000 TL nakit teklife sıcak bakabilir.",
-        gorunurluk: "private"
-      }
-    ],
-    medya: [ORNEK_FOTOGRAFLAR[0], ORNEK_FOTOGRAFLAR[1]],
-    teklifler: [
-      {
-        alici: "Hakan Çelik",
-        tutar: "7.150.000 ₺",
-        odemeSekli: "Nakit / Peşin",
-        tarih: "17 Kasım 2026",
-        not: "Yatırımcı alıcı, peşin ödeme teklifi sundu.",
-        durum: "pending",
-        saticiYaniti: ""
-      }
-    ],
-    yerGosterimleri: [
-      {
-        alici: "Burak & Esra Yılmaz",
-        telefon: "0535 123 45 67",
-        tarihSaat: "22 Kasım Pazar • 13:00",
-        not: "Yaşamkent'te 4+1 bahçe katı arayan ailemiz.",
-        durum: "pending",
-        saticiYaniti: ""
-      }
-    ],
-    taleplerMetni:
-      "16 Kasım | Ofis Portföy Havuzu | Yaşamkent'te 4+1 arayan hazır müşterimize daire gösterildi. | Değerlendiriyor"
-  },
-  {
-    // PAYLAŞIMLI ÇALIŞMA (CO-OPERATION) ÖRNEK PORTFÖYÜ (Ankara -> İstanbul Bağcılar)
-    kod: "738192045612", // Satıcının 12 Haneli Takip Numarası
-    coopKod: "910482736519", // Ortak Çalışılan (Co-Op) Emlakçının 12 Haneli Takip Numarası (Satıcıdan farklı!)
-    coopAktifMi: true,
-    coopPaylasimOrani: "%50 - %50 Hizmet Bedeli Paylaşımı",
-    coopYonlendirenDanisman: "Gencay Çelikkan (Ankara • Etimesgut / Çankaya)",
-    coopDanismanTel: "0532 000 00 00", // Ortak emlakçı için tanımlı telefon numarası
-    baslik: "İstanbul Bağcılar Güneşli 3+1 Metro Yakını Site İçi Daire",
-    fiyat: "6.250.000 ₺ - 6.500.000 ₺",
-    mulkSahibi: "Mülk Sahibi (0535 610 20 30)",
-    mulkSahibiTel: "0535 610 20 30", // Satıcı için tanımlı telefon numarası
-    danisman: "Burak Demir (İstanbul Bağcılar Bölge Uzmanı)",
-    danismanTel: "0532 777 88 99",
-    ofis: "Marmara Kurumsal Gayrimenkul • Bağcılar / İstanbul",
-    bolge: "Bağcılar, İstanbul",
-    durumEtiketi: "Paylaşımlı Portföy (Co-Op) • Pazar Analizi & İlan Yayında",
-    sonGuncelleme: "19 Kasım 2026",
-    sahibindenUrl: "https://www.sahibinden.com/",
-    videoUrl: "https://www.instagram.com/",
-    matterportUrl: "https://my.matterport.com/show/?m=SxQL3iGyoDo",
-    takyidatUrl: "",
-    goruntulenme: "1.420",
-    favori: "38",
-    telefon: "14 Arama",
-    gosterim: "4 Aile Gezdi",
-    sosyalErisim: "9.800 İzlenme • 310 Beğeni",
-    yetkiModu: "mobil_onay",
-    yetkiSuresi: "90 Gün",
-    komisyon: "2",
-    yetkiOnaylandiMi: true,
-    yetkiBelgesiDosyaAdi: "",
-    yetkiOnayDetayi: "Satıcı ve Ortak Danışman (Co-Op) onaylı paylaşımlı portföy",
-    hizmetler: [
-      {
-        ad: "Yerinde Keşif",
-        durum: "done",
-        emoji: "👍",
-        saticiYorumu: ""
-      },
-      {
-        ad: "Profesyonel Fotoğraf Çekimi",
-        durum: "done",
-        emoji: "👍",
-        saticiYorumu: "Bağcılar bölge uzmanı Burak Bey zamanında gelip çekimleri yaptı."
-      },
-      {
-        ad: "Detaylı Pazar Analizi",
-        durum: "done",
-        emoji: "👏",
-        saticiYorumu: "Güneşli bölgesindeki emsal analizi çok net olmuş."
-      },
-      { ad: "Tapu Takyidat & İmar Kontrolü", durum: "done", emoji: "❤️", saticiYorumu: "" },
-      { ad: "Yetki Sözleşmesi", durum: "done", emoji: "", saticiYorumu: "" },
-      { ad: "Afiş / Branda Asılması", durum: "done", emoji: "🔥", saticiYorumu: "" },
-      { ad: "İlan Portalında Yayınlama", durum: "done", emoji: "", saticiYorumu: "" }
-    ],
-    pazarAnalizi: {
-      tamamlandiMi: true,
-      danismanFoto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
-      danismanBio:
-        "İstanbul Bağcılar, Güneşli ve Basın Ekspres hattında 9 yıllık bölge uzmanıyım. Ankara'dan Gencay Çelikkan ortaklığıyla (Co-Operation) yönlendirilen bu mülkün tüm saha, çekim ve gösterim operasyonunu yürütüyorum.",
-      referansMulkler:
-        "Bağcılar Güneşli 3+1 Site İçi Daire — 19 Günde Satıldı (6.300.000 ₺)\nBağcılar Kirazlı 2+1 Metro Yakını — 15 Günde Satıldı (4.450.000 ₺)",
-      minFiyat: "6.250.000 ₺",
-      maxFiyat: "6.500.000 ₺",
-      finalDegerlendirme:
-        "Bağcılar Güneşli meydan ve metro hattındaki rakip 3+1 daireler incelendiğinde mülkün 6.250.000 TL - 6.500.000 TL aralığında satılacağı öngörülmektedir.",
-      rakipler: [
-        {
-          url: "https://www.sahibinden.com/",
-          baslik: "Bağcılar Güneşli Mah. 3+1 125 m² Yan Blok Daire",
-          fiyat: "6.750.000 ₺",
-          sure: "3 Aydır İlanda",
-          yorum: "Bu ilandaki emlakçıyla görüşüldü; fiyat yüksek kaldığı için 3 aydır teklif almadığı teyit edildi."
-        }
-      ]
-    },
-    gunluk: [
-      {
-        tarih: "19 Kasım 2026 • 11:00",
-        metin: "🤝 Ankara'dan Gencay Çelikkan ile İstanbul Bağcılar Bölge Uzmanı Burak Demir arasında %50-%50 paylaşımlı çalışma (Co-Operation) başlatıldı. Satıcı ve Ortak Emlakçı için ayrı 12 haneli takip kodları üretildi.",
-        gorunurluk: "public"
-      },
-      {
-        tarih: "19 Kasım 2026 • 15:30",
-        metin: "Bağcılar Güneşli'deki dairenin fotoğraf çekimi ve pazar analizi tamamlanarak yayına alındı.",
-        gorunurluk: "public"
-      }
-    ],
-    medya: [ORNEK_FOTOGRAFLAR[0], ORNEK_FOTOGRAFLAR[2]],
-    teklifler: [
-      {
-        alici: "Serkan Kaya (İstanbul)",
-        tutar: "6.200.000 ₺",
-        odemeSekli: "Nakit / Peşin",
-        tarih: "19 Kasım 2026",
-        not: "Bağcılar bölge uzmanı Burak Demir tarafından gösterim sonrası alınan ilk yazılı teklif.",
-        durum: "pending",
-        saticiYaniti: ""
-      }
-    ],
-    yerGosterimleri: [
-      {
-        alici: "Serkan Kaya & Ailesi",
-        telefon: "0532 911 22 33",
-        tarihSaat: "20 Kasım Cuma • 15:00",
-        not: "Bağcılar bölge uzmanı eşliğinde yer gösterme belgesi imzalatılarak gezdirilecek.",
-        durum: "approved",
-        saticiYaniti: "Uygun, kiracı/kapıcı bilgilendirildi."
-      }
-    ],
-    taleplerMetni:
-      "19 Kasım | Co-Operation (Paylaşımlı Portföy) | Bağcılar bölge uzmanı Burak Demir tarafından 2 aileye yer gösterimi planlandı. | Aktif"
-  }
-];
-
 let portfoyler = [];
 let seciliKod = "";
 let proPaketAktif = false;
@@ -864,6 +490,49 @@ function danismanGirisOnayla() {
   danismanAnaModSec(bekleyenDanismanModu, document.getElementById(btnId));
 }
 
+function hizliTakimHesabinaGec(userId) {
+  dortKarakterVerileriniHazirla();
+  const bulunan = kayitliKullanicilar.find(u => u.id === userId);
+  if (!bulunan) return;
+
+  aktifKullanici = bulunan;
+  kullanicilariKaydet();
+  danismanGirisYaptiMi = true;
+  proPaketAktif = bulunan.plan !== "ucretsiz";
+  incelenenWebSitesiDanismanId = bulunan.id;
+  profilGoruntuleyenModu = "owner";
+
+  const hedefProfil = danismanProfiliniGetirById(bulunan.id);
+  if (hedefProfil) {
+    danismanProfili = JSON.parse(JSON.stringify(hedefProfil));
+    profilKaydetStorage();
+  }
+
+  const kendiPortfoyleri = portfoyler.filter(p => p.danismanId === bulunan.id || p.danisman === bulunan.ad);
+  if (kendiPortfoyleri.length > 0) {
+    seciliKod = kendiPortfoyleri[0].kod;
+    acikAkordeonPortfoyKodu = null;
+  }
+
+  const avatarEl = document.getElementById("igSidebarAvatarImg");
+  if (avatarEl && danismanProfili?.foto) {
+    avatarEl.src = danismanProfili.foto;
+  }
+  const mobileTopAvatarEl = document.getElementById("mobileTopAvatarImg");
+  if (mobileTopAvatarEl && danismanProfili?.foto) {
+    mobileTopAvatarEl.src = danismanProfili.foto;
+  }
+
+  danismanGirisModalKapat();
+
+  const navText = document.getElementById("navAgentLoginBtnText");
+  if (navText) navText.textContent = `Danışman Paneli (${(bulunan.ad || "Danışman").split(" ")[0]})`;
+
+  ajandaAktifAltSekme = "goals";
+  gorunumDegistir("view-dashboard");
+  danismanSolMenuSec("agenda");
+}
+
 function danismanCikisYap() {
   danismanGirisYaptiMi = false;
   aktifKullanici = null;
@@ -1200,7 +869,7 @@ function danismanUyelikKaydiTamamla(googleIleMi = false, refKodOzel = "") {
     vergiNo,
     deneyim: "Gayrimenkul Danışmanı",
     telefon: tel,
-    foto: "../assets/gencay-hero-portre.jpg",
+    foto: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80",
     il: seciliIl,
     ilce: seciliIlce,
     bolgeler: `${seciliIlce}, ${seciliMahalle}`,
@@ -1280,7 +949,7 @@ function ucretsizUyeProKisitiGoster(ozellikAdi) {
   if (badgeEl) badgeEl.textContent = "🔒 PRO ÜYELİK (ÜCRETLİ PAKET) ÖZELLİĞİ";
   if (titleEl) titleEl.textContent = `${ozellikAdi} İçin Mülkİzle Pro'ya Geçin`;
   if (descEl) {
-    descEl.innerHTML = `<strong>${ozellikAdi}</strong> yalnızca ücretli <strong>Pro Danışman Paketi</strong> üy자larımız için aktiftir. Ücretsiz üyelikte yalnızca aktif portföylerinizi yönetebilir ve müşterilerinize 12 haneli Mülk Takip Kodu gönderebilirsiniz.`;
+    descEl.innerHTML = `<strong>${ozellikAdi}</strong> yalnızca ücretli <strong>Pro Danışman Paketi</strong> üyelerimiz için aktiftir. Ücretsiz üyelikte yalnızca aktif portföylerinizi yönetebilir ve müşterilerinize 12 haneli Mülk Takip Kodu gönderebilirsiniz.`;
   }
 
   const modal = document.getElementById("paywallModal");
@@ -2373,7 +2042,7 @@ function varsayilanPazarAnalizi(p) {
   if (!p.pazarAnalizi) {
     p.pazarAnalizi = {
       tamamlandiMi: false,
-      danismanFoto: "../assets/gencay-hero-portre.jpg",
+      danismanFoto: (danismanProfili && danismanProfili.foto) || "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80",
       danismanBio: `${p.bolge || "Bölge"} uzman gayrimenkul danışmanı olarak profesyonel görsel pazarlama, doğru fiyat analizi ve şeffaf raporlama ile hizmet veriyorum.`,
       referansMulkler: "Bağlıca 3+1 Site İçi Daire — 21 Günde Satıldı\nYaşamkent 4+1 Bahçe Dubleks — 18 Günde Satıldı",
       minFiyat: "5.000.000 ₺",
@@ -4074,7 +3743,6 @@ function yeniTekilAliciTakipKoduOlustur() {
 
   const ad = (document.getElementById("newBuyerCodeName")?.value || "").trim();
   const tel = (document.getElementById("newBuyerCodePhone")?.value || "").trim();
-  const butce = (document.getElementById("newBuyerCodeBudget")?.value || "").trim();
   const tercih = (document.getElementById("newBuyerCodePref")?.value || "").trim();
 
   if (!ad || !tel) {
@@ -4094,7 +3762,7 @@ function yeniTekilAliciTakipKoduOlustur() {
     kod: yeniAliciKodu,
     aliciAd: ad,
     aliciTel: tel,
-    butce: butce || p.fiyat || "Belirtilmedi",
+    butce: p.fiyat || "Belirtilmedi",
     danismanOzelNotu: tercih || "",
     aliciNotlari: [],
     tercihNotu: tercih || `${p.bolge} • ${p.baslik}`,
@@ -4105,7 +3773,6 @@ function yeniTekilAliciTakipKoduOlustur() {
 
   if (document.getElementById("newBuyerCodeName")) document.getElementById("newBuyerCodeName").value = "";
   if (document.getElementById("newBuyerCodePhone")) document.getElementById("newBuyerCodePhone").value = "";
-  if (document.getElementById("newBuyerCodeBudget")) document.getElementById("newBuyerCodeBudget").value = "";
   if (document.getElementById("newBuyerCodePref")) document.getElementById("newBuyerCodePref").value = "";
 
   verileriKaydet();
@@ -4599,17 +4266,12 @@ function potansiyelAliciIcinAriyorumIlaniAc(potId) {
     ariyorumKategoriSec(kat);
   }
 
-  const butceEl = document.getElementById("bcBudget");
+  const butceEl = document.getElementById("bcPriceRange");
   if (butceEl) butceEl.value = item.butce || item.kaynakPortfoyFiyat || "";
 
-  const baslikEl = document.getElementById("bcPropertyType");
-  if (baslikEl) {
-    baslikEl.value = `${item.arananBolge} • ${item.arananKategori}`;
-  }
-
-  const notEl = document.getElementById("bcNotes");
+  const notEl = document.getElementById("bcBuyerNote");
   if (notEl) {
-    notEl.value = `Hazır Alıcım İçin Arıyorum: ${item.danismanOzelNotu || item.tercihNotu || ""}${
+    notEl.value = `Hazır Alıcım İçin Arıyorum (${item.arananBolge || ""} • ${item.arananKategori || ""}): ${item.danismanOzelNotu || item.tercihNotu || ""}${
       item.aliciKendiNotu ? ` (Alıcı Notu: ${item.aliciKendiNotu})` : ""
     }`;
   }
@@ -7018,7 +6680,7 @@ function yeniPortfoyOlusturOnayla() {
     hizmetler: secilenler,
     pazarAnalizi: {
       tamamlandiMi: false,
-      danismanFoto: "../assets/gencay-hero-portre.jpg",
+      danismanFoto: (danismanProfili && danismanProfili.foto) || "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80",
       danismanBio: `${bolge} bölgesinde uzman gayrimenkul danışmanı olarak; profesyonel fotoğraf çekimi, detaylı rakip fiyat analizi ve şeffaf raporlama ile hizmet veriyorum.`,
       referansMulkler:
         "Bağlıca 3+1 Site İçi Daire — 21 Günde Satıldı (5.100.000 ₺)\nYaşamkent 4+1 Bahçe Dubleks — 18 Günde Satıldı (7.350.000 ₺)",
@@ -7275,8 +6937,6 @@ function saticiVeyaAlicidanDanismanProfilineGit(danismanId) {
 
 function saticiPaneliniGoster(kod) {
   const aranan = (kod || aktifTakipKoduGiris || seciliKod || "").trim().toUpperCase();
-  const searchInput = document.getElementById("clientCodeInput");
-  if (searchInput) searchInput.value = aranan;
 
   const container = document.getElementById("sellerPanelOutput");
   if (!container) return;
@@ -9227,7 +8887,7 @@ const BOLGE_UZMANLARI_HAVUZU = [
     telefon: "0532 000 00 00",
     deneyim: "Konut, Villa & Arsa Uzmanı • %50-%50 Co-Op Uyumlu",
     rozetSayisi: 7,
-    foto: "../assets/gencay-hero-portre.jpg",
+    foto: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80",
     bio: "Ankara Bağlıca, Yaşamkent ve Çayyolu bölgesinde profesyonel fotoğraf, drone ve şeffaf Mülkİzle süreç takibiyle hizmet veriyorum.",
     referansSatislar: "Bağlıca 3+1 Site İçi Daire — 21 Günde Satıldı",
     hobiler: "Mimari fotoğrafçılık, drone teknolojileri, doğa yürüyüşü"
@@ -11555,7 +11215,6 @@ function mobilUygulamaSimulasyonRender() {
 // 3. Alıcı: Zeynep Kaya (Alıcı Adayı • 0533 210 90 80 • Teklif & 360° İnceleme)
 // 4. Başka Emlakçı: Selin Yılmaz (Yılmaz Luxury Gayrimenkul • Ankara / Çayyolu & Co-Op Partner)
 // ============================================================================
-let aktifTestKarakteri = "satici";
 let dortKarakterHazirMi = false;
 
 const DORT_KARAKTER_PROFILLERI = {
@@ -11642,6 +11301,44 @@ const DORT_KARAKTER_PROFILLERI = {
         ozet: "Bağdat Caddesi aksında kentsel dönüşümle yenilenen prestijli binalarda metrekare satış fiyatları ve yatırımcı geri dönüş süreleri."
       }
     ]
+  },
+  "gencay-lider": {
+    id: "gencay-lider",
+    ad: "Gencay (Takım Lideri)",
+    ofis: "Realty World Çizgi Gayrimenkul",
+    deneyim: "Takım Lideri & Proje Satış Direktörü",
+    telefon: "0532 700 10 20",
+    email: "gencay@mulkizle.com",
+    foto: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80",
+    il: "Ankara",
+    ilce: "Gölbaşı",
+    bolgeler: "Gölbaşı, İncek, Çayyolu, Yaşamkent",
+    hobiler: "Ekip koçluğu, proje pazarlama ve saha analitiği",
+    bio: "Realty World Çizgi Gayrimenkul bünyesinde Takım Lideri olarak hem saha portföy geliştirme hem de danışman ekibinin günlük FSBO, etki çevresi ve uzmanlık bölgesi hedeflerini yönetiyorum.",
+    instagram: "https://www.instagram.com/",
+    twitter: "https://x.com/",
+    linkedin: "https://www.linkedin.com/",
+    magazaUrl: "https://www.sahibinden.com/",
+    bloglar: []
+  },
+  "deniz-ekip": {
+    id: "deniz-ekip",
+    ad: "Deniz Hanım",
+    ofis: "Realty World Çizgi Gayrimenkul",
+    deneyim: "Ekip Gayrimenkul Danışmanı",
+    telefon: "0533 800 30 40",
+    email: "deniz@mulkizle.com",
+    foto: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
+    il: "Ankara",
+    ilce: "Gölbaşı",
+    bolgeler: "Gölbaşı Merkez, İncek, Bahçelievler",
+    hobiler: "Müşteri ilişkileri ve bölge portföy çalışması",
+    bio: "Realty World Çizgi Gayrimenkul Gölbaşı ekibinde konut ve proje danışmanı olarak aktif saha ve müşteri takibi yürütüyorum.",
+    instagram: "https://www.instagram.com/",
+    twitter: "https://x.com/",
+    linkedin: "https://www.linkedin.com/",
+    magazaUrl: "https://www.sahibinden.com/",
+    bloglar: []
   }
 };
 
@@ -11659,11 +11356,15 @@ function dortKarakterVerileriniHazirla() {
   const ahmet = DORT_KARAKTER_PROFILLERI["ahmet-demir"];
   const selin = DORT_KARAKTER_PROFILLERI["selin-yilmaz"];
   const burak = DORT_KARAKTER_PROFILLERI["burak-kaya"];
+  const gencayLider = DORT_KARAKTER_PROFILLERI["gencay-lider"];
+  const denizEkip = DORT_KARAKTER_PROFILLERI["deniz-ekip"];
 
-  // 3 Hazır Üye Hesabı:
+  // 5 Hazır Üye Hesabı:
   // 1) Ahmet Demir -> ÜCRETSİZ Üyelik
   // 2) Selin Yılmaz -> PRO Üyelik
   // 3) Burak Kaya -> PRO Üyelik
+  // 4) Gencay (Takım Lideri) -> TAKIM LİDERİ Paketi (Altında Deniz Hanım)
+  // 5) Deniz Hanım -> EKİP DANIŞMANI (Gencay'a bağlı)
   kayitliKullanicilar = [
     {
       id: "ahmet-demir",
@@ -11703,12 +11404,44 @@ function dortKarakterVerileriniHazirla() {
       sifre: "Burak2026!",
       plan: "pro",
       kayitTarihi: "22 Kasım 2026"
+    },
+    {
+      id: "gencay-lider",
+      kullaniciAdi: "gencay",
+      ad: gencayLider.ad,
+      ofis: gencayLider.ofis,
+      telefon: gencayLider.telefon,
+      email: "gencay@mulkizle.com",
+      il: gencayLider.il,
+      ilce: gencayLider.ilce,
+      sifre: "Gencay2026!",
+      plan: "takim_lideri",
+      rol: "takim_lideri",
+      ekipUyeleri: ["deniz-ekip"],
+      kayitTarihi: "28 Kasım 2026"
+    },
+    {
+      id: "deniz-ekip",
+      kullaniciAdi: "deniz",
+      ad: denizEkip.ad,
+      ofis: denizEkip.ofis,
+      telefon: denizEkip.telefon,
+      email: "deniz@mulkizle.com",
+      il: denizEkip.il,
+      ilce: denizEkip.ilce,
+      sifre: "Deniz2026!",
+      plan: "pro",
+      rol: "ekip_danismani",
+      takimLideriId: "gencay-lider",
+      kayitTarihi: "28 Kasım 2026"
     }
   ];
 
   uyeParaliDurumlari["ahmet-demir"] = false;
   uyeParaliDurumlari["selin-yilmaz"] = true;
   uyeParaliDurumlari["burak-kaya"] = true;
+  uyeParaliDurumlari["gencay-lider"] = true;
+  uyeParaliDurumlari["deniz-ekip"] = true;
 
   if (aktifKullanici) {
     const guncelAktif = kayitliKullanicilar.find(u => u.id === aktifKullanici.id);
@@ -12631,8 +12364,131 @@ function uyeMesajKutusuPanelRender() {
 // ANA MODÜL 5: AJANDAM (GÜN, TARİH VE SAATLİ RANDEVU & NOT TAKİBİ)
 // ============================================================================
 const AGENDA_STORAGE_KEY = "mulkizle_ajanda_notlari_v1";
+const AGENDA_CUSTOM_CATS_KEY = "mulkizle_ajanda_ozel_kategoriler_v1";
+const AGENDA_GOALS_STORAGE_KEY = "mulkizle_ajanda_hedefler_v1";
+const TEAM_TASKS_STORAGE_KEY = "mulkizle_ekip_gorevleri_v1";
 let ajandaKayitlari = {};
+let ajandaOzelKategoriler = {};
+let ajandaKisiselHedefler = {};
+let ekipGorevleriListesi = [];
 let ajandaAktifFiltre = "all"; // all | today | upcoming | completed
+let ajandaSeciliKategoriFiltre = "all";
+let ajandaSeciliFormKategori = "Yer Gösterimi";
+let ajandaAktifAltSekme = "calendar"; // calendar | goals
+
+const AGENDA_VARSAYILAN_KATEGORILER = [
+  "Yer Gösterimi",
+  "Mülk Sahibi Görüşmesi",
+  "Tapu & Sözleşme",
+  "Çekim & Pazarlama",
+  "Portföy Bulma / Uzmanlık Bölgesi",
+  "Etki Çevresi",
+  "FSBO (Sahibinden)",
+  "Ofis Ziyaretleri",
+  "Randevu / Not"
+];
+
+function ajandaHtmlEsc(str) {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function danismanAjandaOzelKategorileriYukle() {
+  try {
+    const raw = localStorage.getItem(AGENDA_CUSTOM_CATS_KEY);
+    if (raw) {
+      ajandaOzelKategoriler = JSON.parse(raw) || {};
+    }
+  } catch (e) {
+    ajandaOzelKategoriler = {};
+  }
+}
+
+function danismanAjandaOzelKategorileriKaydet() {
+  try {
+    localStorage.setItem(AGENDA_CUSTOM_CATS_KEY, JSON.stringify(ajandaOzelKategoriler));
+  } catch (e) {}
+}
+
+function danismanAjandaOzelKategoriListesi(danismanId) {
+  danismanAjandaOzelKategorileriYukle();
+  const id = danismanId || (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  if (!Array.isArray(ajandaOzelKategoriler[id])) {
+    ajandaOzelKategoriler[id] = [];
+  }
+  return ajandaOzelKategoriler[id];
+}
+
+function danismanAjandaTumKategorileriGetir(danismanId) {
+  const ozel = danismanAjandaOzelKategoriListesi(danismanId);
+  const sonuc = [...AGENDA_VARSAYILAN_KATEGORILER];
+  ozel.forEach(k => {
+    if (k && !sonuc.some(v => v.toLocaleLowerCase("tr-TR") === k.toLocaleLowerCase("tr-TR"))) {
+      sonuc.push(k);
+    }
+  });
+  return sonuc;
+}
+
+function danismanAjandaKategoriDegisti(val) {
+  const wrap = document.getElementById("agCustomCategoryWrap");
+  const inp = document.getElementById("agCustomCategoryInput");
+  if (val === "__CUSTOM__") {
+    if (wrap) wrap.style.display = "block";
+    if (inp) inp.focus();
+  } else {
+    ajandaSeciliFormKategori = val;
+    if (wrap) wrap.style.display = "none";
+  }
+}
+
+function danismanAjandaOzelKategoriAcKapat() {
+  const wrap = document.getElementById("agCustomCategoryWrap");
+  const inp = document.getElementById("agCustomCategoryInput");
+  if (!wrap) return;
+  const acikMi = wrap.style.display !== "none" && wrap.style.display !== "";
+  wrap.style.display = acikMi ? "none" : "block";
+  if (!acikMi && inp) inp.focus();
+}
+
+function danismanAjandaOzelKategoriEkle() {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const inp = document.getElementById("agCustomCategoryInput");
+  const yeniKat = (inp?.value || "").trim();
+  if (!yeniKat) {
+    alert("Lütfen eklemek istediğiniz kategori adını yazın.");
+    return;
+  }
+  const tumu = danismanAjandaTumKategorileriGetir(aktifId);
+  if (tumu.some(k => k.toLocaleLowerCase("tr-TR") === yeniKat.toLocaleLowerCase("tr-TR"))) {
+    alert("Bu isimde bir kategori zaten mevcut.");
+    return;
+  }
+  const ozel = danismanAjandaOzelKategoriListesi(aktifId);
+  ozel.push(yeniKat);
+  danismanAjandaOzelKategorileriKaydet();
+  ajandaSeciliFormKategori = yeniKat;
+  danismanAjandaPanelRender();
+}
+
+function danismanAjandaOzelKategoriSil(katAdi) {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const ozel = danismanAjandaOzelKategoriListesi(aktifId);
+  ajandaOzelKategoriler[aktifId] = ozel.filter(k => k !== katAdi);
+  danismanAjandaOzelKategorileriKaydet();
+  if (ajandaSeciliKategoriFiltre === katAdi) ajandaSeciliKategoriFiltre = "all";
+  if (ajandaSeciliFormKategori === katAdi) ajandaSeciliFormKategori = "Yer Gösterimi";
+  danismanAjandaPanelRender();
+}
+
+function danismanAjandaKategoriFiltreSec(kat) {
+  ajandaSeciliKategoriFiltre = kat || "all";
+  danismanAjandaPanelRender();
+}
 
 const GUN_ISIMLERI_TR = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
 const AY_ISIMLERI_TR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
@@ -12745,11 +12601,27 @@ function danismanAjandaNotuEkle() {
   const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
   const tarih = document.getElementById("agInputDate")?.value || bugunTarihIso();
   const saat = document.getElementById("agInputTime")?.value || "12:00";
-  const kategori = document.getElementById("agInputCategory")?.value || "Randevu / Not";
+  let kategori = document.getElementById("agInputCategory")?.value || "Randevu / Not";
   const portfoyKod = document.getElementById("agInputPortfolio")?.value || "";
   const baslik = (document.getElementById("agInputTitle")?.value || "").trim();
   const not = (document.getElementById("agInputNote")?.value || "").trim();
   const hatirlatma = document.getElementById("agInputReminder")?.checked !== false;
+
+  if (kategori === "__CUSTOM__") {
+    const ozelAdi = (document.getElementById("agCustomCategoryInput")?.value || "").trim();
+    if (!ozelAdi) {
+      alert("Lütfen yeni kategori adını yazın.");
+      return;
+    }
+    const tumu = danismanAjandaTumKategorileriGetir(aktifId);
+    if (!tumu.some(k => k.toLocaleLowerCase("tr-TR") === ozelAdi.toLocaleLowerCase("tr-TR"))) {
+      danismanAjandaOzelKategoriListesi(aktifId).push(ozelAdi);
+      danismanAjandaOzelKategorileriKaydet();
+    }
+    kategori = ozelAdi;
+  }
+
+  ajandaSeciliFormKategori = kategori;
 
   if (!baslik && !not) {
     alert("Lütfen ajanda kaydı için bir başlık veya not yazın.");
@@ -12792,9 +12664,589 @@ function danismanAjandaTamamlaToggle(kayitId) {
   const liste = danismanAjandaListesiniGetir(aktifId);
   const hedef = liste.find(x => x.id === kayitId);
   if (!hedef) return;
-  hedef.tamamlandi = !hedef.tamamlandi;
+  const yeniDurum = !hedef.tamamlandi;
+  hedef.tamamlandi = yeniDurum;
   danismanAjandasiniKaydet();
+
+  // Ajandada tamamlanan kategori, günlük kişisel hedeflerde de +1/+(-1) senkron çalışsın
+  const hedefler = danismanKisiselHedefleriGetir(aktifId);
+  const eslesen = hedefler.find(h => h.kategori === hedef.kategori);
+  if (eslesen) {
+    eslesen.mevcut = Math.max(0, (Number(eslesen.mevcut) || 0) + (yeniDurum ? 1 : -1));
+    danismanKisiselHedefleriKaydet();
+  }
+
   danismanAjandaPanelRender();
+}
+
+function danismanAjandaAltSekmeSec(sekme) {
+  ajandaAktifAltSekme = sekme === "goals" ? "goals" : "calendar";
+  danismanAjandaPanelRender();
+}
+
+function danismanKisiselHedefleriYukle() {
+  try {
+    const raw = localStorage.getItem(AGENDA_GOALS_STORAGE_KEY);
+    if (raw) {
+      ajandaKisiselHedefler = JSON.parse(raw) || {};
+    }
+  } catch (e) {
+    ajandaKisiselHedefler = {};
+  }
+}
+
+function danismanKisiselHedefleriKaydet() {
+  try {
+    localStorage.setItem(AGENDA_GOALS_STORAGE_KEY, JSON.stringify(ajandaKisiselHedefler));
+  } catch (e) {}
+}
+
+function danismanKisiselHedefleriGetir(danismanId) {
+  danismanKisiselHedefleriYukle();
+  const id = danismanId || (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  if (!Array.isArray(ajandaKisiselHedefler[id]) || ajandaKisiselHedefler[id].length === 0) {
+    ajandaKisiselHedefler[id] = [
+      { id: `kh-fsbo-${id}`, baslik: "Bugün 15 FSBO Araması / Görüşmesi Yap", kategori: "FSBO (Sahibinden)", hedef: 15, mevcut: 6, notlar: [] },
+      { id: `kh-etki-${id}`, baslik: "Etki Çevrenden 10 Kişiyi Ara / Hal-Hatır Sor", kategori: "Etki Çevresi", hedef: 10, mevcut: 4, notlar: [] },
+      { id: `kh-bolge-${id}`, baslik: "Uzmanlık Bölgende 5 Kişiyle Yüz Yüze Görüş", kategori: "Portföy Bulma / Uzmanlık Bölgesi", hedef: 5, mevcut: 2, notlar: [] }
+    ];
+    danismanKisiselHedefleriKaydet();
+  }
+  return ajandaKisiselHedefler[id];
+}
+
+function danismanKisiselHedefArtir(hedefId, delta) {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const hedefler = danismanKisiselHedefleriGetir(aktifId);
+  const h = hedefler.find(x => x.id === hedefId);
+  if (!h) return;
+  const notInput = document.getElementById(`khNote-${hedefId}`);
+  const notTxt = (notInput?.value || "").trim();
+  h.mevcut = Math.max(0, (Number(h.mevcut) || 0) + delta);
+  if (delta > 0 && notTxt) {
+    if (!Array.isArray(h.notlar)) h.notlar = [];
+    const saat = new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
+    h.notlar.unshift({ ts: `Bugün ${saat}`, text: notTxt });
+  }
+  danismanKisiselHedefleriKaydet();
+  danismanAjandaPanelRender();
+}
+
+function danismanKisiselHedefEkle() {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const baslik = (document.getElementById("khNewTitle")?.value || "").trim();
+  const kategori = document.getElementById("khNewCategory")?.value || "FSBO (Sahibinden)";
+  const hedef = Math.max(1, parseInt(document.getElementById("khNewTarget")?.value || "5", 10) || 5);
+  if (!baslik) {
+    alert("Lütfen günlük hedef başlığını yazın (Örn: Bugün 5 Ofis Ziyareti).");
+    return;
+  }
+  const liste = danismanKisiselHedefleriGetir(aktifId);
+  liste.push({ id: `kh-${Date.now()}`, baslik, kategori, hedef, mevcut: 0, notlar: [] });
+  danismanKisiselHedefleriKaydet();
+  danismanAjandaPanelRender();
+}
+
+function danismanKisiselHedefSil(hedefId) {
+  const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
+  const liste = danismanKisiselHedefleriGetir(aktifId);
+  ajandaKisiselHedefler[aktifId] = liste.filter(x => x.id !== hedefId);
+  danismanKisiselHedefleriKaydet();
+  danismanAjandaPanelRender();
+}
+
+function danismanEkipGorevleriniYukle() {
+  try {
+    const raw = localStorage.getItem(TEAM_TASKS_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        ekipGorevleriListesi = parsed;
+        return;
+      }
+    }
+  } catch (e) {}
+
+  ekipGorevleriListesi = [
+    {
+      id: "eg-1",
+      liderId: "gencay-lider",
+      liderAd: "Gencay (Takım Lideri)",
+      atananId: "deniz-ekip",
+      atananAd: "Deniz Hanım",
+      baslik: "Bir Sonraki Toplantıya Kadar 10 FSBO Yapılsın",
+      kategori: "FSBO (Sahibinden)",
+      hedefSayi: 10,
+      mevcutSayi: 4,
+      sonTarih: yarinTarihIso(),
+      kanitZorunlu: true,
+      notlar: [
+        { ts: "Bugün 10:15", text: "Gölbaşı Bahçelievler 3+1 sahibi arandı, Salı 15:00 randevu alındı." },
+        { ts: "Bugün 11:40", text: "İncek 4+1 sahibinden ilanı ile görüşüldü, WhatsApp Mülkİzle linki atıldı." }
+      ]
+    },
+    {
+      id: "eg-2",
+      liderId: "gencay-lider",
+      liderAd: "Gencay (Takım Lideri)",
+      atananId: "deniz-ekip",
+      atananAd: "Deniz Hanım",
+      baslik: "Uzmanlık Bölgesinde 5 Esnaf / Mal Sahibi Ziyareti",
+      kategori: "Portföy Bulma / Uzmanlık Bölgesi",
+      hedefSayi: 5,
+      mevcutSayi: 2,
+      sonTarih: yarinTarihIso(),
+      kanitZorunlu: false,
+      notlar: [{ ts: "Dün 16:20", text: "Site yöneticisi Kemal Bey ile bölgedeki satılık daireler konuşuldu." }]
+    }
+  ];
+  danismanEkipGorevleriniKaydet();
+}
+
+function danismanEkipGorevleriniKaydet() {
+  try {
+    localStorage.setItem(TEAM_TASKS_STORAGE_KEY, JSON.stringify(ekipGorevleriListesi));
+  } catch (e) {}
+}
+
+function danismanEkipGoreviAta() {
+  if (!aktifKullanici) return;
+  danismanEkipGorevleriniYukle();
+  const atananId = document.getElementById("egMemberSelect")?.value || "deniz-ekip";
+  const uye = kayitliKullanicilar.find(u => u.id === atananId);
+  const kategori = document.getElementById("egCategorySelect")?.value || "FSBO (Sahibinden)";
+  const baslik = (document.getElementById("egTitleInput")?.value || "").trim();
+  const hedefSayi = Math.max(1, parseInt(document.getElementById("egTargetInput")?.value || "10", 10) || 10);
+  const sonTarih = document.getElementById("egDeadlineInput")?.value || yarinTarihIso();
+  const kanitZorunlu = document.getElementById("egProofReqCheck")?.checked !== false;
+
+  if (!baslik) {
+    alert("Lütfen ekip görevi başlığını yazın (Örn: Bir sonraki toplantıya kadar 10 FSBO).");
+    return;
+  }
+
+  const yeni = {
+    id: `eg-${Date.now()}`,
+    liderId: aktifKullanici.id,
+    liderAd: aktifKullanici.ad,
+    atananId,
+    atananAd: uye ? uye.ad : "Ekip Üyesi",
+    baslik,
+    kategori,
+    hedefSayi,
+    mevcutSayi: 0,
+    sonTarih,
+    kanitZorunlu,
+    notlar: []
+  };
+
+  ekipGorevleriListesi.unshift(yeni);
+  danismanEkipGorevleriniKaydet();
+
+  const { tamTarih } = tarihBilgisiniFormatlaTR(sonTarih);
+  danismanBildirimEkle({
+    hedefKullaniciId: atananId,
+    tip: "ajanda",
+    baslik: `👑 Yeni Takım Görevi (${aktifKullanici.ad}): ${baslik}`,
+    detay: `${kategori} • Hedef: ${hedefSayi} adet • Son Tarih: ${tamTarih}${kanitZorunlu ? " (Kanıt notu zorunlu)" : ""}`,
+    zaman: "Az önce",
+    hedefMod: "agenda"
+  });
+
+  danismanAjandaPanelRender();
+}
+
+function danismanEkipGoreviIlerlet(gorevId, delta) {
+  danismanEkipGorevleriniYukle();
+  const g = ekipGorevleriListesi.find(x => x.id === gorevId);
+  if (!g) return;
+  const noteInput = document.getElementById(`egNote-${gorevId}`);
+  const noteTxt = (noteInput?.value || "").trim();
+
+  if (delta > 0 && g.kanitZorunlu && !noteTxt) {
+    alert("🛡️ Bu görevde kanıt notu zorunlu! Lütfen kısaca kiminle / hangi mülkle görüştüğünüzü yazıp +1 butonuna basın.");
+    if (noteInput) noteInput.focus();
+    return;
+  }
+
+  g.mevcutSayi = Math.max(0, (Number(g.mevcutSayi) || 0) + delta);
+  if (delta > 0 && noteTxt) {
+    if (!Array.isArray(g.notlar)) g.notlar = [];
+    const saat = new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
+    g.notlar.unshift({ ts: `Bugün ${saat}`, text: noteTxt });
+  }
+  danismanEkipGorevleriniKaydet();
+
+  // Ekip üyesi görevi ilerlettiğinde ilgili kişisel hedefi de senkron tut
+  if (aktifKullanici) {
+    const kh = danismanKisiselHedefleriGetir(aktifKullanici.id).find(x => x.kategori === g.kategori);
+    if (kh) {
+      kh.mevcut = Math.max(0, (Number(kh.mevcut) || 0) + delta);
+      danismanKisiselHedefleriKaydet();
+    }
+  }
+
+  danismanAjandaPanelRender();
+}
+
+function danismanEkipGoreviSil(gorevId) {
+  danismanEkipGorevleriniYukle();
+  ekipGorevleriListesi = ekipGorevleriListesi.filter(x => x.id !== gorevId);
+  danismanEkipGorevleriniKaydet();
+  danismanAjandaPanelRender();
+}
+
+function danismanRozetleriniHesapla(userId) {
+  const hedefler = danismanKisiselHedefleriGetir(userId);
+  danismanEkipGorevleriniYukle();
+  const teamDoneCount = ekipGorevleriListesi.filter(
+    g => (g.atananId === userId || g.liderId === userId) && g.mevcutSayi >= g.hedefSayi
+  ).length;
+
+  const toplamKategoriSayi = kat =>
+    hedefler.filter(h => h.kategori === kat).reduce((sum, h) => sum + (Number(h.mevcut) || 0), 0);
+
+  const fsboSayi = toplamKategoriSayi("FSBO (Sahibinden)");
+  const bolgeSayi = toplamKategoriSayi("Portföy Bulma / Uzmanlık Bölgesi");
+  const etkiSayi = toplamKategoriSayi("Etki Çevresi");
+  const tamamlananHedef = hedefler.filter(h => h.mevcut >= h.hedef).length;
+
+  return [
+    { icon: "🦁", ad: "FSBO Canavarı", sart: `${Math.min(fsboSayi, 15)}/15 FSBO`, kazandi: fsboSayi >= 15 },
+    { icon: "🗺️", ad: "Bölgesinin Bir Tanesi", sart: `${Math.min(bolgeSayi, 5)}/5 Bölge Saha`, kazandi: bolgeSayi >= 5 },
+    { icon: "🤝", ad: "Etki Çevresi Ustası", sart: `${Math.min(etkiSayi, 10)}/10 Etki Çevresi`, kazandi: etkiSayi >= 10 },
+    { icon: "🏆", ad: "Toplantı Şampiyonu", sart: teamDoneCount > 0 ? "Görev %100 Tamam" : "Ekip görevi tamamla", kazandi: teamDoneCount > 0 },
+    { icon: "⚡", ad: "Günün Hızlısı", sart: `${tamamlananHedef} hedef bitti`, kazandi: tamamlananHedef >= 1 },
+    { icon: "🔥", ad: "İstikrar Makinesi", sart: hedefler.length > 0 && tamamlananHedef === hedefler.length ? "Tüm hedefler %100" : "Tüm günlük hedefleri bitir", kazandi: hedefler.length > 0 && tamamlananHedef === hedefler.length }
+  ];
+}
+
+function danismanHedeflerVeGorevlerHtml(aktifId, bugun, katOpsiyonHtml, katRenkMap, ozelFallback) {
+  danismanEkipGorevleriniYukle();
+  const hedefler = danismanKisiselHedefleriGetir(aktifId);
+  const rozetler = danismanRozetleriniHesapla(aktifId);
+  const kazanilanRozetSayi = rozetler.filter(r => r.kazandi).length;
+  const tamamlananGunluk = hedefler.filter(h => h.mevcut >= h.hedef).length;
+
+  const aktifRol = aktifKullanici?.rol || "";
+  const aktifPlan = aktifKullanici?.plan || "";
+  const liderMi = aktifRol === "takim_lideri" || aktifPlan === "takim_lideri" || aktifPlan === "broker" || aktifPlan === "kurumsal";
+  const ekipUyemMi = aktifRol === "ekip_danismani" || Boolean(aktifKullanici?.takimLideriId);
+
+  const benimEkipGorevlerim = ekipGorevleriListesi.filter(g => g.atananId === aktifId);
+  const verdigimGorevler = ekipGorevleriListesi.filter(g => g.liderId === aktifId);
+  const ekipUyeleri = kayitliKullanicilar.filter(
+    u => u.id !== aktifId && (u.takimLideriId === aktifId || (aktifKullanici?.ekipUyeleri || []).includes(u.id))
+  );
+
+  const seriSayisi = 4 + tamamlananGunluk;
+
+  const rozetlerHtml = rozetler
+    .map(
+      r => `
+        <div style="border-radius:10px;padding:10px;border:1.5px solid ${r.kazandi ? "#F59E0B" : "#E2E8F0"};background:${r.kazandi ? "#FFFBEB" : "#F8FAFC"};opacity:${r.kazandi ? "1" : "0.72"};text-align:center;">
+          <div style="font-size:1.35rem;line-height:1.1;">${r.icon}</div>
+          <div style="font-size:0.78rem;font-weight:800;color:#0F172A;margin-top:4px;">${r.ad}</div>
+          <div style="font-size:0.68rem;font-weight:700;color:${r.kazandi ? "#B45309" : "#64748B"};margin-top:2px;">
+            ${r.kazandi ? "✓ KAZANILDI" : r.sart}
+          </div>
+        </div>
+      `
+    )
+    .join("");
+
+  const kisiselHedeflerHtml = hedefler
+    .map(h => {
+      const pct = Math.min(100, Math.round(((Number(h.mevcut) || 0) / Math.max(1, h.hedef)) * 100));
+      const bittiMi = h.mevcut >= h.hedef;
+      const katStil = katRenkMap[h.kategori] || ozelFallback;
+      const sonNotlar = (h.notlar || []).slice(0, 2);
+
+      return `
+        <div class="saas-card" style="padding:14px 16px;margin-bottom:10px;border-left:4px solid ${bittiMi ? "#16A34A" : "#2563EB"};">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:10px;">
+            <div style="flex:1;min-width:220px;">
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+                <span style="font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:999px;${katStil}">${ajandaHtmlEsc(h.kategori)}</span>
+                ${bittiMi ? `<span style="font-size:0.7rem;font-weight:800;background:#DCFCE7;color:#15803D;padding:2px 8px;border-radius:999px;">✓ HEDEF TAMAM</span>` : ""}
+              </div>
+              <div style="font-size:0.94rem;font-weight:800;color:#0F172A;">${ajandaHtmlEsc(h.baslik)}</div>
+              <div style="margin-top:8px;display:flex;align-items:center;gap:10px;">
+                <div style="flex:1;height:10px;background:#E2E8F0;border-radius:999px;overflow:hidden;">
+                  <div style="width:${pct}%;height:100%;background:${bittiMi ? "#16A34A" : "#2563EB"};transition:width 0.2s;"></div>
+                </div>
+                <span style="font-size:0.8rem;font-weight:800;color:#0F172A;min-width:68px;text-align:right;">${h.mevcut} / ${h.hedef} (%${pct})</span>
+              </div>
+              ${
+                sonNotlar.length > 0
+                  ? `<div style="margin-top:8px;font-size:0.74rem;color:#475569;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:6px 8px;">
+                      ${sonNotlar.map(n => `<div>• <strong>${ajandaHtmlEsc(n.ts)}:</strong> ${ajandaHtmlEsc(n.text)}</div>`).join("")}
+                    </div>`
+                  : ""
+              }
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:6px;min-width:205px;">
+              <input type="text" id="khNote-${h.id}" class="saas-input-compact" placeholder="İsteğe bağlı kısa görüşme notu..." style="padding:6px 8px;font-size:0.76rem;" />
+              <div style="display:flex;gap:6px;">
+                <button type="button" class="saas-btn-outline-sm" onclick="danismanKisiselHedefArtir('${h.id}', -1)" style="padding:6px 10px;">−1</button>
+                <button type="button" class="social-btn-primary" onclick="danismanKisiselHedefArtir('${h.id}', 1)" style="flex:1;justify-content:center;padding:6px 12px;">+1 Tamamladım</button>
+                <button type="button" class="saas-btn-outline-sm" onclick="danismanKisiselHedefSil('${h.id}')" style="color:#DC2626;border-color:#FECACA;padding:6px 8px;">Sil</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  let ekipBolumuHtml = "";
+  if (liderMi) {
+    const uyeSecenekleri = ekipUyeleri.length > 0
+      ? ekipUyeleri.map(u => `<option value="${u.id}">${ajandaHtmlEsc(u.ad)} (${ajandaHtmlEsc(u.ofis)})</option>`).join("")
+      : `<option value="deniz-ekip">Deniz Hanım (Ekip Danışmanı)</option>`;
+
+    const verdigimHtml = verdigimGorevler.length === 0
+      ? `<div style="font-size:0.82rem;color:#64748B;">Henüz ekibe atanmış bir görev yok.</div>`
+      : verdigimGorevler
+          .map(g => {
+            const pct = Math.min(100, Math.round(((Number(g.mevcutSayi) || 0) / Math.max(1, g.hedefSayi)) * 100));
+            const bittiMi = g.mevcutSayi >= g.hedefSayi;
+            const { tamTarih } = tarihBilgisiniFormatlaTR(g.sonTarih);
+            return `
+              <div style="background:#FFFFFF;border:1.5px solid ${bittiMi ? "#BBF7D0" : "#CBD5E1"};border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;">
+                  <div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:4px;">
+                      <span class="saas-badge-blue">🧑‍💼 ${ajandaHtmlEsc(g.atananAd)}</span>
+                      <span style="font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:999px;${katRenkMap[g.kategori] || ozelFallback}">${ajandaHtmlEsc(g.kategori)}</span>
+                      <span style="font-size:0.72rem;color:#64748B;font-weight:700;">📅 Son: ${tamTarih}</span>
+                      ${g.kanitZorunlu ? `<span style="font-size:0.68rem;font-weight:800;background:#FEF3C7;color:#92400E;padding:2px 7px;border-radius:999px;">🛡️ Kanıt Notu Zorunlu</span>` : ""}
+                    </div>
+                    <div style="font-size:0.92rem;font-weight:800;color:#0F172A;">${ajandaHtmlEsc(g.baslik)}</div>
+                  </div>
+                  <button type="button" class="saas-btn-outline-sm" onclick="danismanEkipGoreviSil('${g.id}')" style="color:#DC2626;border-color:#FECACA;padding:4px 9px;font-size:0.72rem;">Görevi Sil</button>
+                </div>
+
+                <div style="margin-top:8px;display:flex;align-items:center;gap:10px;">
+                  <div style="flex:1;height:10px;background:#E2E8F0;border-radius:999px;overflow:hidden;">
+                    <div style="width:${pct}%;height:100%;background:${bittiMi ? "#16A34A" : "#2563EB"};"></div>
+                  </div>
+                  <strong style="font-size:0.8rem;color:${bittiMi ? "#15803D" : "#0F172A"};">${g.mevcutSayi} / ${g.hedefSayi} (%${pct})</strong>
+                </div>
+
+                ${
+                  (g.notlar || []).length > 0
+                    ? `<div style="margin-top:8px;font-size:0.75rem;color:#334155;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:7px 9px;">
+                        <div style="font-weight:800;font-size:0.7rem;color:#64748B;margin-bottom:3px;">EKİP ÜYESİNİN GİRDİĞİ SON KANIT NOTLARI:</div>
+                        ${g.notlar.slice(0, 3).map(n => `<div>• <strong>${ajandaHtmlEsc(n.ts)}:</strong> ${ajandaHtmlEsc(n.text)}</div>`).join("")}
+                      </div>`
+                    : `<div style="margin-top:6px;font-size:0.74rem;color:#64748B;">Henüz kanıt notu girilmedi.</div>`
+                }
+              </div>
+            `;
+          })
+          .join("");
+
+    ekipBolumuHtml = `
+      <div class="saas-card" style="padding:16px 18px;margin-bottom:16px;background:#F8FAFC;border:1.5px solid #0F172A;">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;">
+          <div>
+            <h3 class="saas-h2" style="font-size:1rem;margin:0;">👑 Takım Lideri Paneli — Ekibe Görev Ata &amp; Takip Et</h3>
+            <div class="saas-text-xs" style="margin-top:2px;">Bir sonraki toplantıya kadar ekibinize FSBO, Etki Çevresi veya Bölge hedefi verin; ilerlemeyi ve kanıt notlarını canlı izleyin.</div>
+          </div>
+          <button type="button" class="saas-btn-primary-sm" onclick="hizliTakimHesabinaGec('deniz-ekip')">
+            🧑‍💼 Deniz Hanım'ın Ekranından Test Et →
+          </button>
+        </div>
+
+        <div style="background:#FFFFFF;border:1px solid #CBD5E1;border-radius:10px;padding:12px;margin-bottom:14px;">
+          <div class="form-grid-3" style="margin-bottom:8px;">
+            <div class="field">
+              <label>Ekip Üyesi</label>
+              <select id="egMemberSelect" class="saas-input-compact" style="width:100%;padding:7px 10px;">${uyeSecenekleri}</select>
+            </div>
+            <div class="field">
+              <label>Görev Kategorisi</label>
+              <select id="egCategorySelect" class="saas-input-compact" style="width:100%;padding:7px 10px;">
+                ${AGENDA_VARSAYILAN_KATEGORILER.filter(k => k !== "Randevu / Not").map(k => `<option value="${ajandaHtmlEsc(k)}" ${k === "FSBO (Sahibinden)" ? "selected" : ""}>${ajandaHtmlEsc(k)}</option>`).join("")}
+              </select>
+            </div>
+            <div class="field">
+              <label>Son Tarih (Toplantı Günü)</label>
+              <input type="date" id="egDeadlineInput" value="${yarinTarihIso()}" class="saas-input-compact" style="width:100%;padding:7px 10px;" />
+            </div>
+          </div>
+
+          <div class="form-grid-2" style="margin-bottom:8px;">
+            <div class="field">
+              <label>Görev Başlığı</label>
+              <input type="text" id="egTitleInput" class="saas-input-compact" placeholder="Örn: Salı toplantısına kadar 10 FSBO yapılsın" style="width:100%;padding:7px 10px;" />
+            </div>
+            <div class="field">
+              <label>Hedef Adet</label>
+              <input type="number" id="egTargetInput" min="1" max="200" value="10" class="saas-input-compact" style="width:100%;padding:7px 10px;" />
+            </div>
+          </div>
+
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;">
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;color:#334155;cursor:pointer;">
+              <input type="checkbox" id="egProofReqCheck" checked />
+              <span>🛡️ Danışman +1 yaparken kısa kanıt notu yazmak zorunda olsun</span>
+            </label>
+            <button type="button" class="social-btn-primary" onclick="danismanEkipGoreviAta()">📤 Görevi Ekibe Gönder</button>
+          </div>
+        </div>
+
+        <div style="font-size:0.82rem;font-weight:800;color:#0F172A;margin-bottom:8px;">📊 Verdiğim Görevler &amp; Ekip İlerlemesi (${verdigimGorevler.length})</div>
+        ${verdigimHtml}
+      </div>
+    `;
+  } else if (ekipUyemMi) {
+    const gelenHtml = benimEkipGorevlerim.length === 0
+      ? `<div style="font-size:0.82rem;color:#64748B;">Şu an yöneticiniz tarafından atanmış aktif bir görev yok.</div>`
+      : benimEkipGorevlerim
+          .map(g => {
+            const pct = Math.min(100, Math.round(((Number(g.mevcutSayi) || 0) / Math.max(1, g.hedefSayi)) * 100));
+            const bittiMi = g.mevcutSayi >= g.hedefSayi;
+            const { tamTarih } = tarihBilgisiniFormatlaTR(g.sonTarih);
+            return `
+              <div style="background:#FFFFFF;border:1.5px solid ${bittiMi ? "#16A34A" : "#2563EB"};border-radius:12px;padding:13px 15px;margin-bottom:10px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;">
+                  <div style="flex:1;min-width:220px;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:4px;">
+                      <span class="saas-badge-blue">👑 Atayan: ${ajandaHtmlEsc(g.liderAd)}</span>
+                      <span style="font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:999px;${katRenkMap[g.kategori] || ozelFallback}">${ajandaHtmlEsc(g.kategori)}</span>
+                      <span style="font-size:0.72rem;color:#64748B;font-weight:700;">📅 Son: ${tamTarih}</span>
+                      ${g.kanitZorunlu ? `<span style="font-size:0.68rem;font-weight:800;background:#FEF3C7;color:#92400E;padding:2px 7px;border-radius:999px;">🛡️ Not Zorunlu</span>` : ""}
+                    </div>
+                    <div style="font-size:0.94rem;font-weight:800;color:#0F172A;">${ajandaHtmlEsc(g.baslik)}</div>
+                    <div style="margin-top:8px;display:flex;align-items:center;gap:10px;">
+                      <div style="flex:1;height:10px;background:#E2E8F0;border-radius:999px;overflow:hidden;">
+                        <div style="width:${pct}%;height:100%;background:${bittiMi ? "#16A34A" : "#2563EB"};"></div>
+                      </div>
+                      <strong>${g.mevcutSayi} / ${g.hedefSayi} (%${pct})</strong>
+                    </div>
+                    ${
+                      (g.notlar || []).length > 0
+                        ? `<div style="margin-top:8px;font-size:0.74rem;color:#475569;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:6px 8px;">
+                            ${g.notlar.slice(0, 3).map(n => `<div>• <strong>${ajandaHtmlEsc(n.ts)}:</strong> ${ajandaHtmlEsc(n.text)}</div>`).join("")}
+                          </div>`
+                        : ""
+                    }
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:6px;min-width:220px;">
+                    <input type="text" id="egNote-${g.id}" class="saas-input-compact" placeholder="${g.kanitZorunlu ? "Kanıt notu yazın (Zorunlu)..." : "Kısa görüşme notu..."}" style="padding:6px 9px;font-size:0.78rem;" />
+                    <div style="display:flex;gap:6px;">
+                      <button type="button" class="saas-btn-outline-sm" onclick="danismanEkipGoreviIlerlet('${g.id}', -1)" style="padding:6px 10px;">−1</button>
+                      <button type="button" class="social-btn-primary" onclick="danismanEkipGoreviIlerlet('${g.id}', 1)" style="flex:1;justify-content:center;padding:6px 12px;">+1 Yaptım &amp; Gönder</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+
+    ekipBolumuHtml = `
+      <div class="saas-card" style="padding:16px 18px;margin-bottom:16px;background:#EFF6FF;border:1.5px solid #93C5FD;">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;">
+          <div>
+            <h3 class="saas-h2" style="font-size:1rem;margin:0;">📋 Takım Liderimin Verdiği Görevler (${benimEkipGorevlerim.length})</h3>
+            <div class="saas-text-xs" style="margin-top:2px;">Tamamladığınız her görüşmeyi +1 olarak işaretleyin; liderinizin toplantı karnesine anlık düşer.</div>
+          </div>
+          <button type="button" class="saas-btn-primary-sm" onclick="hizliTakimHesabinaGec('gencay-lider')">
+            👑 Takım Lideri (Gencay) Ekranına Dön →
+          </button>
+        </div>
+        ${gelenHtml}
+      </div>
+    `;
+  } else {
+    ekipBolumuHtml = `
+      <div class="saas-card" style="padding:13px 16px;margin-bottom:16px;background:#F8FAFC;border:1px dashed #CBD5E1;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;">
+        <div style="font-size:0.8rem;color:#334155;">
+          <strong>👑 Ekibe Görev Atama &amp; Toplantı Karnesi:</strong> Takım Lideri, Broker ve Kurumsal paketlerde yönetici ekibine hedefler atayıp ilerlemeyi canlı izler.
+        </div>
+        <button type="button" class="saas-btn-primary-sm" onclick="hizliTakimHesabinaGec('gencay-lider')">👑 Takım Lideri Hesabıyla Dene →</button>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="visual-kpi-strip-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px;">
+      <div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;">
+        <div style="width:38px;height:38px;border-radius:10px;background:#FFEDD5;color:#C2410C;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">🔥</div>
+        <div>
+          <div style="font-size:1.15rem;font-weight:800;color:#0F172A;line-height:1.1;">${seriSayisi} Gün</div>
+          <div class="saas-text-xs" style="font-weight:700;color:#9A3412;">Günlük Aktivite Serisi</div>
+        </div>
+      </div>
+      <div style="background:#FFFFFF;border:1.5px solid #E2E8F0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;">
+        <div style="width:38px;height:38px;border-radius:10px;background:#DCFCE7;color:#15803D;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">🎯</div>
+        <div>
+          <div style="font-size:1.15rem;font-weight:800;color:#0F172A;line-height:1.1;">${tamamlananGunluk} / ${hedefler.length}</div>
+          <div class="saas-text-xs" style="font-weight:700;color:#475569;">Günlük Hedef Biten</div>
+        </div>
+      </div>
+      <div style="background:#FFFFFF;border:1.5px solid #E2E8F0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;">
+        <div style="width:38px;height:38px;border-radius:10px;background:#DBEAFE;color:#1D4ED8;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">🏅</div>
+        <div>
+          <div style="font-size:1.15rem;font-weight:800;color:#0F172A;line-height:1.1;">${kazanilanRozetSayi} / ${rozetler.length}</div>
+          <div class="saas-text-xs" style="font-weight:700;color:#475569;">Kazanılan Rozet</div>
+        </div>
+      </div>
+      <div style="background:#FFFFFF;border:1.5px solid #E2E8F0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;">
+        <div style="width:38px;height:38px;border-radius:10px;background:#F3E8FF;color:#7E22CE;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">👥</div>
+        <div>
+          <div style="font-size:1.15rem;font-weight:800;color:#0F172A;line-height:1.1;">${liderMi ? verdigimGorevler.length : benimEkipGorevlerim.length}</div>
+          <div class="saas-text-xs" style="font-weight:700;color:#475569;">${liderMi ? "Ekibe Verdiğim Görev" : "Yönetici Görevim"}</div>
+        </div>
+      </div>
+    </div>
+
+    ${ekipBolumuHtml}
+
+    <div class="saas-card" style="padding:14px 16px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;">
+        <h3 class="saas-h2" style="font-size:0.95rem;margin:0;">🏅 Başarı Rozetlerin (Oyunlaştırma Vitrini)</h3>
+        <span class="saas-text-xs">Hedeflerini tamamladıkça rozetlerin kilidi açılır</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;">
+        ${rozetlerHtml}
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+      <h3 class="saas-h2" style="font-size:0.98rem;margin:0;">🎯 Bugünkü Kişisel Gelişim Hedeflerim</h3>
+      <span class="saas-text-xs">Takvim'de aynı kategoride bir görevi ✓ yaptığında burası da otomatik artar</span>
+    </div>
+
+    ${kisiselHedeflerHtml}
+
+    <div class="saas-card" style="padding:14px 16px;background:#F8FAFC;border:1px solid #E2E8F0;margin-top:12px;">
+      <div style="font-size:0.84rem;font-weight:800;color:#0F172A;margin-bottom:8px;">+ Kendi Günlük Hedefini Ekle</div>
+      <div class="form-grid-3" style="align-items:end;gap:8px;">
+        <div class="field" style="margin-bottom:0;">
+          <label>Kategori</label>
+          <select id="khNewCategory" class="saas-input-compact" style="width:100%;padding:7px 10px;">
+            ${katOpsiyonHtml.replace('<option value="__CUSTOM__">+ Yeni Kategori Ekle...</option>', '')}
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Hedef Adı</label>
+          <input type="text" id="khNewTitle" class="saas-input-compact" placeholder="Örn: Bugün 5 Ofis Ziyareti" style="width:100%;padding:7px 10px;" />
+        </div>
+        <div style="display:flex;gap:6px;align-items:end;">
+          <div class="field" style="margin-bottom:0;width:85px;">
+            <label>Hedef Sayı</label>
+            <input type="number" id="khNewTarget" min="1" max="100" value="5" class="saas-input-compact" style="width:100%;padding:7px 8px;" />
+          </div>
+          <button type="button" class="saas-btn-primary-sm" onclick="danismanKisiselHedefEkle()" style="padding:8px 14px;">+ Ekle</button>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function danismanAjandaSil(kayitId) {
@@ -12822,10 +13274,16 @@ function danismanAjandaPanelRender() {
   const tamamlananSayi = tumListe.filter(x => x.tamamlandi).length;
 
   const filtrelenmis = tumListe.filter(x => {
-    if (ajandaAktifFiltre === "today") return x.tarih === bugun;
-    if (ajandaAktifFiltre === "upcoming") return !x.tamamlandi;
-    if (ajandaAktifFiltre === "completed") return x.tamamlandi;
-    return true;
+    const durumOk =
+      ajandaAktifFiltre === "today"
+        ? x.tarih === bugun
+        : ajandaAktifFiltre === "upcoming"
+        ? !x.tamamlandi
+        : ajandaAktifFiltre === "completed"
+        ? x.tamamlandi
+        : true;
+    const katOk = ajandaSeciliKategoriFiltre === "all" || (x.kategori || "Randevu / Not") === ajandaSeciliKategoriFiltre;
+    return durumOk && katOk;
   });
 
   const gorunenPortfoyler = aktifDanismaninGorunenPortfoyleri();
@@ -12834,13 +13292,53 @@ function danismanAjandaPanelRender() {
     ...gorunenPortfoyler.map(p => `<option value="${p.kod}">#${p.kod} — ${p.baslik}</option>`)
   ].join("");
 
+  const ozelKategoriler = danismanAjandaOzelKategoriListesi(aktifId);
+  const tumKategoriler = danismanAjandaTumKategorileriGetir(aktifId);
+
   const kategoriRenkMap = {
     "Yer Gösterimi": "background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE;",
     "Mülk Sahibi Görüşmesi": "background:#F0FDF4;color:#15803D;border:1px solid #BBF7D0;",
     "Tapu & Sözleşme": "background:#FEF3C7;color:#B45309;border:1px solid #FDE68A;",
     "Çekim & Pazarlama": "background:#FAF5FF;color:#7E22CE;border:1px solid #E9D5FF;",
+    "Portföy Bulma / Uzmanlık Bölgesi": "background:#ECFEFF;color:#0E7490;border:1px solid #A5F3FC;",
+    "Etki Çevresi": "background:#FFF7ED;color:#C2410C;border:1px solid #FED7AA;",
+    "FSBO (Sahibinden)": "background:#FEF2F2;color:#B91C1C;border:1px solid #FECACA;",
+    "Ofis Ziyaretleri": "background:#EEF2FF;color:#4338CA;border:1px solid #C7D2FE;",
     "Randevu / Not": "background:#F1F5F9;color:#334155;border:1px solid #CBD5E1;"
   };
+  const ozelKatFallbackStil = "background:#FDF2F8;color:#BE185D;border:1px solid #FBCFE8;";
+
+  const formKategoriOpsiyonlariHtml = [
+    ...AGENDA_VARSAYILAN_KATEGORILER.map(
+      k => `<option value="${ajandaHtmlEsc(k)}" ${ajandaSeciliFormKategori === k ? "selected" : ""}>${ajandaHtmlEsc(k === "Randevu / Not" ? "Genel Randevu / Not" : k)}</option>`
+    ),
+    ...ozelKategoriler.map(
+      k => `<option value="${ajandaHtmlEsc(k)}" ${ajandaSeciliFormKategori === k ? "selected" : ""}>⭐ ${ajandaHtmlEsc(k)}</option>`
+    ),
+    `<option value="__CUSTOM__">+ Yeni Kategori Ekle...</option>`
+  ].join("");
+
+  const kategoriFiltreOpsiyonlariHtml = [
+    `<option value="all" ${ajandaSeciliKategoriFiltre === "all" ? "selected" : ""}>Tüm Kategoriler (${tumListe.length})</option>`,
+    ...tumKategoriler.map(k => {
+      const cnt = tumListe.filter(x => (x.kategori || "Randevu / Not") === k).length;
+      return `<option value="${ajandaHtmlEsc(k)}" ${ajandaSeciliKategoriFiltre === k ? "selected" : ""}>${ajandaHtmlEsc(k)} (${cnt})</option>`;
+    })
+  ].join("");
+
+  const ozelKatChipHtml =
+    ozelKategoriler.length === 0
+      ? ""
+      : `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
+          ${ozelKategoriler
+            .map(
+              k => `<span style="display:inline-flex;align-items:center;gap:5px;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:999px;${ozelKatFallbackStil}">
+                      ⭐ ${ajandaHtmlEsc(k)}
+                      <button type="button" data-kat="${ajandaHtmlEsc(k)}" onclick="danismanAjandaOzelKategoriSil(this.getAttribute('data-kat'))" title="Kategoriyi sil" style="border:none;background:none;color:#BE185D;font-weight:800;cursor:pointer;padding:0 2px;line-height:1;">×</button>
+                    </span>`
+            )
+            .join("")}
+        </div>`;
 
   const listeHtml =
     filtrelenmis.length === 0
@@ -12852,7 +13350,7 @@ function danismanAjandaPanelRender() {
             const { tamTarih, gunAdi } = tarihBilgisiniFormatlaTR(item.tarih);
             const bugunMu = item.tarih === bugun;
             const bagliPortfoy = item.portfoyKod ? portfoyler.find(p => p.kod === item.portfoyKod) : null;
-            const katStil = kategoriRenkMap[item.kategori] || kategoriRenkMap["Randevu / Not"];
+            const katStil = kategoriRenkMap[item.kategori] || (item.kategori && item.kategori !== "Randevu / Not" ? ozelKatFallbackStil : kategoriRenkMap["Randevu / Not"]);
 
             return `
               <div class="saas-card" style="padding:14px 16px;margin-bottom:10px;border-left:4px solid ${
@@ -12881,7 +13379,7 @@ function danismanAjandaPanelRender() {
                           🕒 ${item.saat || "Belirtilmedi"}
                         </span>
                         <span style="font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:999px;${katStil}">
-                          ${item.kategori || "Not"}
+                          ${ajandaHtmlEsc(item.kategori || "Not")}
                         </span>
                         ${
                           bugunMu && !item.tamamlandi
@@ -12921,21 +13419,25 @@ function danismanAjandaPanelRender() {
           })
           .join("");
 
-  wrap.innerHTML = `
-    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;">
-      <div>
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-          <h2 class="saas-h2" style="margin:0;">Mülk Ajandam</h2>
-          <span class="saas-badge-blue">${bugunkuSayi} Bugünkü Randevu</span>
-          <span class="saas-badge-neutral">${bekleyenSayi} Bekleyen • ${tamamlananSayi} Tamamlanan</span>
-        </div>
-        <div class="saas-text-xs" style="margin-top:2px;">Gün, tarih ve saat belirterek yer gösterimi, mülk sahibi görüşmesi, tapu randevusu ve saha notlarınızı planlayın.</div>
-      </div>
-      <button type="button" class="saas-btn-outline-sm" onclick="danismanSolMenuSec('notifications')">
-        <span>🔔 Bildirimler &amp; Hatırlatmalar</span>
+  danismanEkipGorevleriniYukle();
+  const kisiselSayi = danismanKisiselHedefleriGetir(aktifId).length;
+  const ekipAktifSayi = ekipGorevleriListesi.filter(g => g.atananId === aktifId || g.liderId === aktifId).length;
+
+  const altSekmeBarHtml = `
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #E2E8F0;">
+      <button type="button" class="${ajandaAktifAltSekme === "calendar" ? "social-btn-primary" : "saas-btn-outline-sm"}" onclick="danismanAjandaAltSekmeSec('calendar')">
+        📅 Takvim &amp; Randevular (${tumListe.length})
+      </button>
+      <button type="button" class="${ajandaAktifAltSekme === "goals" ? "social-btn-primary" : "saas-btn-outline-sm"}" onclick="danismanAjandaAltSekmeSec('goals')">
+        🎯 Hedefler, Rozetler &amp; Ekip Görevleri (${kisiselSayi + ekipAktifSayi})
       </button>
     </div>
+  `;
 
+  const govdeHtml =
+    ajandaAktifAltSekme === "goals"
+      ? danismanHedeflerVeGorevlerHtml(aktifId, bugun, formKategoriOpsiyonlariHtml, kategoriRenkMap, ozelKatFallbackStil)
+      : `
     <!-- %70 GÖRSEL ÖZET BAR: 4'LÜ AJANDA DURUM KARTLARI -->
     <div class="visual-kpi-strip-4" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px;">
       <div onclick="danismanAjandaFiltreSec('today')" style="cursor:pointer;background:${ajandaAktifFiltre === "today" ? "#EFF6FF" : "#FFFFFF"};border:1.5px solid ${ajandaAktifFiltre === "today" ? "#2563EB" : "#E2E8F0"};border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;">
@@ -12981,14 +13483,20 @@ function danismanAjandaPanelRender() {
           <input type="time" id="agInputTime" value="14:00" class="saas-input-compact" style="width:100%;padding:8px 10px;" />
         </div>
         <div class="field">
-          <label>Kategori</label>
-          <select id="agInputCategory" class="saas-input-compact" style="width:100%;padding:8px 10px;">
-            <option value="Yer Gösterimi">Yer Gösterimi</option>
-            <option value="Mülk Sahibi Görüşmesi">Mülk Sahibi Görüşmesi</option>
-            <option value="Tapu & Sözleşme">Tapu &amp; Sözleşme</option>
-            <option value="Çekim & Pazarlama">Çekim &amp; Pazarlama</option>
-            <option value="Randevu / Not">Genel Randevu / Not</option>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+            <label style="margin:0;">Kategori</label>
+            <button type="button" onclick="danismanAjandaOzelKategoriAcKapat()" style="border:none;background:none;color:#2563EB;font-size:0.74rem;font-weight:700;cursor:pointer;padding:0;">+ Özel Kategori</button>
+          </div>
+          <select id="agInputCategory" onchange="danismanAjandaKategoriDegisti(this.value)" class="saas-input-compact" style="width:100%;padding:8px 10px;">
+            ${formKategoriOpsiyonlariHtml}
           </select>
+          <div id="agCustomCategoryWrap" style="display:none;margin-top:8px;padding:8px;background:#FFFFFF;border:1px solid #CBD5E1;border-radius:8px;">
+            <div style="display:flex;gap:6px;">
+              <input type="text" id="agCustomCategoryInput" class="saas-input-compact" placeholder="Örn: Ekspertiz / Banka, Müteahhit Ziyareti" style="flex:1;padding:6px 10px;" />
+              <button type="button" class="saas-btn-primary-sm" onclick="danismanAjandaOzelKategoriEkle()">Ekle</button>
+            </div>
+            ${ozelKatChipHtml}
+          </div>
         </div>
       </div>
 
@@ -13022,24 +13530,48 @@ function danismanAjandaPanelRender() {
     </div>
 
     <!-- FİLTRE SEKMELERİ -->
-    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-      <button type="button" class="${ajandaAktifFiltre === "all" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('all')">
-        Tümü (${tumListe.length})
-      </button>
-      <button type="button" class="${ajandaAktifFiltre === "today" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('today')">
-        Bugün (${tumListe.filter(x => x.tarih === bugun).length})
-      </button>
-      <button type="button" class="${ajandaAktifFiltre === "upcoming" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('upcoming')">
-        Bekleyenler (${bekleyenSayi})
-      </button>
-      <button type="button" class="${ajandaAktifFiltre === "completed" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('completed')">
-        Tamamlananlar (${tamamlananSayi})
-      </button>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <button type="button" class="${ajandaAktifFiltre === "all" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('all')">
+          Tümü (${tumListe.length})
+        </button>
+        <button type="button" class="${ajandaAktifFiltre === "today" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('today')">
+          Bugün (${tumListe.filter(x => x.tarih === bugun).length})
+        </button>
+        <button type="button" class="${ajandaAktifFiltre === "upcoming" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('upcoming')">
+          Bekleyenler (${bekleyenSayi})
+        </button>
+        <button type="button" class="${ajandaAktifFiltre === "completed" ? "saas-btn-primary-sm" : "saas-btn-outline-sm"}" onclick="danismanAjandaFiltreSec('completed')">
+          Tamamlananlar (${tamamlananSayi})
+        </button>
+      </div>
+      <select onchange="danismanAjandaKategoriFiltreSec(this.value)" class="saas-input-compact" style="padding:6px 10px;font-size:0.78rem;min-width:190px;">
+        ${kategoriFiltreOpsiyonlariHtml}
+      </select>
     </div>
 
     <div>
       ${listeHtml}
     </div>
+  `;
+
+  wrap.innerHTML = `
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <h2 class="saas-h2" style="margin:0;">Mülk Ajandam</h2>
+          <span class="saas-badge-blue">${bugunkuSayi} Bugünkü Randevu</span>
+          <span class="saas-badge-neutral">${bekleyenSayi} Bekleyen • ${tamamlananSayi} Tamamlanan</span>
+        </div>
+        <div class="saas-text-xs" style="margin-top:2px;">Takvim planlarınızı yönetin; günlük FSBO, etki çevresi ve bölge hedeflerinizle ekip görevlerinizi takip edin.</div>
+      </div>
+      <button type="button" class="saas-btn-outline-sm" onclick="danismanSolMenuSec('notifications')">
+        <span>🔔 Bildirimler &amp; Hatırlatmalar</span>
+      </button>
+    </div>
+
+    ${altSekmeBarHtml}
+    ${govdeHtml}
   `;
 }
 
@@ -13125,7 +13657,8 @@ function danismanBildirimleriniGetir(danismanId) {
 
 function danismanBildirimEkle(yeni) {
   const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
-  const liste = danismanBildirimleriniGetir(aktifId);
+  const targetId = yeni.hedefKullaniciId || aktifId;
+  const liste = danismanBildirimleriniGetir(targetId);
   liste.unshift({
     id: `ntf-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
     tip: yeni.tip || "mesaj",
@@ -13393,14 +13926,6 @@ document.addEventListener("DOMContentLoaded", () => {
     heroForm.addEventListener("submit", e => {
       e.preventDefault();
       heroKodSecVeDogrula(document.getElementById("heroTrackingInput").value);
-    });
-  }
-
-  const clientSearchForm = document.getElementById("clientSearchForm");
-  if (clientSearchForm) {
-    clientSearchForm.addEventListener("submit", e => {
-      e.preventDefault();
-      saticiPaneliniGoster(document.getElementById("clientCodeInput").value);
     });
   }
 

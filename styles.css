@@ -196,24 +196,6 @@ body {
   box-shadow: var(--shadow-xs);
 }
 
-.tab-step-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
-  font-size: 0.68rem;
-  font-weight: 800;
-  background: rgba(11, 31, 58, 0.08);
-  color: inherit;
-}
-
-.view-tab.active .tab-step-pill {
-  background: var(--cobalt-600);
-  color: #ffffff;
-}
-
 /* Görünüm Panelleri */
 .app-view {
   display: none;
@@ -289,17 +271,6 @@ body {
   border: 1px solid #E2E8F0;
 }
 
-.cargo-hero-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 24px;
-  align-items: center;
-}
-
-.hero-eyebrow {
-  display: none;
-}
-
 .cargo-hero h1 {
   font-size: 1.5rem; /* text-2xl font-bold text-slate-900 */
   font-weight: 700;
@@ -331,34 +302,6 @@ body {
   box-shadow: none;
 }
 
-.hero-tracking-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.76rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  margin-bottom: 10px;
-}
-
-.live-indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--status-done);
-  font-weight: 800;
-}
-
-.live-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--status-done);
-  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
-}
-
 .hero-tracking-form {
   display: flex;
   gap: 8px;
@@ -387,34 +330,6 @@ body {
   box-shadow: 0 0 0 3px rgba(29, 95, 232, 0.15);
 }
 
-.hero-demo-chips {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.76rem;
-  color: var(--text-muted);
-}
-
-.demo-code-chip {
-  border: 1px solid var(--border-color);
-  background: var(--bg-page);
-  color: var(--navy-900);
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: 0.75rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.demo-code-chip:hover {
-  border-color: var(--cobalt-600);
-  background: var(--cobalt-50);
-  color: var(--cobalt-600);
-}
-
 /* Ana Sayfa — Emlak Danışmanlarını Parlatan Güven Kartları */
 .trust-pillars-grid {
   display: grid;
@@ -437,19 +352,6 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
-.pillar-icon-box {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  background: var(--cobalt-50);
-  border: 1px solid #bfdbfe;
-  color: var(--cobalt-600);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 14px;
-}
-
 .trust-pillar-card h3 {
   font-size: 1rem; /* text-base font-semibold */
   font-weight: 600;
@@ -461,13 +363,6 @@ body {
   font-size: 0.8125rem; /* text-xs / text-sm */
   color: #64748B;
   line-height: 1.5;
-}
-
-.role-switch-bar {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 12px;
 }
 
 .pill-badge {
@@ -487,94 +382,6 @@ body {
 /* ==========================================================================
    BİREYSEL PAKETLER (2'Lİ) & OFİS PAKETLERİ (YAN YANA KÜÇÜK KUTUCUKLAR)
    ========================================================================== */
-.pricing-grid-individual {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-  margin-top: 16px;
-}
-
-.office-compact-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  margin: 24px 0 10px;
-}
-
-.office-packages-compact-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.office-mini-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 13px 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
-  box-shadow: var(--shadow-xs);
-  transition: var(--transition);
-}
-
-.office-mini-card:hover {
-  border-color: var(--cobalt-600);
-  box-shadow: var(--shadow-sm);
-}
-
-.office-mini-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.office-mini-title {
-  font-size: 0.94rem;
-  font-weight: 800;
-  color: var(--navy-900);
-  margin-top: 2px;
-}
-
-.office-mini-price {
-  text-align: right;
-  flex-shrink: 0;
-}
-
-.office-mini-price strong {
-  display: block;
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--cobalt-600);
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-}
-
-.office-mini-price small {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.office-mini-desc {
-  font-size: 0.76rem;
-  color: var(--text-body);
-  line-height: 1.45;
-}
-
-.office-mini-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border-color);
-}
 
 .price-card {
   background: var(--bg-surface);
@@ -652,72 +459,13 @@ body {
 /* ==========================================================================
    1. PANEL: EMLAKÇI YÖNETİM PANELİ (KONSOL MİMARİSİ)
    ========================================================================== */
-.quota-banner {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 16px 20px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  box-shadow: var(--shadow-xs);
-}
 
-.quota-bar-track {
-  width: 240px;
-  height: 7px;
-  background: var(--bg-soft);
-  border-radius: 999px;
-  overflow: hidden;
-  margin-top: 6px;
-}
-
-.quota-bar-fill {
-  height: 100%;
-  background: var(--cobalt-600);
-  transition: width 0.3s ease;
-}
-
-.dashboard-layout {
-  display: grid;
-  grid-template-columns: 290px 1fr;
-  gap: 20px;
-  align-items: start;
-}
-
-.portfolio-sidebar,
 .editor-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 20px;
   box-shadow: var(--shadow-xs);
-}
-
-.prop-item-btn {
-  width: 100%;
-  text-align: left;
-  background: var(--bg-page);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  font-family: inherit;
-  transition: var(--transition);
-}
-
-.prop-item-btn:hover {
-  border-color: #93c5fd;
-}
-
-.prop-item-btn.active {
-  border-color: var(--cobalt-600);
-  background: var(--cobalt-50);
-  box-shadow: inset 3px 0 0 var(--cobalt-600);
 }
 
 /* Emlakçı Paneli İçindeki Alt Sekmeler (Temiz Kurumsal Bar) */
@@ -857,31 +605,6 @@ body {
   flex-direction: column;
   gap: 8px;
   margin-top: 12px;
-}
-
-.chrono-item {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-}
-
-.chrono-badge {
-  width: 24px;
-  height: 24px;
-  border-radius: 6px;
-  background: var(--navy-900);
-  color: #fff;
-  font-weight: 800;
-  font-size: 0.74rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /* ==========================================================================
@@ -1159,161 +882,13 @@ body {
 /* ==========================================================================
    2. PANEL: SATICI KARGO TAKİP EKRANI & 3. PANEL: ALICI EKRANI
    ========================================================================== */
-.client-track-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  box-shadow: var(--shadow-sm);
-}
-
-.agent-mini-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  background: var(--navy-900);
-  color: #ffffff;
-  padding: 16px 20px;
-  border-radius: 12px;
-  margin-bottom: 22px;
-}
 
 /* Kargo Genel İlerleme Özeti Barı */
-.cargo-progress-summary {
-  background: var(--bg-page);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px 18px;
-  margin: 18px 0 14px;
-}
-
-.cargo-progress-track {
-  width: 100%;
-  height: 9px;
-  background: #dde4ee;
-  border-radius: 999px;
-  overflow: hidden;
-  margin-top: 10px;
-}
-
-.cargo-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--navy-900), var(--cobalt-600));
-  border-radius: 999px;
-  transition: width 0.4s ease;
-}
-
-.stepper-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-  gap: 10px;
-  margin: 16px 0 24px;
-}
-
-.step-box {
-  background: var(--bg-page);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 13px;
-  position: relative;
-  transition: var(--transition);
-}
-
-.step-box.done {
-  background: #ffffff;
-  border-color: #bfdbfe;
-  box-shadow: inset 0 3px 0 var(--status-done);
-}
-
-.step-box.current {
-  background: var(--cobalt-50);
-  border: 1.5px solid var(--cobalt-600);
-  box-shadow: 0 6px 18px -4px rgba(29, 95, 232, 0.18);
-}
 
 @keyframes pulseRing {
   0% { box-shadow: 0 0 0 0 rgba(29, 95, 232, 0.45); }
   70% { box-shadow: 0 0 0 7px rgba(29, 95, 232, 0); }
   100% { box-shadow: 0 0 0 0 rgba(29, 95, 232, 0); }
-}
-
-.step-num-circle {
-  width: 24px;
-  height: 24px;
-  border-radius: 6px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.73rem;
-  font-weight: 800;
-  background: #e2e8f0;
-  color: var(--text-body);
-  margin-bottom: 8px;
-}
-
-.step-box.done .step-num-circle {
-  background: var(--status-done);
-  color: #fff;
-}
-
-.step-box.current .step-num-circle {
-  background: var(--cobalt-600);
-  color: #fff;
-  animation: pulseRing 2s infinite;
-}
-
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.stat-tile {
-  background: var(--bg-page);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 14px;
-  text-align: left;
-}
-
-.stat-tile strong {
-  display: block;
-  font-size: 1.22rem;
-  font-weight: 800;
-  color: var(--navy-900);
-  letter-spacing: -0.02em;
-}
-
-.stat-tile span {
-  font-size: 0.74rem;
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.requests-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.84rem;
-}
-
-.requests-table th {
-  background: var(--bg-page);
-  padding: 10px 14px;
-  text-align: left;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.requests-table td {
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--border-color);
 }
 
 .matterport-frame-wrap {
@@ -1502,26 +1077,6 @@ body {
   margin-bottom: 16px;
 }
 
-.agent-bio-preview {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  align-items: flex-start;
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 16px;
-}
-
-.agent-avatar-img {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2.5px solid var(--cobalt-600);
-  flex-shrink: 0;
-}
-
 .competitor-card {
   background: #ffffff;
   border: 1px solid var(--border-color);
@@ -1541,162 +1096,15 @@ body {
   color: var(--navy-900);
 }
 
-.step-reaction-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 10px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border-color);
-}
-
-.emoji-btn {
-  border: 1px solid var(--border-color);
-  background: #ffffff;
-  border-radius: 6px;
-  padding: 3px 7px;
-  font-size: 0.73rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.emoji-btn:hover {
-  border-color: var(--cobalt-600);
-}
-
-.emoji-btn.active {
-  background: var(--cobalt-50);
-  border-color: var(--cobalt-600);
-  color: var(--cobalt-700);
-  font-weight: 800;
-}
-
-.step-comment-badge {
-  margin-top: 6px;
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-left: 2.5px solid var(--cobalt-600);
-  border-radius: 6px;
-  padding: 5px 8px;
-  font-size: 0.73rem;
-  color: var(--text-main);
-}
-
-.seller-contact-footer {
-  background: var(--navy-900);
-  color: #ffffff;
-  border-radius: 14px;
-  padding: 22px 24px;
-  margin-top: 26px;
-}
-
 /* ==========================================================================
    EMLAK DANIŞMANI KİŞİSEL WEB SİTESİ, ROZET SİSTEMİ & BLOG KARTLARI
    ========================================================================== */
-.agent-profile-hero {
-  background: #FFFFFF;
-  color: #0F172A;
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow-xs);
-}
-
-.agent-profile-top {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.agent-profile-avatar-lg {
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #E2E8F0;
-  flex-shrink: 0;
-}
-
-.agent-region-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  color: #0F172A;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.agent-social-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  color: #0F172A;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: var(--transition);
-}
-
-.agent-social-pill:hover {
-  background: #F8FAFC;
-  border-color: #CBD5E1;
-  color: #2563EB;
-}
 
 .badge-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
   gap: 10px;
   margin: 14px 0 22px;
-}
-
-.badge-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 13px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-page);
-  opacity: 0.52;
-  transition: var(--transition);
-}
-
-.badge-card.earned {
-  opacity: 1;
-  background: #ffffff;
-  border-color: #93c5fd;
-  box-shadow: var(--shadow-xs);
-}
-
-.badge-icon-circle {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: var(--cobalt-50);
-  color: var(--cobalt-600);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  flex-shrink: 0;
-}
-
-.badge-card.earned .badge-icon-circle {
-  background: var(--cobalt-600);
-  color: #ffffff;
 }
 
 .blog-grid {
@@ -1723,25 +1131,11 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
-.clickable-agent-link {
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.clickable-agent-link:hover {
-  opacity: 0.92;
-  text-decoration: underline;
-}
-
 @media (max-width: 768px) {
-  .cargo-hero-grid,
-  .pricing-grid-individual,
-  .office-packages-compact-grid,
-  .dashboard-layout,
   .service-checklist,
-  .form-grid-2,
-  .form-grid-3,
-  .trust-pillars-grid {
+.form-grid-2,
+.form-grid-3,
+.trust-pillars-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -1767,17 +1161,6 @@ body {
 }
 
 /* Emlakçı Paneli Üst Ana Modül Seçici Barı (Portföyler vs Kişisel Site vs Co-Op) */
-.agent-main-mode-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  padding: 8px;
-  border-radius: 12px;
-  margin-bottom: 18px;
-  box-shadow: var(--shadow-xs);
-}
 
 .agent-mode-btn {
   flex: 1;
@@ -1901,10 +1284,6 @@ body {
 }
 
 /* Ara Noktalar / Mavi Küçük Daireler Tamamen Kaldırıldı */
-.house-connector-dots,
-.house-connector-dot {
-  display: none !important;
-}
 
 /* Logodaki Ev Şekilli Kompakt Adım İkonu Yuvası */
 .house-node-circle {
@@ -2037,47 +1416,6 @@ body {
   align-items: center;
   gap: 5px;
   flex-shrink: 0;
-}
-
-.house-step-popup-pill {
-  font-size: 0.66rem;
-  font-weight: 700;
-  color: var(--cobalt-600);
-  background: var(--cobalt-50);
-  border: 1px solid #bfdbfe;
-  padding: 2px 7px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  transition: var(--transition);
-}
-
-.house-step-item:hover .house-step-popup-pill {
-  background: var(--cobalt-600);
-  color: #ffffff;
-  border-color: var(--cobalt-600);
-}
-
-.house-step-newwin-btn {
-  font-size: 0.66rem;
-  font-weight: 700;
-  color: var(--navy-900);
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  padding: 2px 7px;
-  border-radius: 999px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  transition: var(--transition);
-}
-
-.house-step-newwin-btn:hover {
-  background: var(--navy-900);
-  color: #ffffff;
-  border-color: var(--navy-900);
 }
 
 /* ==========================================================================
@@ -2235,31 +1573,6 @@ body {
 }
 
 /* Tek Satırlık Kompakt Yetki Sözleşmesi Bildirim Şeridi (Alert Banner) */
-.saas-alert-banner {
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  border-radius: 10px;
-  padding: 10px 16px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.saas-alert-banner-left {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.saas-alert-banner-right {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
 
 .saas-input-compact {
   padding: 6px 10px;
@@ -2278,61 +1591,6 @@ body {
 }
 
 /* Sadeleştirilmiş 3 Sekme Barı */
-.saas-tabs-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  padding: 5px;
-  border-radius: 10px;
-}
-
-.saas-tab-btn {
-  flex: 1;
-  min-width: 170px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 9px 14px;
-  border-radius: 7px;
-  border: 1px solid transparent;
-  background: transparent;
-  font-family: inherit;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: #64748B;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.saas-tab-btn:hover {
-  color: #0F172A;
-}
-
-.saas-tab-btn.active {
-  background: #FFFFFF;
-  color: #0F172A;
-  border-color: #E2E8F0;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-}
-
-.saas-tab-count {
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 1px 7px;
-  border-radius: 999px;
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  color: #64748B;
-}
-
-.saas-tab-btn.active .saas-tab-count {
-  background: rgba(37, 99, 235, 0.08);
-  border-color: rgba(37, 99, 235, 0.2);
-  color: #2563EB;
-}
 
 /* Sade Liste Satırları (Kutu İçinde Kutu Olmayan Divider Yapısı) */
 .saas-clean-list {
@@ -2358,31 +1616,6 @@ body {
 .saas-list-row:last-child {
   border-bottom: none;
   padding-bottom: 0;
-}
-
-.saas-stat-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-}
-
-.saas-stat-box {
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  border-radius: 10px;
-  padding: 12px 14px;
-}
-
-.saas-stat-box strong {
-  display: block;
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #0F172A;
-}
-
-.saas-stat-box span {
-  font-size: 0.75rem;
-  color: #64748B;
 }
 
 /* ==========================================================================
@@ -2796,107 +2029,8 @@ body {
 }
 
 /* Sosyal Medya Tıklamalı Kutucuklar (Instagram, Twitter, LinkedIn, Sahibinden Mağaza) */
-.social-click-boxes-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-.social-click-box {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 13px;
-  border-radius: 9px;
-  border: 1px solid #E2E8F0;
-  background: #FFFFFF;
-  color: #0F172A;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.social-click-box:hover {
-  background: #F8FAFC;
-  border-color: #2563EB;
-  color: #2563EB;
-  transform: translateY(-1px);
-}
 
 /* Blog Yazıları Satır Satır (Yatay Satır Listesi) */
-.blog-rows-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.blog-row-item {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 10px;
-  overflow: hidden;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.blog-row-item:hover {
-  border-color: #CBD5E1;
-}
-
-.blog-row-header {
-  display: grid;
-  grid-template-columns: auto 1fr auto 24px;
-  align-items: center;
-  gap: 14px;
-  padding: 13px 18px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.blog-row-header:hover {
-  background: #F8FAFC;
-}
-
-.blog-row-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #0F172A;
-  min-width: 0;
-}
-
-.blog-row-date {
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: #64748B;
-  white-space: nowrap;
-}
-
-.blog-row-body {
-  display: none;
-  padding: 12px 18px 16px;
-  border-top: 1px solid #E2E8F0;
-  background: #F8FAFC;
-  font-size: 0.84rem;
-  color: #0F172A;
-  line-height: 1.55;
-}
-
-.blog-row-item.expanded .blog-row-body {
-  display: block;
-}
-
-.blog-row-item.expanded .hb-portfolio-chevron {
-  transform: rotate(180deg);
-}
-
-@media (max-width: 768px) {
-  .blog-row-header {
-    grid-template-columns: 1fr auto;
-    gap: 8px;
-  }
-}
 
 /* ==========================================================================
    MÜLK TAKİP KODU OLUŞTUR — 6 SAYFALI ADIM ADIM SİHİRBAZ (WIZARD) VE SEÇİCİLER
@@ -4320,18 +3454,6 @@ body {
   transform: translateY(-3px);
   border-color: #BFDBFE;
   box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.07);
-}
-
-.pillar-icon-box {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  background: #EFF6FF;
-  color: #2563EB;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
 }
 
 .trust-pillar-card h3 {
@@ -6445,9 +5567,4 @@ body {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
-
-
-
-
-
 

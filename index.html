@@ -16,7 +16,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Mülkİzle" />
   <link rel="apple-touch-icon" href="mulkizle_turkpatent_591x591.jpg" />
-  <link rel="stylesheet" href="styles.css?v=20261126_2" />
+  <link rel="stylesheet" href="styles.css?v=20261126_3" />
 </head>
 <body>
 
@@ -53,6 +53,9 @@
         <button type="button" class="view-tab" data-target="view-about">
           Biz Kimiz?
         </button>
+        <a href="satis-ofisi/index.html" style="text-decoration:none;display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:7px;font-size:0.82rem;font-weight:700;color:#1D4ED8;white-space:nowrap;flex:0 0 auto;background:#EFF6FF;">
+          🏗️ Satış Ofisi
+        </a>
       </div>
 
       <div style="display:flex;align-items:center;gap:8px;">
@@ -3590,7 +3593,7 @@
 
       <div class="field">
         <label>Kullanıcı Adı, E-Posta veya Cep Telefonu</label>
-        <input type="text" id="agentLoginIdentifier" value="" placeholder="Örn: ahmet, selin, burak veya e-posta / telefon" />
+        <input type="text" id="agentLoginIdentifier" value="" placeholder="Örn: gencay, deniz, ahmet, selin, burak" />
       </div>
 
       <div class="field">
@@ -3633,7 +3636,19 @@
         </label>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px;">
+      <div style="background:#F8FAFC;border:1px solid #DBEAFE;border-radius:10px;padding:9px 10px;margin-top:10px;">
+        <div style="font-size:0.72rem;font-weight:800;color:#1E3A8A;margin-bottom:6px;">⚡ Takım Lideri &amp; Ekip Hızlı Test Girişi (Görev Sekmesi)</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button type="button" class="btn btn-sm" style="flex:1;justify-content:center;background:#0F172A;color:#FFFFFF;border-color:#0F172A;font-size:0.74rem;" onclick="hizliTakimHesabinaGec('gencay-lider')">
+            👑 Gencay (Takım Lideri)
+          </button>
+          <button type="button" class="btn btn-sm" style="flex:1;justify-content:center;background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE;font-size:0.74rem;" onclick="hizliTakimHesabinaGec('deniz-ekip')">
+            🧑‍💼 Deniz Hanım (Ekip)
+          </button>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
         <button type="button" class="btn btn-primary" style="width:100%;justify-content:center;" onclick="danismanGirisOnayla()">
           Giriş Yap
         </button>
@@ -3914,6 +3929,6 @@
     </button>
   </nav>
 
-  <script src="app.js?v=20261126_2"></script>
+  <script src="app.js?v=20261128_2"></script>
 </body>
 </html>
