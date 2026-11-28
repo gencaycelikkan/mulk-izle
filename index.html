@@ -16,7 +16,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Mülkİzle" />
   <link rel="apple-touch-icon" href="mulkizle_turkpatent_591x591.jpg" />
-  <link rel="stylesheet" href="styles.css?v=20261126_3" />
+  <link rel="stylesheet" href="styles.css?v=20261128_7" />
 </head>
 <body>
 
@@ -147,28 +147,8 @@
     </div>
 
     <nav class="ig-sidebar-nav">
-      <!-- 1. Portföylerim (Ana Sayfa / Ev İkonu) -->
-      <button type="button" class="ig-nav-item active" id="igNavPortfolios" onclick="danismanSolMenuSec('portfolios')">
-        <span class="ig-nav-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/>
-          </svg>
-        </span>
-        <span class="ig-nav-label">Portföylerim</span>
-      </button>
-
-      <!-- 2. Yeni Mülk Takip Kodu Oluştur (+ Oluştur İkonu) -->
-      <button type="button" class="ig-nav-item" id="igNavCreate" onclick="yeniPortfoyModalAc()">
-        <span class="ig-nav-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"/>
-            <line x1="5" y1="12" x2="19" y2="12"/>
-          </svg>
-        </span>
-        <span class="ig-nav-label">Yeni Mülk Takip Kodu Oluştur</span>
-      </button>
-
-      <!-- 3. Bildirimler (Çan İkonu + Kırmızı Okunmamış Bildirim Rozeti) -->
+      <!-- GRUP 1: İLETİŞİM & PROFİL -->
+      <!-- 1. Bildirimler (Çan İkonu + Kırmızı Okunmamış Bildirim Rozeti) -->
       <button type="button" class="ig-nav-item" id="igNavNotifications" onclick="danismanSolMenuSec('notifications')">
         <span class="ig-nav-icon" style="position:relative;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -180,7 +160,7 @@
         <span class="ig-nav-label">Bildirimler</span>
       </button>
 
-      <!-- 4. Mesajlar (Instagram DM İkonu + Kırmızı Okunmamış Sayısı Rozeti) -->
+      <!-- 2. Mesajlar (Instagram DM İkonu + Kırmızı Okunmamış Sayısı Rozeti) -->
       <button type="button" class="ig-nav-item" id="igNavMessages" onclick="danismanSolMenuSec('messages')">
         <span class="ig-nav-icon" style="position:relative;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -192,7 +172,44 @@
         <span class="ig-nav-label">Mesajlar</span>
       </button>
 
-      <!-- 5. Mülk Ajandam (Takvim İkonu — Gün, Tarih ve Saatli Randevu & Not Takibi) -->
+      <!-- 3. Profilim (Instagram Yuvarlak Profil Fotoğrafı İkonu — Kişisel Web Sitesi & İçinden Düzenleme) -->
+      <button type="button" class="ig-nav-item" id="igNavViewWebsite" onclick="danismanSolMenuSec('view-website')">
+        <span class="ig-nav-icon">
+          <img
+            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=120&q=80"
+            alt="Profil"
+            class="ig-sidebar-avatar"
+            id="igSidebarAvatarImg"
+          />
+        </span>
+        <span class="ig-nav-label">Profilim</span>
+      </button>
+
+      <div class="ig-nav-divider" aria-hidden="true"></div>
+
+      <!-- GRUP 2: GÜNLÜK İŞ & PORTFÖY YÖNETİMİ -->
+      <!-- 4. Portföylerim (Ana Sayfa / Ev İkonu) -->
+      <button type="button" class="ig-nav-item active" id="igNavPortfolios" onclick="danismanSolMenuSec('portfolios')">
+        <span class="ig-nav-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/>
+          </svg>
+        </span>
+        <span class="ig-nav-label">Portföylerim</span>
+      </button>
+
+      <!-- 5. Yeni Mülk Takip Kodu Oluştur (+ Oluştur İkonu) -->
+      <button type="button" class="ig-nav-item" id="igNavCreate" onclick="yeniPortfoyModalAc()">
+        <span class="ig-nav-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+        </span>
+        <span class="ig-nav-label">Yeni Mülk Takip Kodu Oluştur</span>
+      </button>
+
+      <!-- 6. Ajandam ve Görevler (Takvim İkonu — Randevu, Günlük Hedefler & Ekip Görevleri) -->
       <button type="button" class="ig-nav-item" id="igNavAgenda" onclick="danismanSolMenuSec('agenda')">
         <span class="ig-nav-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -207,10 +224,10 @@
             <path d="M12 18h.01"/>
           </svg>
         </span>
-        <span class="ig-nav-label">Mülk Ajandam</span>
+        <span class="ig-nav-label">Ajandam ve Görevler</span>
       </button>
 
-      <!-- 6. Müşteri & Referans Havuzum (Kişiler / Alıcı & Referans Havuzu İkonu) -->
+      <!-- 7. Müşteri & Referans Havuzum (Kişiler / Alıcı & Referans Havuzu İkonu) -->
       <button type="button" class="ig-nav-item" id="igNavPotentialBuyers" onclick="danismanSolMenuSec('potential-buyers')">
         <span class="ig-nav-icon" style="position:relative;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -224,7 +241,10 @@
         <span class="ig-nav-label">Müşteri &amp; Referans Havuzum</span>
       </button>
 
-      <!-- 7. Arıyorum! (Büyüteç İkonu — Ayrı Sayfada Açılan Bölge Uzmanı & Ortak Çalışma) -->
+      <div class="ig-nav-divider" aria-hidden="true"></div>
+
+      <!-- GRUP 3: ORTAK ÇALIŞMA AĞI -->
+      <!-- 8. Arıyorum! (Büyüteç İkonu — Ayrı Sayfada Açılan Bölge Uzmanı & Ortak Çalışma) -->
       <button type="button" class="ig-nav-item" id="igNavAriyorum" onclick="danismanSolMenuSec('ariyorum')">
         <span class="ig-nav-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -233,19 +253,6 @@
           </svg>
         </span>
         <span class="ig-nav-label">Arıyorum!</span>
-      </button>
-
-      <!-- 6. Profilim (Instagram Yuvarlak Profil Fotoğrafı İkonu — Kişisel Web Sitesi & İçinden Düzenleme) -->
-      <button type="button" class="ig-nav-item" id="igNavViewWebsite" onclick="danismanSolMenuSec('view-website')">
-        <span class="ig-nav-icon">
-          <img
-            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=120&q=80"
-            alt="Profil"
-            class="ig-sidebar-avatar"
-            id="igSidebarAvatarImg"
-          />
-        </span>
-        <span class="ig-nav-label">Profilim</span>
       </button>
     </nav>
 
@@ -1305,13 +1312,31 @@
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;">
           <div>
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-              <h2 class="saas-h2" style="margin:0;">Aktif Portföylerim</h2>
+              <h2 class="saas-h2" style="margin:0;">Portföylerim</h2>
               <span class="saas-badge-blue" id="quotaStatusText">Aktif Portföy Sayacı: 2 / 3</span>
             </div>
             <div class="saas-text-xs" style="margin-top:2px;">Detaylarını, mülk günlüğünü ve süreç adımlarını yönetmek istediğiniz portföy satırına tıklayın.</div>
           </div>
           <button type="button" class="social-btn-primary" onclick="yeniPortfoyModalAc()">
             <span>+ Yeni Mülk Takip Kodu Oluştur</span>
+          </button>
+        </div>
+
+        <div class="portfolio-status-tabs" id="portfolioStatusTabs" role="tablist">
+          <button type="button" class="pf-status-tab active" id="pfTabAktif" onclick="portfoyDurumSekmesiSec('aktif')">
+            <span class="pf-dot pf-dot-aktif"></span>
+            <span>Aktif Portföyler</span>
+            <span class="pf-tab-count" id="pfCountAktif">0</span>
+          </button>
+          <button type="button" class="pf-status-tab" id="pfTabGorusmede" onclick="portfoyDurumSekmesiSec('gorusmede')">
+            <span class="pf-dot pf-dot-gorusmede"></span>
+            <span>Görüşmedeki Portföyler</span>
+            <span class="pf-tab-count" id="pfCountGorusmede">0</span>
+          </button>
+          <button type="button" class="pf-status-tab" id="pfTabKapanan" onclick="portfoyDurumSekmesiSec('kapanan')">
+            <span class="pf-dot pf-dot-kapanan"></span>
+            <span>Kapanan Portföyler</span>
+            <span class="pf-tab-count" id="pfCountKapanan">0</span>
           </button>
         </div>
 
@@ -1355,6 +1380,39 @@
           </div>
         </details>
 
+        <!-- GÖRÜŞMEDEKİ PORTFÖY İPTAL NEDENLERİ ADMİN RAPORU (SADECE ADMİN PANELİNDE GÖRÜNÜR) -->
+        <details class="saas-card" id="adminGorusmeIptalRaporCard" style="display:none;margin-top:12px;padding:14px 18px;background:#FFFBEB;border-color:#FDE68A;">
+          <summary style="cursor:pointer;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;list-style:none;">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <span style="font-size:0.95rem;font-weight:800;color:#0F172A;">📉 Görüşmedeki Portföy İptal Nedenleri</span>
+              <span class="saas-badge-blue" id="adminGorusmeIptalCountBadge">0 Kayıt</span>
+              <span style="font-size:0.7rem;font-weight:700;background:#FEF3C7;color:#92400E;padding:2px 8px;border-radius:999px;">🔒 Sadece Admin • Kimliksiz Geri Bildirim</span>
+            </div>
+            <span style="font-size:0.76rem;font-weight:700;color:#B45309;">Raporu Aç / Gizle ▾</span>
+          </summary>
+
+          <div style="margin-top:12px;">
+            <div class="saas-text-xs" style="margin-bottom:10px;color:#78350F;">
+              Henüz aktife geçemeden iptal edilen görüşmedeki portföylerden gelen <strong>kimliksiz danışman geri bildirimleri</strong> ve neden dağılımıdır.
+            </div>
+            <div id="adminGorusmeIptalOzetGrid" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;"></div>
+            <div style="overflow-x:auto;border:1px solid #FDE68A;border-radius:10px;background:#FFFFFF;">
+              <table style="width:100%;border-collapse:collapse;font-size:0.77rem;text-align:left;">
+                <thead>
+                  <tr style="background:#FEF3C7;color:#78350F;border-bottom:1px solid #FDE68A;">
+                    <th style="padding:9px 10px;font-weight:800;">Tarih</th>
+                    <th style="padding:9px 10px;font-weight:800;">Bölge (İl / İlçe)</th>
+                    <th style="padding:9px 10px;font-weight:800;">Kategori</th>
+                    <th style="padding:9px 10px;font-weight:800;">İptal Nedeni</th>
+                    <th style="padding:9px 10px;font-weight:800;">Geri Bildirim Notu</th>
+                  </tr>
+                </thead>
+                <tbody id="adminGorusmeIptalTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
         <!-- Açılan Portföyün İçine Otomatik Yerleşen Çalışma Alanı (DOM Taşıyıcı) -->
         <div id="portfolioWorkspaceStage" style="display:none;">
           <div id="activePortfolioWorkspace">
@@ -1373,9 +1431,10 @@
                 <button type="button" class="saas-btn-primary-sm" onclick="tumDegisiklikleriKaydet()">
                   <span>Değişiklikleri Kaydet</span>
                 </button>
-                <button type="button" class="saas-btn-outline-sm" onclick="portfoySil(seciliKod)" style="color:#DC2626;border-color:#FECACA;" title="Bu portföyü kalıcı olarak sil">
+                <button type="button" class="saas-btn-outline-sm" id="activePropStatusActionBtn" style="display:none;"></button>
+                <button type="button" class="saas-btn-outline-sm" id="activePropCloseOrDeleteBtn" onclick="portfoySil(seciliKod)" style="color:#DC2626;border-color:#FECACA;" title="Bu portföyü kapat veya arşivle">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
-                  <span>Portföyü Sil</span>
+                  <span id="activePropCloseOrDeleteText">Portföyü Kapat</span>
                 </button>
               </div>
             </div>
@@ -2881,6 +2940,10 @@
            SAYFA 1: KATEGORİ (KONUT / İMARLI ARSA), İLETİŞİM, KONUM & ADA/PARSEL
            ================================================================== -->
       <div class="np-wizard-page active" id="npWizardPage1">
+        <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:0.78rem;color:#92400E;line-height:1.45;">
+          🟡 <strong>Otomatik Akış:</strong> Yeni oluşturulan portföyler önce <strong>Görüşmedeki Portföyler</strong> sekmesine eklenir. İlan portalı linkinizi (Sahibinden, Hepsiemlak, Emlakjet vb.) girdiğiniz an <strong>Aktif Portföyler</strong> sekmesine geçer.
+        </div>
+
         <!-- MÜLK KATEGORİSİ SEÇİMİ: KONUT | İMARLI ARSA | TARLA / BAĞ / BAHÇE -->
         <div class="np-field-group" style="margin-bottom:12px;">
           <label class="np-field-label">Mülk Kategorisi <span class="req-star">*</span></label>
@@ -3789,9 +3852,9 @@
     <div class="paywall-modal" style="max-width:520px;text-align:left;padding:22px 24px;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px;">
         <div>
-          <span class="saas-badge-blue" style="margin-bottom:4px;display:inline-flex;">PORTFÖY KALDIRMA &amp; KAPANIŞ ANKETİ</span>
+          <span class="saas-badge-blue" style="margin-bottom:4px;display:inline-flex;">PORTFÖY KAPANIŞ &amp; ARŞİV ANKETİ</span>
           <h3 style="font-size:1.15rem;font-weight:800;color:#0F172A;margin:0;">
-            Bu Portföyü Neden Kaldırıyorsunuz?
+            Bu Portföyü Nasıl Kapatıyorsunuz?
           </h3>
           <div id="deletePortfolioTargetTitle" class="saas-text-xs" style="margin-top:3px;font-weight:700;color:#475569;"></div>
         </div>
@@ -3877,8 +3940,13 @@
           />
         </div>
 
+        <label style="display:flex;align-items:center;gap:9px;margin-bottom:10px;padding:10px 12px;background:#FFFFFF;border:1.5px solid #86EFAC;border-radius:10px;cursor:pointer;font-size:0.8rem;font-weight:700;color:#14532D;">
+          <input type="checkbox" id="delSoldShowOnProfileCheckbox" checked style="width:16px;height:16px;accent-color:#16A34A;flex-shrink:0;" />
+          <span>🏆 Profilimde &quot;Başarılı Satış&quot; olarak göster <small style="display:block;font-weight:500;color:#166534;margin-top:2px;">Kişisel web sitenizde tamamlanan referans satış olarak sergilenir (mülk sahibi bilgisi gizli kalır).</small></span>
+        </label>
+
         <div style="font-size:0.72rem;color:#166534;line-height:1.45;background:#FFFFFF;border:1px solid #DCFCE7;border-radius:8px;padding:8px 10px;">
-          🛡️ <strong>Sıfır Bağlantılı Anonimleştirme Garantisi:</strong> Bu portföy silindiğinde <strong>Danışman Adınız, Vergi No, Mülk Sahibi, Takip Kodu ve Ada/Parsel numarası kalıcı olarak silinir.</strong> Yalnızca <em>"İlçe / Mahalle / Oda Sayısı / m² Birim Fiyat Bandı"</em> kimliksiz olarak bölge emsal havuzuna eklenir; hiçbir kişi veya tapu kaydıyla eşleştirilemez.
+          🛡️ <strong>Sıfır Bağlantılı Anonimleştirme Garantisi:</strong> Bölge emsal havuzuna eklenen verilerde <strong>Danışman Adınız, Vergi No, Mülk Sahibi, Takip Kodu ve Ada/Parsel numarası yer almaz.</strong> Yalnızca <em>"İlçe / Mahalle / Oda Sayısı / m² Birim Fiyat Bandı"</em> kimliksiz olarak kaydedilir; portföy ise kişisel <strong>Kapanan Portföyler</strong> arşivinize taşınır.
         </div>
       </div>
 
@@ -3900,10 +3968,138 @@
         <button
           type="button"
           class="btn btn-primary btn-sm"
-          style="background:#DC2626;border-color:#DC2626;"
+          style="background:#0F172A;border-color:#0F172A;"
           onclick="portfoySilAnketOnayla()"
         >
-          <span>Anketi Kaydet ve Portföyü Sil</span>
+          <span>Kaydet ve Kapanan Portföylere Taşı</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AKTİFE ALMAK İÇİN İLAN PORTALI LİNKİ İSTEME MODALI -->
+  <div class="paywall-backdrop" id="activatePortfolioPortalModal" onclick="if(event.target === this) portfoyAktifeAlmaLinkModalKapat()">
+    <div class="paywall-modal" style="max-width:480px;text-align:left;padding:22px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px;">
+        <div>
+          <span class="saas-badge-blue" style="margin-bottom:4px;display:inline-flex;">YAYIN DOĞRULAMASI</span>
+          <h3 style="font-size:1.12rem;font-weight:800;color:#0F172A;margin:0;">
+            🚀 Portföyü Aktife Al — İlan Portalı Linki
+          </h3>
+          <div id="activatePortalTargetTitle" class="saas-text-xs" style="margin-top:3px;font-weight:700;color:#475569;"></div>
+        </div>
+        <button
+          type="button"
+          onclick="portfoyAktifeAlmaLinkModalKapat()"
+          aria-label="Kapat"
+          style="border:1px solid #E2E8F0;background:#FFFFFF;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:700;color:#64748B;"
+        >
+          ✕
+        </button>
+      </div>
+
+      <p style="font-size:0.84rem;color:#334155;line-height:1.5;margin:8px 0 12px;">
+        Aktife almak için ilan portalı linkinizi yapıştırın (Sahibinden, Hepsiemlak, Emlakjet vb.). Link kaydedildiğinde portföy otomatik olarak <strong>Aktif Portföyler</strong> sekmesine taşınır.
+      </p>
+
+      <div class="field" style="margin-bottom:8px;">
+        <label style="font-size:0.78rem;font-weight:700;color:#0F172A;">İlan Portalı Linki *</label>
+        <input
+          type="url"
+          id="activatePortalLinkInput"
+          placeholder="https://www.sahibinden.com/ilan/..."
+          style="width:100%;font-size:0.86rem;"
+          onkeydown="if(event.key === 'Enter') { event.preventDefault(); portfoyAktifeAlmaLinkOnayla(); }"
+        />
+        <div id="activatePortalLinkError" style="display:none;color:#DC2626;font-size:0.76rem;font-weight:700;margin-top:6px;"></div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:14px;">
+        <button type="button" class="saas-btn-outline-sm" onclick="portfoyAktifeAlmaLinkModalKapat()">Vazgeç</button>
+        <button type="button" class="saas-btn-primary-sm" style="background:#15803D;border-color:#15803D;" onclick="portfoyAktifeAlmaLinkOnayla()">
+          <span>🚀 Linki Kaydet ve Aktife Al</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GÖRÜŞMEDEKİ PORTFÖY İPTAL ANKETİ & ÜRÜN GERİ BİLDİRİM MODALI -->
+  <div class="paywall-backdrop" id="gorusmeIptalAnketModal" onclick="if(event.target === this) gorusmeIptalModalKapat()">
+    <div class="paywall-modal" style="max-width:540px;text-align:left;padding:22px 24px;max-height:90vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px;">
+        <div>
+          <span class="saas-badge-blue" style="margin-bottom:4px;display:inline-flex;background:#FEF3C7;color:#92400E;border-color:#FDE68A;">GÖRÜŞME SONUÇ &amp; GERİ BİLDİRİM</span>
+          <h3 style="font-size:1.12rem;font-weight:800;color:#0F172A;margin:0;">
+            Görüşmedeki Portföyün Aktife Geçememesine Üzüldük
+          </h3>
+          <div id="gorusmeIptalTargetTitle" class="saas-text-xs" style="margin-top:3px;font-weight:700;color:#475569;"></div>
+        </div>
+        <button
+          type="button"
+          onclick="gorusmeIptalModalKapat()"
+          aria-label="Kapat"
+          style="border:1px solid #E2E8F0;background:#FFFFFF;width:30px;height:30px;border-radius:8px;cursor:pointer;font-weight:700;color:#64748B;"
+        >
+          ✕
+        </button>
+      </div>
+
+      <p style="font-size:0.83rem;color:#475569;line-height:1.5;margin:6px 0 12px;">
+        Umarız sitemizden kaynaklı bir durum değildir. Mülkİzle'yi sunumlarınızda daha güçlü hale getirebilmemiz için bu portföyün aktif olamama nedenini işaretler misiniz?
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:12px;">
+        <button type="button" id="giReasonBtn_satici_vazgecti" class="np-chip-btn selected" style="width:100%;justify-content:space-between;padding:10px 13px;font-size:0.84rem;text-align:left;" onclick="gorusmeIptalNedenSec('satici_vazgecti')">
+          <span>⏸️ <strong>Mülk sahibi satıştan vazgeçti / erteledi</strong></span>
+          <span class="np-chip-check">✓</span>
+        </button>
+        <button type="button" id="giReasonBtn_fiyat_pazar_analizi" class="np-chip-btn" style="width:100%;justify-content:space-between;padding:10px 13px;font-size:0.84rem;text-align:left;" onclick="gorusmeIptalNedenSec('fiyat_pazar_analizi')">
+          <span>💰 <strong>Fiyat beklentisinde veya pazar analizinde anlaşamadık</strong></span>
+          <span class="np-chip-check">✓</span>
+        </button>
+        <button type="button" id="giReasonBtn_baska_danisman" class="np-chip-btn" style="width:100%;justify-content:space-between;padding:10px 13px;font-size:0.84rem;text-align:left;" onclick="gorusmeIptalNedenSec('baska_danisman')">
+          <span>🏢 <strong>Başka bir danışman / ofis ile anlaştı veya kendi satmaya karar verdi</strong></span>
+          <span class="np-chip-check">✓</span>
+        </button>
+        <button type="button" id="giReasonBtn_uygulama_begenmedi" class="np-chip-btn" style="width:100%;justify-content:space-between;padding:10px 13px;font-size:0.84rem;text-align:left;" onclick="gorusmeIptalNedenSec('uygulama_begenmedi')">
+          <span>📱 <strong>Mülk sahibi takip uygulamasını / sunumu beğenmedi</strong></span>
+          <span class="np-chip-check">✓</span>
+        </button>
+        <button type="button" id="giReasonBtn_uygulama_eksiklik" class="np-chip-btn" style="width:100%;justify-content:space-between;padding:10px 13px;font-size:0.84rem;text-align:left;" onclick="gorusmeIptalNedenSec('uygulama_eksiklik')">
+          <span>🛠️ <strong>Uygulamada eksiklik veya kullanım zorluğu yaşadım</strong></span>
+          <span class="np-chip-check">✓</span>
+        </button>
+        <button type="button" id="giReasonBtn_diger" class="np-chip-btn" style="width:100%;justify-content:space-between;padding:10px 13px;font-size:0.84rem;text-align:left;" onclick="gorusmeIptalNedenSec('diger')">
+          <span>📝 <strong>Diğer</strong></span>
+          <span class="np-chip-check">✓</span>
+        </button>
+      </div>
+
+      <div id="gorusmeIptalNotWrap" style="display:none;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:11px 13px;margin-bottom:12px;">
+        <label id="gorusmeIptalNotLabel" style="display:block;font-size:0.79rem;font-weight:700;color:#0F172A;margin-bottom:6px;">
+          Geri Bildirim Notunuz
+        </label>
+        <textarea
+          id="gorusmeIptalNotInput"
+          rows="3"
+          placeholder="Kısaca detay paylaşabilirsiniz..."
+          style="width:100%;padding:8px 10px;border:1px solid #CBD5E1;border-radius:8px;font-size:0.83rem;font-family:inherit;"
+        ></textarea>
+      </div>
+
+      <div style="font-size:0.72rem;color:#475569;line-height:1.45;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px;margin-bottom:12px;">
+        🔒 Yanıtınız kimliksiz olarak yalnızca Admin ürün geliştirme raporuna eklenir; portföy <strong>Kapanan Portföyler</strong> arşivinizi kirletmeden kalıcı olarak silinir.
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button type="button" class="saas-btn-outline-sm" onclick="gorusmeIptalModalKapat()">Vazgeç</button>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          style="background:#DC2626;border-color:#DC2626;"
+          onclick="gorusmeIptalAnketOnayla()"
+        >
+          <span>Anketi Gönder ve Portföyü Sil</span>
         </button>
       </div>
     </div>
@@ -3929,6 +4125,6 @@
     </button>
   </nav>
 
-  <script src="app.js?v=20261128_2"></script>
+  <script src="app.js?v=20261128_7"></script>
 </body>
 </html>

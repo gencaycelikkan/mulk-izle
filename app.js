@@ -1126,8 +1126,44 @@ function emlakciAltSekme(subId, btnEl) {
 // 1. PANEL: EMLAKÇI PANELİ YÖNETİMİ (HEPSİBURADA TARZI YATAY AKORDEON LİSTE)
 // ============================================================================
 let acikAkordeonPortfoyKodu = null;
+let aktifPortfoyDurumSekmesi = "aktif";
 
-function aktifDanismaninGorunenPortfoyleri() {
+function portfoyDurumunuAl(p) {
+  if (!p) return "aktif";
+  if (p.portfoyDurumu === "gorusmede") return "gorusmede";
+  if (p.portfoyDurumu === "kapanan") return "kapanan";
+  return "aktif";
+}
+
+function portfoyIlanLinkiGecerliMi(pOrUrl) {
+  const ham = typeof pOrUrl === "string" ? pOrUrl : pOrUrl && pOrUrl.sahibindenUrl;
+  const temiz = String(ham || "").trim();
+  if (temiz.length < 9) return false;
+  if (/^(https?:\/\/|www\.)/i.test(temiz)) return true;
+  if (/(sahibinden|hepsiemlak|emlakjet|zingat|hurriyetemlak)\.[a-z]{2,}/i.test(temiz)) return true;
+  if (/^[a-z0-9-]+(\.[a-z0-9-]+)+\/\S+/i.test(temiz)) return true;
+  return false;
+}
+
+function ilanLinkiniNormalizeEt(rawUrl) {
+  const temiz = String(rawUrl || "").trim();
+  if (!temiz) return "";
+  return /^https?:\/\//i.test(temiz) ? temiz : `https://${temiz}`;
+}
+
+function aktifKullaniciAdminMi() {
+  if (aktifKullanici && (aktifKullanici.rol === "admin" || aktifKullanici.isAdmin === true)) {
+    return true;
+  }
+  try {
+    if (typeof window !== "undefined" && new URLSearchParams(window.location.search).get("admin") === "1") {
+      return true;
+    }
+  } catch (e) {}
+  return false;
+}
+
+function aktifDanismaninTumPortfoyleri() {
   const aktifId = (aktifKullanici && aktifKullanici.id) || "ahmet-demir";
   const aktifAd = (aktifKullanici && aktifKullanici.ad) || "Ahmet Demir";
   return portfoyler.filter(
@@ -1135,13 +1171,51 @@ function aktifDanismaninGorunenPortfoyleri() {
   );
 }
 
+function aktifDanismaninGorunenPortfoyleri() {
+  return aktifDanismaninTumPortfoyleri().filter(p => portfoyDurumunuAl(p) === "aktif");
+}
+
+function portfoyDurumSekmesiSec(durum) {
+  aktifPortfoyDurumSekmesi = ["aktif", "gorusmede", "kapanan"].includes(durum) ? durum : "aktif";
+  acikAkordeonPortfoyKodu = null;
+  panelYenile();
+}
+
 function panelYenile() {
   if (typeof dortKarakterVerileriniHazirla === "function") {
     dortKarakterVerileriniHazirla();
   }
   anaSayfaSayaclariniGuncelle();
-  const gorunenPortfoyler = aktifDanismaninGorunenPortfoyleri();
-  const kullanilan = gorunenPortfoyler.length;
+  const tumPortfoyler = aktifDanismaninTumPortfoyleri();
+  const aktifListe = tumPortfoyler.filter(p => portfoyDurumunuAl(p) === "aktif");
+  const gorusmedeListe = tumPortfoyler.filter(p => portfoyDurumunuAl(p) === "gorusmede");
+  const kapananListe = tumPortfoyler.filter(p => portfoyDurumunuAl(p) === "kapanan");
+
+  const pfCountAktifEl = document.getElementById("pfCountAktif");
+  const pfCountGorusmedeEl = document.getElementById("pfCountGorusmede");
+  const pfCountKapananEl = document.getElementById("pfCountKapanan");
+  if (pfCountAktifEl) pfCountAktifEl.textContent = String(aktifListe.length);
+  if (pfCountGorusmedeEl) pfCountGorusmedeEl.textContent = String(gorusmedeListe.length);
+  if (pfCountKapananEl) pfCountKapananEl.textContent = String(kapananListe.length);
+
+  const sekmeBtnMap = {
+    aktif: "pfTabAktif",
+    gorusmede: "pfTabGorusmede",
+    kapanan: "pfTabKapanan"
+  };
+  Object.entries(sekmeBtnMap).forEach(([key, elId]) => {
+    const el = document.getElementById(elId);
+    if (el) el.classList.toggle("active", aktifPortfoyDurumSekmesi === key);
+  });
+
+  const listelenecekPortfoyler =
+    aktifPortfoyDurumSekmesi === "gorusmede"
+      ? gorusmedeListe
+      : aktifPortfoyDurumSekmesi === "kapanan"
+      ? kapananListe
+      : aktifListe;
+
+  const kullanilan = aktifListe.length;
   const quotaText = document.getElementById("quotaStatusText");
   const quotaFill = document.getElementById("quotaBarFill");
   const planBadge = document.getElementById("currentPlanBadge");
@@ -1196,17 +1270,43 @@ function panelYenile() {
   }
 
   if (listWrap) {
-    if (gorunenPortfoyler.length === 0) {
+    if (listelenecekPortfoyler.length === 0) {
+      const bosMesaj =
+        aktifPortfoyDurumSekmesi === "gorusmede"
+          ? {
+              baslik: "Görüşmedeki portföyünüz bulunmuyor",
+              aciklama: "FSBO veya ön görüşme aşamasındaki mülk sahipleri için takip kodu oluşturup yetki alana kadar burada yönetebilirsiniz.",
+              butonMetni: "+ Görüşmedeki Portföy Ekle",
+              onClickAttr: "yeniPortfoyModalAc('gorusmede')"
+            }
+          : aktifPortfoyDurumSekmesi === "kapanan"
+          ? {
+              baslik: "Henüz kapanan portföyünüz bulunmuyor",
+              aciklama: "Satışı tamamlanan veya kapatılan portföyleriniz silinmez; burada kişisel arşivinize ve dilerseniz profil referans vitrininize taşınır.",
+              butonMetni: "",
+              onClickAttr: ""
+            }
+          : {
+              baslik: "Henüz aktif portföyünüz bulunmuyor",
+              aciklama: "Yeni bir mülk takip kodu oluşturarak portföy yönetimine başlayabilirsiniz.",
+              butonMetni: "+ Yeni Mülk Takip Kodu Oluştur",
+              onClickAttr: "yeniPortfoyModalAc('aktif')"
+            };
       listWrap.innerHTML = `
         <div class="saas-card" style="text-align:center;padding:28px 20px;">
-          <div style="font-size:0.95rem;font-weight:700;color:#0F172A;margin-bottom:4px;">Henüz aktif portföyünüz bulunmuyor</div>
-          <div class="saas-text-xs" style="margin-bottom:14px;">Yeni bir mülk takip kodu oluşturarak portföy yönetimine başlayabilirsiniz.</div>
-          <button type="button" class="saas-btn-primary-sm" onclick="yeniPortfoyModalAc()">+ Yeni Mülk Takip Kodu Oluştur</button>
+          <div style="font-size:0.95rem;font-weight:700;color:#0F172A;margin-bottom:4px;">${bosMesaj.baslik}</div>
+          <div class="saas-text-xs" style="margin-bottom:${bosMesaj.butonMetni ? "14px" : "0"};">${bosMesaj.aciklama}</div>
+          ${
+            bosMesaj.butonMetni
+              ? `<button type="button" class="saas-btn-primary-sm" onclick="${bosMesaj.onClickAttr}">${bosMesaj.butonMetni}</button>`
+              : ""
+          }
         </div>
       `;
     } else {
-      listWrap.innerHTML = gorunenPortfoyler
+      listWrap.innerHTML = listelenecekPortfoyler
         .map(p => {
+        const durum = portfoyDurumunuAl(p);
         const tamamlanan = (p.hizmetler || []).filter(h => h.durum === "done").length;
         const toplam = (p.hizmetler || []).length;
         const isExpanded = acikAkordeonPortfoyKodu === p.kod;
@@ -1221,8 +1321,117 @@ function panelYenile() {
             : 0;
         const goruntulenmeSayisi = portfoyGoruntulenmeSayisiniAl(p);
         const paylasimaAcikMi = p.paylasimaAcikMi !== false;
+        const basariliSatisVitrinde = Boolean(p.basariliSatisGoster);
         const altBilgi = `Satıcı: ${p.mulkSahibi} • 🔑 ${tekilAliciKoduSayisi} Tekil Alıcı Kodu • ${teklifSayisi} Teklif${p.coopAktifMi ? ` • Co-Op: #${p.coopKod}` : ""}`;
-        const tarihBilgisi = (p.sonGuncelleme || "16 Kasım 2026").split("•")[0].trim();
+        const tarihBilgisi = (p.kapanisTarihi || p.sonGuncelleme || "16 Kasım 2026").split("•")[0].trim();
+
+        const durumSatiriHtml =
+          durum === "gorusmede"
+            ? `<div class="hb-status-main" style="color:#B45309;">
+                <span class="hb-status-check-circle" style="background:#FEF3C7;color:#D97706;">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+                </span>
+                <span>Görüşmede / Ön Sunum • ${tamamlanan}/${toplam} Adım • Vitrine Gizli</span>
+              </div>`
+            : durum === "kapanan"
+            ? p.kapanisNedeni === "satildi"
+              ? `<div class="hb-status-main" style="color:#15803D;">
+                  <span class="hb-status-check-circle" style="background:#DCFCE7;color:#16A34A;">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span>✅ Satıldı / Kiralandı • ${tarihBilgisi}</span>
+                </div>`
+              : `<div class="hb-status-main" style="color:#475569;">
+                  <span class="hb-status-check-circle" style="background:#E2E8F0;color:#475569;">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12"/></svg>
+                  </span>
+                  <span>⏹ Kapatıldı (${p.kapanisNedeni === "satilmadi" ? "Satılmadı / Süre Bitti" : "Diğer"}) • ${tarihBilgisi}</span>
+                </div>`
+            : `<div class="hb-status-main">
+                <span class="hb-status-check-circle">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span>Aktif Süreç • ${tamamlanan}/${toplam} Adım Tamamlandı</span>
+              </div>`;
+
+        const sagKontrolHtml =
+          durum === "gorusmede"
+            ? `<button
+                type="button"
+                onclick="event.stopPropagation(); portfoyDurumuDegistir('${p.kod}', 'aktif');"
+                title="Yetki alındığında bu portföyü Aktif Portföyler sekmesine taşı"
+                style="display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:999px;font-size:0.72rem;font-weight:800;cursor:pointer;border:1px solid #86EFAC;background:#F0FDF4;color:#15803D;transition:all 0.2s ease;"
+              >
+                <span>🚀 Aktife Al</span>
+              </button>`
+            : durum === "kapanan"
+            ? `<div style="display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;">
+                ${
+                  p.kapanisNedeni === "satildi"
+                    ? `<button
+                        type="button"
+                        onclick="event.stopPropagation(); portfoyBasariliSatisVitrinToggle('${p.kod}');"
+                        title="Bu satışı kişisel web sitenizdeki Başarılı Satışlarım vitrininde göster/gizle"
+                        style="display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:0.71rem;font-weight:700;cursor:pointer;border:1px solid ${
+                          basariliSatisVitrinde ? "#86EFAC" : "#CBD5E1"
+                        };background:${basariliSatisVitrinde ? "#F0FDF4" : "#F8FAFC"};color:${
+                          basariliSatisVitrinde ? "#15803D" : "#64748B"
+                        };transition:all 0.2s ease;"
+                      >
+                        <span style="width:24px;height:13px;border-radius:999px;background:${
+                          basariliSatisVitrinde ? "#16A34A" : "#94A3B8"
+                        };position:relative;display:inline-block;transition:background 0.2s ease;">
+                          <span style="width:9px;height:9px;border-radius:50%;background:#FFFFFF;position:absolute;top:2px;left:${
+                            basariliSatisVitrinde ? "13px" : "2px"
+                          };transition:left 0.2s ease;"></span>
+                        </span>
+                        <span>🏆 Profilimde Başarılı Satış Olarak Göster</span>
+                      </button>`
+                    : ""
+                }
+                <button
+                  type="button"
+                  onclick="event.stopPropagation(); portfoyDurumuDegistir('${p.kod}', 'aktif');"
+                  title="Bu portföyü tekrar Aktif Portföyler listesine al"
+                  style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:0.71rem;font-weight:700;cursor:pointer;border:1px solid #BFDBFE;background:#EFF6FF;color:#1D4ED8;"
+                >
+                  <span>↩ Aktife Al</span>
+                </button>
+              </div>`
+            : aktifDanismanProMu()
+            ? `<button
+                type="button"
+                onclick="event.stopPropagation(); portfoyPaylasimDurumuToggle('${p.kod}');"
+                title="Bu portföyün kişisel web sitenizde ve diğer emlakçılarla paylaşıma açık/kapalı durumunu değiştir"
+                style="display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:0.71rem;font-weight:700;cursor:pointer;border:1px solid ${
+                  paylasimaAcikMi ? "#86EFAC" : "#CBD5E1"
+                };background:${paylasimaAcikMi ? "#F0FDF4" : "#F8FAFC"};color:${
+                  paylasimaAcikMi ? "#15803D" : "#64748B"
+                };transition:all 0.2s ease;"
+              >
+                <span style="width:24px;height:13px;border-radius:999px;background:${
+                  paylasimaAcikMi ? "#16A34A" : "#94A3B8"
+                };position:relative;display:inline-block;transition:background 0.2s ease;">
+                  <span style="width:9px;height:9px;border-radius:50%;background:#FFFFFF;position:absolute;top:2px;left:${
+                    paylasimaAcikMi ? "13px" : "2px"
+                  };transition:left 0.2s ease;"></span>
+                </span>
+                <span>${paylasimaAcikMi ? "Paylaşıma Açık" : "Paylaşıma Kapalı"}</span>
+              </button>`
+            : "";
+
+        const silButonuOnclick =
+          durum === "kapanan"
+            ? `event.stopPropagation(); kapananPortfoyKaliciSil('${p.kod}');`
+            : durum === "gorusmede"
+            ? `event.stopPropagation(); gorusmedekiPortfoySil('${p.kod}');`
+            : `event.stopPropagation(); portfoySil('${p.kod}');`;
+        const silButonuTitle =
+          durum === "kapanan"
+            ? "Arşivden Kalıcı Sil"
+            : durum === "gorusmede"
+            ? "Görüşmedeki Portföyü İptal Et / Sil"
+            : "Portföyü Kapat / Arşivle";
 
         return `
           <div class="hb-portfolio-card ${isExpanded ? "expanded" : ""}">
@@ -1235,12 +1444,7 @@ function panelYenile() {
               </div>
 
               <div class="hb-portfolio-status-col">
-                <div class="hb-status-main">
-                  <span class="hb-status-check-circle">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  </span>
-                  <span>Aktif Süreç • ${tamamlanan}/${toplam} Adım Tamamlandı</span>
-                </div>
+                ${durumSatiriHtml}
                 <div class="hb-status-sub" style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:4px;">
                   <span>${altBilgi}</span>
                   <span class="hb-portfolio-view-counter" title="Portföy Görüntülenme Sayacı">
@@ -1253,38 +1457,16 @@ function panelYenile() {
               <div class="hb-portfolio-right-col" style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
                 <div class="hb-portfolio-date">${tarihBilgisi}</div>
                 <div class="hb-portfolio-price">${p.fiyat || ""}</div>
-                ${
-                  aktifDanismanProMu()
-                    ? `<button
-                        type="button"
-                        onclick="event.stopPropagation(); portfoyPaylasimDurumuToggle('${p.kod}');"
-                        title="Bu portföyün kişisel web sitenizde ve diğer emlakçılarla paylaşıma açık/kapalı durumunu değiştir"
-                        style="display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:0.71rem;font-weight:700;cursor:pointer;border:1px solid ${
-                          paylasimaAcikMi ? "#86EFAC" : "#CBD5E1"
-                        };background:${paylasimaAcikMi ? "#F0FDF4" : "#F8FAFC"};color:${
-                          paylasimaAcikMi ? "#15803D" : "#64748B"
-                        };transition:all 0.2s ease;"
-                      >
-                        <span style="width:24px;height:13px;border-radius:999px;background:${
-                          paylasimaAcikMi ? "#16A34A" : "#94A3B8"
-                        };position:relative;display:inline-block;transition:background 0.2s ease;">
-                          <span style="width:9px;height:9px;border-radius:50%;background:#FFFFFF;position:absolute;top:2px;left:${
-                            paylasimaAcikMi ? "13px" : "2px"
-                          };transition:left 0.2s ease;"></span>
-                        </span>
-                        <span>${paylasimaAcikMi ? "Paylaşıma Açık" : "Paylaşıma Kapalı"}</span>
-                      </button>`
-                    : ""
-                }
+                ${sagKontrolHtml}
               </div>
 
               <div class="hb-portfolio-actions-col">
                 <button
                   type="button"
                   class="hb-portfolio-delete-btn"
-                  onclick="event.stopPropagation(); portfoySil('${p.kod}');"
-                  title="Portföyü Sil"
-                  aria-label="Portföyü Sil"
+                  onclick="${silButonuOnclick}"
+                  title="${silButonuTitle}"
+                  aria-label="${silButonuTitle}"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
                 </button>
@@ -1306,9 +1488,52 @@ function panelYenile() {
   if (typeof anonimBolgeEmsalTablosuRender === "function") {
     anonimBolgeEmsalTablosuRender();
   }
+  if (typeof adminGorusmeIptalRaporRender === "function") {
+    adminGorusmeIptalRaporRender();
+  }
 
   const p = aktifPortfoy();
   if (!p) return;
+
+  const pDurum = portfoyDurumunuAl(p);
+  const statusActionBtn = document.getElementById("activePropStatusActionBtn");
+  if (statusActionBtn) {
+    statusActionBtn.style.display = "inline-flex";
+    if (pDurum === "gorusmede") {
+      statusActionBtn.textContent = "🚀 Aktife Al";
+      statusActionBtn.style.color = "#15803D";
+      statusActionBtn.style.borderColor = "#86EFAC";
+      statusActionBtn.onclick = () => portfoyDurumuDegistir(p.kod, "aktif");
+    } else if (pDurum === "kapanan") {
+      statusActionBtn.textContent = "↩ Yeniden Aktife Al";
+      statusActionBtn.style.color = "#1D4ED8";
+      statusActionBtn.style.borderColor = "#BFDBFE";
+      statusActionBtn.onclick = () => portfoyDurumuDegistir(p.kod, "aktif");
+    } else {
+      statusActionBtn.textContent = "🟡 Görüşmeye Al";
+      statusActionBtn.style.color = "#B45309";
+      statusActionBtn.style.borderColor = "#FDE68A";
+      statusActionBtn.onclick = () => portfoyDurumuDegistir(p.kod, "gorusmede");
+    }
+  }
+
+  const closeOrDeleteBtn = document.getElementById("activePropCloseOrDeleteBtn");
+  const closeOrDeleteText = document.getElementById("activePropCloseOrDeleteText");
+  if (closeOrDeleteBtn && closeOrDeleteText) {
+    if (pDurum === "kapanan") {
+      closeOrDeleteText.textContent = "Arşivden Kalıcı Sil";
+      closeOrDeleteBtn.title = "Bu portföyü arşivden kalıcı olarak sil";
+      closeOrDeleteBtn.onclick = () => kapananPortfoyKaliciSil(p.kod);
+    } else if (pDurum === "gorusmede") {
+      closeOrDeleteText.textContent = "Görüşmeyi İptal Et / Sil";
+      closeOrDeleteBtn.title = "Görüşmedeki portföyü iptal anketiyle sil";
+      closeOrDeleteBtn.onclick = () => gorusmedekiPortfoySil(p.kod);
+    } else {
+      closeOrDeleteText.textContent = "Portföyü Kapat";
+      closeOrDeleteBtn.title = "Bu portföyü kapat ve Kapanan Portföylere taşı";
+      closeOrDeleteBtn.onclick = () => portfoySil(p.kod);
+    }
+  }
 
   const codeLabel = document.getElementById("activePropCodeLabel");
   if (codeLabel) codeLabel.textContent = `PORTFÖY: ${p.kod} • ${p.bolge}`;
@@ -1358,6 +1583,186 @@ function portfoySec(kod) {
   panelYenile();
 }
 
+function portfoyDurumuDegistir(kod, yeniDurum) {
+  const hedef = portfoyler.find(x => x.kod === kod);
+  if (!hedef) return;
+
+  const eskiDurum = portfoyDurumunuAl(hedef);
+  if (yeniDurum === "aktif" && eskiDurum !== "aktif") {
+    const proMu = aktifDanismanProMu();
+    const mevcutAktifSayisi = aktifDanismaninGorunenPortfoyleri().length;
+    if (!proMu && mevcutAktifSayisi >= UCRETSIZ_LIMIT) {
+      const badgeEl = document.getElementById("paywallModalBadge");
+      const titleEl = document.getElementById("paywallModalTitle");
+      const descEl = document.getElementById("paywallModalDesc");
+      if (badgeEl) badgeEl.textContent = `📊 AKTİF PORTFÖY SAYACI: ${mevcutAktifSayisi} / ${UCRETSIZ_LIMIT} DOLDU`;
+      if (titleEl) titleEl.textContent = `Aktif Portföy Sayınız Doldu (${mevcutAktifSayisi} / ${UCRETSIZ_LIMIT})`;
+      if (descEl) {
+        descEl.textContent =
+          "Ücretsiz pakette aynı anda en fazla 4 aktif portföy yayınlayabilirsiniz. Yeni bir portföyü aktife almak için mevcut aktiflerden birini kapatabilir veya Pro pakete geçebilirsiniz.";
+      }
+      document.getElementById("paywallModal")?.classList.add("open");
+      return;
+    }
+
+    if (!portfoyIlanLinkiGecerliMi(hedef.sahibindenUrl)) {
+      portfoyAktifeAlmaLinkModalAc(kod);
+      return;
+    }
+    hedef.sahibindenUrl = ilanLinkiniNormalizeEt(hedef.sahibindenUrl);
+  }
+
+  hedef.portfoyDurumu = yeniDurum;
+  if (yeniDurum === "gorusmede") {
+    hedef.paylasimaAcikMi = false;
+    hedef.basariliSatisGoster = false;
+  } else if (yeniDurum === "aktif") {
+    hedef.paylasimaAcikMi = true;
+    hedef.basariliSatisGoster = false;
+    hedef.sonGuncelleme = new Date().toLocaleDateString("tr-TR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+  }
+
+  aktifPortfoyDurumSekmesi = yeniDurum;
+  seciliKod = kod;
+  acikAkordeonPortfoyKodu = kod;
+  verileriKaydet();
+  panelYenile();
+  if (typeof danismanKisiselWebSitesiGoster === "function") {
+    danismanKisiselWebSitesiGoster();
+  }
+}
+
+let aktifeAlinacakPortfoyKodu = null;
+
+function portfoyAktifeAlmaLinkModalAc(kod) {
+  const hedef = portfoyler.find(x => x.kod === kod);
+  if (!hedef) return;
+  aktifeAlinacakPortfoyKodu = kod;
+
+  const titleEl = document.getElementById("activatePortalTargetTitle");
+  if (titleEl) {
+    titleEl.textContent = `${hedef.baslik} • #${hedef.kod}`;
+  }
+
+  const inputEl = document.getElementById("activatePortalLinkInput");
+  if (inputEl) {
+    inputEl.value = hedef.sahibindenUrl || "";
+  }
+
+  const errEl = document.getElementById("activatePortalLinkError");
+  if (errEl) {
+    errEl.textContent = "";
+    errEl.style.display = "none";
+  }
+
+  document.getElementById("activatePortfolioPortalModal")?.classList.add("open");
+  setTimeout(() => {
+    inputEl?.focus();
+  }, 50);
+}
+
+function portfoyAktifeAlmaLinkModalKapat() {
+  document.getElementById("activatePortfolioPortalModal")?.classList.remove("open");
+  aktifeAlinacakPortfoyKodu = null;
+}
+
+function portfoyAktifeAlmaLinkOnayla() {
+  if (!aktifeAlinacakPortfoyKodu) return;
+  const hedef = portfoyler.find(x => x.kod === aktifeAlinacakPortfoyKodu);
+  if (!hedef) {
+    portfoyAktifeAlmaLinkModalKapat();
+    return;
+  }
+
+  const inputEl = document.getElementById("activatePortalLinkInput");
+  const errEl = document.getElementById("activatePortalLinkError");
+  const hamUrl = (inputEl?.value || "").trim();
+
+  if (!portfoyIlanLinkiGecerliMi(hamUrl)) {
+    if (errEl) {
+      errEl.textContent = "Lütfen geçerli bir ilan portalı linki yapıştırın (Örn: https://www.sahibinden.com/ilan/...).";
+      errEl.style.display = "block";
+    }
+    inputEl?.focus();
+    return;
+  }
+
+  const proMu = aktifDanismanProMu();
+  const mevcutAktifSayisi = aktifDanismaninGorunenPortfoyleri().length;
+  if (portfoyDurumunuAl(hedef) !== "aktif" && !proMu && mevcutAktifSayisi >= UCRETSIZ_LIMIT) {
+    portfoyAktifeAlmaLinkModalKapat();
+    document.getElementById("paywallModal")?.classList.add("open");
+    return;
+  }
+
+  hedef.sahibindenUrl = ilanLinkiniNormalizeEt(hamUrl);
+  hedef.portfoyDurumu = "aktif";
+  hedef.paylasimaAcikMi = true;
+  hedef.basariliSatisGoster = false;
+  if (!hedef.durumEtiketi || /görüşme|ön sunum|ilan linki/i.test(hedef.durumEtiketi)) {
+    hedef.durumEtiketi = "İlan Yayında — Aktif Pazarlama Sürecinde";
+  }
+  hedef.sonGuncelleme = new Date().toLocaleDateString("tr-TR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  const hedefKod = hedef.kod;
+  aktifPortfoyDurumSekmesi = "aktif";
+  seciliKod = hedefKod;
+  acikAkordeonPortfoyKodu = hedefKod;
+  verileriKaydet();
+  portfoyAktifeAlmaLinkModalKapat();
+  panelYenile();
+  if (typeof danismanKisiselWebSitesiGoster === "function") {
+    danismanKisiselWebSitesiGoster();
+  }
+}
+
+function portfoyBasariliSatisVitrinToggle(kod) {
+  const hedef = portfoyler.find(x => x.kod === kod);
+  if (!hedef) return;
+  if (portfoyDurumunuAl(hedef) !== "kapanan" || hedef.kapanisNedeni !== "satildi") return;
+  hedef.basariliSatisGoster = !Boolean(hedef.basariliSatisGoster);
+  verileriKaydet();
+  panelYenile();
+  if (typeof danismanKisiselWebSitesiGoster === "function") {
+    danismanKisiselWebSitesiGoster();
+  }
+}
+
+function kapananPortfoyKaliciSil(kod) {
+  const hedef = portfoyler.find(x => x.kod === kod);
+  if (!hedef) return;
+  if (!confirm(`"${hedef.baslik}" (#${hedef.kod}) portföyünü Kapanan Portföyler arşivinden kalıcı olarak silmek istediğinize emin misiniz?`)) {
+    return;
+  }
+
+  const workspaceEl = document.getElementById("activePortfolioWorkspace");
+  const workspaceStage = document.getElementById("portfolioWorkspaceStage");
+  if (workspaceEl && workspaceStage && workspaceEl.parentElement !== workspaceStage) {
+    workspaceStage.appendChild(workspaceEl);
+  }
+
+  portfoyler = portfoyler.filter(x => x.kod !== kod);
+  if (acikAkordeonPortfoyKodu === kod) acikAkordeonPortfoyKodu = null;
+  if (seciliKod === kod) {
+    const kalanlar = aktifDanismaninGorunenPortfoyleri();
+    seciliKod = kalanlar.length > 0 ? kalanlar[0].kod : "";
+  }
+
+  verileriKaydet();
+  panelYenile();
+  if (typeof danismanKisiselWebSitesiGoster === "function") {
+    danismanKisiselWebSitesiGoster();
+  }
+}
+
 function portfoyPaylasimDurumuToggle(kod) {
   const hedef = portfoyler.find(x => x.kod === kod);
   if (!hedef) return;
@@ -1388,6 +1793,9 @@ function portfoySil(kod) {
 
   const bandSelect = document.getElementById("delSoldDiscountBand");
   if (bandSelect) bandSelect.value = "pazarlik_3";
+
+  const showProfileCheck = document.getElementById("delSoldShowOnProfileCheckbox");
+  if (showProfileCheck) showProfileCheck.checked = true;
 
   // Bu portföydeki tekil alıcıları "Hangi Alıcıya Satıldı?" açılır listesine doldur
   const winnerSel = document.getElementById("delSoldWinningBuyerSelect");
@@ -1619,6 +2027,10 @@ function anonimBolgeEmsalVerisiKaydet(portfoy, kapanisDurumu, fiyatBandiEtiketi,
 }
 
 function anonimBolgeEmsalTablosuRender() {
+  const card = document.getElementById("anonimBolgeEmsalTabloCard");
+  if (card) {
+    card.style.display = aktifKullaniciAdminMi() ? "" : "none";
+  }
   const tbody = document.getElementById("anonimBolgeEmsalTableBody");
   const countBadge = document.getElementById("anonimEmsalCountBadge");
   if (!tbody) return;
@@ -1653,6 +2065,203 @@ function anonimBolgeEmsalTablosuRender() {
         </tr>
       `;
     })
+    .join("");
+}
+
+const GORUSME_IPTAL_STORAGE_KEY = "mulkizle_gorusme_iptal_geri_bildirim_v1";
+const GORUSME_IPTAL_NEDENLERI = {
+  satici_vazgecti: "⏸️ Mülk sahibi satıştan vazgeçti / erteledi",
+  fiyat_pazar_analizi: "💰 Fiyat beklentisinde veya pazar analizinde anlaşamadık",
+  baska_danisman: "🏢 Başka danışman ile anlaştı / kendi satacak",
+  uygulama_begenmedi: "📱 Mülk sahibi takip uygulamasını / sunumu beğenmedi",
+  uygulama_eksiklik: "🛠️ Uygulamada eksiklik veya kullanım zorluğu",
+  diger: "📝 Diğer"
+};
+
+let gorusmeIptalPortfoyKodu = null;
+let seciliGorusmeIptalNedeni = "satici_vazgecti";
+
+function gorusmeIptalListesiniGetir() {
+  try {
+    const raw = localStorage.getItem(GORUSME_IPTAL_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch (e) {}
+  return [];
+}
+
+function gorusmeIptalKaydiEkle(portfoy, nedenKodu, notMetni) {
+  const bugun = new Date().toLocaleDateString("tr-TR", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+  const parcalar = String((portfoy && portfoy.bolge) || "").split(",");
+  const ilIlce = (parcalar[parcalar.length - 1] || (portfoy && portfoy.bolge) || "Belirtilmedi").trim();
+  const kat = (portfoy && portfoy.ozellikler && portfoy.ozellikler.mulkKategorisi) || "konut";
+  const katEtiketi = kat === "arsa" ? "İmarlı Arsa" : kat === "tarla" ? "Tarla / Arazi" : "Konut";
+
+  const kayit = {
+    id: `GI-${Date.now()}`,
+    tarih: bugun,
+    bolgeOzet: ilIlce,
+    kategori: katEtiketi,
+    nedenKodu,
+    nedenEtiketi: GORUSME_IPTAL_NEDENLERI[nedenKodu] || GORUSME_IPTAL_NEDENLERI.diger,
+    not: String(notMetni || "").trim()
+  };
+
+  const liste = gorusmeIptalListesiniGetir();
+  liste.unshift(kayit);
+  try {
+    localStorage.setItem(GORUSME_IPTAL_STORAGE_KEY, JSON.stringify(liste));
+  } catch (e) {}
+  return kayit;
+}
+
+function gorusmedekiPortfoySil(kod) {
+  const hedef = portfoyler.find(x => x.kod === kod);
+  if (!hedef) return;
+  gorusmeIptalPortfoyKodu = kod;
+
+  const titleEl = document.getElementById("gorusmeIptalTargetTitle");
+  if (titleEl) {
+    titleEl.textContent = `${hedef.baslik} • #${hedef.kod}`;
+  }
+
+  const notEl = document.getElementById("gorusmeIptalNotInput");
+  if (notEl) notEl.value = "";
+
+  gorusmeIptalNedenSec("satici_vazgecti");
+  document.getElementById("gorusmeIptalAnketModal")?.classList.add("open");
+}
+
+function gorusmeIptalModalKapat() {
+  document.getElementById("gorusmeIptalAnketModal")?.classList.remove("open");
+  gorusmeIptalPortfoyKodu = null;
+}
+
+function gorusmeIptalNedenSec(neden) {
+  seciliGorusmeIptalNedeni = neden;
+  Object.keys(GORUSME_IPTAL_NEDENLERI).forEach(k => {
+    const btn = document.getElementById(`giReasonBtn_${k}`);
+    if (btn) btn.classList.toggle("selected", k === neden);
+  });
+
+  const notWrap = document.getElementById("gorusmeIptalNotWrap");
+  const notLabel = document.getElementById("gorusmeIptalNotLabel");
+  const notInput = document.getElementById("gorusmeIptalNotInput");
+  if (!notWrap) return;
+
+  if (neden === "uygulama_begenmedi") {
+    notWrap.style.display = "block";
+    if (notLabel) notLabel.textContent = "Mülk sahibinin en çok tereddüt ettiği nokta neydi? (İsteğe Bağlı)";
+    if (notInput) notInput.placeholder = "Örn: Takip ekranını karmaşık buldu, komisyon oranında ikna olmadı...";
+  } else if (neden === "uygulama_eksiklik") {
+    notWrap.style.display = "block";
+    if (notLabel) notLabel.textContent = "Neyi iyileştirmemizi istersiniz? (İsteğe Bağlı)";
+    if (notInput) notInput.placeholder = "Örn: Şu özellik eksikti veya şu adımda zorlandım...";
+  } else if (neden === "diger") {
+    notWrap.style.display = "block";
+    if (notLabel) notLabel.textContent = "Diğer Neden (Lütfen kısaca belirtiniz) *";
+    if (notInput) notInput.placeholder = "İptal nedenini kısaca yazınız...";
+  } else {
+    notWrap.style.display = "none";
+  }
+}
+
+function gorusmeIptalAnketOnayla() {
+  if (!gorusmeIptalPortfoyKodu) return;
+  const hedef = portfoyler.find(x => x.kod === gorusmeIptalPortfoyKodu);
+  if (!hedef) {
+    gorusmeIptalModalKapat();
+    return;
+  }
+
+  const notMetni = (document.getElementById("gorusmeIptalNotInput")?.value || "").trim();
+  if (seciliGorusmeIptalNedeni === "diger" && !notMetni) {
+    alert("Lütfen 'Diğer' seçeneği için açıklama yazınız.");
+    document.getElementById("gorusmeIptalNotInput")?.focus();
+    return;
+  }
+
+  gorusmeIptalKaydiEkle(hedef, seciliGorusmeIptalNedeni, notMetni);
+
+  const workspaceEl = document.getElementById("activePortfolioWorkspace");
+  const workspaceStage = document.getElementById("portfolioWorkspaceStage");
+  if (workspaceEl && workspaceStage && workspaceEl.parentElement !== workspaceStage) {
+    workspaceStage.appendChild(workspaceEl);
+  }
+
+  const silinenKod = gorusmeIptalPortfoyKodu;
+  portfoyler = portfoyler.filter(x => x.kod !== silinenKod);
+  if (acikAkordeonPortfoyKodu === silinenKod) acikAkordeonPortfoyKodu = null;
+  if (seciliKod === silinenKod) {
+    const kalanlar = aktifDanismaninTumPortfoyleri();
+    seciliKod = kalanlar.length > 0 ? kalanlar[0].kod : "";
+  }
+
+  verileriKaydet();
+  gorusmeIptalModalKapat();
+  panelYenile();
+  alert("🙏 Geri bildiriminiz için teşekkür ederiz. Görüşmedeki portföy listeden kaldırıldı.");
+}
+
+function adminGorusmeIptalRaporRender() {
+  const card = document.getElementById("adminGorusmeIptalRaporCard");
+  if (card) {
+    card.style.display = aktifKullaniciAdminMi() ? "" : "none";
+  }
+
+  const tbody = document.getElementById("adminGorusmeIptalTableBody");
+  const ozetGrid = document.getElementById("adminGorusmeIptalOzetGrid");
+  const countBadge = document.getElementById("adminGorusmeIptalCountBadge");
+  if (!tbody) return;
+
+  const liste = gorusmeIptalListesiniGetir();
+  if (countBadge) countBadge.textContent = `${liste.length} Kayıt`;
+
+  if (ozetGrid) {
+    const sayacMap = {};
+    Object.keys(GORUSME_IPTAL_NEDENLERI).forEach(k => {
+      sayacMap[k] = 0;
+    });
+    liste.forEach(item => {
+      const k = item.nedenKodu || "diger";
+      sayacMap[k] = (sayacMap[k] || 0) + 1;
+    });
+
+    ozetGrid.innerHTML = Object.entries(GORUSME_IPTAL_NEDENLERI)
+      .map(([k, etiket]) => {
+        const adet = sayacMap[k] || 0;
+        const vurgulu = adet > 0;
+        return `<span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;font-size:0.73rem;font-weight:700;background:${vurgulu ? "#FFFFFF" : "#FEF3C7"};color:#0F172A;border:1px solid ${vurgulu ? "#F59E0B" : "#FDE68A"};">
+          <span>${etiket}</span>
+          <strong style="background:${vurgulu ? "#D97706" : "#E2E8F0"};color:${vurgulu ? "#FFFFFF" : "#475569"};padding:1px 7px;border-radius:999px;">${adet}</strong>
+        </span>`;
+      })
+      .join("");
+  }
+
+  if (liste.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="padding:14px;text-align:center;color:#64748B;">Henüz görüşmedeki portföy iptal geri bildirimi kaydedilmedi.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = liste
+    .map(
+      item => `
+      <tr style="border-bottom:1px solid #F1F5F9;">
+        <td style="padding:9px 10px;font-weight:700;color:#475569;white-space:nowrap;">${ajandaHtmlEsc(item.tarih || "-")}</td>
+        <td style="padding:9px 10px;font-weight:700;color:#0F172A;">${ajandaHtmlEsc(item.bolgeOzet || "-")}</td>
+        <td style="padding:9px 10px;color:#334155;">${ajandaHtmlEsc(item.kategori || "Konut")}</td>
+        <td style="padding:9px 10px;font-weight:700;color:#92400E;">${ajandaHtmlEsc(item.nedenEtiketi || "-")}</td>
+        <td style="padding:9px 10px;color:#334155;">${item.not ? ajandaHtmlEsc(item.not) : "<span style='color:#94A3B8;'>—</span>"}</td>
+      </tr>
+    `
+    )
     .join("");
 }
 
@@ -1713,15 +2322,32 @@ function portfoySilAnketOnayla() {
     workspaceStage.appendChild(workspaceEl);
   }
 
-  // Portföyü (takip kodu, satıcı telefonu, ada/parsel dahil) aktif listeden tamamen sil (Hard Delete)
-  portfoyler = portfoyler.filter(x => x.kod !== kod);
+  // Portföyü silmek yerine "Kapanan Portföyler" sekmesine arşivle
+  const bugunKapanis = new Date().toLocaleDateString("tr-TR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+  silinecek.portfoyDurumu = "kapanan";
+  silinecek.kapanisNedeni = seciliPortfoySilmeNedeni;
+  silinecek.kapanisTarihi = bugunKapanis;
+  silinecek.kapanisAciklama =
+    seciliPortfoySilmeNedeni === "diger"
+      ? (document.getElementById("delOtherReasonInput")?.value || "").trim()
+      : "";
+  silinecek.basariliSatisGoster =
+    seciliPortfoySilmeNedeni === "satildi" &&
+    Boolean(document.getElementById("delSoldShowOnProfileCheckbox")?.checked);
+  silinecek.paylasimaAcikMi = false;
+  silinecek.sonGuncelleme = bugunKapanis;
 
+  aktifPortfoyDurumSekmesi = "kapanan";
   if (acikAkordeonPortfoyKodu === kod) {
     acikAkordeonPortfoyKodu = null;
   }
   if (seciliKod === kod) {
     const kalanlar = aktifDanismaninGorunenPortfoyleri();
-    seciliKod = kalanlar.length > 0 ? kalanlar[0].kod : "";
+    seciliKod = kalanlar.length > 0 ? kalanlar[0].kod : kod;
   }
 
   verileriKaydet();
@@ -1730,18 +2356,23 @@ function portfoySilAnketOnayla() {
   if (typeof igSolMenuGuncelle === "function") {
     igSolMenuGuncelle("portfolios");
   }
-
-  if (aktarilanAliciSayisi > 0 || aktarilanReferansSayisi > 0) {
-    alert(
-      `✅ Portföy kapatıldı!\n` +
-        (aktarilanReferansSayisi > 0
-          ? `• Evi sattığınız Mülk Sahibi ve Alıcı (${aktarilanReferansSayisi} kişi) otomatik olarak "Müşteri & Referans Havuzum → Referans Müşterilerim" bölümüne kaydedildi.\n`
-          : "") +
-        (aktarilanAliciSayisi > 0
-          ? `• Evi alamayan diğer ${aktarilanAliciSayisi} alıcı adayı ise eski mülkün özellikleriyle "Potansiyel Alıcılarım" bölümüne aktarıldı!`
-          : "")
-    );
+  if (typeof danismanKisiselWebSitesiGoster === "function") {
+    danismanKisiselWebSitesiGoster();
   }
+
+  const profilMesaji = silinecek.basariliSatisGoster
+    ? "• Bu satış profilinizdeki \"Başarılı Satışlarım\" referans vitrininde de sergilenecek.\n"
+    : "";
+  alert(
+    `✅ Portföy "Kapanan Portföyler" arşivine taşındı!\n` +
+      profilMesaji +
+      (aktarilanReferansSayisi > 0
+        ? `• Evi sattığınız Mülk Sahibi ve Alıcı (${aktarilanReferansSayisi} kişi) otomatik olarak "Müşteri & Referans Havuzum → Referans Müşterilerim" bölümüne kaydedildi.\n`
+        : "") +
+      (aktarilanAliciSayisi > 0
+        ? `• Evi alamayan diğer ${aktarilanAliciSayisi} alıcı adayı ise eski mülkün özellikleriyle "Potansiyel Alıcılarım" bölümüne aktarıldı!`
+        : "")
+  );
 }
 
 function portfoySosyalMedyaLinkleriniGetir(p) {
@@ -2887,10 +3518,34 @@ function tumDegisiklikleriKaydet(bildirimGoster = true) {
     year: "numeric"
   });
 
+  let otomatikAktifeGecti = false;
+  let kotaEngeliMesaji = "";
+  if (portfoyDurumunuAl(p) === "gorusmede" && portfoyIlanLinkiGecerliMi(p.sahibindenUrl)) {
+    p.sahibindenUrl = ilanLinkiniNormalizeEt(p.sahibindenUrl);
+    const proMu = aktifDanismanProMu();
+    const mevcutAktif = aktifDanismaninGorunenPortfoyleri().length;
+    if (proMu || mevcutAktif < UCRETSIZ_LIMIT) {
+      p.portfoyDurumu = "aktif";
+      p.paylasimaAcikMi = true;
+      p.basariliSatisGoster = false;
+      aktifPortfoyDurumSekmesi = "aktif";
+      otomatikAktifeGecti = true;
+    } else {
+      kotaEngeliMesaji = `\n\nℹ️ Ücretsiz aktif portföy kotanız (${UCRETSIZ_LIMIT}/${UCRETSIZ_LIMIT}) dolu olduğu için kayıt Görüşmedeki Portföyler sekmesinde kaldı.`;
+    }
+  }
+
   verileriKaydet();
   panelYenile();
+  if (typeof danismanKisiselWebSitesiGoster === "function") {
+    danismanKisiselWebSitesiGoster();
+  }
   if (bildirimGoster) {
-    alert("✅ Değişiklikler kaydedildi! Satıcı ve Alıcı panelleri anında güncellendi.");
+    alert(
+      otomatikAktifeGecti
+        ? "✅ Değişiklikler ve ilan linkiniz kaydedildi! Portföy otomatik olarak Aktif Portföyler sekmesine taşındı."
+        : `✅ Değişiklikler kaydedildi! Satıcı ve Alıcı panelleri anında güncellendi.${kotaEngeliMesaji}`
+    );
   }
 }
 
@@ -6377,26 +7032,16 @@ function npHizmetKutulariniSifirla() {
   npHizmetSlotlariniRenderEt();
 }
 
+let aktifYeniPortfoyDurumu = "gorusmede";
+
+function npPortfoyDurumuSec(durum) {
+  aktifYeniPortfoyDurumu = durum === "aktif" ? "aktif" : "gorusmede";
+}
+
 function yeniPortfoyModalAc() {
   const proMu = aktifDanismanProMu();
   const kendiAktifPortfoyleri = aktifDanismaninGorunenPortfoyleri();
   const kullanilan = kendiAktifPortfoyleri.length;
-
-  if (!proMu && kullanilan >= UCRETSIZ_LIMIT) {
-    const badgeEl = document.getElementById("paywallModalBadge");
-    const titleEl = document.getElementById("paywallModalTitle");
-    const descEl = document.getElementById("paywallModalDesc");
-
-    if (badgeEl) badgeEl.textContent = `📊 AKTİF PORTFÖY SAYACI: ${kullanilan} / ${UCRETSIZ_LIMIT} DOLDU`;
-    if (titleEl) titleEl.textContent = `Aktif Portföy Sayınız Doldu (${kullanilan} / ${UCRETSIZ_LIMIT})`;
-    if (descEl) {
-      descEl.textContent =
-        "Aktif portföy sayınız dolduğu için maalesef mülk takip kodu oluşturamıyorsunuz. Dilerseniz aktif portföy sayınızı azaltabilir ya da sınırsız aktif portföy oluşturabilmek için Pro pakete geçebilirsiniz.";
-    }
-
-    document.getElementById("paywallModal").classList.add("open");
-    return;
-  }
 
   const modalCounterEl = document.getElementById("newPortfolioQuotaCounterBadge");
   if (modalCounterEl) {
@@ -6405,6 +7050,7 @@ function yeniPortfoyModalAc() {
       : `Aktif Portföy Sayacı: ${kullanilan} / ${UCRETSIZ_LIMIT}`;
   }
 
+  aktifYeniPortfoyDurumu = "gorusmede";
   npUlkeleriDoldur();
   npKonumUlkeDegisti();
 
@@ -6645,6 +7291,9 @@ function yeniPortfoyOlusturOnayla() {
   const yeniPortfoy = {
     kod: yeniKod,
     danismanId: aktifDanismanId,
+    portfoyDurumu: "gorusmede",
+    paylasimaAcikMi: false,
+    basariliSatisGoster: false,
     baslik: `${baslik} (${kisaEtiket})`,
     fiyat: sonFiyat,
     mulkSahibi: saticiAd,
@@ -6656,9 +7305,7 @@ function yeniPortfoyOlusturOnayla() {
     ozellikDetay: bilinenOzellikler,
     ozellikler: seciliOzelliklerObj,
     pazarAnaliziSecildiMi: pazarAnaliziSecildi,
-    durumEtiketi: pazarAnaliziSecildi
-      ? "1. Adım: Fotoğraf Çekimi & Detaylı Pazar Analizi Sürecinde"
-      : "1. Adım: Mülk Pazarlama Sürecinde",
+    durumEtiketi: "Görüşme / Ön Sunum Aşamasında (İlan Linki Bekleniyor)",
     sonGuncelleme: bugun,
     sahibindenUrl: "",
     videoUrl: "",
@@ -6704,6 +7351,7 @@ function yeniPortfoyOlusturOnayla() {
   };
 
   portfoyler.push(yeniPortfoy);
+  aktifPortfoyDurumSekmesi = "gorusmede";
   seciliKod = yeniKod;
   acikAkordeonPortfoyKodu = yeniKod;
   verileriKaydet();
@@ -6711,7 +7359,7 @@ function yeniPortfoyOlusturOnayla() {
   panelYenile();
 
   alert(
-    `MÜLK TAKİP KODU OLUŞTURULDU!\n\nTakip Kodu: ${yeniKod}\nMülk Sahibi: ${saticiAd} (${saticiTel})\nKonum: ${bolge}\nSatış Fiyatı: ${sonFiyat}`
+    `MÜLK TAKİP KODU OLUŞTURULDU!\n\nTakip Kodu: ${yeniKod}\nMülk Sahibi: ${saticiAd} (${saticiTel})\nKonum: ${bolge}\nSatış Fiyatı: ${sonFiyat}\n\n🟡 Portföyünüz "Görüşmedeki Portföyler" sekmesine eklendi. İlan portalı linkinizi girdiğinizde otomatik "Aktif Portföyler" sekmesine taşınacaktır.`
   );
 }
 
@@ -8030,6 +8678,25 @@ function danismanRozetleriniHesapla(dp) {
   ];
 }
 
+function profilRozetPopoverToggle(event) {
+  if (event) event.stopPropagation();
+  const pop = document.getElementById("profileBadgePopover");
+  if (!pop) return;
+  pop.classList.toggle("open");
+}
+
+function profilRozetPopoverKapat() {
+  const pop = document.getElementById("profileBadgePopover");
+  if (pop) pop.classList.remove("open");
+}
+
+document.addEventListener("click", event => {
+  const wrap = document.getElementById("profileBadgeDropdownWrap");
+  if (wrap && !wrap.contains(event.target)) {
+    profilRozetPopoverKapat();
+  }
+});
+
 function kisiselProfilEditorRender() {
   if (!danismanProfili) profilYukle();
   const dp = danismanProfili;
@@ -8399,6 +9066,7 @@ function blogYazisiSil(idx) {
 // - Blog Yazıları: Satır satır listelenir
 function portfoyunAktifIlaniVarMi(item) {
   if (!item) return false;
+  if (portfoyDurumunuAl(item) !== "aktif") return false;
   const ilanLinki = (item.sahibindenUrl || "").trim();
   const ilanLinkiGecerli =
     ilanLinki.length > 8 &&
@@ -8455,13 +9123,20 @@ function danismanKisiselWebSitesiGoster() {
 
   const rozetler = danismanRozetleriniHesapla(dp);
   const kazanilanRozetSayisi = rozetler.filter(r => r.kazanildi).length;
+  const siraliRozetler = [...rozetler].sort((a, b) => Number(b.kazanildi) - Number(a.kazanildi));
 
-  const kompaktRozetIkonlariHtml = rozetler
+  const profilRozetPopoverListHtml = siraliRozetler
     .map(
       r => `
-      <div class="compact-badge-icon-btn ${r.kazanildi ? "earned" : ""}" title="${r.baslik}">
-        ${r.ikon}
-        <span class="compact-badge-tooltip">${r.baslik} ${r.kazanildi ? "✓" : ""}</span>
+      <div class="profile-badge-popover-item ${r.kazanildi ? "earned" : "locked"}">
+        <div class="profile-badge-popover-icon">${r.ikon}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+            <strong style="font-size:0.78rem;color:#0F172A;">${r.baslik}</strong>
+            <span class="profile-badge-popover-state">${r.kazanildi ? "✓ Aktif" : "Bekliyor"}</span>
+          </div>
+          <div style="font-size:0.72rem;color:#64748B;line-height:1.35;margin-top:2px;">${r.aciklama}</div>
+        </div>
       </div>
     `
     )
@@ -8486,15 +9161,12 @@ function danismanKisiselWebSitesiGoster() {
     .filter(Boolean)
     .join("");
 
-  // YÖNETİLEN AKTİF PORTFÖYLER (Sadece ilanı aktif olanlar)
+  // YÖNETİLEN AKTİF PORTFÖYLER (Sadece ilanı aktif olanlar) & BAŞARILI SATIŞ REFERANSLARI
   const danismanaAitPortfoyler = portfoyler.filter(item => {
-    if (incelenenWebSitesiDanismanId === "selin-yilmaz") {
-      return item.danismanId === "selin-yilmaz" || item.danisman === "Selin Yılmaz";
+    if (incelenenWebSitesiDanismanId === "ahmet-demir") {
+      return !item.danismanId || item.danismanId === "ahmet-demir" || item.danisman === dp.ad;
     }
-    if (incelenenWebSitesiDanismanId === "burak-kaya") {
-      return item.danismanId === "burak-kaya" || item.danisman === "Burak Kaya";
-    }
-    return !item.danismanId || item.danismanId === "ahmet-demir" || item.danisman === dp.ad;
+    return item.danismanId === incelenenWebSitesiDanismanId || (dp && dp.ad && item.danisman === dp.ad);
   });
 
   const sayfaSahibiMi = profilGoruntuleyenModu === "owner";
@@ -8508,6 +9180,13 @@ function danismanKisiselWebSitesiGoster() {
     if (!sayfaSahibiMi && item.paylasimaAcikMi === false) return false;
     return true;
   });
+
+  const basariliSatisPortfoyleri = danismanaAitPortfoyler.filter(
+    item =>
+      portfoyDurumunuAl(item) === "kapanan" &&
+      item.kapanisNedeni === "satildi" &&
+      item.basariliSatisGoster === true
+  );
 
   const hedefUyeParaliMi =
     typeof uyeParaliUyelikVarMi === "function" ? uyeParaliUyelikVarMi(incelenenWebSitesiDanismanId) : proPaketAktif;
@@ -8533,8 +9212,59 @@ function danismanKisiselWebSitesiGoster() {
   const okunmamisMesajSayisi = uyeMesajListesi.filter(m => !m.okundu && !m.yanit).length;
 
   // SEKME 1: GÖRSEL PORTFÖY VİTRİNİ (AIRBNB / INSTAGRAM ESTETİĞİNDE BÜYÜK FOTOĞRAFLI KARTLAR)
-  const portfoyGridHtml =
-    yayindakiIlanliPortfoyler.length > 0
+  const basariliSatisVitriniHtml =
+    basariliSatisPortfoyleri.length > 0
+      ? `<section class="pf-sold-showcase-section">
+          <div class="pf-sold-showcase-head">
+            <div>
+              <h3 class="saas-h2" style="margin:0;">🏆 Başarılı Satışlarım (${basariliSatisPortfoyleri.length})</h3>
+              <div class="saas-text-xs" style="margin-top:2px;">Tamamlanan işlemler ve referans portföyler (mülk sahibi iletişim bilgileri gizli tutulur).</div>
+            </div>
+            <span class="pf-sold-ribbon">✅ Doğrulanmış Tamamlanan İşlem</span>
+          </div>
+          <div class="social-portfolio-grid">
+            ${basariliSatisPortfoyleri
+              .map(item => {
+                const kapakFoto =
+                  (item.medya && item.medya[0] && item.medya[0].url) ||
+                  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80";
+                return `
+                  <article class="social-listing-card" style="border-color:#BBF7D0;">
+                    <div class="social-listing-media" style="cursor:default;">
+                      <img src="${kapakFoto}" alt="${item.baslik}" />
+                      <span class="social-listing-badge-top-left" style="background:rgba(21,128,61,0.92);color:#FFFFFF;">
+                        <span>✅ SATILDI • ${item.kapanisTarihi || "Tamamlandı"}</span>
+                      </span>
+                      ${item.fiyat ? `<div class="social-listing-price-overlay">${item.fiyat}</div>` : ""}
+                    </div>
+                    <div class="social-listing-content">
+                      <div>
+                        <h3 class="social-listing-title">${item.baslik}</h3>
+                        <div class="social-listing-sub" style="margin-top:4px;">
+                          <span>${item.bolge}</span>
+                          ${item.ozellikDetay ? `<span>• ${item.ozellikDetay}</span>` : ""}
+                        </div>
+                      </div>
+                      ${
+                        sayfaSahibiMi
+                          ? `<div class="social-listing-footer">
+                              <button type="button" class="social-btn-soft" style="padding:6px 11px;font-size:0.74rem;color:#64748B;" onclick="portfoyBasariliSatisVitrinToggle('${item.kod}')">
+                                <span>Profilde Gizle</span>
+                              </button>
+                            </div>`
+                          : ""
+                      }
+                    </div>
+                  </article>
+                `;
+              })
+              .join("")}
+          </div>
+        </section>`
+      : "";
+
+  const aktifPortfoyVeSatisHtml =
+    (yayindakiIlanliPortfoyler.length > 0
       ? `<div class="social-portfolio-grid">` +
         yayindakiIlanliPortfoyler
           .map(item => {
@@ -8599,7 +9329,7 @@ function danismanKisiselWebSitesiGoster() {
           <div style="font-size:0.95rem;font-weight:700;color:#0F172A;margin-bottom:4px;">Paylaşıma açık aktif ilan bulunmuyor</div>
           <div class="saas-text-xs">Danışmanın "Paylaşıma Açık" olarak işaretlediği aktif portföyler burada vitrin kartı olarak sergilenir.</div>
         </div>
-      `;
+      `) + basariliSatisVitriniHtml;
 
   // SEKME 2: BÖLGE ANALİZLERİ & BLOG YAZILARI (LINKEDIN MAKALE KARTLARI)
   const bloglarSekmeHtml =
@@ -8689,7 +9419,7 @@ function danismanKisiselWebSitesiGoster() {
       ? bloglarSekmeHtml
       : aktifProfilSekmesi === "about"
       ? hakkindaSekmeHtml
-      : portfoyGridHtml;
+      : aktifPortfoyVeSatisHtml;
 
   container.innerHTML = `
     <!-- FACEBOOK / LINKEDIN / INSTAGRAM ESTETİĞİNDE PROFİL HERO KARTI -->
@@ -8745,8 +9475,19 @@ function danismanKisiselWebSitesiGoster() {
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
             <h1 style="font-size:1.45rem;font-weight:800;color:#0F172A;margin:0;letter-spacing:-0.02em;">${dp.ad}</h1>
             <span class="social-verified-tick" title="Doğrulanmış Gayrimenkul Danışmanı">${verifiedCheckSvg}</span>
-            <div class="compact-badge-row" style="margin-left:4px;" aria-label="Kazanılan Uzmanlık Rozetleri">
-              ${kompaktRozetIkonlariHtml}
+            <div class="profile-badge-dropdown-wrap" id="profileBadgeDropdownWrap">
+              <button type="button" class="profile-badge-summary-pill" onclick="profilRozetPopoverToggle(event)" aria-label="Uzmanlık Rozetlerini Görüntüle">
+                <span>🏅 ${kazanilanRozetSayisi}/${rozetler.length} Uzmanlık Rozeti ▾</span>
+              </button>
+              <div class="profile-badge-popover" id="profileBadgePopover">
+                <div class="profile-badge-popover-head">
+                  <strong>🏅 Uzmanlık &amp; Doğrulama Rozetleri (${kazanilanRozetSayisi}/${rozetler.length})</strong>
+                  <button type="button" onclick="profilRozetPopoverKapat()" style="border:none;background:none;color:#64748B;font-weight:800;cursor:pointer;font-size:0.85rem;">✕</button>
+                </div>
+                <div class="profile-badge-popover-list">
+                  ${profilRozetPopoverListHtml}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -8766,6 +9507,14 @@ function danismanKisiselWebSitesiGoster() {
               <strong>${yayindakiIlanliPortfoyler.length}</strong>
               <span>Yayındaki İlan</span>
             </div>
+            ${
+              basariliSatisPortfoyleri.length > 0
+                ? `<div class="social-stat-item">
+                    <strong>${basariliSatisPortfoyleri.length}</strong>
+                    <span>Başarılı Satış</span>
+                  </div>`
+                : ""
+            }
             <div class="social-stat-item">
               <strong>${(dp.bloglar || []).length}</strong>
               <span>Bölge Yazısı</span>
@@ -12896,7 +13645,7 @@ function danismanEkipGoreviSil(gorevId) {
   danismanAjandaPanelRender();
 }
 
-function danismanRozetleriniHesapla(userId) {
+function danismanGorevRozetleriniHesapla(userId) {
   const hedefler = danismanKisiselHedefleriGetir(userId);
   danismanEkipGorevleriniYukle();
   const teamDoneCount = ekipGorevleriListesi.filter(
@@ -12924,7 +13673,7 @@ function danismanRozetleriniHesapla(userId) {
 function danismanHedeflerVeGorevlerHtml(aktifId, bugun, katOpsiyonHtml, katRenkMap, ozelFallback) {
   danismanEkipGorevleriniYukle();
   const hedefler = danismanKisiselHedefleriGetir(aktifId);
-  const rozetler = danismanRozetleriniHesapla(aktifId);
+  const rozetler = danismanGorevRozetleriniHesapla(aktifId);
   const kazanilanRozetSayi = rozetler.filter(r => r.kazandi).length;
   const tamamlananGunluk = hedefler.filter(h => h.mevcut >= h.hedef).length;
 
@@ -13286,10 +14035,12 @@ function danismanAjandaPanelRender() {
     return durumOk && katOk;
   });
 
-  const gorunenPortfoyler = aktifDanismaninGorunenPortfoyleri();
+  const gorunenPortfoyler = aktifDanismaninTumPortfoyleri().filter(p => portfoyDurumunuAl(p) !== "kapanan");
   const portfoySecenekleriHtml = [
     `<option value="">Bağlı Portföy Seçin (İsteğe Bağlı)</option>`,
-    ...gorunenPortfoyler.map(p => `<option value="${p.kod}">#${p.kod} — ${p.baslik}</option>`)
+    ...gorunenPortfoyler.map(
+      p => `<option value="${p.kod}">${portfoyDurumunuAl(p) === "gorusmede" ? "[Görüşmede] " : ""}#${p.kod} — ${p.baslik}</option>`
+    )
   ].join("");
 
   const ozelKategoriler = danismanAjandaOzelKategoriListesi(aktifId);
@@ -13472,7 +14223,7 @@ function danismanAjandaPanelRender() {
 
     <!-- YENİ MÜLK AJANDASI NOTU EKLEME KARTI -->
     <div class="saas-card" style="padding:16px 18px;margin-bottom:16px;background:#F8FAFC;border:1.5px solid #DBEAFE;">
-      <h3 class="saas-h2" style="font-size:0.95rem;margin-bottom:10px;">+ Mülk Ajandama Yeni Kayıt Ekle</h3>
+      <h3 class="saas-h2" style="font-size:0.95rem;margin-bottom:10px;">+ Yeni Ajanda Kaydı Ekle</h3>
       <div class="form-grid-3" style="margin-bottom:10px;">
         <div class="field">
           <label>Tarih (Gün / Ay / Yıl)</label>
@@ -13524,7 +14275,7 @@ function danismanAjandaPanelRender() {
           <span>Bildirimler merkezine hatırlatma olarak da düşsün</span>
         </label>
         <button type="button" class="social-btn-primary" onclick="danismanAjandaNotuEkle()">
-          <span>+ Mülk Ajandama Kaydet</span>
+          <span>+ Ajandama Kaydet</span>
         </button>
       </div>
     </div>
@@ -13559,7 +14310,7 @@ function danismanAjandaPanelRender() {
     <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;">
       <div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-          <h2 class="saas-h2" style="margin:0;">Mülk Ajandam</h2>
+          <h2 class="saas-h2" style="margin:0;">Ajandam ve Görevler</h2>
           <span class="saas-badge-blue">${bugunkuSayi} Bugünkü Randevu</span>
           <span class="saas-badge-neutral">${bekleyenSayi} Bekleyen • ${tamamlananSayi} Tamamlanan</span>
         </div>

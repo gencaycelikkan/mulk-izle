@@ -2330,13 +2330,15 @@ body {
   background: #FFFFFF;
   border-radius: 18px;
   border: 1px solid rgba(15, 23, 42, 0.08);
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
   margin-bottom: 18px;
 }
 
 .social-profile-cover {
   height: 156px;
+  border-radius: 17px 17px 0 0;
+  overflow: hidden;
   background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 52%, #2563EB 100%);
   background-size: cover;
   background-position: center;
@@ -2974,8 +2976,15 @@ body.member-logged-in #navRegisterBtn {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 16px;
+  gap: 10px;
   flex: 1;
+}
+
+.ig-nav-divider {
+  height: 1px;
+  background: #E2E8F0;
+  margin: 4px 10px;
+  flex-shrink: 0;
 }
 
 .ig-sidebar-bottom {
@@ -4978,6 +4987,7 @@ body {
   /* Üst bara taşınan öğeleri (Bildirimler, Mesajlar, Profilim, Çıkış ve Üst Logo) alt bardan gizle */
   body.member-logged-in .ig-sidebar-top,
   body.member-logged-in .ig-sidebar-bottom,
+  body.member-logged-in .ig-nav-divider,
   body.member-logged-in #igNavNotifications,
   body.member-logged-in #igNavMessages,
   body.member-logged-in #igNavViewWebsite {
@@ -5096,9 +5106,10 @@ body {
   }
 
   body.member-logged-in #igNavAgenda .ig-nav-label::after {
-    content: "Ajandam";
-    font-size: 0.63rem;
+    content: "Ajanda/Görev";
+    font-size: 0.58rem;
     font-weight: 700;
+    white-space: nowrap;
   }
 
   /* 3. HERO & KAMUSAL SAYFA KARTLARI MOBİL UYUMU */
@@ -5567,4 +5578,240 @@ body {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
+
+/* ==========================================================================
+   PROFİL ROZET ÖZET HAPI & AÇILIR DETAY KARTI (SEÇENEK 1)
+   ========================================================================== */
+.profile-badge-dropdown-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.profile-badge-summary-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid #BFDBFE;
+  background: #EFF6FF;
+  color: #1D4ED8;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.14s ease;
+  white-space: nowrap;
+}
+
+.profile-badge-summary-pill:hover {
+  background: #DBEAFE;
+  border-color: #93C5FD;
+}
+
+.profile-badge-popover {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 120;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 14px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.16);
+  padding: 12px;
+}
+
+.profile-badge-popover.open {
+  display: block;
+}
+
+.profile-badge-popover-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: #0F172A;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.profile-badge-popover-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 310px;
+  overflow-y: auto;
+}
+
+.profile-badge-popover-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+}
+
+.profile-badge-popover-item.earned {
+  background: #F0FDF4;
+  border-color: #BBF7D0;
+}
+
+.profile-badge-popover-item.locked {
+  opacity: 0.65;
+}
+
+.profile-badge-popover-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563EB;
+  flex-shrink: 0;
+}
+
+.profile-badge-popover-item.earned .profile-badge-popover-icon {
+  color: #16A34A;
+  border-color: #BBF7D0;
+}
+
+.profile-badge-popover-state {
+  font-size: 0.66rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #E2E8F0;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.profile-badge-popover-item.earned .profile-badge-popover-state {
+  background: #DCFCE7;
+  color: #15803D;
+}
+
+/* ============================================================================
+   PORTFÖYLERİM: 3 DURUM SEKMESİ & BAŞARILI SATIŞ REFERANS VİTRİNİ
+   ============================================================================ */
+.portfolio-status-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+  background: #F1F5F9;
+  padding: 5px;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+}
+
+.pf-status-tab {
+  flex: 1;
+  min-width: 170px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  color: #475569;
+  font-size: 0.83rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.pf-status-tab:hover {
+  background: rgba(255, 255, 255, 0.65);
+  color: #0F172A;
+}
+
+.pf-status-tab.active {
+  background: #FFFFFF;
+  color: #0F172A;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.pf-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pf-dot-aktif {
+  background: #16A34A;
+}
+
+.pf-dot-gorusmede {
+  background: #D97706;
+}
+
+.pf-dot-kapanan {
+  background: #64748B;
+}
+
+.pf-tab-count {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #E2E8F0;
+  color: #475569;
+}
+
+.pf-status-tab.active .pf-tab-count {
+  background: #EFF6FF;
+  color: #1D4ED8;
+}
+
+.pf-sold-showcase-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #E2E8F0;
+}
+
+.pf-sold-showcase-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.pf-sold-ribbon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #DCFCE7;
+  color: #15803D;
+  border: 1px solid #BBF7D0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+@media (max-width: 640px) {
+  .pf-status-tab {
+    min-width: calc(33% - 6px);
+    padding: 8px 8px;
+    font-size: 0.74rem;
+    gap: 5px;
+  }
+}
+
 
